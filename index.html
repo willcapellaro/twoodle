@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+			<meta content="utf-8" http-equiv="encoding">
+			<title>Work It Out: 2x2</title>	
+			<script type="text/javascript" src="js/jquery.js"></script>
+			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+			<link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
+		</head>
+	<body id="body" onload="menuItemClicked('create')">
+
+		<header>
+			<div>
+				<h1 id="title">Work It Out: 2x2</h1>
+			</div>
+		</header>
+		<nav id="menu">
+			<ul>
+				<button class="menuButton" onclick="menuItemClicked(this.id)" id="create">Create your items</button>
+				<button class="menuButton" onclick="menuItemClicked(this.id)" id="rate">Rate your items</button>
+				<button class="menuButton" onclick="menuItemClicked(this.id)" id="see">See your matrix</button>
+			</ul>
+		</nav>
+		<div id="createDiv">
+			<div id="itemsList" onchange="verifyItemsNames();">
+				<div class="item" id="item_0">
+					<input class="itemName" type="text" value="Item 1" id="item_name_0">
+					<button class="deleteItemButton" id="0" onclick="deleteItem(this.id);">Delete</button>
+					<label class="lblRepeatedItem" id="lblItem_0"></label>
+				</div>
+			</div>
+			<button id="addButton" onclick="addItem();">+ Add an item</button>
+		</div>
+		<div id="rateDiv" onchange="drawResult();">
+			<label id="lblImportance">Importance</label>
+			<button class="resetButton" id="resetImportance" onclick="resetValues('importance');">Reset values</button>
+			<div id="importanceItemsList"></div>
+			<label id="lblUrgency">Urgency</label>
+			<button class="resetButton" id="resetUrgency" onclick="resetValues('urgency');">Reset values</button>
+			<div id="urgencyItemsList"></div>
+		</div>
+		<div id="seeDiv">
+			<div><canvas id="canvas">Canvas not supported.</canvas></div>
+			<div><p class="canvasLabel" id="labelLowUrgency">Low Urgency</p></div>
+			<div><p class="canvasLabel" id="labelHighUrgency">High Urgency</p></div>
+			<div><p class="canvasLabel" id="labelLowImportance">Low Importance</p></div>
+			<div><p class="canvasLabel" id="labelHighImportance">High Importance</p></div>
+		</div>
+		<script type="text/javascript" src="./js/configurations.js"></script>
+		<script type="text/javascript" src="./js/results.js"></script>
+		<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
+	</body>
+</html>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
