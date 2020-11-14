@@ -1,6 +1,8 @@
 body {
-	font-family: 'Slabo 27px', serif;
-	max-width: 1200px;
+	font-family: 'Nunito', sans-serif;
+margin-top: 2em;
+
+	max-width: 90vw;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -8,34 +10,52 @@ body {
 {
 	text-align: center;
 }
+
+
 button {
-	background-color: #17A589;
+	background-color: #0f4c81;
 	color: white;
 	padding: .5em 1em .5em 1em ;
-	margin: 1em 1em 1em 0;
+	margin: 1em 0em 1em 0;
 	border: none;
-	border-radius: 10px;
+	border-radius: 3px;
+}
+select {
+	border-radius: 3px;
 }
 button:hover {
-	background-color: #48C9B0;
+	background-color: #444;
 }
 ul {
 	padding: 0;
 }
 input {
-	width: 200px;
-	margin-left: 1em;
+/*	width: 200px;
+*/	margin-left: 1em;
 	padding: 4px;
 }
+.yItem, .xItem { 
+/*	background-color: red;
+*/	font-size: 1.5em;
+ }
+ .lblLowY, .lblLowX, .lblHighY, .lblHighX {
+ 	font-size: 1em;
+ 	padding: 1em;
+ }
 
-/*.urgencyRange .importanceRange {
+.canvasLabel {
+	color: #0f4c81;
+}
+
+/*.yRange .xRange {
 	display: inline-block;
 	width: 20%;
 }*/
 .custom-range {
 	display: inline-block;
-	width: 10em;
-}
+	width: 30em;
+/*	padding: 2em;
+*/}
 .deleteItemButton {
 	margin-left: 1em;
 }
@@ -73,12 +93,9 @@ input {
 
 
 
-
-
-
-
-
-
+.deleteItemButton {
+	background-color: #dc143c;
+}
 
 
 .seeDiv {
@@ -111,59 +128,116 @@ input {
 	background-color: yellow;
 }
 
+.errorText {
+	color: red;
+	margin-left: 1.4em;
+}
+
 #canvas
 {
-	background-color: red;
-/*	position: relative;
+/*	background-color: red;
+*//*	position: relative;
 	left: 110px;*/
 	width: 700px;
 	height: 500px;
 }
-#labelLowUrgency {
+#labelLowY {
 
 }
-#labelHighUrgency {
+#labelHighY {
 
 }
-#labelLowImportance {
+#labelLowX {
 
 }
-#labelHighImportance {
+#labelHighX {
 
 }
-.importanceRange .urgencyRange {
-	color: red;
-	background-color: red;
+.xRange .yRange {
 	width: 10em;
 }
-#labelHighImportance
+
+
+/*#labelHighX
 {
 	position: relative;
 	left: 300px;
 }
-#labelLowUrgency
+#labelLowY
 {
 	position: relative;
 	top: 100px;
-}
+}*/
 
-#importanceItemsList .itemName, #urgencyItemsList .itemName{
+#xItemsList .itemName, #yItemsList .itemName{
 	display: inline-block;
 	width: 600px;
 }
-.lblLowUrgency, .lblLowImportace {
-		display: inline-block;
-	width: 120px;
+
+.custom-range {
+}
+
+.custom-range::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  /*width: 25px;*/ /* Set a specific slider handle width */
+  /*height: 25px;*/ /* Slider handle height */
+  background: #0f4c81; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.custom-range::-moz-range-thumb {
+  /*width: 25px;*/ /* Set a specific slider handle width */
+  /*height: 25px; *//* Slider handle height */
+  background: #0f4c81; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+#axisList .item label {
+	color: black;
+	padding: .5em 0 0 1.5em;
+}
+
+#createDiv input {
+	width: calc(100% - 10em);
+	font-size: 1.5em;
+	height: 2em;
+	padding: 0 .3em;
+}
+
+#createDiv .itemName {
+	padding: 1em .3em;
+	margin: 0 1em 1em 1em;
+}
+
+#createDiv button {
+	font-size: 1.5em;
+	height: 2em;
+	padding: 0 1em;
+	margin-left: .2em;
+	width: 6em;
+}
+
+#createDiv #addButton {
+	width: auto;
+	margin-left: 1.1em;
+}
+.itemName {
+	padding: .3em 0 0 .4em;
+}
+
+.lblLowY, .lblLowX {
+/*	display: inline-block;*/
 	text-align: right;
 }
-#importanceItemsList, #itemsList, #urgencyItemsList {
+#xItemsList, #itemsList, #yItemsList {
 	background: whitesmoke;
 }
-#itemsList div, #importanceItemsList div, #urgencyItemsList div {
+#itemsList div, #xItemsList div, #yItemsList div {
 	border: none;
 	border-bottom: 1px solid grey;
-	height: 6em;
-}
+/*	height: 6em;
+*/}
 .item {
 	border: none;
 	border-bottom: 1px solid grey;
@@ -180,7 +254,18 @@ input {
 {
 	display: none;
 }
-/*#urgencyItemsList div, #importanceItemsList div {
+
+#rateXDiv button, #rateYDiv button {
+	height: 2em;
+	padding: 0 1em 0 1em;
+	margin-right: 1em;
+}
+
+#rateXDiv select, #rateYDiv select {
+	height: 2em;
+	padding: 0;
+}
+/*#yItemsList div, #xItemsList div {
 	height: 5em;
 }
 */
