@@ -418,7 +418,7 @@ function addItem()
 		</div>`
 	);
 	document.getElementById(c[0].id.split('_')[1]).disabled = false;
-	document.getElementById(c[0].id.split('_')[1]).style.backgroundColor = '#dc143c';
+	document.getElementById(c[0].id.split('_')[1]).style.backgroundColor = '#17A589';
 	verifyItemsNames();
 }
 function deleteItem(item)
@@ -460,7 +460,7 @@ function deleteItem(item)
 	if (items.length == 1)
 	{
 		document.getElementById(items[0].id.split('_')[1]).disabled = true;
-		document.getElementById(items[0].id.split('_')[1]).style.backgroundColor = '#888';
+		document.getElementById(items[0].id.split('_')[1]).style.backgroundColor = 'grey';
 	}
 	getNames();
 	getPreviousIdsOrder();
@@ -494,7 +494,7 @@ function verifyItemsNames()
 	validItemsNames = !repetidos.length;
 	for (var i = 0; i < repetidos.length; i++)
 	{
-		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<p class="errorText"> Repeated name</p>';
+		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<p style="color: red;"> (repeated name)</p>';
 	}
 }
 function verifyAxisNames()
@@ -507,8 +507,8 @@ function verifyAxisNames()
 	validAxisNames = true;
 	if (document.getElementById('yAxis_name').value == document.getElementById('xAxis_name').value)
 	{
-		document.getElementById('lblYAxisRepeated').innerHTML = '<p class="errorText"> Repeated name</p>';
-		document.getElementById('lblXAxisRepeated').innerHTML = '<p class="errorText"> Repeated name</p>';
+		document.getElementById('lblYAxisRepeated').innerHTML = '<p style="color: red;"> (repeated name)</p>';
+		document.getElementById('lblXAxisRepeated').innerHTML = '<p style="color: red;"> (repeated name)</p>';
 		validAxisNames = false;
 	}
 }

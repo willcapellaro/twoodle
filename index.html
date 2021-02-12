@@ -3,7 +3,7 @@
 	<head>
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 		<meta content="utf-8" http-equiv="encoding">
-		<title>Twobytoo</title>	
+		<title>Work It Out: 2x2</title>	
 		<!-- Draggable JS -->
 			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.legacy.js"></script>
@@ -17,15 +17,14 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet">
-<!-- <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500&family=Nunito:wght@600&display=swap" rel="stylesheet">
- -->		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+		<link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
 	</head>
 	<body id="body" onload="menuItemClicked('create');">
 		<header>
 			<div>
-				<h1 id="title">twoombly: the 2x2 machine</h1>
+				<h1 id="title">Work It Out: 2x2</h1>
 			</div>
 		</header>
 		<nav id="menu">
@@ -37,18 +36,18 @@
 			</ul>
 		</nav>
 		<div id="createDiv">
-			<label >Value Scales</label>
+			<label">Value Scales</label>
 			<div id="axisList" onchange="verifyAxisNames();">
 				<div class="item" id="yAxis" style="background-color: whitesmoke;">
-					<label>Y axis</label>
+					<label">Y axis</label>
 					<br>
-					<input class="itemName" type="text" value="urgency" id="yAxis_name">
+					<input class="itemName" type="text" value="urgency" id="yAxis_name" style="margin: 1em 1em 1em 0; padding: .5em 1em .5em 1em;">
 					<label class="lblRepeatedItem" id="lblYAxisRepeated"></label>
 				</div>
 				<div class="item" id="xAxis" style="background-color: whitesmoke;">
-					<label>X axis</label>
+					<label">X axis</label>
 					<br>
-					<input class="itemName" type="text" value="difficulty" id="xAxis_name">
+					<input class="itemName" type="text" value="difficulty" id="xAxis_name" style="margin: 1em 1em 1em 0; padding: .5em 1em .5em 1em;">
 					<label class="lblRepeatedItem" id="lblXAxisRepeated"></label>
 				</div>
 			</div>
@@ -65,7 +64,7 @@
 		</div>
 		
 		<div id="rateYDiv">
-			<label >Sort by </label>
+			<label>Sort by </label>
 			<select id="slcSortY" onchange="
 				if (document.getElementById('slcSortY').selectedIndex == 0)
 				{
@@ -74,7 +73,7 @@
 				else
 				{
 					document.getElementById('btnSubmitSortY').disabled = false;
-					document.getElementById('btnSubmitSortY').style.backgroundColor = '#0f4c81';
+					document.getElementById('btnSubmitSortY').style.backgroundColor = '#17A589';
 				}
 			">
 				<option>Select</option>
@@ -82,7 +81,7 @@
 				<option value="value">Value (High > Low)</option>
 			</select>
 			<button style="background-color: grey;" id="btnSubmitSortY" onclick="submit('y', 'sort')">Submit</button>
-			<label >Actions </label>
+			<label>Actions </label>
 			<select id="slcActionsY" onclick="verifyDifferentValues('y');" onchange="
 				if (document.getElementById('slcActionsY').selectedIndex == 0)
 				{
@@ -91,7 +90,7 @@
 				else
 				{
 					document.getElementById('btnSubmitActionsY').disabled = false;
-					document.getElementById('btnSubmitActionsY').style.backgroundColor = '#0f4c81';
+					document.getElementById('btnSubmitActionsY').style.backgroundColor = '#17A589';
 				}
 			">
 				<option>Select</option>
@@ -108,7 +107,7 @@
 		</div>
 
 		<div id="rateXDiv">
-			<label >Sort by </label>
+			<label>Sort by </label>
 			<select id="slcSortX" onchange="
 				if (document.getElementById('slcSortX').selectedIndex == 0)
 				{
@@ -117,7 +116,7 @@
 				else
 				{
 					document.getElementById('btnSubmitSortX').disabled = false;
-					document.getElementById('btnSubmitSortX').style.backgroundColor = '#0f4c81';
+					document.getElementById('btnSubmitSortX').style.backgroundColor = '#17A589';
 				}
 			">
 				<option>Select</option>
@@ -125,7 +124,7 @@
 				<option value="value">Value (High > Low)</option>
 			</select>
 			<button id="btnSubmitSortX" onclick="submit('x', 'sort')">Submit</button>
-			<label >Actions </label>
+			<label>Actions </label>
 			<select id="slcActionsX" onclick="verifyDifferentValues('x');" onchange="
 				if (document.getElementById('slcActionsX').selectedIndex == 0)
 				{
@@ -134,7 +133,7 @@
 				else
 				{
 					document.getElementById('btnSubmitActionsX').disabled = false;
-					document.getElementById('btnSubmitActionsX').style.backgroundColor = '#0f4c81';
+					document.getElementById('btnSubmitActionsX').style.backgroundColor = '#17A589';
 				}
 			">
 				<option>Select</option>
@@ -147,25 +146,25 @@
 			<button id="btnSubmitActionsX" onclick="submit('x', 'action')" disabled="true">Submit</button><label id="lblChangeX" style="float: right;"></label>
 
 			<div id="xItemsList"></div>
-			<div class="rangeLabel" id="xDivRange"></div>
+			<div id="xDivRange"></div>
 		</div>
 		
 		<div id="seeDiv">
 			<table id="tableSee">
 				<tr>
 					<td></td>
-					<td id="tdHighY"><center><p class="canvasLabel" id="labelHighY"></p></center></td>
+					<td id="tdHighY"><center><p class="canvasLabel" id="labelHighY" style="color: red;"></p></center></td>
 					<td></td>
 				</tr>
 				<tr>
-					<td id="tdLowX"><p class="canvasLabel" id="labelLowX"></p></td>
+					<td id="tdLowX"><p class="canvasLabel" id="labelLowX" style="color: red;"></p></td>
 					<!--<td style="background-color: red;"><img id="canvasImage" src="./imgs/result.png"></td>-->
 					<td><img id="canvasImage" src="./imgs/result.png"></td>
-					<td><p class="canvasLabel" id="labelHighX"></p></td>
+					<td><p class="canvasLabel" id="labelHighX" style="color: red;"></p></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><center><p class="canvasLabel" id="labelLowY"></p></center></td>
+					<td><center><p class="canvasLabel" id="labelLowY" style="color: red;"></p></center></td>
 					<td></td>
 				</tr>
 			</table>
