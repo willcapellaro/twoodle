@@ -113,9 +113,10 @@ input {
 
 #canvas
 {
-	background-color: red;
+	background-color: white;
 /*	position: relative;
 	left: 110px;*/
+	display: block;
 	width: 700px;
 	height: 500px;
 }

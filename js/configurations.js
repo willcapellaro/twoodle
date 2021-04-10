@@ -494,7 +494,7 @@ function verifyItemsNames()
 	validItemsNames = !repetidos.length;
 	for (var i = 0; i < repetidos.length; i++)
 	{
-		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<p style="color: red;"> (repeated name)</p>';
+		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<p style="color: white;"> (repeated name)</p>';
 	}
 }
 function verifyAxisNames()
@@ -507,8 +507,8 @@ function verifyAxisNames()
 	validAxisNames = true;
 	if (document.getElementById('yAxis_name').value == document.getElementById('xAxis_name').value)
 	{
-		document.getElementById('lblYAxisRepeated').innerHTML = '<p style="color: red;"> (repeated name)</p>';
-		document.getElementById('lblXAxisRepeated').innerHTML = '<p style="color: red;"> (repeated name)</p>';
+		document.getElementById('lblYAxisRepeated').innerHTML = '<p style="color: white;"> (repeated name)</p>';
+		document.getElementById('lblXAxisRepeated').innerHTML = '<p style="color: white;"> (repeated name)</p>';
 		validAxisNames = false;
 	}
 }
