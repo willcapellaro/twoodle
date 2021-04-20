@@ -6,6 +6,7 @@ var xValues = [];
 
 var pre_yIdsOrder = [];
 var pre_xIdsOrder = [];
+var idsOrder = [];
 
 var itemMoved = -1;
 function getPreviousIdsOrder()
@@ -22,8 +23,8 @@ function getIdsOrder(axis)
 {
     getValues();
     var values = [...yValues];
-    var idsOrder = [];
     var pre_idsOrder = [...pre_yIdsOrder];
+    idsOrder = [];
     var c = document.getElementById(axis + 'ItemsList').children;
     for (var i = 0; i < c.length; i++)
     {

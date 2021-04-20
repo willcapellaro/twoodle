@@ -21,7 +21,7 @@
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
 	</head>
-	<body id="body" onload="menuItemClicked('create');">
+	<body id="body" onload="menuItemClicked('create');loadValues();saveNames();">
 		<header>
 			<div>
 				<h1 id="title">Work It Out: 2x2</h1>
@@ -37,7 +37,7 @@
 		</nav>
 		<div id="createDiv">
 			<label">Value Scales</label>
-			<div id="axisList" onchange="verifyAxisNames();">
+			<div id="axisList" onchange="verifyAxisNames();saveNames();">
 				<div class="item" id="yAxis" style="background-color: whitesmoke;">
 					<label">Y axis</label>
 					<br>
@@ -55,7 +55,7 @@
 			<label>Items</label><label style="float: right;">Drag items to change thier <u>order</u></label>
 			<div id="itemsList" onchange="verifyItemsNames();">
 				<div class="item" id="item_0">
-					<input class="itemName" type="text" value="Item 1" id="item_name_0" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
+					<input class="itemName" type="text" value="Item 1" id="item_name_0" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));saveNames();" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
 					<button class="deleteItemButton" id="0" onclick="deleteItem(this.id);" disabled="true" style="background-color: grey;">Delete</button>
 					<label class="lblRepeatedItem" id="lblItem_0"></label>
 				</div>
@@ -171,6 +171,7 @@
 		</div>
 		<script type="text/javascript" src="./js/configurations.js"></script>
 		<script type="text/javascript" src="./js/results.js"></script>
+		<script type="text/javascript" src="./js/localStorage.js"></script>
 		<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
 	</body>
 </html>

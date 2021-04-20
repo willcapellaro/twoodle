@@ -17,7 +17,9 @@ function menuItemClicked(item)
 				break;
 			case "rateY":
 				getNames();
+				saveNames();
 				getPreviousIdsOrder();
+				getValues();
 				fillLists('x');
 				document.getElementById("createDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
@@ -26,6 +28,7 @@ function menuItemClicked(item)
 				{
 					document.getElementById("rateYDiv").style.display = "block";
 					getPreviousIdsOrder();
+					getValues();
 					fillLists('y');
 					if (document.getElementById('slcActionsY').selectedIndex != 0)
 					{
@@ -40,7 +43,9 @@ function menuItemClicked(item)
 				break;
 			case "rateX":
 				getNames();
+				saveNames();
 				getPreviousIdsOrder();
+				getValues();
 				fillLists('y');
 				document.getElementById("createDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
@@ -49,6 +54,7 @@ function menuItemClicked(item)
 				{
 					document.getElementById("rateXDiv").style.display = "block";
 					getPreviousIdsOrder();
+					getValues();
 					fillLists('x');
 					if (document.getElementById('slcActionsX').selectedIndex != 0)
 					{
@@ -279,6 +285,7 @@ function submit(axis, option)
 				document.getElementById('opt' + axis.toUpperCase() + 'm').disabled = true;
 				getNames();
 				getPreviousIdsOrder();
+				getValues();
 				fillLists(axis);
 			}
 			else
@@ -304,7 +311,8 @@ function submit(axis, option)
 }
 function verifyDifferentValues(axis)
 {
-	document.getElementById('opt' + axis.toUpperCase() + 'd').disabled = true;//7.
+	document.getElementById('opt' + axis.toUpperCase() + 'd').disabled = true;
+	saveAxisValues(axis);
 	getValues();
 	var values = yValues;
 	if (values.length > 1)
@@ -412,7 +420,7 @@ function addItem()
 	}
 	$("#itemsList").append(`
 		<div id="item_` + nextId + `">
-			<input class="itemName" type="text" value="Item ` + (nextId + 1) + `" id="item_name_` + nextId + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
+			<input class="itemName" type="text" value="Item ` + (nextId + 1) + `" id="item_name_` + nextId + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));saveNames();" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
 			<button class="deleteItemButton" id="` + nextId + `" onclick="deleteItem(this.id);">Delete</button>
 			<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
 		</div>`
@@ -420,6 +428,7 @@ function addItem()
 	document.getElementById(c[0].id.split('_')[1]).disabled = false;
 	document.getElementById(c[0].id.split('_')[1]).style.backgroundColor = '#17A589';
 	verifyItemsNames();
+	saveNames();
 }
 function deleteItem(item)
 {
@@ -473,8 +482,10 @@ function deleteItem(item)
 			initialId++;
 		}
 	}
+	getValues();
 	fillLists('y');
 	fillLists('x');
+	saveNames();
 }
 function verifyItemsNames()
 {
@@ -496,6 +507,7 @@ function verifyItemsNames()
 	{
 		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<p style="color: white;"> (repeated name)</p>';
 	}
+	saveNames();
 }
 function verifyAxisNames()
 {
@@ -514,7 +526,6 @@ function verifyAxisNames()
 }
 function fillLists(axis = null)
 {
-	getValues();
 	var values = [...yValues];
 	var axisName = yAxisName;
 	var pre_idsOrder = [...pre_yIdsOrder];
@@ -553,7 +564,7 @@ function fillLists(axis = null)
 	}
 }
 function updateCreateList(axis)
-{
+{//Not used.
 	var c = document.getElementById(axis + 'ItemsList').children;
 	if (c.length)
 	{

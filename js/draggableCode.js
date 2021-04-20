@@ -7,7 +7,6 @@ var yItemsListSortable = new Sortable.default([], {
 yItemsListSortable.on('sortable:stop', function(){
     getIdsOrder('y');
 })
-
 var xItemsListSortable = new Sortable.default([], {
     draggable: 'div'
 });
