@@ -27,6 +27,16 @@ input {
 	margin-left: 1em;
 	padding: 4px;
 }
+.smoke {
+/*	  background-image: linear-gradient(to bottom right, red, yellow);
+*/
+}
+
+.matrixLabel p {
+	text-align: center;
+	margin: auto;
+	line-height: 3rem;
+}
 
 /*.yRange .xRange {
 	display: inline-block;
@@ -113,24 +123,17 @@ input {
 
 #canvas
 {
-	background-color: whitesmoke;
+	background-color: white;
+	box-shadow: 3px 3px 30px #ddd;
 /*	position: relative;
 	left: 110px;*/
 	display: block;
-	width: 700px;
+	width: 500px;
 	height: 500px;
 }
-#labelLowY {
-
-}
-#labelHighY {
-
-}
-#labelLowX {
-
-}
-#labelHighX {
-
+#labelLowY, #labelHighY, #labelLowX, #labelHighX    {
+text-transform: uppercase;
+font-family: sans-serif;
 }
 .xRange .yRange {
 	color: red;
@@ -159,7 +162,7 @@ input {
 	text-align: right;
 }
 #xItemsList, #itemsList, #yItemsList {
-	background: whitesmoke;
+	background: white;
 }
 #itemsList div, #xItemsList div, #yItemsList div {
 	border: none;

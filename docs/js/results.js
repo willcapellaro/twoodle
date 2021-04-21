@@ -202,13 +202,13 @@ function drawResult()
         }
         catch
         {
-            w = 600;
+            w = 500;
             h = 500;
         }
     }
     if (!found)
     {
-        w = 600;
+        w = 500;
         h = 500;
     }
     canvasSize = [w, h];
