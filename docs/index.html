@@ -21,7 +21,7 @@
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
 	</head>
-	<body id="body" onload="menuItemClicked('create');loadValues();saveNames();">
+	<body id="body" onload="menuItemClicked('create');loadValues();saveNames();saveAxisNames();">
 		<header>
 			<div>
 				<h1 id="title">Twoombly, a 2x2 creation twool</h1>
@@ -37,7 +37,7 @@
 		</nav>
 		<div id="createDiv">
 			<label">Value Scales</label>
-			<div id="axisList" onchange="verifyAxisNames();saveNames();">
+			<div id="axisList" onchange="verifyAxisNames();saveAxisNames();">
 				<div class="item" id="yAxis" style="background-color: whitesmoke;">
 					<label">Y axis</label>
 					<br>

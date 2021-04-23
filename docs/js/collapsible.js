@@ -1,5 +1,7 @@
 var yOpen = true;
 var xOpen = true;
+/*This function is not used at any time.
+It seems to me that I wanted to use it to make the 'Rate Y Axis' and 'Rate X Axis' items drop down.*/
 function expandCollapseAxis(id)
 {
 	if (id[0] == 'y')

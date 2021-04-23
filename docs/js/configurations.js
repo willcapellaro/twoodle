@@ -8,7 +8,7 @@ function menuItemClicked(item)
 	if (validItemsNames && validAxisNames)
 	{
 		switch (item)
-		{
+		{//It goes through this 'switch' when I click on a button on the top bar.
 			case "create":
 				document.getElementById("rateYDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
@@ -18,6 +18,7 @@ function menuItemClicked(item)
 			case "rateY":
 				getNames();
 				saveNames();
+				saveAxisNames();
 				getPreviousIdsOrder();
 				getValues();
 				fillLists('x');
@@ -44,6 +45,7 @@ function menuItemClicked(item)
 			case "rateX":
 				getNames();
 				saveNames();
+				saveAxisNames();
 				getPreviousIdsOrder();
 				getValues();
 				fillLists('y');
@@ -69,6 +71,8 @@ function menuItemClicked(item)
 				break;
 			case "see":
 				getNames();
+				saveNames();
+				saveAxisNames();
 				fillAxisNames();
 				document.getElementById("createDiv").style.display = "none";
 				document.getElementById("rateYDiv").style.display = "none";
@@ -521,6 +525,16 @@ function verifyAxisNames()
 	{
 		document.getElementById('lblYAxisRepeated').innerHTML = '<p style="color: white;"> (repeated name)</p>';
 		document.getElementById('lblXAxisRepeated').innerHTML = '<p style="color: white;"> (repeated name)</p>';
+		validAxisNames = false;
+	}
+	if (document.getElementById('xAxis_name').value == '')
+	{
+		document.getElementById('lblXAxisRepeated').innerHTML = '<p style="color: white;"> (empty name)</p>';
+		validAxisNames = false;
+	}
+	if (document.getElementById('yAxis_name').value == '')
+	{
+		document.getElementById('lblYAxisRepeated').innerHTML = '<p style="color: white;"> (empty name)</p>';
 		validAxisNames = false;
 	}
 }

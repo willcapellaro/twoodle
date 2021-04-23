@@ -160,14 +160,6 @@ function fillAxisNames()
 function drawResult()
 {
     var fontPx = 15;
-    var extra_x = 0;
-    for (var i = 0; i < namesMaster.length; i++)
-    {
-        if ((fontPx * 1.15 * namesMaster[i].length) > extra_x)
-        {
-            extra_x = (fontPx * 1.15 * namesMaster[i].length);
-        }
-    }
     var w;
     var h;
     var found = false;
@@ -214,7 +206,7 @@ function drawResult()
     canvasSize = [w, h];
     var top = document.getElementById('canvasImage').offsetTop;
     $('#canvas').remove();
-    $("#seeDiv").append('<canvas style="position: absolute;" width=' + (canvasSize[0] + extra_x) + ' height=' + canvasSize[1] + ' id="canvas">Canvas not supported.</canvas>');
+    $("#seeDiv").append('<canvas style="position: absolute;" width=' + canvasSize[0] + ' height=' + canvasSize[1] + ' id="canvas">Canvas not supported.</canvas>');
     canvas = document.getElementById('canvas').getContext('2d');
     canvas.beginPath();
     canvas.moveTo(0, 0);
@@ -254,9 +246,14 @@ function drawResult()
             yText = (fontPx * 1.1);
         }
 
+        if (xValues[Number(pre_xIdsOrder[i])] > 50)
+        {
+            xText = -12;
+            xText -= canvas.measureText(namesMaster[i]).width;
+        }
+
         canvas.font = fontPx + "px Arial";
         canvas.fillText(document.getElementById('item_name_' + pre_yIdsOrder[i]).value, x + xText, y + yText);
-        
         canvas.fillStyle = '';
         canvas.beginPath();
         canvas.arc((canvasSize[0] * (xValues[Number(pre_xIdsOrder[i])] / 100)), (canvasSize[1] * (1 - (yValues[Number(pre_yIdsOrder[i])] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);

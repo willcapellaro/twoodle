@@ -14,6 +14,14 @@ function saveNames()
 		localStorage.setItem('itemsOrder', JSON.stringify(itemsOrder));
 	}
 }
+function saveAxisNames()
+{
+	if (document.getElementById('yAxis_name').value != document.getElementById('xAxis_name').value)
+	{
+		localStorage.setItem('xAxisName', JSON.stringify(document.getElementById('xAxis_name').value));
+		localStorage.setItem('yAxisName', JSON.stringify(document.getElementById('yAxis_name').value));
+	}
+}
 function saveAxisValues(axis)
 {
 	getPreviousIdsOrder();
@@ -40,6 +48,11 @@ function loadValues()
 	    }
 	    if (localStorage.getItem('yValues'))
 	    {
+	    	if (localStorage.getItem('yAxisName') && localStorage.getItem('xAxisName') && (localStorage.getItem('yAxisName') != localStorage.getItem('xAxisName')))
+			{
+				xAxisName = JSON.parse(localStorage.getItem('xAxisName'));
+				yAxisName = JSON.parse(localStorage.getItem('yAxisName'));
+			}
 			xValues = JSON.parse(localStorage.getItem('xValues'));
 			yValues = JSON.parse(localStorage.getItem('yValues'));
 			if (localStorage.getItem('itemsOrder'))
@@ -64,4 +77,5 @@ function loadValues()
 			}
 	    }
 	}
+	verifyAxisNames();
 }
