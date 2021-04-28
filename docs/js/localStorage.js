@@ -46,13 +46,15 @@ function loadValues()
 				</div>`
 			);
 	    }
+    	if (localStorage.getItem('yAxisName') && localStorage.getItem('xAxisName') && (localStorage.getItem('yAxisName') != localStorage.getItem('xAxisName')))
+		{
+			xAxisName = JSON.parse(localStorage.getItem('xAxisName'));
+			yAxisName = JSON.parse(localStorage.getItem('yAxisName'));
+			document.getElementById('yAxis_name').value = yAxisName;
+			document.getElementById('xAxis_name').value = xAxisName;
+		}
 	    if (localStorage.getItem('yValues'))
 	    {
-	    	if (localStorage.getItem('yAxisName') && localStorage.getItem('xAxisName') && (localStorage.getItem('yAxisName') != localStorage.getItem('xAxisName')))
-			{
-				xAxisName = JSON.parse(localStorage.getItem('xAxisName'));
-				yAxisName = JSON.parse(localStorage.getItem('yAxisName'));
-			}
 			xValues = JSON.parse(localStorage.getItem('xValues'));
 			yValues = JSON.parse(localStorage.getItem('yValues'));
 			if (localStorage.getItem('itemsOrder'))
