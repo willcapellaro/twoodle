@@ -41,18 +41,18 @@
 				<div class="item" id="yAxis" style="background-color: whitesmoke;">
 					<label">Y axis</label>
 					<br>
-					<input class="itemName" type="text" value="urgency" id="yAxis_name" style="margin: 1em 1em 1em 0; padding: .5em 1em .5em 1em;">
+					<input class="itemName" type="text" value="importance" id="yAxis_name" style="margin: 1em 1em 1em 0; padding: .5em 1em .5em 1em;">
 					<label class="lblRepeatedItem" id="lblYAxisRepeated"></label>
 				</div>
 				<div class="item" id="xAxis" style="background-color: whitesmoke;">
 					<label">X axis</label>
 					<br>
-					<input class="itemName" type="text" value="difficulty" id="xAxis_name" style="margin: 1em 1em 1em 0; padding: .5em 1em .5em 1em;">
+					<input class="itemName" type="text" value="urgency" id="xAxis_name" style="margin: 1em 1em 1em 0; padding: .5em 1em .5em 1em;">
 					<label class="lblRepeatedItem" id="lblXAxisRepeated"></label>
 				</div>
 			</div>
 			<br>
-			<label>Items</label><label style="float: right;">Drag items to change thier <u>order</u></label>
+			<label>Items</label><label style="float: right;">Drag items to change their <u>order</u></label>
 			<div id="itemsList" onchange="verifyItemsNames();">
 				<div class="item" id="item_0">
 					<input class="itemName" type="text" value="Item 1" id="item_name_0" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));saveNames();" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">

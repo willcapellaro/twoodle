@@ -295,7 +295,7 @@ function submit(axis, option)
 			else
 			{
 				itemsListSortable.addContainer(document.getElementById(axis + 'ItemsList'));
-				document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = 'Drag items to change thier <u>value</u>';
+				document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = 'Drag items to change their <u>value</u>';
 				if ((document.getElementById('slcActions' + axis.toUpperCase()).selectedIndex == 4) || (document.getElementById('slcActions' + axis.toUpperCase()).selectedIndex == 5))
 				{
 					document.getElementById('slcActions' + axis.toUpperCase()).selectedIndex = 0;
