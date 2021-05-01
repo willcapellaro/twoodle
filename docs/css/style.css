@@ -256,8 +256,24 @@ font-family: sans-serif;
   .mobileHide  {
    display: none; }
 
+#menu {
+	text-align: center;
+}
+
    .menuButton {
-   	width: 20%;
+   	margin: 0;
+   	border-radius: 0rem;
+   }
+
+   .menuButton:nth-child(1) {
+   	border-top-left-radius: 2rem;
+   	border-bottom-left-radius: 2rem;
+   }
+
+
+   .menuButton:nth-child(4) {
+   	border-top-right-radius: 2rem;
+   	border-bottom-right-radius: 2rem;
    }
 
 #title {font-size: 2rem; margin-top: 1rem;}
