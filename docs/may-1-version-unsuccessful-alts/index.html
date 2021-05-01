@@ -4,8 +4,6 @@
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 		<meta content="utf-8" http-equiv="encoding">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 
 		<title>Twoombly 2x2</title>	
 		<!-- Draggable JS -->
@@ -22,15 +20,15 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
-				<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
-
-
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
-	</head>
+		<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<!-- 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+ -->	</head>
 	<body id="body" onload="menuItemClicked('create');loadValues();saveNames();saveAxisNames();">
 		<header>
 			<div>
-				<h1 id="title">Twoombly
+				<h1 id="title">Twoombly<span class="material-icons">delete</span>
 <span class="mobileHide">, the twool for 2x2 charting</span></h1>
 			</div>
 		</header>
@@ -43,12 +41,12 @@
 			</ul>
 		</nav>
 		<div id="createDiv">
-			<label">Value Scales</label>
+			<label"><span class="mobileHide">Value Scales</span></label>
 			<div id="axisList" onchange="verifyAxisNames();saveAxisNames();">
-				<div class="item" id="yAxis>
+				<div class="item" id="yAxis">
 					<label">Y axis</label>
 					<br>
-					<input class="itemName" type="text" value="importance" id="yAxis_name">
+					<input class="itemName" type="text" value="importance" id="yAxis_name" class="inputStyle" >
 					<label class="lblRepeatedItem" id="lblYAxisRepeated"></label>
 				</div>
 				<div class="item" id="xAxis">
@@ -59,11 +57,11 @@
 				</div>
 			</div>
 			<br>
-			<label>Items</label><label class="labelFloatRight"><span class="mobileHide">Drag items to change their order</span></label>
+			<label>Items</label><label class="labelFloatRight"><span class="mobileHide">Drag items to change their <u>order</u></span></label>
 			<div id="itemsList" onchange="verifyItemsNames();">
 				<div class="item" id="item_0">
 					<input class="itemName" type="text" value="Item 1" id="item_name_0" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));saveNames();" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
-					<button class="deleteItemButton deleteBtnGrey" id="0" onclick="deleteItem(this.id);" disabled="true">Delete</button>
+					<button class="deleteItemButton deleteBtnGrey" id="0" onclick="deleteItem(this.id);" disabled="true">Defflete</button>
 					<label class="lblRepeatedItem" id="lblItem_0"></label>
 				</div>
 			</div>
@@ -108,7 +106,6 @@
 				<option id="optYm" value="master">Use as master order</option>
 			</select>
 			<button id="btnSubmitActionsY" onclick="submit('y', 'action')" disabled="true">Submit</button><label id="lblChangeY" class="labelFloatRight"></label>
-			
 			<div id="yItemsList"></div>
 			<div id="yDivRange"></div>
 		</div>
@@ -160,16 +157,12 @@
 
 		<div id="seeDiv">
 
-		<div id="matrixNew" class="matrixGrid" >
-			<div class="matrixLabel smoke">
-				<p class="canvasLabel" id="labelHighY"></p></div>
-			<div class="matrixLabel smoke" >
-				<p class="canvasLabel" id="labelHighX"></p></div>
-			<div class="matrixLabel smoke">
-				<p class="canvasLabel" id="labelLowY"></p></div>
-			<div class="matrixLabel smoke" >
-				<p class="canvasLabel" id="labelLowX"></p></div>
-			<div>
+		<div id="matrixNew" class="matrixGrid">
+			<div class="matrixLabel smoke" ><p class="canvasLabel" id="labelHighY"></p></div>
+			<div class="matrixLabel smoke" ><p class="canvasLabel" id="labelHighX"></p></div>
+			<div class="matrixLabel smoke" ><p class="canvasLabel" id="labelLowY"></p></div>
+			<div class="matrixLabel smoke" ><p class="canvasLabel" id="labelLowX"></p></div>
+			<div >
 				<table id="tableSee" >
 					<tr>
 						<td ></td>
