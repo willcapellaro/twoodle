@@ -206,7 +206,7 @@ function drawResult()
     canvasSize = [w, h];
     var top = document.getElementById('canvasImage').offsetTop;
     $('#canvas').remove();
-    $("#seeDiv").append('<canvas style="position: absolute;" width=' + canvasSize[0] + ' height=' + canvasSize[1] + ' id="canvas">Canvas not supported.</canvas>');
+    $("#seeDiv").append('<canvas class="canvasImage" width=' + canvasSize[0] + ' height=' + canvasSize[1] + ' id="canvas">Canvas not supported.</canvas>');
     canvas = document.getElementById('canvas').getContext('2d');
     canvas.beginPath();
     canvas.moveTo(0, 0);
@@ -264,6 +264,6 @@ function generateImage()
 {
     var top = document.getElementById('tableSee').offsetTop + document.getElementById('tdHighY').offsetHeight;
     var left = document.getElementById('tableSee').offsetLeft + document.getElementById('tdLowX').offsetWidth;
-    document.getElementById('canvas').style.top = top + 'px';
-    document.getElementById('canvas').style.left = left + 'px';
+    // document.getElementById('canvas').style.top = top + 'px';
+    // document.getElementById('canvas').style.left = left + 'px';
 }

@@ -1,8 +1,10 @@
 body {
 	font-family: 'Slabo 27px', serif;
 	max-width: 1200px;
-	margin-left: 1rem;
-	margin-right: 1rem;
+	margin-left: auto; 
+	margin-right: auto;
+	padding-left: 2rem;
+	padding-right: 2rem;
 }
 #title
 {
@@ -57,39 +59,23 @@ input {
 .buttonGrey {
 	background-color: grey;
 }
-.gridDiv {
-	display: grid;
-	grid-template-columns: 4em 4em 4em 4em 4em;
-	grid-template-rows: 4em 10em 10em 4em 4em;
-}
-.gridDiv:nth-child(1) {
-	grid-row: 2 | 3;
-	grid-column: 2 | 4;
-	background-color: blue;
 
-}
-.gridDiv:nth-child(2) {
-	grid-column: 1 | 2;
-	grid-row: 2 | 4;
-	background-color: aqua;
-}
-.gridDiv:nth-child(3) {
-	grid-column: 4 | 5;
-	grid-row: 2 | 4;
-	background-color: purple;
-}
-.gridDiv:nth-child(4) {
-	grid-column: 2 | 4;
-	grid-row: 4 | 5;
-	background-color: green;
-}
-.gridDiv:nth-child(5) {
-	grid-column: 2 | 4;
-	grid-row: 1 | 2;
+#seeDiv {
+	text-align: center: 
 	background-color: yellow;
 }
 
+#seeDiv div {
+	margin-left: auto;
+	margin-right: auto; 
+/*	width: 600px;
+	height: 600px;*/
+	padding: 0;
+}
+
+
 .matrixGrid {
+	margin: auto;
 	display: grid; 
 	grid-template-rows: 3em 500px 3rem; 
 	grid-template-columns: 3em 500px 3rem;
@@ -126,44 +112,8 @@ transform: rotate(180deg);
 
 .matrixGrid div:nth-child(5) { 
 grid-column: 2 / 3; grid-row: 2 / 3;
-
-}
-
-
-
-
-
-
-
-.seeDiv {
-	display: grid;
-	grid-template-columns: 4em 4em 4em 4em;
-	grid-template-rows: 4em 10em 10em 4em;
-}
-.seeDiv div:nth-child(1) {
-	grid-row: 2 | 3;
-	grid-column: 2 | 4;
-}
-.seeDiv div:nth-child(2) {
-	grid-column: 1 | 2;
-	grid-row: 2 | 4;
-	background-color: aqua;
-}
-.seeDiv div:nth-child(3) {
-	grid-column: 4 | 5;
-	grid-row: 2 | 4;
-	background-color: purple;
-}
-.seeDiv div:nth-child(4) {
-	grid-column: 2 | 4;
-	grid-row: 4 | 5;
-	background-color: green;
-}
-.seeDiv div:nth-child(5) {
-	grid-column: 2 | 4;
-	grid-row: 1 | 2;
-	background-color: yellow;
-}
+/*background-color: red;
+*/}
 
 #canvas
 {
@@ -171,18 +121,29 @@ grid-column: 2 / 3; grid-row: 2 / 3;
 	box-shadow: 3px 3px 30px #ddd;
 /*	position: relative;
 	left: 110px;*/
-	display: block;
-	width: 500px;
+/*	display: block;
+*/	width: 500px;
 	height: 500px;
 }
+
+
+.canvasImage {
+/*	position: absolute;
+	margin-left: auto;
+	margin-right: auto;*/
+	margin-top: 0;
+	/*background-color: red;*/
+/*	border: red 2px solid;
+*/}
+
 #labelLowY, #labelHighY, #labelLowX, #labelHighX    {
 text-transform: uppercase;
 font-family: sans-serif;
 }
 .xRange .yRange {
 	color: red;
-	background-color: red;
-	width: 10em;
+/*	background-color: red;
+*/	width: 10em;
 }
 /*#labelHighX
 {
@@ -277,5 +238,31 @@ font-family: sans-serif;
    }
 
 #title {font-size: 2rem; margin-top: 1rem;}
+
+.matrixGrid {
+	display: grid; 
+	grid-template-columns: 3em 70vw 3rem;
+	grid-template-rows: 2em 70vw 2rem; 
+}
+
+#canvas
+{
+/*	background-color: red;
+*/	box-shadow: 3px 3px 30px #ddd;
+/*	position: relative;
+	left: 110px;*/
+	display: block;
+	width: 70vw;
+	height: 70vw;
+}
+
+#matrixNew {
+	display: none;
+}
+
+.lblLowY, .lblLowX, .lblHighY, .lblHighX {
+	display: none;
+}
+
 
 }
