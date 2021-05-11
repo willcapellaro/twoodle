@@ -212,7 +212,7 @@ font-size: 50%;}
 
 
 
-@media screen and (max-width: 700px) {
+/*@media screen and (max-width: 700px) {
   body {
     font-size: 1.25rem;
   }
@@ -251,10 +251,9 @@ font-size: 50%;}
 
 #canvas
 {
-/*	background-color: red;
-*/	box-shadow: 3px 3px 30px #ddd;
-/*	position: relative;
-	left: 110px;*/
+	
+	box-shadow: 3px 3px 30px #ddd;
+
 	display: block;
 	width: 70vw;
 	height: 70vw;
@@ -270,3 +269,15 @@ font-size: 50%;}
 
 
 }
+*/
+
+/*
+
+removed ffromb mobile #canvas tag
+
+
+background-color: red;
+	position: relative;
+	left: 110px;
+
+	*/
