@@ -81,6 +81,7 @@ function menuItemClicked(item)
 				getValues();
 				getPreviousIdsOrder();
 				drawResult();
+				// drawQuadHints();
 				generateImage();
 				break;
 			default:

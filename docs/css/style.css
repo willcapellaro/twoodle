@@ -202,6 +202,9 @@ font-family: sans-serif;
 {
 	display: none;
 }
+
+  h1 .mobileHide  {
+font-size: 50%;}
 /*#yItemsList div, #xItemsList div {
 	height: 5em;
 }
@@ -215,7 +218,8 @@ font-family: sans-serif;
   }
 
   .mobileHide  {
-   display: none; }
+   display: none; 
+}
 
 #menu {
 	text-align: center;

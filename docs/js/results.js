@@ -102,7 +102,7 @@ function getIdsOrder(axis)
             if (Number(c[i].id.split('_')[1]) != Number(idsOrder[i]))
             {
                 document.getElementById('opt' + axis.toUpperCase() + 'm').disabled = false;
-                i = idsOrder.length;
+                i = idsOrder.length;fillText
             }
             else
             {
@@ -157,6 +157,18 @@ function fillAxisNames()
     document.getElementById('labelLowX').innerHTML = 'Low ' + xAxisName;
     document.getElementById('labelHighX').innerHTML = 'High ' + xAxisName;
 }
+
+function drawQuadHints()
+{
+
+    canvas.font = fontPx + "px Arial";
+        canvas.fillText(document.getElementById('item_name_' + pre_yIdsOrder[i]).value, x + xText, y + yText);
+        canvas.fillStyle = '';
+        canvas.beginPath();
+        canvas.arc((canvasSize[0] * (xValues[Number(pre_xIdsOrder[i])] / 100)), (canvasSize[1] * (1 - (yValues[Number(pre_yIdsOrder[i])] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
+        canvas.fill();
+ }
+
 function drawResult()
 {
     var fontPx = 15;
