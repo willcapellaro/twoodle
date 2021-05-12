@@ -36,10 +36,10 @@ function menuItemClicked(item)
 						document.getElementById('slcActionsY').selectedIndex = 0;
 					}
 					document.getElementById('btnSubmitActionsY').disabled = true;
-					document.getElementById('btnSubmitActionsY').style.backgroundColor = 'grey';
+					document.getElementById('btnSubmitActionsY').className = 'buttonGrey';
 					document.getElementById('slcSortY').selectedIndex = 0;
 					document.getElementById('btnSubmitSortY').disabled = true;
-					document.getElementById('btnSubmitSortY').style.backgroundColor = 'grey';
+					document.getElementById('btnSubmitSortY').className = 'buttonGrey';
 				}
 				break;
 			case "rateX":
@@ -63,10 +63,10 @@ function menuItemClicked(item)
 						document.getElementById('slcActionsX').selectedIndex = 0;
 					}
 					document.getElementById('btnSubmitActionsX').disabled = true;
-					document.getElementById('btnSubmitActionsX').style.backgroundColor = 'grey';
+					document.getElementById('btnSubmitActionsX').className = 'buttonGrey';
 					document.getElementById('slcSortX').selectedIndex = 0;
 					document.getElementById('btnSubmitSortX').disabled = true;
-					document.getElementById('btnSubmitSortX').style.backgroundColor = 'grey';
+					document.getElementById('btnSubmitSortX').className = 'buttonGrey';
 				}
 				break;
 			case "see":
@@ -82,7 +82,6 @@ function menuItemClicked(item)
 				getPreviousIdsOrder();
 				drawResult();
 				// drawQuadHints();
-				generateImage();
 				break;
 			default:
 				break;
@@ -273,7 +272,7 @@ function submit(axis, option)
 			}
 			document.getElementById('slcActions' + axis.toUpperCase()).selectedIndex = 0
 			document.getElementById('btnSubmitActions' + axis.toUpperCase()).disabled = true;
-			document.getElementById('btnSubmitActions' + axis.toUpperCase()).style.backgroundColor = 'grey';
+			document.getElementById('btnSubmitActions' + axis.toUpperCase()).className = 'buttonGrey';
 		break;
 		case 'sort':
 			var itemsListSortable = yItemsListSortable;
@@ -301,7 +300,7 @@ function submit(axis, option)
 				{
 					document.getElementById('slcActions' + axis.toUpperCase()).selectedIndex = 0;
 					document.getElementById('btnSubmitActions' + axis.toUpperCase()).disabled = true;
-					document.getElementById('btnSubmitActions' + axis.toUpperCase()).style.backgroundColor = 'grey';
+					document.getElementById('btnSubmitActions' + axis.toUpperCase()).className = 'buttonGrey';
 				}
 				verifyDifferentValues(axis);
 				document.getElementById('opt' + axis.toUpperCase() + 'm').disabled = false;
@@ -310,7 +309,7 @@ function submit(axis, option)
 			}
 			document.getElementById('slcSort' + axis.toUpperCase()).selectedIndex = 0
 			document.getElementById('btnSubmitSort' + axis.toUpperCase()).disabled = true;
-			document.getElementById('btnSubmitSort' + axis.toUpperCase()).style.backgroundColor = 'grey';
+			document.getElementById('btnSubmitSort' + axis.toUpperCase()).className = 'buttonGrey';
 		break;
 	}
 }
@@ -340,7 +339,7 @@ function verifyDifferentValues(axis)
 		{
 			document.getElementById('slcActions' + axis.toUpperCase()).selectedIndex = 0;
 			document.getElementById('btnSubmitActions' + axis.toUpperCase()).disabled = true;
-			document.getElementById('btnSubmitActions' + axis.toUpperCase()).style.backgroundColor = 'grey';
+			document.getElementById('btnSubmitActions' + axis.toUpperCase()).className = 'buttonGrey';
 		}
 	}
 }
@@ -388,7 +387,7 @@ function sortItems(axis)
     	var top = document.getElementById(axis + '_item_' + auxValues[i][1]).offsetTop;
 		var right = document.getElementById(axis + '_item_' + auxValues[i][1]).offsetLeft;
 		$("#" + axis + "DivRange").append(`
-			<div style="position: absolute; top: ` + top + `px; right: ` + right + `px; height: 95px;">
+			<div class="rangeDiv" style="top: ` + top + `px; right: ` + right + `px;">
 				<label class="lblLowY">Low ` + axisName + `</label>
 				<input type="range" id="range_` + axis + `_item_` + auxValues[i][1] + `" value="` + auxValues[i][0] + `" class="` + axis + `Range custom-range" min="0" max="100" ondrag="verifyDifferentValues(\'` + axis + `\')" onchange="verifyDifferentValues(\'` + axis + `\')">
 				<label class="lblHighY">High ` + axisName + `</label>
@@ -431,7 +430,7 @@ function addItem()
 		</div>`
 	);
 	document.getElementById(c[0].id.split('_')[1]).disabled = false;
-	document.getElementById(c[0].id.split('_')[1]).style.backgroundColor = '#17A589';
+	document.getElementById(c[0].id.split('_')[1]).className = 'itemBackGround';
 	verifyItemsNames();
 	saveNames();
 }
@@ -474,7 +473,7 @@ function deleteItem(item)
 	if (items.length == 1)
 	{
 		document.getElementById(items[0].id.split('_')[1]).disabled = true;
-		document.getElementById(items[0].id.split('_')[1]).style.backgroundColor = 'grey';
+		document.getElementById(items[0].id.split('_')[1]).className = 'buttonGrey';
 	}
 	getNames();
 	getPreviousIdsOrder();
@@ -510,7 +509,7 @@ function verifyItemsNames()
 	validItemsNames = !repetidos.length;
 	for (var i = 0; i < repetidos.length; i++)
 	{
-		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<p style="color: white;"> (repeated name)</p>';
+		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated"> (repeated name)</p>';
 	}
 	saveNames();
 }
@@ -524,18 +523,18 @@ function verifyAxisNames()
 	validAxisNames = true;
 	if (document.getElementById('yAxis_name').value == document.getElementById('xAxis_name').value)
 	{
-		document.getElementById('lblYAxisRepeated').innerHTML = '<p style="color: white;"> (repeated name)</p>';
-		document.getElementById('lblXAxisRepeated').innerHTML = '<p style="color: white;"> (repeated name)</p>';
+		document.getElementById('lblYAxisRepeated').innerHTML = '<p class="lblRepeated"> (repeated name)</p>';
+		document.getElementById('lblXAxisRepeated').innerHTML = '<p class="lblRepeated"> (repeated name)</p>';
 		validAxisNames = false;
 	}
 	if (document.getElementById('xAxis_name').value == '')
 	{
-		document.getElementById('lblXAxisRepeated').innerHTML = '<p style="color: white;"> (empty name)</p>';
+		document.getElementById('lblXAxisRepeated').innerHTML = '<p class="lblRepeated"> (empty name)</p>';
 		validAxisNames = false;
 	}
 	if (document.getElementById('yAxis_name').value == '')
 	{
-		document.getElementById('lblYAxisRepeated').innerHTML = '<p style="color: white;"> (empty name)</p>';
+		document.getElementById('lblYAxisRepeated').innerHTML = '<p class="lblRepeated"> (empty name)</p>';
 		validAxisNames = false;
 	}
 }
@@ -575,7 +574,7 @@ function fillLists(axis = null)
 		}
 		var top = document.getElementById(axis + '_item_' + pre_idsOrder[i]).offsetTop;
 		var right = document.getElementById(axis + '_item_' + pre_idsOrder[i]).offsetLeft;
-		$("#" + axis + "DivRange").append('<div style="position: absolute; top: ' + top + 'px; right: ' + right + 'px; height: 95px;"><label class="lblLow' + axis.toUpperCase() + '">Low ' + axisName + '</label><input type="range" id="range_' + axis + '_item_' + pre_idsOrder[i] + '" value="' + v + '" class="' + axis.toUpperCase() + 'Range custom-range" min="0" max="100" ondrag="verifyDifferentValues(\'' + axis + '\')" onchange="verifyDifferentValues(\'' + axis + '\')"><label class="lblHigh' + axis.toUpperCase() + '">High ' + axisName + '</label></div');
+		$("#" + axis + "DivRange").append('<div class="rangeDiv" style="top: ' + top + 'px; right: ' + right + 'px;"><label class="lblLow' + axis.toUpperCase() + '">Low ' + axisName + '</label><input type="range" id="range_' + axis + '_item_' + pre_idsOrder[i] + '" value="' + v + '" class="' + axis.toUpperCase() + 'Range custom-range" min="0" max="100" ondrag="verifyDifferentValues(\'' + axis + '\')" onchange="verifyDifferentValues(\'' + axis + '\')"><label class="lblHigh' + axis.toUpperCase() + '">High ' + axisName + '</label></div');
 	}
 }
 function updateCreateList(axis)

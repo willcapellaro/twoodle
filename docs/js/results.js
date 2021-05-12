@@ -160,13 +160,12 @@ function fillAxisNames()
 
 function drawQuadHints()
 {
-
     canvas.font = fontPx + "px Arial";
-        canvas.fillText(document.getElementById('item_name_' + pre_yIdsOrder[i]).value, x + xText, y + yText);
-        canvas.fillStyle = '';
-        canvas.beginPath();
-        canvas.arc((canvasSize[0] * (xValues[Number(pre_xIdsOrder[i])] / 100)), (canvasSize[1] * (1 - (yValues[Number(pre_yIdsOrder[i])] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
-        canvas.fill();
+    canvas.fillText(document.getElementById('item_name_' + pre_yIdsOrder[i]).value, x + xText, y + yText);
+    canvas.fillStyle = '';
+    canvas.beginPath();
+    canvas.arc((canvasSize[0] * (xValues[Number(pre_xIdsOrder[i])] / 100)), (canvasSize[1] * (1 - (yValues[Number(pre_yIdsOrder[i])] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
+    canvas.fill();
  }
 
 function drawResult()
@@ -175,6 +174,11 @@ function drawResult()
     var w;
     var h;
     var found = false;
+    
+    var strokeStyleOfQuadrants = '#ff0000';
+    var fillStyleOfItems = "#000000";
+    var fillStyleOFQuadrantsText = "#ff0000";
+
     var rules;
     try
     {
@@ -216,10 +220,11 @@ function drawResult()
         h = 500;
     }
     canvasSize = [w, h];
-    var top = document.getElementById('canvasImage').offsetTop;
+    //var top = document.getElementById('canvasImage').offsetTop;
     $('#canvas').remove();
-    $("#seeDiv").append('<canvas class="canvasImage" width=' + canvasSize[0] + ' height=' + canvasSize[1] + ' id="canvas">Canvas not supported.</canvas>');
+    $("#canvasDiv").append('<canvas class="canvasImage" width=' + canvasSize[0] + ' height=' + canvasSize[1] + ' id="canvas">Canvas not supported.</canvas>');
     canvas = document.getElementById('canvas').getContext('2d');
+    canvas.strokeStyle = strokeStyleOfQuadrants;
     canvas.beginPath();
     canvas.moveTo(0, 0);
     canvas.lineTo(canvasSize[0], 0);
@@ -237,9 +242,9 @@ function drawResult()
     canvas.moveTo(0, (canvasSize[1] / 2));
     canvas.lineTo(canvasSize[0], (canvasSize[1] / 2));
     canvas.stroke();
-
-    canvas.fillStyle = "#000000";
-
+    
+    canvas.fillStyle = fillStyleOfItems;
+    
     for (var i = 0; i < namesMaster.length; i++)
     {
         var xText = 12;
@@ -271,11 +276,12 @@ function drawResult()
         canvas.arc((canvasSize[0] * (xValues[Number(pre_xIdsOrder[i])] / 100)), (canvasSize[1] * (1 - (yValues[Number(pre_yIdsOrder[i])] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
         canvas.fill();
     }
-}
-function generateImage()
-{
-    var top = document.getElementById('tableSee').offsetTop + document.getElementById('tdHighY').offsetHeight;
-    var left = document.getElementById('tableSee').offsetLeft + document.getElementById('tdLowX').offsetWidth;
-    // document.getElementById('canvas').style.top = top + 'px';
-    // document.getElementById('canvas').style.left = left + 'px';
+    canvas.fillStyle = fillStyleOFQuadrantsText;
+
+    var texts = conditionals(xAxisName, yAxisName);
+    
+    canvas.fillText(texts[0], (canvasSize[0] * 0.25) - (canvas.measureText(texts[0]).width * 0.5), (canvasSize[1] * 0.25) + (fontPx * 0.5));
+    canvas.fillText(texts[1], (canvasSize[0] * 0.75) - (canvas.measureText(texts[1]).width * 0.5), (canvasSize[1] * 0.25) + (fontPx * 0.5));
+    canvas.fillText(texts[2], (canvasSize[0] * 0.25) - (canvas.measureText(texts[2]).width * 0.5), (canvasSize[1] * 0.75) + (fontPx * 0.5));
+    canvas.fillText(texts[3], (canvasSize[0] * 0.75) - (canvas.measureText(texts[3]).width * 0.5), (canvasSize[1] * 0.75) + (fontPx * 0.5));
 }

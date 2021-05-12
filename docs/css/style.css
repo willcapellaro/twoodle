@@ -60,6 +60,23 @@ input {
 	background-color: grey;
 }
 
+.buttonGreen {
+	background-color: #17A589;
+}
+
+.itemBackGround {
+	background-color: #17A589;
+}
+
+.lblRepeated {
+	color: white;
+}
+
+.rangeDiv {
+	position: absolute;
+	height: 95px;
+}
+
 #seeDiv {
 	text-align: center: 
 	background-color: yellow;
@@ -209,7 +226,6 @@ font-size: 50%;}
 	height: 5em;
 }
 */
-
 
 
 /*@media screen and (max-width: 700px) {
