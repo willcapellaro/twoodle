@@ -48,15 +48,14 @@ function getIdsOrder(axis)
         }
         if (changes)
         {
-            c = document.getElementById(axis + 'DivRange').children;
+            c = document.getElementById(axis + 'ItemsList').children;
             for (var i = 0; i < idsOrder.length; i++)
             {
                 for (var j = 0; j < c.length; j++)
                 {
-                    if (Number(c[j].getElementsByClassName(axis + 'Range')[0].id.split('_')[3]) == Number(pre_idsOrder[i]))
+                    if (Number(c[j].getElementsByClassName('itemValue')[0].id.split('_')[3]) == Number(pre_idsOrder[i]))
                     {
-                        c[j].getElementsByClassName(axis + 'Range')[0].value = values[Number(pre_idsOrder[i])];
-                        c[j].style.top = document.getElementById(axis + '_item_' + pre_idsOrder[i]).offsetTop + 'px';
+                        c[j].getElementsByClassName('itemValue')[0].innerHTML = values[Number(pre_idsOrder[i])];
                         j = c.length;
                     }
                 }
@@ -64,25 +63,25 @@ function getIdsOrder(axis)
             for (var i = 0; i < idsOrder.length; i++)
             {
                 if (idsOrder[i] == itemMoved)
-                {
+                {//Falta actualizar yValues y xValues.
                     if (i == 0)
-                    {
-                        document.getElementById('range_' + axis + '_item_' + itemMoved).value = 100;
+                    {console.log('Cambia a 100.');
+                        document.getElementById('value_' + axis + '_item_' + itemMoved).innerHTML = 100;
                         verifyDifferentValues(axis);
                     }
                     else
                     {
                         if (i == (idsOrder.length - 1))
-                        {
-                            document.getElementById('range_' + axis + '_item_' + itemMoved).value = 0;
+                        {console.log('Cambia a 0.');
+                            document.getElementById('value_' + axis + '_item_' + itemMoved).innerHTML = 0;
                             verifyDifferentValues(axis);
                         }
                         else
                         {
-                            var up = Number(document.getElementById('range_' + axis + '_item_' + idsOrder[i - 1] ).value);
-                            var down = Number(document.getElementById('range_' + axis + '_item_' + idsOrder[i + 1] ).value);
-                            document.getElementById('range_' + axis + '_item_' + itemMoved).value = (up + down) / 2;
-                        }
+                            var up = Number(document.getElementById('value_' + axis + '_item_' + idsOrder[i - 1] ).innerHTML);
+                            var down = Number(document.getElementById('value_' + axis + '_item_' + idsOrder[i + 1] ).innerHTML);
+                            document.getElementById('value_' + axis + '_item_' + itemMoved).innerHTML = (up + down) / 2;
+                        console.log('Cambia a ' + ((up + down) / 2) + '.');}
                     }
                 }
             }
@@ -95,19 +94,6 @@ function getIdsOrder(axis)
         else
         {
             pre_yIdsOrder = [...idsOrder];
-        }
-        var c = document.getElementById('itemsList').children;
-        for (var i = 0; i < idsOrder.length; i++)
-        {
-            if (Number(c[i].id.split('_')[1]) != Number(idsOrder[i]))
-            {
-                document.getElementById('opt' + axis.toUpperCase() + 'm').disabled = false;
-                i = idsOrder.length;
-            }
-            else
-            {
-                document.getElementById('opt' + axis.toUpperCase() + 'm').disabled = true;
-            }
         }
     }
     else
@@ -129,7 +115,8 @@ function getValues()
 {
     yValues = [];
     xValues = [];
-    var c = document.getElementById('yDivRange').getElementsByTagName('div');
+    //var c = document.getElementById('yDivRange').getElementsByTagName('div');
+    var c = document.getElementById('yItemsList').getElementsByClassName('itemValue');
     for (var i = 0; i < c.length; i++)
     {
         yValues.push(50);
@@ -139,14 +126,14 @@ function getValues()
     {
         try
         {
-            yValues[Number(pre_yIdsOrder[i])] = Number(document.getElementById('range_y_item_' + pre_yIdsOrder[i]).value);
+            yValues[Number(pre_yIdsOrder[i])] = Number(document.getElementById('value_y_item_' + pre_yIdsOrder[i]).innerHTML);
         }catch{}
     }
     for (var i = 0; i < pre_xIdsOrder.length; i++)
     {
         try
         {
-            xValues[Number(pre_xIdsOrder[i])] = Number(document.getElementById('range_x_item_' + pre_xIdsOrder[i]).value);
+            xValues[Number(pre_xIdsOrder[i])] = Number(document.getElementById('value_x_item_' + pre_xIdsOrder[i]).innerHTML);
         }catch{}
     }
 }
@@ -220,7 +207,6 @@ function drawResult()
         h = 500;
     }
     canvasSize = [w, h];
-    //var top = document.getElementById('canvasImage').offsetTop;
     $('#canvas').remove();
     $("#canvasDiv").append('<canvas class="canvasImage" width=' + canvasSize[0] + ' height=' + canvasSize[1] + ' id="canvas">Canvas not supported.</canvas>');
     canvas = document.getElementById('canvas').getContext('2d');
