@@ -11,6 +11,7 @@ var idsOrder = [];
 var itemMoved = -1;
 function getPreviousIdsOrder()
 {
+
     pre_yIdsOrder = [];
     pre_xIdsOrder = [];
     for (var i = 0; i < document.getElementById('itemsList').children.length; i++)
@@ -175,9 +176,11 @@ function drawResult()
     var h;
     var found = false;
     
-    var strokeStyleOfQuadrants = '#ff0000';
-    var fillStyleOfItems = "#000000";
-    var fillStyleOFQuadrantsText = "#ff0000";
+
+    // style colors
+    var strokeStyleOfQuadrants = '#61AFFF';
+    var fillStyleOfItems = "#737373";
+    var fillStyleOFQuadrantsText = "61AFFF";
 
     var rules;
     try
