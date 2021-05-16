@@ -1,37 +1,98 @@
+:root {
+  --primary-active: #2032B0;
+  --primary-hover: #61AFFF; 
+  --text-primary: #222;
+  --text-secondary: #737373;
+  --field-border: #888;
+  --background-secondary: #9FC3E9; 
+  --alert: #FF698F; 
+
+}
+
 body {
-	font-family: 'Slabo 27px', serif;
-	max-width: 1200px;
-	margin-left: auto; 
-	margin-right: auto;
-	padding-left: 2rem;
-	padding-right: 2rem;
+/*	width: 90vw;*/
+ 	font-family: 'Open Sans', sans-serif;
+ 	margin-left: auto;
+ 	margin-right: auto;
+ 	padding-right: 100px;
+ 	padding-left: 100px;
+ 	padding-top: 20px;
+ 	font-weight: 700;
+ 	color: var(--text-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+ 	font-family: 'Archivo', sans-serif;
+	font-weight: 500;
+  	color: var(--text-primary);
 }
 #title
 {
 	text-align: center;
+	display: inline;
+	position: relative;
+	top: 5px;
+
 }
+
+header {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0px;
+	text-align: right;
+	background-color: white;
+	padding: 0;
+}
+header div {
+	display: inline;
+}
+
+
+#menu {
+	display: inline;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0px;
+	text-align: right;
+}
+nav {
+}
+
 button {
-	background-color: #17A589;
+	background-color: var(--primary-active);
 	color: white;
 	padding: .5em 1em .5em 1em ;
-	margin: 1em 1em 1em 0;
+	margin: 1em 3px 1em 0;
 	border: none;
-	border-radius: 10px;
+	border-radius: 3px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 button:hover {
-	background-color: #48C9B0;
+	background-color: var(--primary-hover);
+	box-shadow: 0 14px 28px rgba(0,0,0,0.02), 0 5px 5px rgba(0,0,0,0.22);
 }
 ul {
 	padding: 0;
 }
 input {
-	width: 200px;
+	width: 300px;
 	margin-left: 1em;
 	padding: 4px;
+
 }
+#createDiv input {
+	border: 1px solid var(--field-border);
+	border-radius: 3px;
+}
+
 .smoke {
-/*	  background-image: linear-gradient(to bottom right, red, yellow);
+/*	  background-image: linear-gradient(to bottom right, pink, yellow);
 */
+}
+
+.topBtnR {
+	padding-left: 15px;
 }
 
 .matrixLabel p {
@@ -61,20 +122,31 @@ input {
 }
 
 .buttonGreen {
-	background-color: #17A589;
+	background-color: dodgerblue;
 }
 
 .itemBackGround {
-	background-color: #17A589;
+  background-color: var(--primary-active: #2032B0);
+
 }
 
 .lblRepeated {
-	color: white;
+	padding-left: 4px;
+	color: var(--text-primary);
 }
 
 .rangeDiv {
 	position: absolute;
-	height: 95px;
+	height: 85px;
+	padding: 20px;
+}
+
+.lblHighY, .lblHighX {
+	padding-left: 14px;
+}
+
+#rateYDiv input, #rateXDiv input  {
+	padding-top: 8px;
 }
 
 #seeDiv {
@@ -90,6 +162,11 @@ input {
 	padding: 0;
 }
 
+.matrixCenter {
+	position: relative;
+	display: inline-block;
+	left: 25%;
+}
 
 .matrixGrid {
 	margin: auto;
@@ -129,7 +206,7 @@ transform: rotate(180deg);
 
 .matrixGrid div:nth-child(5) { 
 grid-column: 2 / 3; grid-row: 2 / 3;
-/*background-color: red;
+/*background-color: pink;
 */}
 
 #canvas
@@ -149,17 +226,17 @@ grid-column: 2 / 3; grid-row: 2 / 3;
 	margin-left: auto;
 	margin-right: auto;*/
 	margin-top: 0;
-	/*background-color: red;*/
-/*	border: red 2px solid;
+	/*background-color: pink;*/
+/*	border: pink 2px solid;
 */}
 
 #labelLowY, #labelHighY, #labelLowX, #labelHighX    {
 text-transform: uppercase;
-font-family: sans-serif;
+/*font-family: sans-serif;*/
 }
 .xRange .yRange {
-	color: red;
-/*	background-color: red;
+	color: pink;
+/*	background-color: pink;
 */	width: 10em;
 }
 /*#labelHighX
@@ -172,6 +249,9 @@ font-family: sans-serif;
 	position: relative;
 	top: 100px;
 }*/
+
+.xItem, .yItem {
+}
 
 #xItemsList .itemName, #yItemsList .itemName{
 	display: inline-block;
@@ -186,10 +266,14 @@ font-family: sans-serif;
 .labelFloatRight {
 	float: right;
 }
+.lblLowY, .lblLowX, .lblHighY, .lblHighX {
 
+	max-width: 300px;
+	overflow: hidden;
+  	text-overflow: ellipsis;
+}
 .lblLowY, .lblLowX {
 	display: inline-block;
-	width: 120px;
 	text-align: right;
 }
 #xItemsList, #itemsList, #yItemsList {
@@ -197,13 +281,12 @@ font-family: sans-serif;
 }
 #itemsList div, #xItemsList div, #yItemsList div {
 	border: none;
-	border-bottom: 1px solid grey;
-	height: 6em;
+	border-bottom: 1px solid var(--field-border);
 }
 .item {
 	border: none;
-	border-bottom: 1px solid grey;
-	background-color: hsla(179, 60%, 90%, 1);
+	border-bottom: 1px solid var(--field-border);
+	background-color: var(--background-secondary);
 	padding: 1rem;
 }
 }
@@ -222,15 +305,19 @@ font-family: sans-serif;
 
   h1 .mobileHide  {
 font-size: 50%;}
+
+
 /*#yItemsList div, #xItemsList div {
 	height: 5em;
 }
 */
 
 
-/*@media screen and (max-width: 700px) {
+@media screen and (max-width: 700px) {
   body {
     font-size: 1.25rem;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .mobileHide  {
@@ -267,16 +354,18 @@ font-size: 50%;}
 
 #canvas
 {
-	
 	box-shadow: 3px 3px 30px #ddd;
-
 	display: block;
 	width: 70vw;
 	height: 70vw;
+	margin: 0;
+	padding: 0;
+}
+#matrixNew {
 }
 
-#matrixNew {
-	display: none;
+.matrixCenter {
+	left: 0;
 }
 
 .lblLowY, .lblLowX, .lblHighY, .lblHighX {
@@ -285,15 +374,27 @@ font-size: 50%;}
 
 
 }
-*/
+
 
 /*
 
 removed ffromb mobile #canvas tag
 
 
-background-color: red;
+background-color: pink;
 	position: relative;
 	left: 110px;
+
+	*/
+
+
+
+
+	/*
+
+
+	animate on delete
+
+	https://stackoverflow.com/questions/52829256/css-animate-remove-from-dom
 
 	*/

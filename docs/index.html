@@ -21,18 +21,20 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
-				<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Archivo:500|Open+Sans:300,400,500,700" rel="stylesheet">				<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
+
 
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
 	</head>
 	<body id="body" onload="menuItemClicked('create');loadValues();saveNames();saveAxisNames();">
 		<header>
-			<div>
+			<div style="float: left;">
 				<h1 id="title">Twoombly<span class="mobileHide"> the twool for 2x2 priorization</span></h1>
 			</div>
-		</header>
 		<nav id="menu">
 			<ul>
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="create">Create<span class="mobileHide"> your items</span></button>
@@ -41,19 +43,21 @@
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="see"><span class="mobileHide">See</span> Matrix</button>
 			</ul>
 		</nav>
+		</header>
+
 		<div id="createDiv">
 			<label">Value Scales</label>
 			<div id="axisList" onchange="verifyAxisNames();saveAxisNames();">
 				<div class="item" id="yAxis>
 					<label">Y axis</label>
 					<br>
-					<input class="itemName" type="text" value="importance" id="yAxis_name">
+					<input class="itemName" type="text" value="importance" maxlength="32" id="yAxis_name">
 					<label class="lblRepeatedItem" id="lblYAxisRepeated"></label>
 				</div>
 				<div class="item" id="xAxis">
 					<label">X axis</label>
 					<br>
-					<input class="itemName" type="text" value="urgency" id="xAxis_name">
+					<input class="itemName" type="text" value="urgency" maxlength="32" id="xAxis_name">
 					<label class="lblRepeatedItem" id="lblXAxisRepeated"></label>
 				</div>
 			</div>
@@ -66,6 +70,8 @@
 					<label class="lblRepeatedItem" id="lblItem_0"></label>
 				</div>
 			</div>
+
+
 			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
 		
@@ -88,7 +94,7 @@
 				<option value="value">Value (High > Low)</option>
 			</select>
 			<button class="buttonGrey" id="btnSubmitSortY" onclick="submit('y', 'sort')">Submit</button>
-			<label>Actions </label>
+			<label class="topBtnR">Actions </label>
 			<select id="slcActionsY" onclick="verifyDifferentValues('y');" onchange="
 				if (document.getElementById('slcActionsY').selectedIndex == 0)
 				{
@@ -133,7 +139,7 @@
 				<option value="value">Value (High > Low)</option>
 			</select>
 			<button id="btnSubmitSortX" onclick="submit('x', 'sort')">Submit</button>
-			<label>Actions </label>
+			<label class="topBtnR">Actions </label>
 			<select id="slcActionsX" onclick="verifyDifferentValues('x');" onchange="
 				if (document.getElementById('slcActionsX').selectedIndex == 0)
 				{
@@ -162,7 +168,7 @@
 
 
 		<div id="seeDiv">
-			<div>
+			<div class="matrixCenter">
 				<div id="matrixNew" class="matrixGrid" >
 					<div class="matrixLabel smoke">
 						<p class="canvasLabel" id="labelHighY"></p>
