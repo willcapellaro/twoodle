@@ -3,9 +3,28 @@
   --primary-hover: #61AFFF; 
   --text-primary: #222;
   --text-secondary: #737373;
+  --btn-text: white; 
   --field-border: #888;
+  --background-primary: white; 
   --background-secondary: #9FC3E9; 
   --alert: #FF698F; 
+}
+
+@media (prefers-color-scheme: dark) {
+:root {
+  --primary-active: #4C61DB;
+  --primary-hover: #2032B0; 
+  --text-primary: #ddd;
+  --text-secondary: #bbb;
+  --field-border: tan;
+  --btn-text: #ddd; 
+  --background-primary: #222; 
+  --background-secondary: #0A3463; 
+  --alert: #FF698F; 
+}
+
+html {
+	 	background-color: var(--background-primary)
 
 }
 
@@ -18,6 +37,7 @@ body {
  	padding-left: 100px;
  	padding-top: 20px;
  	font-weight: 700;
+ 	background-color: var(--background-primary)
  	color: var(--text-primary);
 }
 
@@ -32,15 +52,44 @@ h1, h2, h3, h4, h5, h6 {
 	display: inline;
 	position: relative;
 	top: 5px;
-
 }
+.infoBtn {
+	padding-left: 4px; 
+	cursor: help; 
+	font-size: 50%; 
+	color: dodgerblue;
+	position: relative;
+	top: 4px;
+}
+
+#lblChangeY, #lblChangeX {
+	padding-top: 24px;
+	color: var(--text-primary);
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 15px;
+  line-height: 2;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
 
 header {
 	position: -webkit-sticky;
 	position: sticky;
 	top: 0px;
 	text-align: right;
-	background-color: white;
+	background-color: var(--background-primary);
 	padding: 0;
 }
 header div {
@@ -60,7 +109,7 @@ nav {
 
 button {
 	background-color: var(--primary-active);
-	color: white;
+	color: var(--btn-text);
 	padding: .5em 1em .5em 1em ;
 	margin: 1em 3px 1em 0;
 	border: none;
@@ -79,7 +128,8 @@ input {
 	width: 300px;
 	margin-left: 1em;
 	padding: 4px;
-
+	background-color: var(--background-primary);
+	color: var(--btn-text);
 }
 #createDiv input {
 	border: 1px solid var(--field-border);
@@ -93,6 +143,10 @@ input {
 
 .topBtnR {
 	padding-left: 15px;
+}
+
+label {
+	color: var(--text-primary);
 }
 
 .matrixLabel p {
@@ -220,6 +274,14 @@ grid-column: 2 / 3; grid-row: 2 / 3;
 	height: 500px;
 }
 
+@media (prefers-color-scheme: dark) {
+#canvas {
+		box-shadow: 3px 3px 30px black;
+
+}
+{
+}
+
 
 .canvasImage {
 /*	position: absolute;
@@ -256,6 +318,7 @@ text-transform: uppercase;
 #xItemsList .itemName, #yItemsList .itemName{
 	display: inline-block;
 	width: 600px;
+	color: var(--text-primary);
 }
 
 .itemName {
@@ -267,17 +330,18 @@ text-transform: uppercase;
 	float: right;
 }
 .lblLowY, .lblLowX, .lblHighY, .lblHighX {
-
 	max-width: 300px;
 	overflow: hidden;
   	text-overflow: ellipsis;
+  	color: var(--text-primary);
+
 }
 .lblLowY, .lblLowX {
 	display: inline-block;
 	text-align: right;
 }
 #xItemsList, #itemsList, #yItemsList {
-	background: white;
+	background: var(--background-primary);
 }
 #itemsList div, #xItemsList div, #yItemsList div {
 	border: none;
@@ -375,6 +439,8 @@ font-size: 50%;}
 
 }
 
+
+}
 
 /*
 

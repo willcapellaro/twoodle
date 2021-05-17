@@ -60,16 +60,16 @@
  -->
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Try a matrix recipe</h4>
+<!--           <button type="button" class="close" data-dismiss="modal">&times;</button>
+ -->          <h4 class="modal-title">Try a matrix recipe</h4>
         </div>
         <div class="modal-body">
-          <p>Use some popular matrix labels like importance/urgency or impact/ease.</p>
+          <p>Use popular value labels like importance/urgency or impact/ease. They'll create useful quadrant labels on the matrix. Just enter your valies, we'll figure it out on the back end.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -80,24 +80,24 @@
   </div>
 
 		<div id="createDiv">
-			<label">Value Scales</label><span class="material-icons" data-toggle="modal"  data-target="#myModal" style="padding-left: 4px; cursor: help; font-size: 16px; color: dodgerblue;">info</span>
+			<label>Value Scales</label><span class="infoBtn"><span class="material-icons" data-toggle="modal"  data-target="#myModal" class="iconSize">info</span></span>
 
 			<div id="axisList" onchange="verifyAxisNames();saveAxisNames();">
-				<div class="item" id="yAxis>
-					<label">Y axis</label>
+				<div class="item" id="yAxis">
+					<label>Y axis</label>
 					<br>
 					<input class="itemName" type="text" value="importance" maxlength="32" id="yAxis_name">
 					<label class="lblRepeatedItem" id="lblYAxisRepeated"></label>
 				</div>
 				<div class="item" id="xAxis">
-					<label">X axis</label>
+					<label>X axis</label>
 					<br>
 					<input class="itemName" type="text" value="urgency" maxlength="32" id="xAxis_name">
 					<label class="lblRepeatedItem" id="lblXAxisRepeated"></label>
 				</div>
 			</div>
 			<br>
-			<label>Items</label><label class="labelFloatRight"><span class="mobileHide">Drag items to change their order</span></label>
+			<label>Items</label><label class="labelFloatRight"><span class="mobileHide">Drag items to change their primary order</span></label>
 			<div id="itemsList" onchange="verifyItemsNames();">
 				<div class="item" id="item_0">
 					<input class="itemName" type="text" value="Item 1" id="item_name_0" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));saveNames();" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
