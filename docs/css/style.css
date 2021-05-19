@@ -121,7 +121,7 @@ input {
 	margin-left: 1em;
 	padding: 4px;
 	background-color: var(--background-primary);
-	color: var(--btn-text);
+	color: var(--text-primary);
 }
 #createDiv input {
 	border: 1px solid var(--field-border);
