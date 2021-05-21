@@ -42,6 +42,9 @@ h1, h2, h3, h4, h5, h6 {
 	position: relative;
 	top: 5px;
 }
+.headerTag {
+	float: left;
+}	
 .infoBtn {
 	padding-left: 4px; 
 	cursor: help; 
@@ -385,16 +388,34 @@ font-size: 50%;}
 @media screen and (max-width: 700px) {
   body {
     font-size: 1.25rem;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0;
   }
 
   .mobileHide  {
    display: none; 
 }
-
+#title {
+	display: block;
+	text-align: center;
+	font-size: 1.5rem !important;
+	margin-top: 0 !important;
+}
 #menu {
 	text-align: center;
+}
+header {
+	padding: 0;
+	margin: 0;
+}
+.headerTag {
+	float: none;
+		background-color: yellow;
+}	
+#createDiv, #rateYDiv, #rateXDiv, #seeDiv { 
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
    .menuButton {
