@@ -14,6 +14,10 @@ function menuItemClicked(item)
 				document.getElementById("rateXDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
 				document.getElementById("createDiv").style.display = "block";
+				document.getElementById("create").classList.add("active");
+				document.getElementById("rateY").classList.remove("active");
+				document.getElementById("rateX").classList.remove("active");
+				document.getElementById("see").classList.remove("active");
 				break;
 			case "rateY":
 				getNames();
@@ -25,6 +29,10 @@ function menuItemClicked(item)
 				document.getElementById("createDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
+				document.getElementById("create").classList.remove("active");
+				document.getElementById("rateY").classList.add("active");
+				document.getElementById("rateX").classList.remove("active");
+				document.getElementById("see").classList.remove("active");
 				if (!(document.getElementById("rateYDiv").style.display == 'block'))
 				{
 					document.getElementById("rateYDiv").style.display = "block";
@@ -52,6 +60,10 @@ function menuItemClicked(item)
 				document.getElementById("createDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
 				document.getElementById("rateYDiv").style.display = "none";
+				document.getElementById("create").classList.remove("active");
+				document.getElementById("rateY").classList.remove("active");
+				document.getElementById("rateX").classList.add("active");
+				document.getElementById("see").classList.remove("active");
 				if (!(document.getElementById("rateXDiv").style.display == 'block'))
 				{
 					document.getElementById("rateXDiv").style.display = "block";
@@ -78,6 +90,10 @@ function menuItemClicked(item)
 				document.getElementById("rateYDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "block";
+				document.getElementById("create").classList.remove("active");
+				document.getElementById("rateY").classList.remove("active");
+				document.getElementById("rateX").classList.remove("active");
+				document.getElementById("see").classList.add("active");
 				getValues();
 				getPreviousIdsOrder();
 				drawResult();
