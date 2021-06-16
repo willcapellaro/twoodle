@@ -1,21 +1,64 @@
-#createDiv input {
-	border: 4px solid var(--field-border);
+#createDiv input, #yItemslist input {
+	border: 4px solid var(--primary-text);
 	border-radius: 3px;
-	border: none;
-	font-size: 1.5rem;
+	font-size: 1rem;
 	font-weight: 800;
-	padding: 0 0 0 1rem;
+	padding: 0 0 4px 0;
+	margin-left: 1rem;
+	margin: .5rem .5rem .5rem 1rem;
+	line-height: 1rem;
 }
 
 #createDiv input:focus {
-	border: 4px solid var(--field-border);
-	border-radius: 3px;
-	border: none;
-	font-size: 1.5rem;
-	padding: 0 0 0 1rem;
+	outline: none;
+	padding: 0 0 0 0;
+	border-bottom: 4px solid red;
+	border-bottom-color: var(--primary-text);
+	border-radius: 0;
 }
+
+#itemsList button {
+	background-color: var(--background-color);
+	border: none;
+	box-shadow: none;
+	font-size: 0;
+}
+
+#itemsList div button {
+/*	float: right;
+*/}
+
+.itemName {
+	width: 80%;
+}
+.deleteItemButton::before {
+    font-family: "Material Icons";
+    content: "delete";
+    vertical-align: middle;
+    font-size: 2rem;
+}
+
+.deleteItemButton:hover::before {
+    font-family: "Material Icons";
+    content: "delete";
+    vertical-align: middle;
+    font-size: 2rem;
+    color: var(--hover);
+    background-color: var(--background-color);
+}
+
+
+/*
+button {
+	padding: 0;
+	margin: 0;
+}*/
 
 #itemsList div, #xItemsList div, #yItemsList div {
 	border: 4px solid var(--field-border);
 	margin-bottom: -4px;
 }
+
+/*.itemName {
+	padding: 0 0 0 1rem;
+}*/

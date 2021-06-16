@@ -5,7 +5,7 @@
 		<meta content="utf-8" http-equiv="encoding">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Twoombly</title>	
+		<title>Twoodle</title>	
 		<!-- Draggable JS -->
 			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.legacy.js"></script>
@@ -21,12 +21,14 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
 				<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
+<!-- 								<link id="cssFile" rel="stylesheet" type="text/css" href="css/plusbold.css">
+ -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
 	</head>
-	<body id="body" onload="menuItemClicked('create');loadValues();saveNames();saveAxisNames();">
+	<body id="body" onload="loadValues();menuItemClicked('create');localStorage.setItem('items2', JSON.stringify(items));saveAxisNames();">
 		<header>
 			<div>
-				<h1 id="title">Twoombly<span class="mobileHide"> the twool for 2x2 priorization</span></h1>
+				<h1 id="title">Twoodle<span class="mobileHide"> the twool for 2x2 priorization</span></h1>
 			</div>
 		</header>
 		<nav id="menu">
@@ -55,22 +57,15 @@
 			</div>
 			<br>
 			<label>Items</label><label class="labelFloatRight"><span class="mobileHide">Drag items to change their order</span></label>
-			<div id="itemsList" onchange="verifyItemsNames();">
-				<div class="item" id="item_0">
-					<input class="itemName" type="text" value="Item 1" id="item_name_0" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));saveNames();" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
-					<button class="deleteItemButton deleteBtnGrey" id="0" onclick="deleteItem(this.id);" disabled="true">Delete</button>
-					<label class="lblRepeatedItem" id="lblItem_0"></label>
-				</div>
-			</div>
+			<div id="itemsList" onchange="verifyItemsNames();"></div>
 			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
-		
 		<div id="rateYDiv">
-			<label id="lblChangeY" class="labelFloatRight">Drag items to change their <u>value</u></label>
+			<label id="lblChangeY" class="labelFloatRight"></label>
 			<div id="yItemsList"></div>
 		</div>
 		<div id="rateXDiv">
-			<label id="lblChangeX" class="labelFloatRight">Drag items to change their <u>value</u></label>
+			<label id="lblChangeX" class="labelFloatRight"></label>
 			<div id="xItemsList"></div>
 		</div>
 		<div id="seeDiv">

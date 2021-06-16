@@ -1,6 +1,7 @@
 var validItemsNames = true;
 var validAxisNames = true;
-var namesMaster = [];
+//var namesMaster = [];
+var items = [];
 var yAxisName = document.getElementById('yAxis_name').value;
 var xAxisName = document.getElementById('xAxis_name').value;
 function menuItemClicked(item)
@@ -14,30 +15,22 @@ function menuItemClicked(item)
 				document.getElementById("rateXDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
 				document.getElementById("createDiv").style.display = "block";
-				document.getElementById("create").classList.add("active");
-				document.getElementById("rateY").classList.remove("active");
-				document.getElementById("rateX").classList.remove("active");
-				document.getElementById("see").classList.remove("active");
 				break;
 			case "rateY":
-				getNames();
-				saveNames();
-				saveAxisNames();
-				getPreviousIdsOrder();
-				getValues();
-				fillLists('x');
+				//getNames();
+				//saveNames();
+				//saveAxisNames();
+				//getPreviousIdsOrder();
+				//getValues();
+				//fillLists('x');
 				document.getElementById("createDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
-				document.getElementById("create").classList.remove("active");
-				document.getElementById("rateY").classList.add("active");
-				document.getElementById("rateX").classList.remove("active");
-				document.getElementById("see").classList.remove("active");
 				if (!(document.getElementById("rateYDiv").style.display == 'block'))
 				{
 					document.getElementById("rateYDiv").style.display = "block";
-					getPreviousIdsOrder();
-					getValues();
+					//getPreviousIdsOrder();
+					//getValues();
 					fillLists('y');
 					if (document.getElementById('slcActionsY').selectedIndex != 0)
 					{
@@ -51,24 +44,20 @@ function menuItemClicked(item)
 				}
 				break;
 			case "rateX":
-				getNames();
-				saveNames();
-				saveAxisNames();
-				getPreviousIdsOrder();
-				getValues();
-				fillLists('y');
+				//getNames();
+				//saveNames();
+				//saveAxisNames();
+				//getPreviousIdsOrder();
+				//getValues();
+				//fillLists('y');
 				document.getElementById("createDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
 				document.getElementById("rateYDiv").style.display = "none";
-				document.getElementById("create").classList.remove("active");
-				document.getElementById("rateY").classList.remove("active");
-				document.getElementById("rateX").classList.add("active");
-				document.getElementById("see").classList.remove("active");
 				if (!(document.getElementById("rateXDiv").style.display == 'block'))
 				{
 					document.getElementById("rateXDiv").style.display = "block";
-					getPreviousIdsOrder();
-					getValues();
+					//getPreviousIdsOrder();
+					//getValues();
 					fillLists('x');
 					if (document.getElementById('slcActionsX').selectedIndex != 0)
 					{
@@ -82,20 +71,16 @@ function menuItemClicked(item)
 				}
 				break;
 			case "see":
-				getNames();
-				saveNames();
-				saveAxisNames();
+				//getNames();
+				//saveNames();
+				//saveAxisNames();
 				fillAxisNames();
 				document.getElementById("createDiv").style.display = "none";
 				document.getElementById("rateYDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "block";
-				document.getElementById("create").classList.remove("active");
-				document.getElementById("rateY").classList.remove("active");
-				document.getElementById("rateX").classList.remove("active");
-				document.getElementById("see").classList.add("active");
-				getValues();
-				getPreviousIdsOrder();
+				//getValues();
+				//getPreviousIdsOrder();
 				drawResult();
 				// drawQuadHints();
 				break;
@@ -228,6 +213,13 @@ function setValues(axis, value)
 							if (Number(c[j].value) == groups[i]['preValue'])
 							{
 								c[j].value = groups[i]['value'];
+								for (var k = 0; k < items.length; k++)
+							    {
+							    	if (items[k]['index'] == Number(c[j].split('_')[3]))
+							    	{
+							    		items[k][axis + 'Value'] = Number(c[j].value);
+							    	}
+							    }
 							}
 						}
 				    }
@@ -238,7 +230,7 @@ function setValues(axis, value)
 	var c;
 	if (value != 'distribute')
 	{
-		if (axis == 'y')
+		/*if (axis == 'y')
 		{
 			c = document.getElementById('yDivRange').getElementsByTagName('input');
 			yValues = [];
@@ -258,10 +250,15 @@ function setValues(axis, value)
 		    {
 				xValues.push(value);
 			}
-		}
+		}*/
+		c = document.getElementById(axis + 'DivRange').getElementsByTagName('input');
 		for (var i = 0; i < c.length; i++)
 	    {
 	        c[i].value = value;
+	    }
+	    for (var i = 0; i < items.length; i++)
+	    {
+	    	items[i][axis + 'Value'] = value;
 	    }
 	}
 }
@@ -283,7 +280,7 @@ function submit(axis, option)
 				setValues(axis, v);
 			}
 			else
-			{
+			{//Pendiente ver si se usa en algún momento.
 				updateCreateList(axis);
 			}
 			document.getElementById('slcActions' + axis.toUpperCase()).selectedIndex = 0
@@ -303,15 +300,15 @@ function submit(axis, option)
 				document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = '';
 				document.getElementById('opt' + axis.toUpperCase() + 'd').disabled = true;
 				document.getElementById('opt' + axis.toUpperCase() + 'm').disabled = true;
-				getNames();
-				getPreviousIdsOrder();
-				getValues();
+				//getNames();
+				//getPreviousIdsOrder();
+				//getValues();
 				fillLists(axis);
 			}
 			else
 			{
 				itemsListSortable.addContainer(document.getElementById(axis + 'ItemsList'));
-				document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = 'Sort items by dragging and dropping';
+				document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = 'Drag items to change their <u>value</u>';
 				if ((document.getElementById('slcActions' + axis.toUpperCase()).selectedIndex == 4) || (document.getElementById('slcActions' + axis.toUpperCase()).selectedIndex == 5))
 				{
 					document.getElementById('slcActions' + axis.toUpperCase()).selectedIndex = 0;
@@ -320,7 +317,7 @@ function submit(axis, option)
 				}
 				verifyDifferentValues(axis);
 				document.getElementById('opt' + axis.toUpperCase() + 'm').disabled = false;
-				getPreviousIdsOrder();
+				//getPreviousIdsOrder();
 				sortItems(axis);
 			}
 			document.getElementById('slcSort' + axis.toUpperCase()).selectedIndex = 0
@@ -330,7 +327,7 @@ function submit(axis, option)
 	}
 }
 function verifyDifferentValues(axis)
-{
+{console.log(axis);
 	document.getElementById('opt' + axis.toUpperCase() + 'd').disabled = true;
 	saveAxisValues(axis);
 	getValues();
@@ -358,24 +355,29 @@ function verifyDifferentValues(axis)
 			document.getElementById('btnSubmitActions' + axis.toUpperCase()).className = 'buttonGrey';
 		}
 	}
+	localStorage.setItem('items', JSON.stringify(items));
 }
 function sortItems(axis)
 {
-	getValues();
+	//getValues();
 	var auxValues = [];
+	for (var i = 0; i < items.length; i++)
+	{
+		auxValues.push([items[i][axis + 'Value'], i]);
+	}
 	var axisName = yAxisName;
-	for (var i = 0; i < yValues.length; i++)
+	/*for (var i = 0; i < yValues.length; i++)
 	{
 		auxValues.push([yValues[i], i]);
-	}
+	}*/
 	if (axis == 'x')
 	{
-		auxValues = [];
 		axisName = xAxisName;
+		/*auxValues = [];
 		for (var i = 0; i < xValues.length; i++)
 		{
 			auxValues.push([xValues[i], i]);
-		}
+		}*/
 	}
 	for (var i = 0; i < auxValues.length - 1; i++)
     {
@@ -439,8 +441,8 @@ function addItem()
 		}
 	}
 	$("#itemsList").append(`
-		<div id="item_` + nextId + `">
-			<input class="itemName" type="text" value="Item ` + (nextId + 1) + `" id="item_name_` + nextId + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));saveNames();" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
+		<div id="item_` + nextId + `" onmouseup="getItems();">
+			<input class="itemName" type="text" value="Item ` + (nextId + 1) + `" id="item_name_` + nextId + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
 			<button class="deleteItemButton" id="` + nextId + `" onclick="deleteItem(this.id);">Delete</button>
 			<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
 		</div>`
@@ -448,51 +450,69 @@ function addItem()
 	document.getElementById(c[0].id.split('_')[1]).disabled = false;
 	document.getElementById(c[0].id.split('_')[1]).className = 'itemBackGround';
 	verifyItemsNames();
-	saveNames();
+	saveItems();
 }
 function deleteItem(item)
 {
-	var items = document.getElementById('itemsList').children;
+	//var items = document.getElementById('itemsList').children;
 	var flag = false;
-	var valuesCopy = [];
+	//var valuesCopy = [];
 	var initialId;
 	for (var i = 0; i < items.length; i++)
 	{
 		if (flag)
 		{
-			valuesCopy.push([document.getElementById('range_y_item_' + items[i].id.split('_')[1]).value, document.getElementById('range_x_item_' + items[i].id.split('_')[1]).value]);
+			//try
+			//{
+				//valuesCopy.push([document.getElementById('range_y_item_' + items[i].id.split('_')[1]).value, document.getElementById('range_x_item_' + items[i].id.split('_')[1]).value]);
+				valuesCopy.push([items[i]['xValue'], items[i]['yValue']]);
+			/*}
+			catch
+			{
+				valuesCopy.push([50, 50]);
+			}*/
 		}
-		if (items[i].id.split('_')[1] == item)
+		//if (items[i].id.split('_')[1] == item)
+		if (items[i]['index'] == item)
 		{
 			flag = true;
 			initialId = i;
 		}	
 	}
-
-	$('#item_' + Number(item)).remove()
+	$('#item_' + Number(item)).remove();
 	var j = 0;
-	items = document.getElementById('itemsList').children;
-
-	for (var i = 0; i < items.length; i++)
+	var items2 = document.getElementById('itemsList').children;
+	for (var i = 0; i < items2.length; i++)
 	{
-		if (items[i].id.length)
+		if (items2[i].id.length)
 		{
-			var subItems = document.getElementById(items[i].id).children;
+			var subItems = document.getElementById(items2[i].id).children;
 			for (var k = 0; k < subItems.length; k++)
 			{
 				subItems[k].id = subItems[k].id.replace(subItems[k].id.split('_')[subItems[k].id.split('_').length - 1], j);
 			}
-			items[i].id = 'item_' + j;
+			items2[i].id = 'item_' + j;
 			j += 1;
 		}
 	}
-	if (items.length == 1)
+	if (items2.length == 1)
 	{
 		document.getElementById(items[0].id.split('_')[1]).disabled = true;
 		document.getElementById(items[0].id.split('_')[1]).className = 'buttonGrey';
 	}
-	getNames();
-	getPreviousIdsOrder();
+	var auxItems = [];
+	for (var i = 0; i < items.length; i++)
+	{
+		if (items[i]['index'] != item)
+		{
+			auxItems.push(items[i]);
+		}
+	}
+	items = auxItems;
+	/*getNames();
+	//getPreviousIdsOrder();
+	fillLists('y');
+	fillLists('x');
 	if (valuesCopy.length)
 	{
 		for (var i = 0; i < valuesCopy.length; i++)
@@ -502,32 +522,39 @@ function deleteItem(item)
 			initialId++;
 		}
 	}
-	getValues();
+	//getValues();
 	fillLists('y');
-	fillLists('x');
-	saveNames();
+	fillLists('x');*/
+	saveItems();
 }
 function verifyItemsNames()
-{
-	getNames();
+{//console.log();
+	//getNames();
 	var repetidos = [];
-	for (var i = 0; i < namesMaster.length - 1; i++)
+	var names = document.getElementById('itemsList').getElementsByClassName('itemName');
+	/*var auxNames = [];
+	for (var i = 0; i < names.length; i++)
 	{
-		for (var j = i + 1; j < namesMaster.length; j++)
+		auxNames.push(names[i].getElementsByClassName('itemName')[0]);
+	}
+	names = auxNames;*/
+	for (var i = 0; i < names.length - 1; i++)
+	{
+		for (var j = i + 1; j < items.length; j++)
 		{
-			if (namesMaster[i] == namesMaster[j])
+			if (names[i].value == names[j].value)
 			{
-				repetidos.push(i);
-				repetidos.push(j);
+				repetidos.push(names[i].id.split('_')[2]);
+				repetidos.push(names[j].id.split('_')[2]);
 			}
 		}
-	}
+	}//console.log(repetidos);
 	validItemsNames = !repetidos.length;
 	for (var i = 0; i < repetidos.length; i++)
 	{
-		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated"> Duplicate name</p>';
+		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated"> (repeated name)</p>';
 	}
-	saveNames();
+	saveItems();//saveNames();
 }
 function verifyAxisNames()
 {
@@ -539,8 +566,8 @@ function verifyAxisNames()
 	validAxisNames = true;
 	if (document.getElementById('yAxis_name').value == document.getElementById('xAxis_name').value)
 	{
-		document.getElementById('lblYAxisRepeated').innerHTML = '<p class="lblRepeated"> Duplicate name</p>';
-		document.getElementById('lblXAxisRepeated').innerHTML = '<p class="lblRepeated"> Duplicate name</p>';
+		document.getElementById('lblYAxisRepeated').innerHTML = '<p class="lblRepeated"> (repeated name)</p>';
+		document.getElementById('lblXAxisRepeated').innerHTML = '<p class="lblRepeated"> (repeated name)</p>';
 		validAxisNames = false;
 	}
 	if (document.getElementById('xAxis_name').value == '')
@@ -556,51 +583,61 @@ function verifyAxisNames()
 }
 function fillLists(axis = null)
 {
-	var values = [...yValues];
+	/*var values = [];
+	for (var i = 0; i < items.length; i++)
+	{
+		values.push(items[i][axis + 'Value']);
+	}*/
+	//var values = [...yValues];
 	var axisName = yAxisName;
-	var pre_idsOrder = [...pre_yIdsOrder];
+	//var pre_idsOrder = [...pre_yIdsOrder];
 	var itemsListSortable = yItemsListSortable;
 	if (axis == 'x')
 	{
 		itemsListSortable = xItemsListSortable;
-		values = [...xValues];
-		pre_idsOrder = [...pre_xIdsOrder];
+		//values = [...xValues];
+		//pre_idsOrder = [...pre_xIdsOrder];
 		axisName = xAxisName;
 	}
 	document.getElementById(axis + 'ItemsList').innerHTML = '';
 	document.getElementById(axis + 'DivRange').innerHTML = '';
 	var c = document.getElementById('itemsList').children;
-	for (var i = 0; i < namesMaster.length; i++)
+	//for (var i = 0; i < namesMaster.length; i++)
+	for (var i = 0; i < items.length; i++)
 	{
 		$("#" + axis + "ItemsList").append(`
-			<div class="` + axis + `Item" id="` + axis + `_item_` + c[i].id.split('_')[1] + `">
-				<label class="itemName">` + namesMaster[i] + `</label>
+			<div class="` + axis + `Item" id="` + axis + `_item_` + items[i]['index'] + `">
+				<label class="itemName">` + items[i]['name'] + `</label>
 			</div>`
 		);
 	}
 	itemsListSortable.removeContainer(document.getElementById(axis + 'ItemsList'));
 	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = '';
-	document.getElementById('opt' + axis.toUpperCase() + 'm').disabled = true;
-	for (var i = 0; i < namesMaster.length; i++)
+	document.getElementById('opt' + axis.toUpperCase() + 'm').disabled = true;//for (var i = 0; i < namesMaster.length; i++)
+	for (var i = 0; i < items.length; i++)
 	{
-		var v = 50;
-		if (values.length)
-		{
-			v = values[Number(pre_idsOrder[i])];
-		}
-		var top = document.getElementById(axis + '_item_' + pre_idsOrder[i]).offsetTop;
-		var right = document.getElementById(axis + '_item_' + pre_idsOrder[i]).offsetLeft;
-		$("#" + axis + "DivRange").append('<div class="rangeDiv" style="top: ' + top + 'px; right: ' + right + 'px;"><label class="lblLow' + axis.toUpperCase() + '">Low ' + axisName + '</label><input type="range" id="range_' + axis + '_item_' + pre_idsOrder[i] + '" value="' + v + '" class="' + axis.toUpperCase() + 'Range custom-range" min="0" max="100" ondrag="verifyDifferentValues(\'' + axis + '\')" onchange="verifyDifferentValues(\'' + axis + '\')"><label class="lblHigh' + axis.toUpperCase() + '">High ' + axisName + '</label></div>');
+		var v = items[i][axis + 'Value'];
+		var top = document.getElementById(axis + '_item_' + items[i]['index']).offsetTop;
+		var right = document.getElementById(axis + '_item_' + items[i]['index']).offsetLeft;
+		$("#" + axis + "DivRange").append('<div class="rangeDiv" style="top: ' + top + 'px; right: ' + right + 'px;"><label class="lblLow' + axis.toUpperCase() + '">Low ' + axisName + '</label><input type="range" id="range_' + axis + '_item_' + items[i]['index'] + '" value="' + v + '" class="' + axis.toUpperCase() + 'Range custom-range" min="0" max="100" ondrag="verifyDifferentValues(\'' + axis + '\')" onchange="verifyDifferentValues(\'' + axis + '\')"><label class="lblHigh' + axis.toUpperCase() + '">High ' + axisName + '</label></div>');
 	}
 }
 function updateCreateList(axis)
-{//Not used.
+{//Used?
+	var auxItems = [];
 	var c = document.getElementById(axis + 'ItemsList').children;
 	if (c.length)
 	{
 		document.getElementById('itemsList').innerHTML = '';
 	    for (var i = 0; i < c.length; i++)
 	    {
+	    	for (var j = 0; j < items.length; j++)
+	    	{
+	    		if (items[j]['index'] == Number(c[i].id.split('_')[2]))
+	    		{
+	    			auxItems.push(items[j]);
+	    		}
+	    	}
 	    	$("#itemsList").append(`
 				<div id="item_` + c[i].id.split('_')[2] + `">
 					<input class="itemName" type="text" value="` + c[i].getElementsByClassName('itemName')[0].innerHTML + `" id="item_name_` + c[i].id.split('_')[2] + `">
@@ -610,14 +647,104 @@ function updateCreateList(axis)
 			);
 	    }
 	}
+	items = auxItems;
 }
 function getNames()
 {
-	namesMaster = [];
+	for (var i = 0; i < items.length; i++)
+	{
+		items[i]['name'] = '';
+	}
+	//namesMaster = [];
 	var c = document.getElementById('itemsList').children;
 	for (var i = 0; i < c.length; i++)
 	{
-		namesMaster.push(document.getElementById('item_name_' + c[i].id.split('_')[1]).value);
+		if (items.length)
+		{
+			//namesMaster.push(document.getElementById('item_name_' + c[i].id.split('_')[1]).value);
+			if (i < items.length)
+			{
+				items[i]['name'] = document.getElementById('item_name_' + c[i].id.split('_')[1]).value;
+			}
+			else
+			{
+				items.push({
+					'name': document.getElementById('item_name_' + c[i].id.split('_')[1]).value, 
+					'yValue' : 50, 
+					'xValue' : 50, 
+					'index' : Number(c[i].id.split('_')[1])
+				});
+			}
+		}
+		else
+		{
+			items.push({
+				'name': document.getElementById('item_name_' + c[i].id.split('_')[1]).value, 
+				'yValue' : 50, 
+				'xValue' : 50, 
+				'index' : Number(c[i].id.split('_')[1])
+			});
+		}
 		document.getElementById('lblItem_' + c[i].id.split('_')[1]).innerHTML = '';
+	}
+}
+function getItems()
+{//console.log();//here
+	if (validItemsNames && validAxisNames)
+	{
+		var ok = true;
+		var ids = [];
+		var c = document.getElementById('itemsList').children;
+		for (var i = 0; i < c.length; i++)
+		{
+			if (c[i]['id'].length)
+			{
+				if (ids.indexOf(c[i]['id']) == -1)
+				{
+					ids.push(c[i]['id']);
+					ok = true;
+				}
+				else
+				{
+					ok = false;
+					i = c.length;
+				}
+			}
+			else
+			{
+				ok = false;
+				i = c.length;
+			}
+		}
+		if (ok)
+		{
+			var auxItems = [];
+			for (var i = 0; i < c.length; i++)
+			{
+				var auxYValue;
+				var auxXValue;
+				for (var j = 0; j < items.length; j++)
+				{console.log(items[j]['index'], Number(c[i].id.split('_')[1]));
+					if (items[j]['index'] == Number(c[i].id.split('_')[1]))
+					{
+						auxYValue = items[j]['yValue'];
+						auxXValue = items[j]['xValue'];
+					}
+				}//console.log(auxYValue, auxXValue);
+				auxItems.push({
+					'name' : document.getElementById('item_name_' + c[i].id.split('_')[1]).value, 
+					'index' : Number(c[i].id.split('_')[1]), 
+					'yValue' : auxYValue, 
+					'xValue' : auxXValue
+				});
+				document.getElementById('lblItem_' + c[i].id.split('_')[1]).innerHTML = '';
+			}
+			items = auxItems;
+			localStorage.setItem('items', JSON.stringify(items));
+		}
+		else
+		{
+			setTimeout(() => { getItems(); }, 100);
+		}
 	}
 }

@@ -11,7 +11,6 @@ var idsOrder = [];
 var itemMoved = -1;
 function getPreviousIdsOrder()
 {
-
     pre_yIdsOrder = [];
     pre_xIdsOrder = [];
     for (var i = 0; i < document.getElementById('itemsList').children.length; i++)
@@ -21,8 +20,8 @@ function getPreviousIdsOrder()
     }
 }
 function getIdsOrder(axis)
-{
-    getValues();
+{console.log(axis);//here
+    /*getValues();
     var values = [...yValues];
     var pre_idsOrder = [...pre_yIdsOrder];
     idsOrder = [];
@@ -124,11 +123,11 @@ function getIdsOrder(axis)
             }
         }
         setTimeout(() => { getIdsOrder(axis); }, 100);
-    }
+    }*/
 }
 function getValues()
 {
-    yValues = [];
+    /*yValues = [];
     xValues = [];
     var c = document.getElementById('yDivRange').getElementsByTagName('div');
     for (var i = 0; i < c.length; i++)
@@ -149,6 +148,40 @@ function getValues()
         {
             xValues[Number(pre_xIdsOrder[i])] = Number(document.getElementById('range_x_item_' + pre_xIdsOrder[i]).value);
         }catch{}
+    }*/
+    var c = document.getElementById('yDivRange').getElementsByTagName('div');
+    var auxC = [];
+    for (var i = 0; i < c.length; i++)
+    {//console.log(c[i]);
+        auxC.push(c[i].getElementsByTagName('input')[0]);//console.log(c[i].getElementsByTagName('input')[0]);
+    }
+    c = auxC;
+    for (var i = 0; i < c.length; i++)
+    {//console.log(c[i]);
+        for (var j = 0; j < items.length; j++)
+        {//console.log(items[j]['index'], Number(c[i].id.split('_')[3]));
+            if (items[j]['index'] == Number(c[i].id.split('_')[3]))
+            {
+                items[j]['yValue'] = Number(c[i].value);//console.log(items[j]['yValue']);
+            }
+        }
+        //document.getElementById('lblItem_' + c[i].id.split('_')[1]).innerHTML = '';
+    }
+    c = document.getElementById('xDivRange').getElementsByTagName('div');
+    for (var i = 0; i < c.length; i++)
+    {
+        auxC.push(c[i].getElementsByTagName('input')[0]);
+    }
+    c = auxC;
+    for (var i = 0; i < c.length; i++)
+    {
+        for (var j = 0; j < items.length; j++)
+        {
+            if (items[j]['index'] == Number(c[i].id.split('_')[3]))
+            {
+                items[j]['xValue'] = Number(c[i].value);
+            }
+        }
     }
 }
 function fillAxisNames()
@@ -176,11 +209,9 @@ function drawResult()
     var h;
     var found = false;
     
-
-    // style colors
-    var strokeStyleOfQuadrants = '#61AFFF';
-    var fillStyleOfItems = "#737373";
-    var fillStyleOFQuadrantsText = "61AFFF";
+    var strokeStyleOfQuadrants = '#ff0000';
+    var fillStyleOfItems = "#000000";
+    var fillStyleOFQuadrantsText = "#ff0000";
 
     var rules;
     try
@@ -223,7 +254,6 @@ function drawResult()
         h = 500;
     }
     canvasSize = [w, h];
-    //var top = document.getElementById('canvasImage').offsetTop;
     $('#canvas').remove();
     $("#canvasDiv").append('<canvas class="canvasImage" width=' + canvasSize[0] + ' height=' + canvasSize[1] + ' id="canvas">Canvas not supported.</canvas>');
     canvas = document.getElementById('canvas').getContext('2d');
@@ -247,15 +277,15 @@ function drawResult()
     canvas.stroke();
     
     canvas.fillStyle = fillStyleOfItems;
-    
-    for (var i = 0; i < namesMaster.length; i++)
+    //for (var i = 0; i < namesMaster.length; i++)
+    for (var i = 0; i < items.length; i++)
     {
         var xText = 12;
         var yText = fontPx * 0.3;
 
         canvas.font = fontPx + "px Arial";
-        var x = (canvasSize[0] * (xValues[Number(pre_xIdsOrder[i])] / 100));
-        var y = (canvasSize[1] * (1 - (yValues[Number(pre_yIdsOrder[i])] / 100)));
+        var x = (canvasSize[0] * (items[i]['xValue'] / 100));
+        var y = (canvasSize[1] * (1 - (items[i]['yValue'] / 100)));
 
         if (y >= (canvasSize[1] - (fontPx * 1.5)))
         {
@@ -266,17 +296,17 @@ function drawResult()
             yText = (fontPx * 1.1);
         }
 
-        if (xValues[Number(pre_xIdsOrder[i])] > 50)
+        if (items[i]['xValue'] > 50)
         {
             xText = -12;
-            xText -= canvas.measureText(namesMaster[i]).width;
+            xText -= canvas.measureText(items[i]['name']).width;
         }
 
         canvas.font = fontPx + "px Arial";
-        canvas.fillText(document.getElementById('item_name_' + pre_yIdsOrder[i]).value, x + xText, y + yText);
+        canvas.fillText(items[i]['name'], x + xText, y + yText);
         canvas.fillStyle = '';
         canvas.beginPath();
-        canvas.arc((canvasSize[0] * (xValues[Number(pre_xIdsOrder[i])] / 100)), (canvasSize[1] * (1 - (yValues[Number(pre_yIdsOrder[i])] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
+        canvas.arc((canvasSize[0] * (items[i]['xValue'] / 100)), (canvasSize[1] * (1 - (items[i]['yValue'] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
         canvas.fill();
     }
     canvas.fillStyle = fillStyleOFQuadrantsText;

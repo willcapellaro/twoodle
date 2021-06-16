@@ -7,41 +7,33 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-		<title>Twoombly</title>	
+		<title>Twoodle</title>	
 		<!-- Draggable JS -->
-		<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.legacy.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/sortable.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/droppable.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/swappable.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/plugins.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.legacy.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/sortable.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/droppable.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/swappable.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/plugins.js"></script>
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css?family=Archivo:500|Open+Sans:300,400,500,700" rel="stylesheet">				
-<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
-<link id="cssFile" rel="stylesheet" type="text/css" href="css/plusbold.css">
-
-<!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
+				<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
+<!-- 				<link id="cssFile" rel="stylesheet" type="text/css" href="css/plusbold.css">
  -->
-		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css"> -->
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
-
-
-
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
 	</head>
-	<body id="body" onload="menuItemClicked('create');loadValues();saveNames();saveAxisNames();">
+	<body id="body" onload="loadValues();menuItemClicked('create');localStorage.setItem('items', JSON.stringify(items));saveAxisNames();/*loadValues();saveNames();saveAxisNames();*/">
 		<header>
-			<div class="headerTag">
-				<h1 id="title">Twoombly<span class="mobileHide"> the twool for 2x2 priorization</span></h1>
+			<div>
+				<h1 id="title">Twoodle<span class="mobileHide"> the twool for 2x2 priorization</span></h1>
 			</div>
+		</header>
 		<nav id="menu">
 			<ul>
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="create">Create<span class="mobileHide"> your items</span></button>
@@ -50,39 +42,31 @@
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="see"><span class="mobileHide">See</span> Matrix</button>
 			</ul>
 		</nav>
-		</header>
-
-
-
-
 		<div id="createDiv">
-			<label>Value Scales</label><span class="infoBtn"><span class="material-icons" data-toggle="modal"  data-target="#myModal" class="iconSize">info</span></span>
-
+			<label">Value Scales</label>
 			<div id="axisList" onchange="verifyAxisNames();saveAxisNames();">
-				<div class="item" id="yAxis">
-					<label>Y axis</label>
+				<div class="item" id="yAxis>
+					<label">Y axis</label>
 					<br>
-					<input class="itemName" type="text" value="importance" maxlength="32" id="yAxis_name">
+					<input class="itemName" type="text" value="importance" id="yAxis_name">
 					<label class="lblRepeatedItem" id="lblYAxisRepeated"></label>
 				</div>
 				<div class="item" id="xAxis">
-					<label>X axis</label>
+					<label">X axis</label>
 					<br>
-					<input class="itemName" type="text" value="urgency" maxlength="32" id="xAxis_name">
+					<input class="itemName" type="text" value="urgency" id="xAxis_name">
 					<label class="lblRepeatedItem" id="lblXAxisRepeated"></label>
 				</div>
 			</div>
 			<br>
-			<label>Items</label><label class="labelFloatRight"><span class="mobileHide">Drag items to change their primary order</span></label>
+			<label>Items</label><label class="labelFloatRight"><span class="mobileHide">Drag items to change their order</span></label>
 			<div id="itemsList" onchange="verifyItemsNames();">
-				<div class="item" id="item_0">
+				<!--<div class="item" id="item_0">
 					<input class="itemName" type="text" value="Item 1" id="item_name_0" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));saveNames();" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
 					<button class="deleteItemButton deleteBtnGrey" id="0" onclick="deleteItem(this.id);" disabled="true">Delete</button>
 					<label class="lblRepeatedItem" id="lblItem_0"></label>
-				</div>
+				</div>-->
 			</div>
-
-
 			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
 		
@@ -96,7 +80,6 @@
 				else
 				{
 					document.getElementById('btnSubmitSortY').disabled = false;
-					//document.getElementById('btnSubmitSortY').style.backgroundColor = '#17A589';
 					document.getElementById('btnSubmitSortY').className = 'buttonGreen';
 				}
 			">
@@ -105,7 +88,7 @@
 				<option value="value">Value (High > Low)</option>
 			</select>
 			<button class="buttonGrey" id="btnSubmitSortY" onclick="submit('y', 'sort')">Submit</button>
-			<label class="topBtnR">Actions </label>
+			<label>Actions </label>
 			<select id="slcActionsY" onclick="verifyDifferentValues('y');" onchange="
 				if (document.getElementById('slcActionsY').selectedIndex == 0)
 				{
@@ -114,7 +97,6 @@
 				else
 				{
 					document.getElementById('btnSubmitActionsY').disabled = false;
-					//document.getElementById('btnSubmitActionsY').style.backgroundColor = '#17A589';
 					document.getElementById('btnSubmitActionsY').className = 'buttonGreen';
 				}
 			">
@@ -141,7 +123,6 @@
 				else
 				{
 					document.getElementById('btnSubmitSortX').disabled = false;
-					//document.getElementById('btnSubmitSortX').style.backgroundColor = '#17A589';
 					document.getElementById('btnSubmitSortX').className = 'buttonGreen';
 				}
 			">
@@ -150,7 +131,7 @@
 				<option value="value">Value (High > Low)</option>
 			</select>
 			<button id="btnSubmitSortX" onclick="submit('x', 'sort')">Submit</button>
-			<label class="topBtnR">Actions </label>
+			<label>Actions </label>
 			<select id="slcActionsX" onclick="verifyDifferentValues('x');" onchange="
 				if (document.getElementById('slcActionsX').selectedIndex == 0)
 				{
@@ -159,7 +140,6 @@
 				else
 				{
 					document.getElementById('btnSubmitActionsX').disabled = false;
-					//document.getElementById('btnSubmitActionsX').style.backgroundColor = '#17A589';
 					document.getElementById('btnSubmitActionsX').className = 'buttonGreen';
 				}
 			">
@@ -175,34 +155,9 @@
 			<div id="xItemsList"></div>
 			<div id="xDivRange"></div>
 		</div>
-		
-<!-- Trigger the modal with a button -->
-<!--   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
- -->
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Try a matrix recipe</h4>
-                    <button type="button" class="close noShadow" data-dismiss="modal">&times;</button>
-
-        </div>
-        <div class="modal-body">
-          <p>Use popular value scale labels like importance/urgency or impact/ease. They'll create useful quadrant labels on the matrix. Just enter your labels, we'll figure it out for you.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
 
 		<div id="seeDiv">
-			<div class="matrixCenter">
+			<div>
 				<div id="matrixNew" class="matrixGrid" >
 					<div class="matrixLabel smoke">
 						<p class="canvasLabel" id="labelHighY"></p>
@@ -229,21 +184,3 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src="./js/draggableCode.js"></script>
-	<script>
-
-document.addEventListener('keyup', function (event) {
-  if (event.ctrlKey && event.key === '1') {
-    menuItemClicked(create.id);
-  }
-  if (event.ctrlKey && event.key === '2') {
-    menuItemClicked(rateY.id);
-  }
-  if (event.ctrlKey && event.key === '3') {
-    menuItemClicked(rateX.id);
-  }
-  if (event.ctrlKey && event.key === '4') {
-    menuItemClicked(see.id);
-  }
-});
-
-	</script>

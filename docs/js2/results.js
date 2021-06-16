@@ -4,43 +4,29 @@ var arcSize = 0.01;
 var yValues = [];
 var xValues = [];
 
-var pre_yIdsOrder = [];
-var pre_xIdsOrder = [];
 var idsOrder = [];
 
 var itemMoved = -1;
-function getPreviousIdsOrder()
-{
-    pre_yIdsOrder = [];
-    pre_xIdsOrder = [];
-    for (var i = 0; i < document.getElementById('itemsList').children.length; i++)
-    {
-        pre_yIdsOrder.push(i);
-        pre_xIdsOrder.push(i);
-    }
-}
 function getIdsOrder(axis)
 {
-    getValues();
-    var values = [...yValues];
-    var pre_idsOrder = [...pre_yIdsOrder];
+    var preValues = [...yValues];
     idsOrder = [];
     var c = document.getElementById(axis + 'ItemsList').children;
     for (var i = 0; i < c.length; i++)
     {
-        idsOrder.push(c[i].id.split('_')[2]);
+        idsOrder.push(Number(c[i].id.split('_')[2]));
     }
     if (axis == 'x')
     {
-        pre_idsOrder = [...pre_xIdsOrder];
-        values = [...xValues];
+        preValues = [...xValues];
     }
-    if (idsOrder.length == namesMaster.length)
+    if (idsOrder.length == items.length)
     {
+        distribute(axis);
         var changes = false;
         for (var i = 0; i < idsOrder.length; i++)
         {
-            if (pre_idsOrder[i] != idsOrder[i])
+            if (preValues[i]['index'] != idsOrder[i])
             {
                 changes = true;
                 i = idsOrder.length;
@@ -48,52 +34,26 @@ function getIdsOrder(axis)
         }
         if (changes)
         {
-            c = document.getElementById(axis + 'ItemsList').children;
+            var auxPreValues = [];
             for (var i = 0; i < idsOrder.length; i++)
             {
-                for (var j = 0; j < c.length; j++)
+                for (var j = 0; j < preValues.length; j++)
                 {
-                    if (Number(c[j].getElementsByClassName('itemValue')[0].id.split('_')[3]) == Number(pre_idsOrder[i]))
+                    if (preValues[j]['index'] == idsOrder[i])
                     {
-                        c[j].getElementsByClassName('itemValue')[0].innerHTML = values[Number(pre_idsOrder[i])];
-                        j = c.length;
+                        auxPreValues.push(preValues[j]);
                     }
                 }
             }
-            for (var i = 0; i < idsOrder.length; i++)
+            if (axis == 'y')
             {
-                if (idsOrder[i] == itemMoved)
-                {//Falta actualizar yValues y xValues.
-                    if (i == 0)
-                    {console.log('Cambia a 100.');
-                        document.getElementById('value_' + axis + '_item_' + itemMoved).innerHTML = 100;
-                        verifyDifferentValues(axis);
-                    }
-                    else
-                    {
-                        if (i == (idsOrder.length - 1))
-                        {console.log('Cambia a 0.');
-                            document.getElementById('value_' + axis + '_item_' + itemMoved).innerHTML = 0;
-                            verifyDifferentValues(axis);
-                        }
-                        else
-                        {
-                            var up = Number(document.getElementById('value_' + axis + '_item_' + idsOrder[i - 1] ).innerHTML);
-                            var down = Number(document.getElementById('value_' + axis + '_item_' + idsOrder[i + 1] ).innerHTML);
-                            document.getElementById('value_' + axis + '_item_' + itemMoved).innerHTML = (up + down) / 2;
-                        console.log('Cambia a ' + ((up + down) / 2) + '.');}
-                    }
-                }
+                yValues = auxPreValues;
             }
-        }
-        pre_idsOrder = [...idsOrder];
-        if (axis == 'x')
-        {
-            pre_xIdsOrder = [...idsOrder];
-        }
-        else
-        {
-            pre_yIdsOrder = [...idsOrder];
+            if (axis == 'x')
+            {
+                xValues = auxPreValues;
+            }
+            saveValues();
         }
     }
     else
@@ -111,32 +71,6 @@ function getIdsOrder(axis)
         setTimeout(() => { getIdsOrder(axis); }, 100);
     }
 }
-function getValues()
-{
-    yValues = [];
-    xValues = [];
-    //var c = document.getElementById('yDivRange').getElementsByTagName('div');
-    var c = document.getElementById('yItemsList').getElementsByClassName('itemValue');
-    for (var i = 0; i < c.length; i++)
-    {
-        yValues.push(50);
-        xValues.push(50);
-    }
-    for (var i = 0; i < pre_yIdsOrder.length; i++)
-    {
-        try
-        {
-            yValues[Number(pre_yIdsOrder[i])] = Number(document.getElementById('value_y_item_' + pre_yIdsOrder[i]).innerHTML);
-        }catch{}
-    }
-    for (var i = 0; i < pre_xIdsOrder.length; i++)
-    {
-        try
-        {
-            xValues[Number(pre_xIdsOrder[i])] = Number(document.getElementById('value_x_item_' + pre_xIdsOrder[i]).innerHTML);
-        }catch{}
-    }
-}
 function fillAxisNames()
 {
     document.getElementById('labelLowY').innerHTML = 'Low ' + yAxisName;
@@ -144,17 +78,6 @@ function fillAxisNames()
     document.getElementById('labelLowX').innerHTML = 'Low ' + xAxisName;
     document.getElementById('labelHighX').innerHTML = 'High ' + xAxisName;
 }
-
-function drawQuadHints()
-{
-    canvas.font = fontPx + "px Arial";
-    canvas.fillText(document.getElementById('item_name_' + pre_yIdsOrder[i]).value, x + xText, y + yText);
-    canvas.fillStyle = '';
-    canvas.beginPath();
-    canvas.arc((canvasSize[0] * (xValues[Number(pre_xIdsOrder[i])] / 100)), (canvasSize[1] * (1 - (yValues[Number(pre_yIdsOrder[i])] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
-    canvas.fill();
- }
-
 function drawResult()
 {
     var fontPx = 15;
@@ -231,14 +154,14 @@ function drawResult()
     
     canvas.fillStyle = fillStyleOfItems;
     
-    for (var i = 0; i < namesMaster.length; i++)
+    for (var i = 0; i < yValues.length; i++)
     {
         var xText = 12;
         var yText = fontPx * 0.3;
 
         canvas.font = fontPx + "px Arial";
-        var x = (canvasSize[0] * (xValues[Number(pre_xIdsOrder[i])] / 100));
-        var y = (canvasSize[1] * (1 - (yValues[Number(pre_yIdsOrder[i])] / 100)));
+        var x = (canvasSize[0] * (xValues[i]['value'] / 100));
+        var y = (canvasSize[1] * (1 - (yValues[i]['value'] / 100)));
 
         if (y >= (canvasSize[1] - (fontPx * 1.5)))
         {
@@ -249,17 +172,16 @@ function drawResult()
             yText = (fontPx * 1.1);
         }
 
-        if (xValues[Number(pre_xIdsOrder[i])] > 50)
+        if (xValues[i]['value'] > 50)
         {
             xText = -12;
-            xText -= canvas.measureText(namesMaster[i]).width;
+            xText -= canvas.measureText(items[yValues[i]['index']]['name']).width;
         }
-
         canvas.font = fontPx + "px Arial";
-        canvas.fillText(document.getElementById('item_name_' + pre_yIdsOrder[i]).value, x + xText, y + yText);
+        canvas.fillText(document.getElementById('item_name_' + yValues[i]['index']).value, x + xText, y + yText);
         canvas.fillStyle = '';
         canvas.beginPath();
-        canvas.arc((canvasSize[0] * (xValues[Number(pre_xIdsOrder[i])] / 100)), (canvasSize[1] * (1 - (yValues[Number(pre_yIdsOrder[i])] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
+        canvas.arc((canvasSize[0] * (xValues[i]['value'] / 100)), (canvasSize[1] * (1 - (yValues[i]['value'] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
         canvas.fill();
     }
     canvas.fillStyle = fillStyleOFQuadrantsText;
