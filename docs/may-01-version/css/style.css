@@ -1,0 +1,191 @@
+body {
+	font-family: 'Slabo 27px', serif;
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#title
+{
+	text-align: center;
+}
+button {
+	background-color: #17A589;
+	color: white;
+	padding: .5em 1em .5em 1em ;
+	margin: 1em 1em 1em 0;
+	border: none;
+	border-radius: 10px;
+}
+button:hover {
+	background-color: #48C9B0;
+}
+ul {
+	padding: 0;
+}
+input {
+	width: 200px;
+	margin-left: 1em;
+	padding: 4px;
+}
+.smoke {
+/*	  background-image: linear-gradient(to bottom right, red, yellow);
+*/
+}
+
+.matrixLabel p {
+	text-align: center;
+	margin: auto;
+	line-height: 3rem;
+}
+
+/*.yRange .xRange {
+	display: inline-block;
+	width: 20%;
+}*/
+.custom-range {
+	display: inline-block;
+	width: 10em;
+}
+.deleteItemButton {
+	margin-left: 1em;
+}
+.gridDiv {
+	display: grid;
+	grid-template-columns: 4em 4em 4em 4em 4em;
+	grid-template-rows: 4em 10em 10em 4em 4em;
+}
+.gridDiv:nth-child(1) {
+	grid-row: 2 | 3;
+	grid-column: 2 | 4;
+	background-color: blue;
+
+}
+.gridDiv:nth-child(2) {
+	grid-column: 1 | 2;
+	grid-row: 2 | 4;
+	background-color: aqua;
+}
+.gridDiv:nth-child(3) {
+	grid-column: 4 | 5;
+	grid-row: 2 | 4;
+	background-color: purple;
+}
+.gridDiv:nth-child(4) {
+	grid-column: 2 | 4;
+	grid-row: 4 | 5;
+	background-color: green;
+}
+.gridDiv:nth-child(5) {
+	grid-column: 2 | 4;
+	grid-row: 1 | 2;
+	background-color: yellow;
+}
+
+
+
+
+
+
+
+
+
+
+
+.seeDiv {
+	display: grid;
+	grid-template-columns: 4em 4em 4em 4em;
+	grid-template-rows: 4em 10em 10em 4em;
+}
+.seeDiv div:nth-child(1) {
+	grid-row: 2 | 3;
+	grid-column: 2 | 4;
+}
+.seeDiv div:nth-child(2) {
+	grid-column: 1 | 2;
+	grid-row: 2 | 4;
+	background-color: aqua;
+}
+.seeDiv div:nth-child(3) {
+	grid-column: 4 | 5;
+	grid-row: 2 | 4;
+	background-color: purple;
+}
+.seeDiv div:nth-child(4) {
+	grid-column: 2 | 4;
+	grid-row: 4 | 5;
+	background-color: green;
+}
+.seeDiv div:nth-child(5) {
+	grid-column: 2 | 4;
+	grid-row: 1 | 2;
+	background-color: yellow;
+}
+
+#canvas
+{
+	background-color: white;
+	box-shadow: 3px 3px 30px #ddd;
+/*	position: relative;
+	left: 110px;*/
+	display: block;
+	width: 500px;
+	height: 500px;
+}
+#labelLowY, #labelHighY, #labelLowX, #labelHighX    {
+text-transform: uppercase;
+font-family: sans-serif;
+}
+.xRange .yRange {
+	color: red;
+	background-color: red;
+	width: 10em;
+}
+/*#labelHighX
+{
+	position: relative;
+	left: 300px;
+}
+#labelLowY
+{
+	position: relative;
+	top: 100px;
+}*/
+
+#xItemsList .itemName, #yItemsList .itemName{
+	display: inline-block;
+	width: 600px;
+}
+
+.lblLowY, .lblLowX {
+	display: inline-block;
+	width: 120px;
+	text-align: right;
+}
+#xItemsList, #itemsList, #yItemsList {
+	background: white;
+}
+#itemsList div, #xItemsList div, #yItemsList div {
+	border: none;
+	border-bottom: 1px solid grey;
+	height: 6em;
+}
+.item {
+	border: none;
+	border-bottom: 1px solid grey;
+}
+#createDiv
+{
+	display: none;
+}
+#rateDiv
+{
+	display: none;
+}
+#seeDiv
+{
+	display: none;
+}
+/*#yItemsList div, #xItemsList div {
+	height: 5em;
+}
+*/

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>Twoombly 2x2</title>	
+		<!-- Draggable JS -->
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.legacy.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/draggable.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/sortable.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/droppable.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/swappable.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.11/lib/plugins.js"></script>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
+		<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<!-- 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+ -->	</head>
+	<body id="body" onload="menuItemClicked('create');loadValues();saveNames();saveAxisNames();">
+		<header>
+			<div>
+				<h1 id="title">Twoombly<span class="material-icons">delete</span>
+<span class="mobileHide">, the twool for 2x2 charting</span></h1>
+			</div>
+		</header>
+		<nav id="menu">
+			<ul>
+				<button class="menuButton" onclick="menuItemClicked(this.id)" id="create">Create<span class="mobileHide"> your items</span></button>
+				<button class="menuButton" onclick="menuItemClicked(this.id)" id="rateY"><span class="mobileHide">Rate</span>Y <span class="mobileHide">Axis</span></button>
+				<button class="menuButton" onclick="menuItemClicked(this.id)" id="rateX"><span class="mobileHide">Rate</span> X<span class="mobileHide"> Axis</span></button>
+				<button class="menuButton" onclick="menuItemClicked(this.id)" id="see"><span class="mobileHide">See</span> Matrix</button>
+			</ul>
+		</nav>
+		<div id="createDiv">
+			<label"><span class="mobileHide">Value Scales</span></label>
+			<div id="axisList" onchange="verifyAxisNames();saveAxisNames();">
+				<div class="item" id="yAxis">
+					<label">Y axis</label>
+					<br>
+					<input class="itemName" type="text" value="importance" id="yAxis_name" class="inputStyle" >
+					<label class="lblRepeatedItem" id="lblYAxisRepeated"></label>
+				</div>
+				<div class="item" id="xAxis">
+					<label">X axis</label>
+					<br>
+					<input class="itemName" type="text" value="urgency" id="xAxis_name">
+					<label class="lblRepeatedItem" id="lblXAxisRepeated"></label>
+				</div>
+			</div>
+			<br>
+			<label>Items</label><label class="labelFloatRight"><span class="mobileHide">Drag items to change their <u>order</u></span></label>
+			<div id="itemsList" onchange="verifyItemsNames();">
+				<div class="item" id="item_0">
+					<input class="itemName" type="text" value="Item 1" id="item_name_0" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));saveNames();" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
+					<button class="deleteItemButton deleteBtnGrey" id="0" onclick="deleteItem(this.id);" disabled="true">Defflete</button>
+					<label class="lblRepeatedItem" id="lblItem_0"></label>
+				</div>
+			</div>
+			<button id="addButton" onclick="addItem();">+ Add an item</button>
+		</div>
+		
+		<div id="rateYDiv">
+			<label>Sort by </label>
+			<select id="slcSortY" onchange="
+				if (document.getElementById('slcSortY').selectedIndex == 0)
+				{
+					document.getElementById('btnSubmitSortY').disabled = true;
+				}
+				else
+				{
+					document.getElementById('btnSubmitSortY').disabled = false;
+					document.getElementById('btnSubmitSortY').style.backgroundColor = '#17A589';
+				}
+			">
+				<option>Select</option>
+				<option value="master">Master Order</option>
+				<option value="value">Value (High > Low)</option>
+			</select>
+			<button class="buttonGrey" id="btnSubmitSortY" onclick="submit('y', 'sort')">Submit</button>
+			<label>Actions </label>
+			<select id="slcActionsY" onclick="verifyDifferentValues('y');" onchange="
+				if (document.getElementById('slcActionsY').selectedIndex == 0)
+				{
+					document.getElementById('btnSubmitActionsY').disabled = true;
+				}
+				else
+				{
+					document.getElementById('btnSubmitActionsY').disabled = false;
+					document.getElementById('btnSubmitActionsY').style.backgroundColor = '#17A589';
+				}
+			">
+				<option>Select</option>
+				<option id="optYh" value="high">Set all to high</option>
+				<option id="optYme" value="medium">Set all to medium</option>
+				<option id="optYl" value="low">Set all to low</option>
+				<option id="optYd" value="distribute">Distribute values</option>
+				<option id="optYm" value="master">Use as master order</option>
+			</select>
+			<button id="btnSubmitActionsY" onclick="submit('y', 'action')" disabled="true">Submit</button><label id="lblChangeY" class="labelFloatRight"></label>
+			<div id="yItemsList"></div>
+			<div id="yDivRange"></div>
+		</div>
+
+		<div id="rateXDiv">
+			<label>Sort by </label>
+			<select id="slcSortX" onchange="
+				if (document.getElementById('slcSortX').selectedIndex == 0)
+				{
+					document.getElementById('btnSubmitSortX').disabled = true;
+				}
+				else
+				{
+					document.getElementById('btnSubmitSortX').disabled = false;
+					document.getElementById('btnSubmitSortX').style.backgroundColor = '#17A589';
+				}
+			">
+				<option>Select</option>
+				<option value="master">Master Order</option>
+				<option value="value">Value (High > Low)</option>
+			</select>
+			<button id="btnSubmitSortX" onclick="submit('x', 'sort')">Submit</button>
+			<label>Actions </label>
+			<select id="slcActionsX" onclick="verifyDifferentValues('x');" onchange="
+				if (document.getElementById('slcActionsX').selectedIndex == 0)
+				{
+					document.getElementById('btnSubmitActionsX').disabled = true;
+				}
+				else
+				{
+					document.getElementById('btnSubmitActionsX').disabled = false;
+					document.getElementById('btnSubmitActionsX').style.backgroundColor = '#17A589';
+				}
+			">
+				<option>Select</option>
+				<option id="optXh" value="high">Set all to high</option>
+				<option id="optXme" value="medium">Set all to medium</option>
+				<option id="optXl" value="low">Set all to low</option>
+				<option id="optXd" value="distribute">Distribute values</option>
+				<option id="optXm" value="master">Use as master order</option>
+			</select>
+			<button id="btnSubmitActionsX" onclick="submit('x', 'action')" disabled="true">Submit</button><label id="lblChangeX" class="labelFloatRight"></label>
+
+			<div id="xItemsList"></div>
+			<div id="xDivRange"></div>
+		</div>
+		
+
+
+		<div id="seeDiv">
+
+		<div id="matrixNew" class="matrixGrid">
+			<div class="matrixLabel smoke" ><p class="canvasLabel" id="labelHighY"></p></div>
+			<div class="matrixLabel smoke" ><p class="canvasLabel" id="labelHighX"></p></div>
+			<div class="matrixLabel smoke" ><p class="canvasLabel" id="labelLowY"></p></div>
+			<div class="matrixLabel smoke" ><p class="canvasLabel" id="labelLowX"></p></div>
+			<div >
+				<table id="tableSee" >
+					<tr>
+						<td ></td>
+						<td id="tdHighY" ><center></center></td>
+						<td ></td>
+					</tr>
+					<tr>
+						<td id="tdLowX" ></td>
+						<!--<td style="background-color: red;"><img id="canvasImage" src="./imgs/result.png"></td>-->
+						<td><img id="canvasImage" src="./imgs/result.png"></td>
+						<td><p class="canvasLabel" id="labelHighX"></p></td>
+					</tr>
+					<tr>
+						<td ></td>
+						<td ><center><p class="canvasLabel" id="labelLowY"></p></center></td>
+						<td ></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- deprecate in css: tdHighY -->
+
+		</div>
+		<script type="text/javascript" src="./js/configurations.js"></script>
+		<script type="text/javascript" src="./js/results.js"></script>
+		<script type="text/javascript" src="./js/localStorage.js"></script>
+	</body>
+</html>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="./js/draggableCode.js"></script>
