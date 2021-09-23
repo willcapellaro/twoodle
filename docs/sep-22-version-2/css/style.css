@@ -4,7 +4,7 @@
   --text-primary: #222;
   --text-secondary: #737373;
   --btn-text: white; 
-  --field-border: grey;
+  --field-border: #888;
   --background-primary: white; 
   --background-secondary: #9FC3E9; 
   --alert: #FF698F; 
@@ -410,14 +410,14 @@ font-size: 50%;}
 
 /*------------------------------------------------------------------------------------------------------------------------------*/
 
-/*
+
 @media (prefers-color-scheme: dark) {
 	:root {
 	  --primary-active: #4C61DB;
 	  --primary-hover: #2032B0; 
 	  --text-primary: #ddd;
 	  --text-secondary: #bbb;
-	  --field-border: red;
+	  --field-border: grey;
 	  --btn-text: #ddd; 
 	  --background-primary: #222; 
 	  --background-secondary: #0A3463; 
@@ -429,7 +429,7 @@ font-size: 50%;}
 
 	}
 }
-*/
+
 
 
 

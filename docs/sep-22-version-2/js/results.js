@@ -9,20 +9,20 @@ var idsOrder = [];
 var itemMoved = -1;
 function getIdsOrder(axis)
 {
-    var preValues = [...yValues];
     idsOrder = [];
     var c = document.getElementById(axis + 'ItemsList').children;
     for (var i = 0; i < c.length; i++)
     {
         idsOrder.push(Number(c[i].id.split('_')[2]));
     }
-    if (axis == 'x')
-    {
-        preValues = [...xValues];
-    }
     if (idsOrder.length == items.length)
     {
-        distribute(axis);
+        var preValues = [...yValues];
+        if (axis == 'x')
+        {
+            preValues = [...xValues];
+        }
+
         var changes = false;
         for (var i = 0; i < idsOrder.length; i++)
         {
@@ -53,6 +53,7 @@ function getIdsOrder(axis)
             {
                 xValues = auxPreValues;
             }
+            distribute(axis);
             saveValues();
         }
     }
@@ -160,8 +161,17 @@ function drawResult()
         var yText = fontPx * 0.3;
 
         canvas.font = fontPx + "px Arial";
-        var x = (canvasSize[0] * (xValues[i]['value'] / 100));
         var y = (canvasSize[1] * (1 - (yValues[i]['value'] / 100)));
+        var x;
+        var xIndex;
+        for (var j = 0; j < xValues.length; j++)
+        {
+            if (xValues[j]['index'] == yValues[i]['index'])
+            {
+                x = (canvasSize[0] * (xValues[j]['value'] / 100));
+                xIndex = j;
+            }
+        }
 
         if (y >= (canvasSize[1] - (fontPx * 1.5)))
         {
@@ -172,16 +182,23 @@ function drawResult()
             yText = (fontPx * 1.1);
         }
 
-        if (xValues[i]['value'] > 50)
+        if (xValues[xIndex]['value'] > 50)
         {
             xText = -12;
-            xText -= canvas.measureText(items[yValues[i]['index']]['name']).width;
+            for (var j = 0; j < items.length; j++)
+            {
+                if (items[j]['index'] == yValues[i]['index'])
+                {
+                    xText -= canvas.measureText(items[j]['name']).width;
+                }
+            }
         }
         canvas.font = fontPx + "px Arial";
         canvas.fillText(document.getElementById('item_name_' + yValues[i]['index']).value, x + xText, y + yText);
         canvas.fillStyle = '';
+        
         canvas.beginPath();
-        canvas.arc((canvasSize[0] * (xValues[i]['value'] / 100)), (canvasSize[1] * (1 - (yValues[i]['value'] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
+        canvas.arc((canvasSize[0] * (xValues[xIndex]['value'] / 100)), (canvasSize[1] * (1 - (yValues[i]['value'] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
         canvas.fill();
     }
     canvas.fillStyle = fillStyleOFQuadrantsText;

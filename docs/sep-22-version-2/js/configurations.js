@@ -76,46 +76,22 @@ function distribute(axis)
 		document.getElementById(c[0]['id']).innerHTML = 100;
 		if (axis == 'y')
 		{
-			for (var i = 0; i < yValues.length; i++)
-			{
-				if (yValues[i]['index'] == Number(c[0]['id'].split('_')[3]))
-				{
-					yValues[i]['value'] = 100;
-				}
-			}
+			yValues[Number(c[0]['id'].split('_')[3])]['value'] = 100;
 		}
 		if (axis == 'x')
 		{
-			for (var i = 0; i < xValues.length; i++)
-			{
-				if (xValues[i]['index'] == Number(c[0]['id'].split('_')[3]))
-				{
-					xValues[i]['value'] = 100;
-				}
-			}
+			xValues[Number(c[0]['id'].split('_')[3])]['value'] = 100;
 		}
 		if (c.length > 1)
 		{
 			document.getElementById(c[c.length - 1]['id']).innerHTML = 0;
 			if (axis == 'y')
 			{
-				for (var i = 0; i < yValues.length; i++)
-				{
-					if (yValues[i]['index'] == Number(c[c.length - 1]['id'].split('_')[3]))
-					{
-						yValues[i]['value'] = 0;
-					}
-				}
+				yValues[Number(c[c.length - 1]['id'].split('_')[3])]['value'] = 0;
 			}
 			if (axis == 'x')
 			{
-				for (var i = 0; i < xValues.length; i++)
-				{
-					if (xValues[i]['index'] == Number(c[c.length - 1]['id'].split('_')[3]))
-					{
-						xValues[i]['value'] = 0;
-					}
-				}
+				xValues[Number(c[c.length - 1]['id'].split('_')[3])]['value'] = 0;
 			}
 			if (c.length > 2)
 			{

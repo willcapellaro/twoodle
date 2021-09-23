@@ -2,8 +2,6 @@ var validItemsNames = true;
 var validAxisNames = true;
 var items = [];
 
-var yAxisName = document.getElementById('yAxis_name').value;
-var xAxisName = document.getElementById('xAxis_name').value;
 function menuItemClicked(item)
 {
 	if (validItemsNames && validAxisNames)
@@ -103,11 +101,11 @@ function distribute(axis)
 					document.getElementById(c[i]['id']).innerHTML = (100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2);
 					if (axis == 'y')
 					{
-						yValues[Number(c[i]['id'].split('_')[3])]['value'] = (100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2);
+						yValues[Number(c[i]['id'].split('_')[3])]['value'] = Number((100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2));
 					}
 					if (axis == 'x')
 					{
-						xValues[Number(c[i]['id'].split('_')[3])]['value'] = (100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2);
+						xValues[Number(c[i]['id'].split('_')[3])]['value'] = Number((100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2));
 					}
 				}
 		    }
@@ -173,11 +171,11 @@ function deleteItem(item)
 			j += 1;
 		}
 	}
-	if (items.length == 1)
+	/*if (items.length == 1)
 	{
 		document.getElementById(items[0].id.split('_')[1]).disabled = true;
 		document.getElementById(items[0].id.split('_')[1]).className = 'buttonGrey';
-	}
+	}*/
 	var auxValues = [];
 	for (var i = 0; i < yValues.length; i++)
 	{
@@ -213,7 +211,7 @@ function deleteItem(item)
 	}
 	xValues = auxValues;
 	getItems();
-	saveValues();
+	//saveValues();
 }
 function verifyItemsNames()
 {
@@ -335,7 +333,8 @@ function getItems()
 				items.push({'name' : document.getElementById('item_name_' + c[i].id.split('_')[1]).value, 'index' : Number(c[i].id.split('_')[1])});
 				document.getElementById('lblItem_' + c[i].id.split('_')[1]).innerHTML = '';
 			}
-			localStorage.setItem('items2', JSON.stringify(items));
+			//localStorage.setItem('items', JSON.stringify(items));
+			saveValues();
 		}
 		else
 		{

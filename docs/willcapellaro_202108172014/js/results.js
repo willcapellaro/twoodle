@@ -9,20 +9,20 @@ var idsOrder = [];
 var itemMoved = -1;
 function getIdsOrder(axis)
 {
+    var preValues = [...yValues];
     idsOrder = [];
     var c = document.getElementById(axis + 'ItemsList').children;
     for (var i = 0; i < c.length; i++)
     {
         idsOrder.push(Number(c[i].id.split('_')[2]));
     }
+    if (axis == 'x')
+    {
+        preValues = [...xValues];
+    }
     if (idsOrder.length == items.length)
     {
-        var preValues = [...yValues];
-        if (axis == 'x')
-        {
-            preValues = [...xValues];
-        }
-
+        distribute(axis);
         var changes = false;
         for (var i = 0; i < idsOrder.length; i++)
         {
@@ -53,7 +53,6 @@ function getIdsOrder(axis)
             {
                 xValues = auxPreValues;
             }
-            distribute(axis);
             saveValues();
         }
     }
@@ -86,9 +85,9 @@ function drawResult()
     var h;
     var found = false;
     
-    var strokeStyleOfQuadrants = 'grey';
+    var strokeStyleOfQuadrants = '#ff0000';
     var fillStyleOfItems = "#000000";
-    var fillStyleOFQuadrantsText = "lightblue";
+    var fillStyleOFQuadrantsText = "#ff0000";
 
     var rules;
     try
@@ -204,11 +203,9 @@ function drawResult()
     canvas.fillStyle = fillStyleOFQuadrantsText;
 
     var texts = conditionals(xAxisName, yAxisName);
-            canvas.font = (fontPx*2) + "px Arial";
+    
     canvas.fillText(texts[0], (canvasSize[0] * 0.25) - (canvas.measureText(texts[0]).width * 0.5), (canvasSize[1] * 0.25) + (fontPx * 0.5));
     canvas.fillText(texts[1], (canvasSize[0] * 0.75) - (canvas.measureText(texts[1]).width * 0.5), (canvasSize[1] * 0.25) + (fontPx * 0.5));
     canvas.fillText(texts[2], (canvasSize[0] * 0.25) - (canvas.measureText(texts[2]).width * 0.5), (canvasSize[1] * 0.75) + (fontPx * 0.5));
     canvas.fillText(texts[3], (canvasSize[0] * 0.75) - (canvas.measureText(texts[3]).width * 0.5), (canvasSize[1] * 0.75) + (fontPx * 0.5));
-        canvas.font = fontPx + "px Arial";
-
 }
