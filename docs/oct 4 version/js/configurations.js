@@ -1,6 +1,10 @@
 var validItemsNames = true;
 var validAxisNames = true;
 var items = [];
+var distributing = false;
+
+var yAxisName;
+var xAxisName;
 
 function menuItemClicked(item)
 {
@@ -28,9 +32,6 @@ function menuItemClicked(item)
 				}
 				distribute('y');
     			distribute('x');
-				var itemsListSortable = yItemsListSortable;
-				itemsListSortable.removeContainer(document.getElementById('yItemsList'));
-				itemsListSortable.addContainer(document.getElementById('yItemsList'));
 				break;
 			case "rateX":
 				getItems();
@@ -46,9 +47,6 @@ function menuItemClicked(item)
 				}
 				distribute('y');
     			distribute('x');
-				var itemsListSortable = xItemsListSortable;
-				itemsListSortable.removeContainer(document.getElementById('xItemsList'));
-				itemsListSortable.addContainer(document.getElementById('xItemsList'));
 				break;
 			case "see":
 				getItems();
@@ -74,25 +72,50 @@ function distribute(axis)
 	var c = document.getElementById(axis + 'ItemsList').getElementsByClassName('itemValue');
 	if (c.length)
 	{
+		distributing = true;
 		document.getElementById(c[0]['id']).innerHTML = 100;
 		if (axis == 'y')
 		{
-			yValues[Number(c[0]['id'].split('_')[3])]['value'] = 100;
+			for (var i = 0; i < yValues.length; i++)
+			{
+				if (yValues[i]['index'] == Number(c[0]['id'].split('_')[3]))
+				{
+					yValues[i]['value'] = 100;
+				}
+			}
 		}
 		if (axis == 'x')
 		{
-			xValues[Number(c[0]['id'].split('_')[3])]['value'] = 100;
+			for (var i = 0; i < xValues.length; i++)
+			{
+				if (xValues[i]['index'] == Number(c[0]['id'].split('_')[3]))
+				{
+					xValues[i]['value'] = 100;
+				}
+			}
 		}
 		if (c.length > 1)
 		{
 			document.getElementById(c[c.length - 1]['id']).innerHTML = 0;
 			if (axis == 'y')
 			{
-				yValues[Number(c[c.length - 1]['id'].split('_')[3])]['value'] = 0;
+				for (var i = 0; i < yValues.length; i++)
+				{
+					if (yValues[i]['index'] == Number(c[c.length - 1]['id'].split('_')[3]))
+					{
+						yValues[i]['value'] = 0;
+					}
+				}
 			}
 			if (axis == 'x')
 			{
-				xValues[Number(c[c.length - 1]['id'].split('_')[3])]['value'] = 0;
+				for (var i = 0; i < xValues.length; i++)
+				{
+					if (xValues[i]['index'] == Number(c[c.length - 1]['id'].split('_')[3]))
+					{
+						xValues[i]['value'] = 0;
+					}
+				}
 			}
 			if (c.length > 2)
 			{
@@ -101,19 +124,43 @@ function distribute(axis)
 					document.getElementById(c[i]['id']).innerHTML = (100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2);
 					if (axis == 'y')
 					{
-						yValues[Number(c[i]['id'].split('_')[3])]['value'] = Number((100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2));
+						for (var j = 0; j < yValues.length; j++)
+	    				{
+	    					if (yValues[j]['index'] == Number(c[i]['id'].split('_')[3]))
+	    					{
+	    						yValues[j]['value'] = Number((100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2));
+	    					}
+	    				}
 					}
 					if (axis == 'x')
 					{
-						xValues[Number(c[i]['id'].split('_')[3])]['value'] = Number((100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2));
+						for (var j = 0; j < xValues.length; j++)
+	    				{
+	    					if (xValues[j]['index'] == Number(c[i]['id'].split('_')[3]))
+	    					{
+	    						xValues[j]['value'] = Number((100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2));
+	    					}
+	    				}
 					}
 				}
 		    }
 		}
+		distributing = false;
 	}
 }
 function addItem()
 {
+	var nextItemNumber = 1;
+	for (var i = 0; i < items.length; i++)
+	{
+		if (items[i]['name'].toLowerCase().indexOf('item ') != -1)
+		{
+			if (Number(items[i]['name'].toLowerCase().split('item ')[1]) >= nextItemNumber)
+			{
+				nextItemNumber = Number(items[i]['name'].toLowerCase().split('item ')[1]) + 1;
+			}
+		}
+	}
 	var nextId = 0;
 	var c = document.getElementById('itemsList').children;
 	if (c.length)
@@ -126,19 +173,28 @@ function addItem()
 			}
 		}
 	}
+	flagShareUpdate = false;
 	$("#itemsList").append(`
 		<div id="item_` + nextId + `" onmouseup="getItems();">
-			<input class="itemName" type="text" value="Item ` + (nextId + 1) + `" id="item_name_` + nextId + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
+			<input class="itemName" type="text" value="Item ` + nextItemNumber + `" id="item_name_` + nextId + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
 			<button class="deleteItemButton" id="` + nextId + `" onclick="deleteItem(this.id);">Delete</button>
 			<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
 		</div>`
 	);
+	flagShareUpdate = true;
 	document.getElementById(c[0].id.split('_')[1]).disabled = false;
 	document.getElementById(c[0].id.split('_')[1]).className = 'itemBackGround';
-	verifyItemsNames();
-	yValues.push({'value' : 0, 'index' : nextId});
-	xValues.push({'value' : 0, 'index' : nextId});
-	saveValues();
+	verifyItemsNames(false);
+	if (validItemsNames)
+	{
+		yValues.push({'value' : 0, 'index' : nextId});
+		xValues.push({'value' : 0, 'index' : nextId});
+		fillLists('y', false);
+		fillLists('x', false);
+		distribute('y');
+		distribute('x');
+		saveValues();
+	}
 }
 function deleteItem(item)
 {
@@ -153,7 +209,6 @@ function deleteItem(item)
 			initialId = i;
 		}	
 	}
-
 	$('#item_' + Number(item)).remove();
 	var j = 0;
 	items = document.getElementById('itemsList').children;
@@ -171,11 +226,6 @@ function deleteItem(item)
 			j += 1;
 		}
 	}
-	/*if (items.length == 1)
-	{
-		document.getElementById(items[0].id.split('_')[1]).disabled = true;
-		document.getElementById(items[0].id.split('_')[1]).className = 'buttonGrey';
-	}*/
 	var auxValues = [];
 	for (var i = 0; i < yValues.length; i++)
 	{
@@ -211,17 +261,21 @@ function deleteItem(item)
 	}
 	xValues = auxValues;
 	getItems();
-	//saveValues();
 }
-function verifyItemsNames()
+function verifyItemsNames(shareUpdate = true)
 {
-	getItems();
 	var repetidos = [];
-	for (var i = 0; i < items.length - 1; i++)
+	var auxItems = [];
+	var c = document.getElementById('itemsList').children;
+	for (var i = 0; i < c.length; i++)
 	{
-		for (var j = i + 1; j < items.length; j++)
+		auxItems.push(document.getElementById('item_name_' + c[i].id.split('_')[1]).value);
+	}
+	for (var i = 0; i < auxItems.length - 1; i++)
+	{
+		for (var j = i + 1; j < auxItems.length; j++)
 		{
-			if (items[i]['name'] == items[j]['name'])
+			if (auxItems[i] == auxItems[j])
 			{
 				repetidos.push(i);
 				repetidos.push(j);
@@ -233,6 +287,7 @@ function verifyItemsNames()
 	{
 		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated"> (repeated name)</p>';
 	}
+	getItems(shareUpdate && flagShareUpdate);
 }
 function verifyAxisNames()
 {
@@ -259,9 +314,8 @@ function verifyAxisNames()
 		validAxisNames = false;
 	}
 }
-function fillLists(axis = null)
+function fillLists(axis = null, shareUpdate = true)
 {
-	saveValues();
 	var values = [...yValues];
 	var itemsListSortable = yItemsListSortable;
 	var axisName = yAxisName;
@@ -295,9 +349,15 @@ function fillLists(axis = null)
 			</div>`
 		);
 	}
+	distribute(axis);
+	if (shareUpdate)
+	{
+		saveValues();
+	}
 	itemsListSortable.removeContainer(document.getElementById(axis + 'ItemsList'));
+	itemsListSortable.addContainer(document.getElementById(axis + 'ItemsList'));
 }
-function getItems()
+function getItems(shareUpdate = true)
 {
 	if (validItemsNames && validAxisNames)
 	{
@@ -333,12 +393,14 @@ function getItems()
 				items.push({'name' : document.getElementById('item_name_' + c[i].id.split('_')[1]).value, 'index' : Number(c[i].id.split('_')[1])});
 				document.getElementById('lblItem_' + c[i].id.split('_')[1]).innerHTML = '';
 			}
-			//localStorage.setItem('items', JSON.stringify(items));
-			saveValues();
+			if (shareUpdate)
+			{
+				saveValues();
+			}
 		}
 		else
 		{
-			setTimeout(() => { getItems(); }, 100);
+			setTimeout(() => { getItems(); }, 10);
 		}
 	}
 }

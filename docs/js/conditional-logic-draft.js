@@ -3,58 +3,41 @@
 // i'd like to have just a section of mappings, or have a function covert
 // this goes along with the button to swap X/Y.
 
-
 function conditionals(x, y)
 {
 	x = x.toLowerCase();
 	y = y.toLowerCase();
 	var texts = [('high ' + y + ' and low ' + x), ('high ' + y + ' and high ' + x), ('low ' + y + ' and high ' + x), ('low ' + y + ' and low ' + x)];
-	if (x == 'urgency' && y == 'importance')
-	{
-		texts[0] = 'schedule';//topleft
-        texts[1] = 'focus';//topright
-		texts[2] = 'avoid';//bottomleft
-		texts[3] = 'delegate';//bottomright
-	}
+	
+	texts = getTexts(x, y, texts, ['urgency', 'importance'], ['schedule', 'focus', 'avoid', 'delegate']);
+	/*In this case when x = 'urgency' and y = 'importance', then the texts will be located as follows:
+		'schedule'//topleft
+	    'focus'//topright
+		'avoid'//bottomleft
+		'delegate'//bottomright
 
-	if (x == 'importance')
+	If the values of x and y are swapped, then the order will be:
+		'delegate'//topleft
+	    'focus'//topright
+		'avoid'//bottomleft
+		'schedule'//bottomright
+	In other words, it will go from '0, 1, 2, 3' to '3, 1, 2, 0'.*/
+	
+	texts = getTexts(x, y, texts, ['importance', 'ease'], ['luxury', 'strategic', 'distractions', 'high value']);
+	
+	texts = getTexts(x, y, texts, ['low balance', 'high interest'], ['pay off first', 'pay down first', 'luxury', 'high value']);
+	
+	return texts;
+}
+function getTexts(x, y, texts, axis, auxTexts)
+{
+	if (x == axis[0] && y == axis[1])
 	{
-		if (y == 'urgency') 
-		{
-			texts[0] = 'avoid';
-			texts[1] = 'focus';
-			texts[2] = 'schedule';
-			texts[3] = 'delegate';
-		}
-		if (y == 'ease')
-		{
-			texts[0] = 'luxury';
-			texts[1] = 'strategic';
-			texts[2] = 'distractions';
-			texts[3] = 'high value';
-		}
+		texts = [...auxTexts];
 	}
-	if (x == 'ease' && y == 'importance')
+	if (x == axis[1] && y == axis[0])
 	{
-		texts[0] = 'distractions';
-		texts[1] = 'strategic';
-		texts[2] = 'luxury';
-		texts[3] = 'high value';
-	}
-
-	if (x == 'low balance' && y == 'high interest')
-	{
-		texts[0] = 'pay off first';
-		texts[1] = 'pay down first';
-		texts[2] = 'luxury';
-		texts[3] = 'high value';
-	}
-	if (x == 'high interest' && y == 'low balance')
-	{
-		texts[0] = 'luxury';
-		texts[1] = 'pay down first';
-		texts[2] = 'pay off first';
-		texts[3] = 'high value';
+		texts = [auxTexts[3], auxTexts[1], auxTexts[2], auxTexts[0]];
 	}
 	return texts;
 }

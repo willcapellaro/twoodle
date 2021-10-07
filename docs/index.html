@@ -19,10 +19,17 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
-		<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 		<!--<link id="cssFile" rel="stylesheet" type="text/css" href="css/plusbold.css">-->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+				<script src="https://kit.fontawesome.com/ab0cb79ff8.js" crossorigin="anonymous"></script> 
+
 		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -33,6 +40,7 @@
 		<script type="text/javascript" src="./js/configurations.js"></script>
 		<script type="text/javascript" src="./js/results.js"></script>
 		<script type="text/javascript" src="./js/localStorage.js"></script>
+			<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body onload="loadValues();menuItemClicked('create');saveAxisNames();">
 		<header>
@@ -48,16 +56,16 @@
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="see"><span class="mobileHide">See</span> Matrix</button>
 			</ul>
 		</nav>
-		<div id="createDiv">
-			<label">Value Scales</label>
+		<div id="createDiv" class="">
+			<label">Value Scales</label><button type="button" class="linkbtn" onclick="swap();">Swap X/Y</button>
 			<div id="axisList" onchange="verifyAxisNames();saveAxisNames();">
-				<div class="item" id="yAxis>
+				<div class="item itemLabel" id="yAxis>
 					<label">Y axis</label>
 					<br>
 					<input class="itemName" type="text" value="importance" id="yAxis_name">
 					<label class="lblRepeatedItem" id="lblYAxisRepeated"></label>
 				</div>
-				<div class="item" id="xAxis">
+				<div class="item itemLabel" id="xAxis">
 					<label">X axis</label>
 					<br>
 					<input class="itemName" type="text" value="urgency" id="xAxis_name">
@@ -65,33 +73,24 @@
 				</div>
 			</div>
 			<br>
-			<label>Items</label><label class="labelFloatRight"><span class="mobileHide">Drag items to change their order</span></label>
-			<div><label>Actions</label>
-				<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
-				<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Local Storage</button>
-			</div>
+			<label>Items</label><label class="labelFloatRight"><span class="mobileHide" style = "font-weight: 300;">Drag items to change their display order only</span></label>
+			
 			
 			<div id="itemsList" onchange="verifyItemsNames();"></div>
 			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
-		<div id="rateYDiv">
-			<label>Actions</label>
-			<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
-			<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Local Storage</button>
+		<div id="rateYDiv" class="">
 			<label id="lblChangeY" class="labelFloatRight"></label>
 			<div id="yItemsList"></div>
+			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
-		<div id="rateXDiv">
-			<label>Actions</label>
-			<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
-			<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Local Storage</button>
+		<div id="rateXDiv" class="">
 			<label id="lblChangeX" class="labelFloatRight"></label>
 			<div id="xItemsList"></div>
+			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
-		<div id="seeDiv">
-			<label>Actions</label>
-			<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
-			<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Local Storage</button>
+		<div id="seeDiv" class="">
+			
 			<div>
 				<div id="matrixNew" class="matrixGrid" >
 					<div class="matrixLabel smoke">
@@ -110,7 +109,14 @@
 				</div>
 			</div>
 		</div>
+
 		
+		<label>Actions</label>
+		<span class="hiddenTechBox">
+			<button data-toggle="modal" data-target="#modalClear" class="linkbtn">Clear Local Storage</option>
+			<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" class="linkbtn">Display Results</button>
+		</span>
+
 		<div class="modal fade" id="modalClear" tabindex="-1" role="dialog" aria-labelledby="modalClearTitle" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -131,11 +137,13 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="modalLocalStorageTitle">Locale Storage Contents</h5>
+						<h5 class="modal-title" id="modalLocalStorageTitle">Twoodle Results</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
+					<button type="button" class="localeStorageTabs" onclick="displayLocalStorage('readable');">Readable</button>
+					<button type="button" class="localeStorageTabs" onclick="displayLocalStorage('code');">Code</button>
 					<div class="modal-body" id="localStorageContents"></div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

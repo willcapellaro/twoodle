@@ -4,7 +4,7 @@
   --text-primary: #222;
   --text-secondary: #737373;
   --btn-text: white; 
-  --field-border: #888;
+  --field-border: grey;
   --background-primary: white; 
   --background-secondary: #9FC3E9; 
   --alert: #FF698F; 
@@ -12,16 +12,15 @@
 
 }
 
-
-
 html {
-	 	background-color: var(--background-primary)
-
+	 	background-color: var(--background-primary);
+font-family: 'Poppins', sans-serif;
 }
 
 body {
 /*	width: 90vw;*/
- 	font-family: 'Open Sans', sans-serif;
+font-family: 'Poppins', sans-serif;
+
  	margin-left: auto;
  	margin-right: auto;
  	padding-right: 100px;
@@ -61,7 +60,7 @@ nav {
 	border-bottom: 4px var(--primary-active) solid;
 }
 h1, h2, h3, h4, h5, h6 {
- 	font-family: 'Archivo', sans-serif;
+
 	font-weight: 500;
   	color: var(--text-primary);
 }
@@ -115,8 +114,6 @@ h1, h2, h3, h4, h5, h6 {
 .canvasLabel {
 	color: var(--text-secondary);
 }
-
-
 
 
 button {
@@ -312,7 +309,11 @@ grid-column: 2 / 3; grid-row: 2 / 3;
 }
 
 
+.itemLabel {
 
+	  	color: var(--text-primary);
+
+}
 
 .canvasImage {
 /*	position: absolute;
@@ -325,7 +326,6 @@ grid-column: 2 / 3; grid-row: 2 / 3;
 
 #labelLowY, #labelHighY, #labelLowX, #labelHighX    {
 text-transform: uppercase;
-/*font-family: sans-serif;*/
 }
 .xRange .yRange {
 	color: pink;
@@ -378,6 +378,11 @@ text-transform: uppercase;
 	border: none;
 	border-bottom: 1px solid var(--field-border);
 }
+
+#itemsList, #xItemsList, #yItemsList {
+	background-color: transparent;
+}
+
 .item {
 	border: none;
 	border-bottom: 1px solid var(--field-border);
@@ -489,6 +494,7 @@ header {
 #createDiv, #rateYDiv, #rateXDiv, #seeDiv { 
     padding-left: 16px;
     padding-right: 16px;
+    background-color: transparent;
 }
 
    .menuButton {
@@ -541,7 +547,9 @@ header {
 
 }
 
-
+.localStorageContents {
+	text-align: center;
+}
 
 /*
 
@@ -566,3 +574,6 @@ background-color: pink;
 
 	*/
 
+.tab {
+	background-color: var(--focus);
+}

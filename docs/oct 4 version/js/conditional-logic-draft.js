@@ -1,3 +1,8 @@
+// marcelo, this is the doc that needs a logic improvement. I don't want to have to have to code the same conditions twice.
+// see the conditions here, they are all sets of two duplicates
+// i'd like to have just a section of mappings, or have a function covert
+// this goes along with the button to swap X/Y.
+
 function conditionals(x, y)
 {
 	x = x.toLowerCase();
@@ -13,7 +18,7 @@ function conditionals(x, y)
 
 	if (x == 'importance')
 	{
-		if (y == 'urgency')
+		if (y == 'urgency') 
 		{
 			texts[0] = 'avoid';
 			texts[1] = 'focus';

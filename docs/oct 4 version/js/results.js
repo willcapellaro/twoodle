@@ -86,9 +86,9 @@ function drawResult()
     var h;
     var found = false;
     
-    var strokeStyleOfQuadrants = '#ff0000';
+    var strokeStyleOfQuadrants = 'grey';
     var fillStyleOfItems = "#000000";
-    var fillStyleOFQuadrantsText = "#ff0000";
+    var fillStyleOFQuadrantsText = "lightblue";
 
     var rules;
     try
@@ -153,14 +153,64 @@ function drawResult()
     canvas.lineTo(canvasSize[0], (canvasSize[1] / 2));
     canvas.stroke();
     
+    canvas.fillStyle = fillStyleOFQuadrantsText;
+    var texts = conditionals(xAxisName, yAxisName);
+        canvas.font = (fontPx*2) + "px 'Poppins'"; // marcelo, can you build in a condition to make this text small/large depending on the character count of the axis label. If one axis label > 22 characters, then make it the small text size. Otherwise, large.
+        if (texts[0].length > 16)
+        {
+            var disminution = 0.01;
+            canvas.font = (fontPx * 1.99) + "px 'Poppins'";
+            while (canvas.measureText(texts[0]).width >= (canvasSize[0] * 0.49))
+            {
+                disminution += 0.01;
+                canvas.font = (fontPx * (2 - disminution)) + "px 'Poppins'";
+            }
+        }
+        canvas.fillText(texts[0], (canvasSize[0] * 0.25) - (canvas.measureText(texts[0]).width * 0.5), (canvasSize[1] * 0.25) + (fontPx * 0.5));
+        canvas.font = (fontPx*2) + "px 'Poppins'";
+        if (texts[1].length > 16)
+        {
+            var disminution = 0.01;
+            canvas.font = (fontPx * 1.99) + "px 'Poppins'";
+            while (canvas.measureText(texts[1]).width >= (canvasSize[0] * 0.49))
+            {
+                disminution += 0.01;
+                canvas.font = (fontPx * (2 - disminution)) + "px 'Poppins'";
+            }
+        }
+        canvas.fillText(texts[1], (canvasSize[0] * 0.75) - (canvas.measureText(texts[1]).width * 0.5), (canvasSize[1] * 0.25) + (fontPx * 0.5));
+        canvas.font = (fontPx*2) + "px 'Poppins'";
+        if (texts[2].length > 16)
+        {
+            var disminution = 0.01;
+            canvas.font = (fontPx * 1.99) + "px 'Poppins'";
+            while (canvas.measureText(texts[2]).width >= (canvasSize[0] * 0.49))
+            {
+                disminution += 0.01;
+                canvas.font = (fontPx * (2 - disminution)) + "px 'Poppins'";
+            }
+        }
+        canvas.fillText(texts[2], (canvasSize[0] * 0.25) - (canvas.measureText(texts[2]).width * 0.5), (canvasSize[1] * 0.75) + (fontPx * 0.5));
+        canvas.font = (fontPx*2) + "px 'Poppins'";
+        if (texts[3].length > 16)
+        {
+            var disminution = 0.01;
+            canvas.font = (fontPx * 1.99) + "px 'Poppins'";
+            while (canvas.measureText(texts[3]).width >= (canvasSize[0] * 0.49))
+            {
+                disminution += 0.01;
+                canvas.font = (fontPx * (2 - disminution)) + "px 'Poppins'";
+            }
+        }
+        canvas.fillText(texts[3], (canvasSize[0] * 0.75) - (canvas.measureText(texts[3]).width * 0.5), (canvasSize[1] * 0.75) + (fontPx * 0.5));
+
     canvas.fillStyle = fillStyleOfItems;
-    
     for (var i = 0; i < yValues.length; i++)
     {
         var xText = 12;
         var yText = fontPx * 0.3;
 
-        canvas.font = fontPx + "px Arial";
+        canvas.font = fontPx + "px 'Poppins'";
         var y = (canvasSize[1] * (1 - (yValues[i]['value'] / 100)));
         var x;
         var xIndex;
@@ -193,7 +243,7 @@ function drawResult()
                 }
             }
         }
-        canvas.font = fontPx + "px Arial";
+        canvas.font = fontPx + "px 'Poppins'";
         canvas.fillText(document.getElementById('item_name_' + yValues[i]['index']).value, x + xText, y + yText);
         canvas.fillStyle = '';
         
@@ -201,12 +251,4 @@ function drawResult()
         canvas.arc((canvasSize[0] * (xValues[xIndex]['value'] / 100)), (canvasSize[1] * (1 - (yValues[i]['value'] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
         canvas.fill();
     }
-    canvas.fillStyle = fillStyleOFQuadrantsText;
-
-    var texts = conditionals(xAxisName, yAxisName);
-    
-    canvas.fillText(texts[0], (canvasSize[0] * 0.25) - (canvas.measureText(texts[0]).width * 0.5), (canvasSize[1] * 0.25) + (fontPx * 0.5));
-    canvas.fillText(texts[1], (canvasSize[0] * 0.75) - (canvas.measureText(texts[1]).width * 0.5), (canvasSize[1] * 0.25) + (fontPx * 0.5));
-    canvas.fillText(texts[2], (canvasSize[0] * 0.25) - (canvas.measureText(texts[2]).width * 0.5), (canvasSize[1] * 0.75) + (fontPx * 0.5));
-    canvas.fillText(texts[3], (canvasSize[0] * 0.75) - (canvas.measureText(texts[3]).width * 0.5), (canvasSize[1] * 0.75) + (fontPx * 0.5));
 }

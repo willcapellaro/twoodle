@@ -17,6 +17,11 @@ function menuItemClicked(item)
 				document.getElementById("rateXDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
 				document.getElementById("createDiv").style.display = "block";
+				
+				document.getElementById('create').classList.add('activeTab');
+				document.getElementById('rateY').classList.remove('activeTab');
+				document.getElementById('rateX').classList.remove('activeTab');
+				document.getElementById('see').classList.remove('activeTab');
 				break;
 			case "rateY":
 				getItems();
@@ -25,6 +30,11 @@ function menuItemClicked(item)
 				document.getElementById("createDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
+				
+				document.getElementById('create').classList.remove('activeTab');
+				document.getElementById('rateY').classList.add('activeTab');
+				document.getElementById('rateX').classList.remove('activeTab');
+				document.getElementById('see').classList.remove('activeTab');
 				if (!(document.getElementById("rateYDiv").style.display == 'block'))
 				{
 					document.getElementById("rateYDiv").style.display = "block";
@@ -40,6 +50,11 @@ function menuItemClicked(item)
 				document.getElementById("createDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
 				document.getElementById("rateYDiv").style.display = "none";
+				
+				document.getElementById('create').classList.remove('activeTab');
+				document.getElementById('rateY').classList.remove('activeTab');
+				document.getElementById('rateX').classList.add('activeTab');
+				document.getElementById('see').classList.remove('activeTab');
 				if (!(document.getElementById("rateXDiv").style.display == 'block'))
 				{
 					document.getElementById("rateXDiv").style.display = "block";
@@ -60,6 +75,11 @@ function menuItemClicked(item)
 				document.getElementById("rateYDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "block";
+				
+				document.getElementById('create').classList.remove('activeTab');
+				document.getElementById('rateY').classList.remove('activeTab');
+				document.getElementById('rateX').classList.remove('activeTab');
+				document.getElementById('see').classList.add('activeTab');
 				drawResult();
 				break;
 			default:
@@ -177,7 +197,7 @@ function addItem()
 	$("#itemsList").append(`
 		<div id="item_` + nextId + `" onmouseup="getItems();">
 			<input class="itemName" type="text" value="Item ` + nextItemNumber + `" id="item_name_` + nextId + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
-			<button class="deleteItemButton" id="` + nextId + `" onclick="deleteItem(this.id);">Delete</button>
+			<button class="deleteItemButton" id="` + nextId + `" onclick="deleteItem(this.id);"><i class="fas fa-trash"></i></button>
 			<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
 		</div>`
 	);
@@ -325,7 +345,7 @@ function fillLists(axis = null, shareUpdate = true)
 		values = [...xValues];
 		axisName = xAxisName;
 	}
-	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = 'Sort items from highest to lower "' + axisName + '"';
+	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = '<span style="font-weight: 300";>Sort items from highest to lowest </span><span class="emphasis">' + axisName + '</span>';
 	document.getElementById(axis + 'ItemsList').innerHTML = '';
 	var c = document.getElementById(axis + 'ItemsList').children;
 	if (!c.length)
@@ -400,7 +420,7 @@ function getItems(shareUpdate = true)
 		}
 		else
 		{
-			setTimeout(() => { getItems(); }, 100);
+			setTimeout(() => { getItems(); }, 10);
 		}
 	}
 }

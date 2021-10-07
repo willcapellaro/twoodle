@@ -19,8 +19,14 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
-		<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+
 		<!--<link id="cssFile" rel="stylesheet" type="text/css" href="css/plusbold.css">-->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
 		
@@ -33,6 +39,7 @@
 		<script type="text/javascript" src="./js/configurations.js"></script>
 		<script type="text/javascript" src="./js/results.js"></script>
 		<script type="text/javascript" src="./js/localStorage.js"></script>
+			<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body onload="loadValues();menuItemClicked('create');saveAxisNames();">
 		<header>
@@ -48,16 +55,16 @@
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="see"><span class="mobileHide">See</span> Matrix</button>
 			</ul>
 		</nav>
-		<div id="createDiv">
-			<label">Value Scales</label>
+		<div id="createDiv" class="tab">
+			<label">Value Scales</label><button type="button" onclick="swap();">Swap X/Y</button>
 			<div id="axisList" onchange="verifyAxisNames();saveAxisNames();">
-				<div class="item" id="yAxis>
+				<div class="item itemLabel" id="yAxis>
 					<label">Y axis</label>
 					<br>
 					<input class="itemName" type="text" value="importance" id="yAxis_name">
 					<label class="lblRepeatedItem" id="lblYAxisRepeated"></label>
 				</div>
-				<div class="item" id="xAxis">
+				<div class="item itemLabel" id="xAxis">
 					<label">X axis</label>
 					<br>
 					<input class="itemName" type="text" value="urgency" id="xAxis_name">
@@ -66,10 +73,7 @@
 			</div>
 			<br>
 			<label>Items</label><label class="labelFloatRight"><span class="mobileHide">Drag items to change their order</span></label>
-			<div><label>Actions</label><!--<select class="slcLocalStorage" onclick="localStorageSelected(this.selectedIndex);">
-				<option data-toggle="modal" data-target="#modalClear">Clear Local Storage</option>
-				<option data-toggle="modal" data-target="#modalLocalStorage" value="displayLocalStorage">Display Local Storage</option>
-			</select>-->
+			<div><label>Actions</label>
 				<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
 				<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Local Storage</button>
 			</div>
@@ -77,21 +81,23 @@
 			<div id="itemsList" onchange="verifyItemsNames();"></div>
 			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
-		<div id="rateYDiv">
+		<div id="rateYDiv" class="tab">
 			<label>Actions</label>
 			<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
 			<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Local Storage</button>
 			<label id="lblChangeY" class="labelFloatRight"></label>
 			<div id="yItemsList"></div>
+			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
-		<div id="rateXDiv">
+		<div id="rateXDiv" class="tab">
 			<label>Actions</label>
 			<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
 			<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Local Storage</button>
 			<label id="lblChangeX" class="labelFloatRight"></label>
 			<div id="xItemsList"></div>
+			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
-		<div id="seeDiv">
+		<div id="seeDiv" class="tab">
 			<label>Actions</label>
 			<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
 			<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Local Storage</button>
@@ -139,6 +145,8 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
+					<button type="button" class="localeStorageTabs" onclick="displayLocalStorage('readable');">Readable</button>
+					<button type="button" class="localeStorageTabs" onclick="displayLocalStorage('code');">Code</button>
 					<div class="modal-body" id="localStorageContents"></div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
