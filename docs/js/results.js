@@ -88,7 +88,7 @@ function drawResult()
     
     var strokeStyleOfQuadrants = 'grey';
     var fillStyleOfItems = "#000000";
-    var fillStyleOFQuadrantsText = "lightblue";
+    var fillStyleOFQuadrantsText = "#aaa";
 
     var rules;
     try

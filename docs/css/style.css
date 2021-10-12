@@ -1,15 +1,15 @@
 :root {
-  --primary-active: #2032B0;
-  --primary-hover: #61AFFF; 
+  --primary-active: #222;
+
+  --primary-hover: #444; 
   --text-primary: #222;
   --text-secondary: #737373;
   --btn-text: white; 
   --field-border: grey;
-  --background-primary: white; 
-  --background-secondary: #9FC3E9; 
+  --background-primary: white;   
+  --background-secondary: #bbb; 
   --alert: #FF698F; 
   --focus: #b1d; 
-
 }
 
 html {
@@ -120,17 +120,16 @@ h1, h2, h3, h4, h5, h6 {
 .linkbtn {
 	padding-bottom: 5px;
 	color:  var(--primary-active);
-	background-color: white;
+	background-color: var(--background-primary);
 	box-shadow: none;
 
 }
 
 .linkbtn:hover {
-	background-color: white;
+	background-color: var(--background-primary);
 	box-shadow: none;
-	color: var(--primary-hover);
-		text-decoration: underline;
-
+	opacity: .8;
+	text-decoration: underline;
 }
 
 .hiddenTechBox {
@@ -144,7 +143,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 button {
-	background-color: var(--primary-active);
+	background-color: var(--text-primary);
 	color: var(--btn-text);
 /*	border: 4px var(--primary-active) solid;*/
 	border: none;
@@ -454,14 +453,14 @@ font-size: 50%;}
 
 @media (prefers-color-scheme: dark) {
 	:root {
-	  --primary-active: #4C61DB;
-	  --primary-hover: #2032B0; 
+	  --primary-active: #ddd;
+	  --primary-hover: #bbb; 
 	  --text-primary: #ddd;
 	  --text-secondary: #bbb;
 	  --field-border: grey;
-	  --btn-text: #ddd; 
+	  --btn-text: #222; 
 	  --background-primary: #222; 
-	  --background-secondary: #0A3463; 
+	  --background-secondary: #333; 
 	  --alert: #FF698F; 
 	}
 	#canvas {
@@ -613,7 +612,7 @@ background-color: pink;
 	*/
 
 .activeTab {
-	background-color: var(--background-secondary);
+	background-color: var(--text-secondary);
 	/*border: 4px var(--focus) solid;*/
 	border: none;
 }
