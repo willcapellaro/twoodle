@@ -3,6 +3,7 @@
 
   --primary-hover: #444; 
   --text-primary: #222;
+  --interaction:  dodgerblue;
   --text-secondary: #737373;
   --btn-text: white; 
   --field-border: grey;
@@ -456,6 +457,7 @@ font-size: 50%;}
 	  --primary-active: #ddd;
 	  --primary-hover: #bbb; 
 	  --text-primary: #ddd;
+	  --interaction:  dodgerblue;
 	  --text-secondary: #bbb;
 	  --field-border: grey;
 	  --btn-text: #222; 

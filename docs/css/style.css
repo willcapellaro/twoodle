@@ -3,6 +3,7 @@
 
   --primary-hover: #444; 
   --text-primary: #222;
+  --interaction:  dodgerblue;
   --text-secondary: #737373;
   --btn-text: white; 
   --field-border: grey;
@@ -58,7 +59,7 @@ nav {
 	text-align: right;
 }
 #menu ul {
-	border-bottom: 4px var(--primary-active) solid;
+	border-bottom: 1px var(--background-secondary) solid;
 }
 h1, h2, h3, h4, h5, h6 {
 
@@ -119,7 +120,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .linkbtn {
 	padding-bottom: 5px;
-	color:  var(--primary-active);
+	color:  var(--interaction);
 	background-color: var(--background-primary);
 	box-shadow: none;
 
@@ -143,7 +144,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 button {
-	background-color: var(--text-primary);
+	background-color: var(--interaction);
 	color: var(--btn-text);
 /*	border: 4px var(--primary-active) solid;*/
 	border: none;
@@ -162,8 +163,27 @@ button:hover {
 /*	border-color: var(--primary-hover);
 */}
 .menuButton {
-	border-radius: 10px 10px 0 0;
-	border-bottom: 0;
+/*	border-radius: 3px 3px 0 0;*/
+	background-color: var(--background-primary);
+	color:  var(--interaction);
+	border-bottom: 4px var(--background-primary) solid;
+	border-radius: 3px 3px 0 0;
+	box-shadow: none;
+}
+.menuButton:focus {
+/*	border-radius: 3px 3px 0 0;*/
+	color:  var(--interaction);
+	outline: 3px var(--interaction) solid;
+	border-radius: 3px 3px 3px 3px;
+	box-shadow: none;
+}
+.menuButton:hover {
+/*	border-radius: 3px 3px 0 0;*/
+	background-color: var(--background-primary);
+	color:  var(--interaction);
+	opacity: .7;
+	border-bottom: 4px var(--background-primary) solid;
+	border-radius: 3px 3px 0 0;
 	box-shadow: none;
 }
 .active {
@@ -456,6 +476,7 @@ font-size: 50%;}
 	  --primary-active: #ddd;
 	  --primary-hover: #bbb; 
 	  --text-primary: #ddd;
+	  --interaction:  dodgerblue;
 	  --text-secondary: #bbb;
 	  --field-border: grey;
 	  --btn-text: #222; 
@@ -612,7 +633,8 @@ background-color: pink;
 	*/
 
 .activeTab {
-	background-color: var(--text-secondary);
+	background-color: var(--background-primary);
 	/*border: 4px var(--focus) solid;*/
 	border: none;
+	border-bottom: 4px var(--interaction) solid;
 }
