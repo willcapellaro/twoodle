@@ -1,0 +1,300 @@
+body {
+	font-family: 'Slabo 27px', serif;
+	max-width: 1200px;
+	margin-left: auto; 
+	margin-right: auto;
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+#title
+{
+	text-align: center;
+}
+button {
+	background-color: #17A589;
+	color: white;
+	padding: .5em 1em .5em 1em ;
+	margin: 1em 1em 1em 0;
+	border: none;
+	border-radius: 10px;
+}
+button:hover {
+	background-color: #48C9B0;
+}
+ul {
+	padding: 0;
+}
+input {
+	width: 200px;
+	margin-left: 1em;
+	padding: 4px;
+}
+.smoke {
+/*	  background-image: linear-gradient(to bottom right, red, yellow);
+*/
+}
+
+.matrixLabel p {
+	text-align: center;
+	margin: auto;
+	line-height: 3rem;
+}
+
+/*.yRange .xRange {
+	display: inline-block;
+	width: 20%;
+}*/
+.custom-range {
+	display: inline-block;
+	width: 10em;
+}
+.deleteItemButton {
+	margin-left: 1em;
+}
+
+.deleteBtnGrey {
+	background-color: grey;
+}
+
+.buttonGrey {
+	background-color: grey;
+}
+
+.buttonGreen {
+	background-color: #17A589;
+}
+
+.itemBackGround {
+	background-color: #17A589;
+}
+
+.lblRepeated {
+	color: white;
+}
+
+.rangeDiv {
+	position: absolute;
+	height: 95px;
+}
+
+#seeDiv {
+	text-align: center: 
+	background-color: yellow;
+}
+
+#seeDiv div {
+	margin-left: auto;
+	margin-right: auto; 
+/*	width: 600px;
+	height: 600px;*/
+	padding: 0;
+}
+
+
+.matrixGrid {
+	margin: auto;
+	display: grid; 
+	grid-template-rows: 3em 500px 3rem; 
+	grid-template-columns: 3em 500px 3rem;
+}
+
+.matrixGrid div:nth-child(1) { 
+grid-column: 2 / 3; 
+grid-row: 1 / 2;
+}
+
+.matrixGrid div:nth-child(2) { 
+grid-column: 3 / 4; 
+grid-row: 2 / 3; 
+writing-mode: vertical-rl;
+text-orientation: mixed;
+text-align: center;
+
+}
+
+.matrixGrid div:nth-child(3) { 
+grid-column: 2 / 3; 
+grid-row: 3 / 4; 
+}
+
+.matrixGrid div:nth-child(4) { 
+grid-column: 1 / 2; 
+grid-row: 2 / 3; 
+text-align: center; 
+writing-mode: vertical-rl;
+text-orientation: mixed; 
+text-align: center; 
+transform: rotate(180deg);
+}
+
+.matrixGrid div:nth-child(5) { 
+grid-column: 2 / 3; grid-row: 2 / 3;
+/*background-color: red;
+*/}
+
+#canvas
+{
+	background-color: white;
+	box-shadow: 3px 3px 30px #ddd;
+/*	position: relative;
+	left: 110px;*/
+/*	display: block;
+*/	width: 500px;
+	height: 500px;
+}
+
+
+.canvasImage {
+/*	position: absolute;
+	margin-left: auto;
+	margin-right: auto;*/
+	margin-top: 0;
+	/*background-color: red;*/
+/*	border: red 2px solid;
+*/}
+
+#labelLowY, #labelHighY, #labelLowX, #labelHighX    {
+text-transform: uppercase;
+font-family: sans-serif;
+}
+.xRange .yRange {
+	color: red;
+/*	background-color: red;
+*/	width: 10em;
+}
+/*#labelHighX
+{
+	position: relative;
+	left: 300px;
+}
+#labelLowY
+{
+	position: relative;
+	top: 100px;
+}*/
+
+#xItemsList .itemName, #yItemsList .itemName{
+	display: inline-block;
+	width: 600px;
+}
+
+.itemName {
+	margin: 1em 1em 1em 0; 
+	padding: .5em 1em .5em 1em;
+}
+
+.labelFloatRight {
+	float: right;
+	color: red;
+}
+
+.lblLowY, .lblLowX {
+	display: inline-block;
+	width: 120px;
+	text-align: right;
+}
+#xItemsList, #itemsList, #yItemsList {
+	background: white;
+}
+#itemsList div, #xItemsList div, #yItemsList div {
+	border: none;
+	border-bottom: 1px solid grey;
+	height: 6em;
+}
+.item {
+	border: none;
+	border-bottom: 1px solid grey;
+	background-color: hsla(179, 60%, 90%, 1);
+	padding: 1rem;
+}
+}
+#createDiv
+{
+	display: none;
+}
+#rateDiv
+{
+	display: none;
+}
+#seeDiv
+{
+	display: none;
+}
+
+  h1 .mobileHide  {
+font-size: 50%;}
+/*#yItemsList div, #xItemsList div {
+	height: 5em;
+}
+*/
+
+
+/*@media screen and (max-width: 700px) {
+  body {
+    font-size: 1.25rem;
+  }
+
+  .mobileHide  {
+   display: none; 
+}
+
+#menu {
+	text-align: center;
+}
+
+   .menuButton {
+   	margin: 0;
+   	border-radius: 0rem;
+   }
+
+   .menuButton:nth-child(1) {
+   	border-top-left-radius: 2rem;
+   	border-bottom-left-radius: 2rem;
+   }
+
+
+   .menuButton:nth-child(4) {
+   	border-top-right-radius: 2rem;
+   	border-bottom-right-radius: 2rem;
+   }
+
+#title {font-size: 2rem; margin-top: 1rem;}
+
+.matrixGrid {
+	display: grid; 
+	grid-template-columns: 3em 70vw 3rem;
+	grid-template-rows: 2em 70vw 2rem; 
+}
+
+#canvas
+{
+	
+	box-shadow: 3px 3px 30px #ddd;
+
+	display: block;
+	width: 70vw;
+	height: 70vw;
+}
+
+#matrixNew {
+	display: none;
+}
+
+.lblLowY, .lblLowX, .lblHighY, .lblHighX {
+	display: none;
+}
+
+
+}
+*/
+
+/*
+
+removed ffromb mobile #canvas tag
+
+
+background-color: red;
+	position: relative;
+	left: 110px;
+
+	*/
