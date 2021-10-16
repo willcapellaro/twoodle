@@ -346,3 +346,55 @@ function swap()
 	}
 	saveValues();
 }
+function recipe1(yPlug,xPlug)
+{
+	document.getElementById('yAxis_name').value = yPlug;
+	document.getElementById('xAxis_name').value = xPlug;
+	yAxisName = document.getElementById('yAxis_name').value;
+	xAxisName = document.getElementById('xAxis_name').value;
+
+
+	for (var i = 0; i < xValues.length; i++)
+	{
+		var auxValue = xValues[i];
+		for (var j = 0; j < yValues.length; j++)
+		{
+			if (xValues[i]['index'] == yValues[j]['index'])
+			{
+				xValues[i] = yValues[j];
+				yValues[j] = auxValue;
+			}
+		}
+	}
+	var changes = true;
+	while (changes)
+	{
+		changes = false;
+		for (var i = 0; i < xValues.length - 1; i++)
+		{
+			if (xValues[i]['value'] < xValues[i + 1]['value'])
+			{
+				var auxValue = xValues[i];
+				xValues[i] = xValues[i + 1];
+				xValues[i + 1] = auxValue;
+				changes = true;
+			}
+		}
+	}
+	changes = true;
+	while (changes)
+	{
+		changes = false;
+		for (var i = 0; i < yValues.length - 1; i++)
+		{
+			if (yValues[i]['value'] < yValues[i + 1]['value'])
+			{
+				var auxValue = yValues[i];
+				yValues[i] = yValues[i + 1];
+				yValues[i + 1] = auxValue;
+				changes = true;
+			}
+		}
+	}
+	saveValues();
+}

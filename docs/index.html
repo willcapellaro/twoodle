@@ -58,6 +58,9 @@
 		</nav>
 		<div id="createDiv" class="">
 			<label>Value Scales</label><button type="button" class="linkbtn" onclick="swap();">Swap X/Y</button>
+			<button onclick="displayRecipes();" data-toggle="modal" data-target="#modalRecipes" class="linkbtn">Recipes</button>
+
+
 			<div id="axisList" onchange="verifyAxisNames();saveAxisNames();">
 				<div class="item itemLabel" id="yAxis>
 					<label">Y axis</label>
@@ -146,6 +149,34 @@
 					<button type="button" class="localeStorageTabs" onclick="displayLocalStorage('code');">Code</button>
 					<div class="modal-body" id="localStorageContents"></div>
 					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="modalRecipes" tabindex="-1" role="dialog" aria-labelledby="modalLocalRecipes" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalLocalStorageTitle">Try a Recipe!</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div style="padding: 2em;font-weight: 400;">
+					<p >Twoodle's got you. Here are some of our cherished recipes for thinking:</p>
+						<ul style="list-style: none; line-height: 2;">
+							<li><button type="button" class="modalbtn" onclick="recipe1('urgency','importance');">Manage your time: urgency vs importance</button></li>
+							<li><button type="button" class="modalbtn" onclick="recipe1('impact','ease');">Prioritize projects: impact vs ease</button></li>
+							<li><button type="button" class="modalbtn" onclick="recipe1('low balance','high interest');">Break free of debt: interest vs balance</button></li>
+							<li></li>
+							<li></li>
+						</ul>
+					</div>
+					<div class="modal-body" id="localStorageContents"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" ><a style="color: white;" href="mailto:will@capellaro.com?subject=Add%20my%20Twoodle%20recipe!&body=Type%20the%20details%20of%20your%20Twoodle%20recipe%20here...%0D%0A%0D%0AName%20of%20Matrix%3A%20______%0D%0AX%20Axis%3A%20_____%0D%0AY%20Axis%3A%20_____%0D%0A%0D%0AQuadrant%20Labels%20(optional%20but%20recommended*)%3A%0D%0AX%20%2B%20Y%3A%20____%0D%0AX%20only%3A%20____%0D%0AY%20only%3A%20____%0D%0ANeither%3A%20____%0D%0A%0D%0AAdditional%20context%3F%20%5BOptional%2C%20add%20reference%20links%20or%20draft%20any%20explanatory%20text%20here%5D%0D%0A%0D%0ACan%20we%20contact%20you%20for%20details%3F%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A">Submit Recipe</a></button>
+
 						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 					</div>
 				</div>

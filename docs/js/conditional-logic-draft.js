@@ -1,7 +1,4 @@
-// marcelo, this is the doc that needs a logic improvement. I don't want to have to have to code the same conditions twice.
-// see the conditions here, they are all sets of two duplicates
-// i'd like to have just a section of mappings, or have a function covert
-// this goes along with the button to swap X/Y.
+// this includes logic that will allow swapping of x vs y and handling quadrant labels automatically
 
 function conditionals(x, y)
 {
@@ -23,7 +20,7 @@ function conditionals(x, y)
 		'schedule'//bottomright
 	In other words, it will go from '0, 1, 2, 3' to '3, 1, 2, 0'.*/
 	
-	texts = getTexts(x, y, texts, ['priority', 'ease'], ['luxury', 'strategic', 'distractions', 'high value']);
+	texts = getTexts(x, y, texts, ['impact', 'ease'], ['luxury', 'strategic', 'distractions', 'high value']);
 	
 	texts = getTexts(x, y, texts, ['low balance', 'high interest'], ['pay off first', 'pay down first', 'luxury', 'high value']);
 	

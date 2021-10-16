@@ -74,6 +74,10 @@ h1, h2, h3, h4, h5, h6 {
 	top: 5px;*/
 }
 
+.modal-title {
+	color:  black;
+}
+
 .headerTag {
 	float: left;
 }	
@@ -123,8 +127,15 @@ h1, h2, h3, h4, h5, h6 {
 	color:  var(--interaction);
 	background-color: var(--background-primary);
 	box-shadow: none;
-
 }
+
+.modalbtn {
+	padding-bottom: 5px;
+	color:  var(--interaction);
+	background-color: white;
+	box-shadow: none;
+}
+
 
 .linkbtn:hover {
 	background-color: var(--background-primary);
@@ -411,6 +422,17 @@ text-transform: uppercase;
 	margin: 1em 1em 1em 0; 
 	padding: .5em 1em .5em 1em;
 }
+
+#rateYDiv .itemName {
+	margin-bottom: 0; 
+	padding: 0;
+}
+
+#rateXDiv .itemName {
+	margin-bottom: 0; 
+	padding: 0;
+}
+
 
 .labelFloatRight {
 	float: right;
