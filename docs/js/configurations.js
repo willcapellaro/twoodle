@@ -305,7 +305,7 @@ function verifyItemsNames(shareUpdate = true)
 	validItemsNames = !repetidos.length;
 	for (var i = 0; i < repetidos.length; i++)
 	{
-		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated"> (repeated name)</p>';
+		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated" style="color: var(--interaction);"><i class="fas fa-exclamation-triangle"></i> duplicate</p>';
 	}
 	getItems(shareUpdate && flagShareUpdate);
 }
@@ -319,8 +319,8 @@ function verifyAxisNames()
 	validAxisNames = true;
 	if (document.getElementById('yAxis_name').value == document.getElementById('xAxis_name').value)
 	{
-		document.getElementById('lblYAxisRepeated').innerHTML = '<p class="lblRepeated"> (repeated name)</p>';
-		document.getElementById('lblXAxisRepeated').innerHTML = '<p class="lblRepeated"> (repeated name)</p>';
+		document.getElementById('lblYAxisRepeated').innerHTML = '<p class="lblRepeated"> duplicate</p>';
+		document.getElementById('lblXAxisRepeated').innerHTML = '<p class="lblRepeated"> duplicate</p>';
 		validAxisNames = false;
 	}
 	if (document.getElementById('xAxis_name').value == '')
@@ -345,7 +345,7 @@ function fillLists(axis = null, shareUpdate = true)
 		values = [...xValues];
 		axisName = xAxisName;
 	}
-	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = '<span style="font-weight: 300";>Sort items from highest to lowest </span><span class="emphasis">' + axisName + '</span>';
+	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = '<span style="font-weight: 300";><i class="fas fa-arrows-alt-v"></i> Sort items from highest to lowest </span><span class="emphasis">' + axisName + '</span>';
 	document.getElementById(axis + 'ItemsList').innerHTML = '';
 	var c = document.getElementById(axis + 'ItemsList').children;
 	if (!c.length)
