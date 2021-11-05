@@ -22,7 +22,7 @@ function conditionals(x, y)
 	
 	texts = getTexts(x, y, texts, ['impact', 'ease'], ['luxury', 'strategic', 'distractions', 'high value']);
 	
-	texts = getTexts(x, y, texts, ['low balance', 'high interest'], ['pay off first', 'pay down first', 'luxury', 'high value']);
+	texts = getTexts(x, y, texts, ['balance', 'interest'], ['pay off first', 'pay down first', 'let be', 'pay off when you can']);
 	
 	return texts;
 }

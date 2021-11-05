@@ -45,9 +45,10 @@
 	<body onload="loadValues();menuItemClicked('create');saveAxisNames();">
 		<header>
 			<div>
-				<h1 id="title">Twoodle<span class="mobileHide"> a thinking tool</span></h1>
+				<h1 id="title"> <i class="fas fa-border-all"></i> Twoodle<span class="mobileHide"> a thinking tool</span></h1>
 			</div>
 		</header>
+		
 		<nav id="menu">
 			<ul>
 				<button class="menuButton" onclick="menuItemClicked(this.id);" id="create">Create<span class="mobileHide"> your items</span></button>
@@ -63,20 +64,23 @@
 
 			<div id="axisList" onchange="verifyAxisNames();saveAxisNames();">
 				<div class="item itemLabel" id="yAxis>
-					<label">Y axis</label>
+					<label"><i class="fas fa-arrows-alt-v"></i> Y axis</label>
 					<br>
 					<input class="itemName" type="text" value="importance" id="yAxis_name">
 					<label class="lblRepeatedItem" id="lblYAxisRepeated"></label>
 				</div>
 				<div class="item itemLabel" id="xAxis">
-					<label">X axis</label>
+					<label"><i class="fas fa-arrows-alt-h"></i> X axis</label>
 					<br>
 					<input class="itemName" type="text" value="urgency" id="xAxis_name">
 					<label class="lblRepeatedItem" id="lblXAxisRepeated"></label>
 				</div>
 			</div>
 			<br>
-			<label>Items</label><label class="labelFloatRight"><span class="mobileHide" style = "font-weight: 300;"><i class="fas fa-arrows-alt-v"></i> Drag items to change their display order only</span></label>
+			<label>Items</label>
+
+<!-- removing the item below until it can be replaced with a toggle-able control to enable dragging -->
+			<!-- <label class="labelFloatRight"><span class="mobileHide" style = "font-weight: 300;"><i class="fas fa-arrows-alt-v"></i> Sort items for display purposes only</span></label> -->
 			
 			
 			<div id="itemsList" onchange="verifyItemsNames();"></div>
