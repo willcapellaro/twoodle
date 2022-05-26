@@ -197,7 +197,7 @@ function addItem()
 	$("#itemsList").append(`
 		<div id="item_` + nextId + `" onmouseup="getItems();">
 			<input class="itemName" type="text" value="Item ` + nextItemNumber + `" id="item_name_` + nextId + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
-			<button class="deleteItemButton" id="` + nextId + `" onclick="deleteItem(this.id);"><i class="fas fa-trash"></i></button>
+			<button class="deleteItemButton" id="` + nextId + `" onclick="deleteItem(this.id);">Delete</button>
 			<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
 		</div>`
 	);
@@ -305,7 +305,7 @@ function verifyItemsNames(shareUpdate = true)
 	validItemsNames = !repetidos.length;
 	for (var i = 0; i < repetidos.length; i++)
 	{
-		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated" style="color: var(--interaction);"><i class="fas fa-exclamation-triangle"></i> duplicate</p>';
+		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated"> (repeated name)</p>';
 	}
 	getItems(shareUpdate && flagShareUpdate);
 }
@@ -313,24 +313,27 @@ function verifyAxisNames()
 {
 	yAxisName = document.getElementById('yAxis_name').value;
 	xAxisName = document.getElementById('xAxis_name').value;
-
-	document.getElementById('lblYAxisRepeated').innerHTML = '';
-	document.getElementById('lblXAxisRepeated').innerHTML = '';
+	//document.getElementById('lblYAxisRepeated').innerHTML = '';
+	//document.getElementById('lblXAxisRepeated').innerHTML = '';
+	document.getElementById('divDuplicatedError').innerHTML = '';
 	validAxisNames = true;
-	if (document.getElementById('yAxis_name').value == document.getElementById('xAxis_name').value)
+	if (document.getElementById('yAxis_name').value.toLowerCase() == document.getElementById('xAxis_name').value.toLowerCase())
 	{
-		document.getElementById('lblYAxisRepeated').innerHTML = '<p class="lblRepeated"> duplicate</p>';
-		document.getElementById('lblXAxisRepeated').innerHTML = '<p class="lblRepeated"> duplicate</p>';
+		//document.getElementById('lblYAxisRepeated').innerHTML = '<p class="lblRepeated"> (repeated name)</p>';
+		//document.getElementById('lblXAxisRepeated').innerHTML = '<p class="lblRepeated"> (repeated name)</p>';
+		document.getElementById('divDuplicatedError').innerHTML = '<p class="lblRepeated">Error: duplicated label names</p>';
 		validAxisNames = false;
 	}
 	if (document.getElementById('xAxis_name').value == '')
 	{
-		document.getElementById('lblXAxisRepeated').innerHTML = '<p class="lblRepeated"> (empty name)</p>';
+		//document.getElementById('lblXAxisRepeated').innerHTML = '<p class="lblRepeated"> (empty name)</p>';
+		document.getElementById('divDuplicatedError').innerHTML = '<p class="lblRepeated">Error: empty label name</p>';
 		validAxisNames = false;
 	}
 	if (document.getElementById('yAxis_name').value == '')
 	{
-		document.getElementById('lblYAxisRepeated').innerHTML = '<p class="lblRepeated"> (empty name)</p>';
+		//document.getElementById('lblYAxisRepeated').innerHTML = '<p class="lblRepeated"> (empty name)</p>';
+		document.getElementById('divDuplicatedError').innerHTML = '<p class="lblRepeated">Error: empty label name</p>';
 		validAxisNames = false;
 	}
 }
@@ -345,7 +348,7 @@ function fillLists(axis = null, shareUpdate = true)
 		values = [...xValues];
 		axisName = xAxisName;
 	}
-	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = '<span style="font-weight: 300";><i class="fas fa-arrows-alt-v"></i> Sort items from highest to lowest </span><span class="emphasis">' + axisName + '</span>';
+	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = 'Sort items from highest to lower "' + axisName + '"';
 	document.getElementById(axis + 'ItemsList').innerHTML = '';
 	var c = document.getElementById(axis + 'ItemsList').children;
 	if (!c.length)
@@ -376,6 +379,48 @@ function fillLists(axis = null, shareUpdate = true)
 	}
 	itemsListSortable.removeContainer(document.getElementById(axis + 'ItemsList'));
 	itemsListSortable.addContainer(document.getElementById(axis + 'ItemsList'));
+}
+function checkLblRecipes()
+{
+	var flag = false;
+	for (var i = 0; i < recipes.length; i++)
+	{
+		if (((xAxisName.toLowerCase() == recipes[i]['defaultX']) && (yAxisName.toLowerCase() == recipes[i]['defaultY'])) || 
+			((xAxisName.toLowerCase() == recipes[i]['defaultY']) && (yAxisName.toLowerCase() == recipes[i]['defaultX'])))
+		{
+			flag = true;
+			document.getElementById('recipeTitleCreateDiv').innerHTML = recipes[i]['recipeSubName'];
+			document.getElementById('recipeTitleRateYDiv').innerHTML = recipes[i]['recipeSubName'];
+			document.getElementById('recipeTitleRateXDiv').innerHTML = recipes[i]['recipeSubName'];
+			document.getElementById('recipeTitleSeeDiv').innerHTML = recipes[i]['recipeSubName'];
+
+			auxDefaultX = recipes[i]['defaultX'];
+			auxDefaultY = recipes[i]['defaultY'];
+			NElbl = recipes[i]['quadrantLabels'][0].toLowerCase();
+			NWlbl = recipes[i]['quadrantLabels'][1].toLowerCase();
+			SElbl = recipes[i]['quadrantLabels'][2].toLowerCase();
+			SWlbl = recipes[i]['quadrantLabels'][3].toLowerCase();
+			recipes[i]['defaultXY'] = true;
+			document.getElementById('swapRestoreBtn').innerHTML = 'Swap X/Y';
+			recipeIndex = i;
+			localStorage.setItem('recipeIndex', recipeIndex);
+			if ((xAxisName.toLowerCase() == recipes[Number(localStorage.getItem('recipeIndex'))]['defaultY']) && (yAxisName.toLowerCase() == recipes[Number(localStorage.getItem('recipeIndex'))]['defaultX']))
+			{
+				recipes[Number(localStorage.getItem('recipeIndex'))]['defaultXY'] = false;
+				SElbl = recipes[Number(localStorage.getItem('recipeIndex'))]['quadrantLabels'][1].toLowerCase();
+				NWlbl = recipes[Number(localStorage.getItem('recipeIndex'))]['quadrantLabels'][2].toLowerCase();
+				document.getElementById('swapRestoreBtn').innerHTML = 'Restore X/Y';
+			}
+		}
+	}
+	if (!flag)
+	{//Pendiente ver cómo reconocer el recipe que se estaba usando para poder hacer: recipes[i]['defaultXY'] = false;
+		document.getElementById('recipeTitleCreateDiv').innerHTML = 'Custom Recipe';
+		document.getElementById('recipeTitleRateYDiv').innerHTML = 'Custom Recipe';
+		document.getElementById('recipeTitleRateXDiv').innerHTML = 'Custom Recipe';
+		document.getElementById('recipeTitleSeeDiv').innerHTML = 'Custom Recipe';
+		recipeIndex = null;
+	}
 }
 function getItems(shareUpdate = true)
 {

@@ -88,7 +88,7 @@ function drawResult()
     
     var strokeStyleOfQuadrants = 'grey';
     var fillStyleOfItems = "#000000";
-    var fillStyleOFQuadrantsText = "#aaa";
+    var fillStyleOFQuadrantsText = "lightblue";
 
     var rules;
     try
@@ -156,12 +156,12 @@ function drawResult()
     canvas.fillStyle = fillStyleOFQuadrantsText;
     var texts = conditionals(xAxisName, yAxisName);
     var cuadrantsPositions = [
-        [0.25, 0.25], 
         [0.75, 0.25], 
-        [0.25, 0.75], 
-        [0.75, 0.75]
+        [0.25, 0.25], 
+        [0.75, 0.75], 
+        [0.25, 0.75]
     ];
-    // marcelo, can you build in a condition to make this text small/large depending on the character count of the axis label. If one axis label > 22 characters, then make it the small text size. Otherwise, large.
+    
     for (var i = 0; i < texts.length; i++)
     {
         canvas.font = (fontPx*2) + "px 'Poppins'"; 

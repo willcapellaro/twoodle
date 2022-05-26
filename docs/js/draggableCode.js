@@ -1,9 +1,6 @@
-// disabled until there's a control for it
-
-// var itemsListSortable = new Sortable.default(document.getElementById('itemsList'), {
-//     draggable: 'div'
-// });
-
+var itemsListSortable = new Sortable.default(document.getElementById('itemsList'), {
+    draggable: 'div'
+});
 var yItemsListSortable = new Sortable.default([], {
     draggable: 'div'
 });
