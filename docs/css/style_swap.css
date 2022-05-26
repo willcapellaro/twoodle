@@ -1,24 +1,19 @@
 :root {
-  --primary-active: #222;
-
-  --primary-hover: #444; 
+  --primary-active: #2032B0;
+  --primary-hover: #61AFFF; 
   --text-primary: #222;
-  --interaction:  dodgerblue;
-  --interaction:  #e12836;
-
   --text-secondary: #737373;
   --btn-text: white; 
   --field-border: grey;
-  --background-primary: white;   
-  --background-secondary: #f5f5f5; 
+  --background-primary: white; 
+  --background-secondary: #9FC3E9; 
   --alert: #FF698F; 
-  --focus: #b1d; 
+  /*--focus: #b1d;*/
 }
 
 html {
 	 	background-color: var(--background-primary);
 font-family: 'Poppins', sans-serif;
-font-weight: 300;
 }
 
 body {
@@ -36,9 +31,9 @@ font-family: 'Poppins', sans-serif;
 }
 
 header {
-/*	position: -webkit-sticky;
+	position: -webkit-sticky;
 	position: sticky;
-*/	top: 0px;
+	top: 0px;
 	text-align: right;
 	background-color: var(--background-primary);
 	padding: 0;
@@ -52,6 +47,11 @@ nav {
 	padding: 0;
 }
 
+#resultsModalNav {
+	text-align: center;
+	display: inline;
+}
+
 #menu {
 	text-align: center;
 	display: inline;
@@ -61,7 +61,7 @@ nav {
 	text-align: right;
 }
 #menu ul {
-	border-bottom: 1px var(--background-secondary) solid;
+	/*border-bottom: 4px var(--primary-active) solid;*/
 }
 h1, h2, h3, h4, h5, h6 {
 
@@ -70,14 +70,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 #title
 {
-/*	text-align: left	;
+	text-align: center;
 	display: inline;
 	position: relative;
-	top: 5px;*/
-}
-
-.modal-title {
-	color:  black;
+	top: 5px;
 }
 
 .headerTag {
@@ -124,96 +120,41 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-
-.modalbtn {
-	padding-bottom: 5px;
-	color:  var(--interaction);
-	background-color: white;
-	box-shadow: none;
-}
-
-.hiddenTechBox {
-	opacity: .1;
-	transition: 300ms;
-}
-
-.hiddenTechBox:hover {
-	opacity: 1;
-	transition: 300ms;
-}
-
 button {
-	background-color: var(--interaction);
+	background-color: var(--primary-active);
 	color: var(--btn-text);
-	border: none;
+	border: 4px var(--primary-active) solid;
 	padding: .5em 1em .5em 1em ;
 	margin: 1em 3px 0;
 	border-radius: 3px;
-/*	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-*/  	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+/*  	transition: all 0.3s cubic-bezier(.25,.8,.25,1);*/
 }
 button:focus {
-	outline: none;
-}
-button:focus-visible {
 	outline: var(--primary-hover) 3px solid;
 }
 button:hover {
-/*	background-color: var(--primary-hover);
-*/	
-/*box-shadow: 0 14px 28px rgba(0,0,0,0.02), 0 5px 5px rgba(0,0,0,0.08);*/
-opacity: .6;
+	background-color: var(--primary-hover);
+	box-shadow: 0 14px 28px rgba(0,0,0,0.02), 0 5px 5px rgba(0,0,0,0.08);
+	border-color: var(--primary-hover);
 }
-button:active {
-	outline: none;
-	border:  none;
-}
-
-.linkbtn {
-	padding-bottom: 5px;
-	color:  var(--interaction);
-	background-color: var(--background-primary);
-	box-shadow: none;
-}
-
-.linkbtn:hover {
-	background-color: var(--background-primary);
-	box-shadow: none;
-	opacity: .5;
-/*	text-decoration: underline;
-*/}
-
-
 .menuButton {
-	background-color: var(--background-primary);
-	color:  var(--interaction);
-	border-bottom: 4px var(--background-primary) solid;
-	border-radius: 0 0 0 0;
+	border-radius: 10px 10px 0 0;
+	border-bottom: 0;
 	box-shadow: none;
+	color: red;
+	background-color: transparent;
+	border: none;
 }
-.menuButton:focus {
-/*	border-radius: 3px 3px 0 0;*/
-	color:  var(--interaction);
-	outline: none;
-	border-radius: 0 0 0 0;
+.localeStorageTabs {
+	border-radius: 10px 10px 0 0;
+	border-bottom: 0;
 	box-shadow: none;
+	background-color: transparent;
+	color: black;
+	border: none;
 }
-.menuButton:focus-visible {
-/*	border-radius: 3px 3px 0 0;*/
-	color:  var(--interaction);
-	outline: 3px var(--interaction) solid;
-	border-radius: 0 0 0 0;
-	box-shadow: none;
-}
-.menuButton:hover {
-/*	border-radius: 3px 3px 0 0;*/
-	background-color: var(--background-primary);
-	color:  var(--interaction);
-	opacity: .7;
-	border-bottom: 4px var(--background-primary) solid;
-	border-radius: 0 0 0 0;
-	box-shadow: none;
-}
+
 .active {
 	background-color: var(--background-primary);
 	box-shadow: none;
@@ -222,13 +163,17 @@ button:active {
 	color: var(--primary-active);
 	border-radius: 10px 10px 0 0;
 }
-
+.active:hover {
+	background-color: var(--background-primary);
+	box-shadow: none;
+	border-color: var(--primary-active);
+}
 ul {
 	padding: 0;
 }
 input {
-/*	width: 300px;
-*/	margin-left: 1em;
+	width: 300px;
+	margin-left: 1em;
 	padding: 4px;
 	background-color: var(--background-primary);
 	color: var(--text-primary);
@@ -257,8 +202,8 @@ label {
 	line-height: 3rem;
 }
 
-.emphasis {
-	 font-weight: 600;
+.inlineDiv p {
+	display: inline;
 }
 
 /*.yRange .xRange {
@@ -271,17 +216,6 @@ label {
 }
 .deleteItemButton {
 	margin-left: 1em;
-}
-
-.deleteItemButton {
-	background-color: var(--background-primary);
-	color:  var(--interaction);
-	box-shadow: none;
-}
-
-
-.itemValue {
-	display: none;
 }
 
 .deleteBtnGrey {
@@ -303,11 +237,9 @@ label {
   background-color: var(--primary-active: #2032B0);
 }
 
-
-
 .lblRepeated {
 	padding-left: 4px;
-	color: var(--interaction);
+	color: red;/*color: var(--text-primary);*/
 }
 
 .rangeDiv {
@@ -397,7 +329,9 @@ grid-column: 2 / 3; grid-row: 2 / 3;
 
 
 .itemLabel {
+
 	  	color: var(--text-primary);
+
 }
 
 .canvasImage {
@@ -431,41 +365,16 @@ text-transform: uppercase;
 .xItem, .yItem {
 }
 
-.itemName {
-	width: 80%;
-}
-
-.itemName:hover {
-
-}
-
-#xItemsList .itemName, #yItemsList .itemName {
+#xItemsList .itemName, #yItemsList .itemName{
 	display: inline-block;
 	width: 600px;
 	color: var(--text-primary);
-	font-weight: 200;
-}
-
-#xItemsList .itemName:hover, #yItemsList .itemName:hover {
-	background-color: var(--background-secondary);
-	border-radius: 4px;
 }
 
 .itemName {
 	margin: 1em 1em 1em 0; 
 	padding: .5em 1em .5em 1em;
 }
-
-#rateYDiv .itemName {
-	margin-bottom: 0; 
-	padding: 0;
-}
-
-#rateXDiv .itemName {
-	margin-bottom: 0; 
-	padding: 0;
-}
-
 
 .labelFloatRight {
 	float: right;
@@ -486,12 +395,11 @@ text-transform: uppercase;
 }
 #itemsList div, #xItemsList div, #yItemsList div {
 	border: none;
+	border-bottom: 1px solid var(--field-border);
 }
 
 #itemsList, #xItemsList, #yItemsList {
 	/*background-color: transparent;*/
-	margin: 0;
-	padding: 0;
 }
 
 .item {
@@ -499,6 +407,7 @@ text-transform: uppercase;
 	border-bottom: 1px solid var(--field-border);
 	background-color: var(--background-secondary);
 	padding: 1rem;
+}
 }
 #createDiv
 {
@@ -526,17 +435,16 @@ font-size: 50%;}
 /*------------------------------------------------------------------------------------------------------------------------------*/
 
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: white) {
 	:root {
-	  --primary-active: #ddd;
-	  --primary-hover: #bbb; 
+	  --primary-active: #4C61DB;
+	  --primary-hover: #2032B0; 
 	  --text-primary: #ddd;
-	  --interaction:  dodgerblue;
 	  --text-secondary: #bbb;
 	  --field-border: grey;
-	  --btn-text: #222; 
+	  --btn-text: #ddd; 
 	  --background-primary: #222; 
-	  --background-secondary: #333; 
+	  --background-secondary: #0A3463; 
 	  --alert: #FF698F; 
 	}
 	#canvas {
@@ -580,7 +488,6 @@ font-size: 50%;}
 
 .active {
 		border-bottom: 4px var(--primary-active) solid;
-		border-radius: 0;
 }
 #menu ul {
 	border-bottom: none;
@@ -589,10 +496,10 @@ font-size: 50%;}
    display: none; 
 }
 #title {
-/*	display: block;
+	display: block;
 	text-align: center;
 	font-size: 1.5rem !important;
-	margin-top: 0 !important;*/
+	margin-top: 0 !important;
 }
 
 header {
@@ -625,9 +532,7 @@ header {
    	border-bottom-right-radius: 2rem;
    }
 
-#title {
-	/*font-size: 2rem; 
-	margin-top: 1rem;*/}
+#title {font-size: 2rem; margin-top: 1rem;}
 
 .matrixGrid {
 	display: grid; 
@@ -664,6 +569,9 @@ header {
 .localStorageContents {
 	text-align: center;
 }
+.recipesContents {
+	text-align: center;
+}
 
 /*
 
@@ -689,16 +597,19 @@ background-color: pink;
 	*/
 
 .activeTab {
-	background-color: var(--background-primary);
-	/*border: 4px var(--focus) solid;*/
-	border: none;
-	border-bottom: 4px var(--interaction) solid;
-	border-radius: 0px;
+	background-color: var(--focus);
+	border: 4px var(--focus) solid;
+	border-bottom: 4px red solid;
 }
-
-.activeTab:hover {
-	background-color: var(--background-primary);
-	/*border: 4px var(--focus) solid;*/
-	border: none;
-	border-bottom: 4px var(--interaction) solid;
+.resultsModalActiveTab {
+	border-bottom: 4px red solid;
+}
+.selectedRecipe {
+	background-color: blue;
+}
+.clipboardInfoSuccess {
+	color: green;
+}
+.clipboardInfoError {
+	color: red;
 }
