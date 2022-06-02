@@ -1,6 +1,5 @@
 var validItemsNames = true;
 var validAxisNames = true;
-var items = [];
 var distributing = false;
 
 var yAxisName;
@@ -11,7 +10,7 @@ function menuItemClicked(item)
 	if (validItemsNames && validAxisNames)
 	{
 		switch (item)
-		{//It goes through this 'switch' when I click on a button on the top bar.
+		{
 			case "create":
 				document.getElementById("rateYDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
@@ -25,7 +24,7 @@ function menuItemClicked(item)
 				break;
 			case "rateY":
 				getItems();
-				saveAxisNames();
+				saveValues();
 				fillLists('x');
 				document.getElementById("createDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
@@ -45,7 +44,7 @@ function menuItemClicked(item)
 				break;
 			case "rateX":
 				getItems();
-				saveAxisNames();
+				saveValues();
 				fillLists('y');
 				document.getElementById("createDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
@@ -65,7 +64,7 @@ function menuItemClicked(item)
 				break;
 			case "see":
 				getItems();
-				saveAxisNames();
+				saveValues();
 				fillAxisNames();
 				fillLists('y');
 				fillLists('x');
@@ -96,21 +95,21 @@ function distribute(axis)
 		document.getElementById(c[0]['id']).innerHTML = 100;
 		if (axis == 'y')
 		{
-			for (var i = 0; i < yValues.length; i++)
+			for (var i = 0; i < twoodles[selectedTwoodleIndex]['yValues'].length; i++)
 			{
-				if (yValues[i]['index'] == Number(c[0]['id'].split('_')[3]))
+				if (twoodles[selectedTwoodleIndex]['yValues'][i]['index'] == Number(c[0]['id'].split('_')[3]))
 				{
-					yValues[i]['value'] = 100;
+					twoodles[selectedTwoodleIndex]['yValues'][i]['value'] = 100;
 				}
 			}
 		}
 		if (axis == 'x')
 		{
-			for (var i = 0; i < xValues.length; i++)
+			for (var i = 0; i < twoodles[selectedTwoodleIndex]['xValues'].length; i++)
 			{
-				if (xValues[i]['index'] == Number(c[0]['id'].split('_')[3]))
+				if (twoodles[selectedTwoodleIndex]['xValues'][i]['index'] == Number(c[0]['id'].split('_')[3]))
 				{
-					xValues[i]['value'] = 100;
+					twoodles[selectedTwoodleIndex]['xValues'][i]['value'] = 100;
 				}
 			}
 		}
@@ -119,21 +118,21 @@ function distribute(axis)
 			document.getElementById(c[c.length - 1]['id']).innerHTML = 0;
 			if (axis == 'y')
 			{
-				for (var i = 0; i < yValues.length; i++)
+				for (var i = 0; i < twoodles[selectedTwoodleIndex]['yValues'].length; i++)
 				{
-					if (yValues[i]['index'] == Number(c[c.length - 1]['id'].split('_')[3]))
+					if (twoodles[selectedTwoodleIndex]['yValues'][i]['index'] == Number(c[c.length - 1]['id'].split('_')[3]))
 					{
-						yValues[i]['value'] = 0;
+						twoodles[selectedTwoodleIndex]['yValues'][i]['value'] = 0;
 					}
 				}
 			}
 			if (axis == 'x')
 			{
-				for (var i = 0; i < xValues.length; i++)
+				for (var i = 0; i < twoodles[selectedTwoodleIndex]['xValues'].length; i++)
 				{
-					if (xValues[i]['index'] == Number(c[c.length - 1]['id'].split('_')[3]))
+					if (twoodles[selectedTwoodleIndex]['xValues'][i]['index'] == Number(c[c.length - 1]['id'].split('_')[3]))
 					{
-						xValues[i]['value'] = 0;
+						twoodles[selectedTwoodleIndex]['xValues'][i]['value'] = 0;
 					}
 				}
 			}
@@ -144,21 +143,21 @@ function distribute(axis)
 					document.getElementById(c[i]['id']).innerHTML = (100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2);
 					if (axis == 'y')
 					{
-						for (var j = 0; j < yValues.length; j++)
+						for (var j = 0; j < twoodles[selectedTwoodleIndex]['yValues'].length; j++)
 	    				{
-	    					if (yValues[j]['index'] == Number(c[i]['id'].split('_')[3]))
+	    					if (twoodles[selectedTwoodleIndex]['yValues'][j]['index'] == Number(c[i]['id'].split('_')[3]))
 	    					{
-	    						yValues[j]['value'] = Number((100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2));
+	    						twoodles[selectedTwoodleIndex]['yValues'][j]['value'] = Number((100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2));
 	    					}
 	    				}
 					}
 					if (axis == 'x')
 					{
-						for (var j = 0; j < xValues.length; j++)
+						for (var j = 0; j < twoodles[selectedTwoodleIndex]['xValues'].length; j++)
 	    				{
-	    					if (xValues[j]['index'] == Number(c[i]['id'].split('_')[3]))
+	    					if (twoodles[selectedTwoodleIndex]['xValues'][j]['index'] == Number(c[i]['id'].split('_')[3]))
 	    					{
-	    						xValues[j]['value'] = Number((100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2));
+	    						twoodles[selectedTwoodleIndex]['xValues'][j]['value'] = Number((100 / (c.length - 1) * ((c.length - 1) - i)).toFixed(2));
 	    					}
 	    				}
 					}
@@ -171,13 +170,13 @@ function distribute(axis)
 function addItem()
 {
 	var nextItemNumber = 1;
-	for (var i = 0; i < items.length; i++)
+	for (var i = 0; i < twoodles[selectedTwoodleIndex]['items'].length; i++)
 	{
-		if (items[i]['name'].toLowerCase().indexOf('item ') != -1)
+		if (twoodles[selectedTwoodleIndex]['items'][i]['name'].toLowerCase().indexOf('item ') != -1)
 		{
-			if (Number(items[i]['name'].toLowerCase().split('item ')[1]) >= nextItemNumber)
+			if (Number(twoodles[selectedTwoodleIndex]['items'][i]['name'].toLowerCase().split('item ')[1]) >= nextItemNumber)
 			{
-				nextItemNumber = Number(items[i]['name'].toLowerCase().split('item ')[1]) + 1;
+				nextItemNumber = Number(twoodles[selectedTwoodleIndex]['items'][i]['name'].toLowerCase().split('item ')[1]) + 1;
 			}
 		}
 	}
@@ -207,8 +206,8 @@ function addItem()
 	verifyItemsNames(false);
 	if (validItemsNames)
 	{
-		yValues.push({'value' : 0, 'index' : nextId});
-		xValues.push({'value' : 0, 'index' : nextId});
+		twoodles[selectedTwoodleIndex]['yValues'].push({'value' : 0, 'index' : nextId});
+		twoodles[selectedTwoodleIndex]['xValues'].push({'value' : 0, 'index' : nextId});
 		fillLists('y', false);
 		fillLists('x', false);
 		distribute('y');
@@ -219,67 +218,57 @@ function addItem()
 function deleteItem(item)
 {
 	var items = document.getElementById('itemsList').children;
-	var flag = false;
-	var initialId;
-	for (var i = 0; i < items.length; i++)
-	{
-		if (items[i].id.split('_')[1] == item)
-		{
-			flag = true;
-			initialId = i;
-		}	
-	}
 	$('#item_' + Number(item)).remove();
 	var j = 0;
-	items = document.getElementById('itemsList').children;
+	twoodles[selectedTwoodleIndex]['items'] = document.getElementById('itemsList').children;
 
-	for (var i = 0; i < items.length; i++)
+	for (var i = 0; i < twoodles[selectedTwoodleIndex]['items'].length; i++)
 	{
-		if (items[i].id.length)
+		if (twoodles[selectedTwoodleIndex]['items'][i].id.length)
 		{
-			var subItems = document.getElementById(items[i].id).children;
+			var subItems = document.getElementById(twoodles[selectedTwoodleIndex]['items'][i].id).children;
 			for (var k = 0; k < subItems.length; k++)
 			{
 				subItems[k].id = subItems[k].id.replace(subItems[k].id.split('_')[subItems[k].id.split('_').length - 1], j);
 			}
-			items[i].id = 'item_' + j;
+			twoodles[selectedTwoodleIndex]['items'][i].id = 'item_' + j;
 			j += 1;
 		}
 	}
 	var auxValues = [];
-	for (var i = 0; i < yValues.length; i++)
+	for (var i = 0; i < twoodles[selectedTwoodleIndex]['yValues'].length; i++)
 	{
-		if (yValues[i]['index'] != Number(item))
+		if (twoodles[selectedTwoodleIndex]['yValues'][i]['index'] != Number(item))
 		{
-			if (yValues[i]['index'] < Number(item))
+			if (twoodles[selectedTwoodleIndex]['yValues'][i]['index'] < Number(item))
 			{
-				auxValues.push(yValues[i]);
+				auxValues.push(twoodles[selectedTwoodleIndex]['yValues'][i]);
 			}
-			if (yValues[i]['index'] > Number(item))
+			if (twoodles[selectedTwoodleIndex]['yValues'][i]['index'] > Number(item))
 			{
-				yValues[i]['index'] -= 1;
-				auxValues.push(yValues[i]);
+				twoodles[selectedTwoodleIndex]['yValues'][i]['index'] -= 1;
+				auxValues.push(twoodles[selectedTwoodleIndex]['yValues'][i]);
 			}
 		}
 	}
-	yValues = auxValues;
+	twoodles[selectedTwoodleIndex]['yValues'] = auxValues;
 	auxValues = [];
-	for (var i = 0; i < xValues.length; i++)
+	for (var i = 0; i < twoodles[selectedTwoodleIndex]['xValues'].length; i++)
 	{
-		if (xValues[i]['index'] != Number(item))
+		if (twoodles[selectedTwoodleIndex]['xValues'][i]['index'] != Number(item))
 		{
-			if (xValues[i]['index'] < Number(item))
+			if (twoodles[selectedTwoodleIndex]['xValues'][i]['index'] < Number(item))
 			{
-				auxValues.push(xValues[i]);
+				auxValues.push(twoodles[selectedTwoodleIndex]['xValues'][i]);
 			}
-			if (xValues[i]['index'] > Number(item))
+			if (twoodles[selectedTwoodleIndex]['xValues'][i]['index'] > Number(item))
 			{
-				xValues[i]['index'] -= 1;
-				auxValues.push(xValues[i]);
+				twoodles[selectedTwoodleIndex]['xValues'][i]['index'] -= 1;
+				auxValues.push(twoodles[selectedTwoodleIndex]['xValues'][i]);
 			}
 		}
 	}
-	xValues = auxValues;
+	twoodles[selectedTwoodleIndex]['xValues'] = auxValues;
 	getItems();
 }
 function verifyItemsNames(shareUpdate = true)
@@ -313,39 +302,33 @@ function verifyAxisNames()
 {
 	yAxisName = document.getElementById('yAxis_name').value;
 	xAxisName = document.getElementById('xAxis_name').value;
-	//document.getElementById('lblYAxisRepeated').innerHTML = '';
-	//document.getElementById('lblXAxisRepeated').innerHTML = '';
 	document.getElementById('divDuplicatedError').innerHTML = '';
 	validAxisNames = true;
 	if (document.getElementById('yAxis_name').value.toLowerCase() == document.getElementById('xAxis_name').value.toLowerCase())
 	{
-		//document.getElementById('lblYAxisRepeated').innerHTML = '<p class="lblRepeated"> (repeated name)</p>';
-		//document.getElementById('lblXAxisRepeated').innerHTML = '<p class="lblRepeated"> (repeated name)</p>';
 		document.getElementById('divDuplicatedError').innerHTML = '<p class="lblRepeated">Error: duplicated label names</p>';
 		validAxisNames = false;
 	}
 	if (document.getElementById('xAxis_name').value == '')
 	{
-		//document.getElementById('lblXAxisRepeated').innerHTML = '<p class="lblRepeated"> (empty name)</p>';
 		document.getElementById('divDuplicatedError').innerHTML = '<p class="lblRepeated">Error: empty label name</p>';
 		validAxisNames = false;
 	}
 	if (document.getElementById('yAxis_name').value == '')
 	{
-		//document.getElementById('lblYAxisRepeated').innerHTML = '<p class="lblRepeated"> (empty name)</p>';
 		document.getElementById('divDuplicatedError').innerHTML = '<p class="lblRepeated">Error: empty label name</p>';
 		validAxisNames = false;
 	}
 }
 function fillLists(axis = null, shareUpdate = true)
 {
-	var values = [...yValues];
+	var values = [...twoodles[selectedTwoodleIndex]['yValues']];
 	var itemsListSortable = yItemsListSortable;
 	var axisName = yAxisName;
 	if (axis == 'x')
 	{
 		itemsListSortable = xItemsListSortable;
-		values = [...xValues];
+		values = [...twoodles[selectedTwoodleIndex]['xValues']];
 		axisName = xAxisName;
 	}
 	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = 'Sort items from highest to lower "' + axisName + '"';
@@ -358,11 +341,11 @@ function fillLists(axis = null, shareUpdate = true)
 	for (var i = 0; i < values.length; i++)
 	{
 		var n;
-		for (var j = 0; j < items.length; j++)
+		for (var j = 0; j < twoodles[selectedTwoodleIndex]['items'].length; j++)
 		{
-			if (values[i]['index'] == items[j]['index'])
+			if (values[i]['index'] == twoodles[selectedTwoodleIndex]['items'][j]['index'])
 			{
-				n = items[j]['name'];
+				n = twoodles[selectedTwoodleIndex]['items'][j]['name'];
 			}
 		}
 		$("#" + axis + "ItemsList").append(`
@@ -382,13 +365,17 @@ function fillLists(axis = null, shareUpdate = true)
 }
 function checkLblRecipes()
 {
-	var flag = false;
+	NElbl = null;
+	NWlbl = null;
+	SElbl = null;
+	SWlbl = null;
+	var index = -1;
 	for (var i = 0; i < recipes.length; i++)
 	{
 		if (((xAxisName.toLowerCase() == recipes[i]['defaultX']) && (yAxisName.toLowerCase() == recipes[i]['defaultY'])) || 
 			((xAxisName.toLowerCase() == recipes[i]['defaultY']) && (yAxisName.toLowerCase() == recipes[i]['defaultX'])))
 		{
-			flag = true;
+			index = i;
 			document.getElementById('recipeTitleCreateDiv').innerHTML = recipes[i]['recipeSubName'];
 			document.getElementById('recipeTitleRateYDiv').innerHTML = recipes[i]['recipeSubName'];
 			document.getElementById('recipeTitleRateXDiv').innerHTML = recipes[i]['recipeSubName'];
@@ -402,25 +389,23 @@ function checkLblRecipes()
 			SWlbl = recipes[i]['quadrantLabels'][3].toLowerCase();
 			recipes[i]['defaultXY'] = true;
 			document.getElementById('swapRestoreBtn').innerHTML = 'Swap X/Y';
-			recipeIndex = i;
-			localStorage.setItem('recipeIndex', recipeIndex);
-			if ((xAxisName.toLowerCase() == recipes[Number(localStorage.getItem('recipeIndex'))]['defaultY']) && (yAxisName.toLowerCase() == recipes[Number(localStorage.getItem('recipeIndex'))]['defaultX']))
+			if ((xAxisName.toLowerCase() == recipes[i]['defaultY']) && (yAxisName.toLowerCase() == recipes[i]['defaultX']))
 			{
-				recipes[Number(localStorage.getItem('recipeIndex'))]['defaultXY'] = false;
-				SElbl = recipes[Number(localStorage.getItem('recipeIndex'))]['quadrantLabels'][1].toLowerCase();
-				NWlbl = recipes[Number(localStorage.getItem('recipeIndex'))]['quadrantLabels'][2].toLowerCase();
+				recipes[i]['defaultXY'] = false;
+				SElbl = recipes[i]['quadrantLabels'][1].toLowerCase();
+				NWlbl = recipes[i]['quadrantLabels'][2].toLowerCase();
 				document.getElementById('swapRestoreBtn').innerHTML = 'Restore X/Y';
 			}
 		}
 	}
-	if (!flag)
-	{//Pendiente ver cómo reconocer el recipe que se estaba usando para poder hacer: recipes[i]['defaultXY'] = false;
+	if (index == -1)
+	{
 		document.getElementById('recipeTitleCreateDiv').innerHTML = 'Custom Recipe';
 		document.getElementById('recipeTitleRateYDiv').innerHTML = 'Custom Recipe';
 		document.getElementById('recipeTitleRateXDiv').innerHTML = 'Custom Recipe';
 		document.getElementById('recipeTitleSeeDiv').innerHTML = 'Custom Recipe';
-		recipeIndex = null;
 	}
+	return index;
 }
 function getItems(shareUpdate = true)
 {
@@ -452,10 +437,10 @@ function getItems(shareUpdate = true)
 		}
 		if (ok)
 		{
-			items = [];
+			twoodles[selectedTwoodleIndex]['items'] = [];
 			for (var i = 0; i < c.length; i++)
 			{
-				items.push({'name' : document.getElementById('item_name_' + c[i].id.split('_')[1]).value, 'index' : Number(c[i].id.split('_')[1])});
+				twoodles[selectedTwoodleIndex]['items'].push({'name' : document.getElementById('item_name_' + c[i].id.split('_')[1]).value, 'index' : Number(c[i].id.split('_')[1])});
 				document.getElementById('lblItem_' + c[i].id.split('_')[1]).innerHTML = '';
 			}
 			if (shareUpdate)
@@ -467,5 +452,22 @@ function getItems(shareUpdate = true)
 		{
 			setTimeout(() => { getItems(); }, 10);
 		}
+	}
+}
+function fillItemsList(items)
+{
+	document.getElementById('itemsList').innerHTML = '';
+	if (items)
+	{
+		for (var i = 0; i < items.length; i++)
+	    {
+	    	$("#itemsList").append(`
+				<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
+					<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
+					<button class="deleteItemButton" id="` + items[i]['index'] + `" onclick="deleteItem(this.id);">Delete</button>
+					<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+				</div>`
+			);
+	    }
 	}
 }

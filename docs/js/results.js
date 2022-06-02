@@ -1,9 +1,5 @@
 var canvasSize = [null, null];
 var arcSize = 0.01;
-
-var yValues = [];
-var xValues = [];
-
 var idsOrder = [];
 
 var itemMoved = -1;
@@ -15,12 +11,12 @@ function getIdsOrder(axis)
     {
         idsOrder.push(Number(c[i].id.split('_')[2]));
     }
-    if (idsOrder.length == items.length)
+    if (idsOrder.length == twoodles[selectedTwoodleIndex]['items'].length)
     {
-        var preValues = [...yValues];
+        var preValues = [...twoodles[selectedTwoodleIndex]['yValues']];
         if (axis == 'x')
         {
-            preValues = [...xValues];
+            preValues = [...twoodles[selectedTwoodleIndex]['xValues']];
         }
 
         var changes = false;
@@ -47,11 +43,11 @@ function getIdsOrder(axis)
             }
             if (axis == 'y')
             {
-                yValues = auxPreValues;
+                twoodles[selectedTwoodleIndex]['yValues'] = auxPreValues;
             }
             if (axis == 'x')
             {
-                xValues = auxPreValues;
+                twoodles[selectedTwoodleIndex]['xValues'] = auxPreValues;
             }
             distribute(axis);
             saveValues();
@@ -179,20 +175,20 @@ function drawResult()
     }
     
     canvas.fillStyle = fillStyleOfItems;
-    for (var i = 0; i < yValues.length; i++)
+    for (var i = 0; i < twoodles[selectedTwoodleIndex]['yValues'].length; i++)
     {
         var xText = 12;
         var yText = fontPx * 0.3;
 
         canvas.font = fontPx + "px 'Poppins'";
-        var y = (canvasSize[1] * (1 - (yValues[i]['value'] / 100)));
+        var y = (canvasSize[1] * (1 - (twoodles[selectedTwoodleIndex]['yValues'][i]['value'] / 100)));
         var x;
         var xIndex;
-        for (var j = 0; j < xValues.length; j++)
+        for (var j = 0; j < twoodles[selectedTwoodleIndex]['xValues'].length; j++)
         {
-            if (xValues[j]['index'] == yValues[i]['index'])
+            if (twoodles[selectedTwoodleIndex]['xValues'][j]['index'] == twoodles[selectedTwoodleIndex]['yValues'][i]['index'])
             {
-                x = (canvasSize[0] * (xValues[j]['value'] / 100));
+                x = (canvasSize[0] * (twoodles[selectedTwoodleIndex]['xValues'][j]['value'] / 100));
                 xIndex = j;
             }
         }
@@ -206,23 +202,23 @@ function drawResult()
             yText = (fontPx * 1.1);
         }
 
-        if (xValues[xIndex]['value'] > 50)
+        if (twoodles[selectedTwoodleIndex]['xValues'][xIndex]['value'] > 50)
         {
             xText = -12;
-            for (var j = 0; j < items.length; j++)
+            for (var j = 0; j < twoodles[selectedTwoodleIndex]['items'].length; j++)
             {
-                if (items[j]['index'] == yValues[i]['index'])
+                if (twoodles[selectedTwoodleIndex]['items'][j]['index'] == twoodles[selectedTwoodleIndex]['yValues'][i]['index'])
                 {
-                    xText -= canvas.measureText(items[j]['name']).width;
+                    xText -= canvas.measureText(twoodles[selectedTwoodleIndex]['items'][j]['name']).width;
                 }
             }
         }
         canvas.font = fontPx + "px 'Poppins'";
-        canvas.fillText(document.getElementById('item_name_' + yValues[i]['index']).value, x + xText, y + yText);
+        canvas.fillText(document.getElementById('item_name_' + twoodles[selectedTwoodleIndex]['yValues'][i]['index']).value, x + xText, y + yText);
         canvas.fillStyle = '';
         
         canvas.beginPath();
-        canvas.arc((canvasSize[0] * (xValues[xIndex]['value'] / 100)), (canvasSize[1] * (1 - (yValues[i]['value'] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
+        canvas.arc((canvasSize[0] * (twoodles[selectedTwoodleIndex]['xValues'][xIndex]['value'] / 100)), (canvasSize[1] * (1 - (twoodles[selectedTwoodleIndex]['yValues'][i]['value'] / 100))), ((canvasSize[0] * arcSize) + (canvasSize[1] * arcSize)) / 2 , 10, Math.PI, true);
         canvas.fill();
     }
 }

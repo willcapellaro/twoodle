@@ -3,7 +3,7 @@ var recipes = [
 		'id' : 0, 
 		'recipeName' : 'Urgent or Important?', 
 		'recipeSubName' : 'Urgency vs Importance', 
-		'description' : 'Manage your time better with this common matrix. Good for lots of little annoyances.', 
+		'description' : 'Manage your time better with this common matrix. Good for lots of little annoyance.', 
 		'defaultY' : 'urgency', 
 		'defaultX' : 'importance', 
 		'defaultXY' : true, 
@@ -36,7 +36,7 @@ var recipes = [
 		'id' : 3, 
 		'recipeName' : 'Task Triage', 
 		'recipeSubName' : 'Urgency vs Ease', 
-		'description' : 'Scarce resources? Find your way out of the mess.', 
+		'description' : 'Scare resources? Find your way out of the mess.', 
 		'defaultY' : 'urgency', 
 		'defaultX' : 'ease', 
 		'defaultXY' : true, 
@@ -46,6 +46,9 @@ var recipes = [
 ];
 function displayRecipes()
 {
+	document.getElementById('btnUseRecipe').classList.remove('buttonGrey');
+	document.getElementById('btnUseRecipe').classList.remove('button');
+	document.getElementById('btnUseRecipe').classList.add('buttonGrey');
 	if (recipes.length)
 	{
 		recipesdescription = 'Twoodle\'s got you. Here are some of our cherised recipes for thinking:<br>';
@@ -69,11 +72,6 @@ var SElbl;
 var SWlbl;
 var recipeIndex;
 
-function loadRecipe()
-{
-	if (recipes.length)
-	{}
-}
 function preSelectRecipe(element)
 {
 	recipeIndex = Number(element.id.split('_')[1]);
@@ -94,7 +92,6 @@ function selectRecipe()
 {
 	if ((recipeIndex != null) && (recipeIndex != undefined) && !document.getElementById('btnUseRecipe').classList.contains('buttonGrey'))
 	{
-		localStorage.setItem('recipeIndex', recipeIndex);
 		auxDefaultX = recipes[recipeIndex]['defaultX'];
 		auxDefaultY = recipes[recipeIndex]['defaultY'];
 		NElbl = recipes[recipeIndex]['quadrantLabels'][0].toLowerCase();
@@ -110,6 +107,6 @@ function selectRecipe()
 		document.getElementById('xAxis_name').value = auxDefaultX;
 		document.getElementById('yAxis_name').value = auxDefaultY;
 		verifyAxisNames();
-		saveAxisNames();
+		saveValues();
 	}
 }
