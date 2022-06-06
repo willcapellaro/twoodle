@@ -244,4 +244,18 @@ function selectTwoodle(selectedIndex = document.getElementById('slcTwoodles').se
 	{
 		displayNewTwoodleMenu();
 	}
+	if (document.getElementById("rateYDiv").style.display != "none")
+	{
+		menuItemClicked('rateY');
+		fillLists('y');
+	}
+	if (document.getElementById("rateXDiv").style.display != "none")
+	{
+		menuItemClicked('rateX');
+		fillLists('x');
+	}
+	if (document.getElementById("seeDiv").style.display != "none")
+	{
+		menuItemClicked('see');
+	}
 }
