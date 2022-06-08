@@ -2,7 +2,7 @@ function conditionals(x, y)
 {
 	x = x.toLowerCase();
 	y = y.toLowerCase();
-	var texts = [('high ' + y + ' and low ' + x), ('high ' + y + ' and high ' + x), ('low ' + y + ' and high ' + x), ('low ' + y + ' and low ' + x)];;
+	var texts = [('high ' + y + ' and high ' + x), ('high ' + y + ' and low ' + x), ('low ' + y + ' and high ' + x), ('low ' + y + ' and low ' + x)];;
 	if (NElbl && NWlbl && SElbl && SWlbl)
 	{
 		texts = [NElbl, NWlbl, SElbl, SWlbl];
