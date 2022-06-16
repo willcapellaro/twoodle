@@ -90,7 +90,7 @@
 			<div id="divDuplicatedError"></div>
 			<br>
 			<label>Items</label><label class="labelFloatRight"><span class="mobileHide">Drag items to change their order</span></label>
-			<div id="itemsList" onchange="verifyItemsNames();" class="itemsListSortableStop"></div>
+			<div id="itemsList" onchange="verifyItemsNames();"></div>
 			<button id="addButton" onclick="addItem();">+ Add an item</button>
 			<div><label>Actions</label>
 				<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
@@ -103,7 +103,7 @@
 			<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
 			<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Results</button>
 			<label id="lblChangeY" class="labelFloatRight"></label>
-			<div id="yItemsList" class="valuesListSortableStop"></div>
+			<div id="yItemsList"></div>
 			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
 		<div id="rateXDiv" class="activeTab">
@@ -112,7 +112,7 @@
 			<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
 			<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Results</button>
 			<label id="lblChangeX" class="labelFloatRight"></label>
-			<div id="xItemsList" class="valuesListSortableStop"></div>
+			<div id="xItemsList"></div>
 			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
 		<div id="seeDiv" class="activeTab">
@@ -217,8 +217,8 @@
 			            <div id="matrixInput"></div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" onmousedown="selectPreviousTwoodle();" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary" onmousedown="createTwoodle();" id="btnCreateTwoodle">Create</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createTwoodle()">Create</button>
 					</div>
 				</div>
 			</div>
@@ -238,7 +238,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary" onmousedown="renameTwoodle()" id="btnRenameTwoodle">Save</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="renameTwoodle()">Save</button>
 					</div>
 				</div>
 			</div>

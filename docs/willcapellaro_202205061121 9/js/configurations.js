@@ -196,7 +196,7 @@ function addItem()
 	$("#itemsList").append(`
 		<div id="item_` + nextId + `" onmouseup="getItems();">
 			<input class="itemName" type="text" value="Item ` + nextItemNumber + `" id="item_name_` + nextId + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
-			<button class="deleteItemButton" id="` + nextId + `" onclick="deleteItem(this.id);" onmouseover="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseout="itemsListSortable.addContainer(document.getElementById('itemsList'));">Delete</button>
+			<button class="deleteItemButton" id="` + nextId + `" onclick="deleteItem(this.id);">Delete</button>
 			<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
 		</div>`
 	);
@@ -464,7 +464,7 @@ function fillItemsList(items)
 	    	$("#itemsList").append(`
 				<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
 					<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
-					<button class="deleteItemButton" id="` + items[i]['index'] + `" onclick="deleteItem(this.id);" onmouseover="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseout="itemsListSortable.addContainer(document.getElementById('itemsList'));">Delete</button>
+					<button class="deleteItemButton" id="` + items[i]['index'] + `" onclick="deleteItem(this.id);">Delete</button>
 					<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
 				</div>`
 			);

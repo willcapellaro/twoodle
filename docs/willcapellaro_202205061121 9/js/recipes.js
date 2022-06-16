@@ -7,6 +7,7 @@ var recipes = [
 		'defaultY' : 'urgency', 
 		'defaultX' : 'importance', 
 		'defaultXY' : true, 
+		'featuredRecipe' : true, 
 		'quadrantLabels' : ['focus', 'delegate', 'schedule', 'avoid']
 	}, 
 	{
@@ -17,6 +18,7 @@ var recipes = [
 		'defaultY' : 'interest', 
 		'defaultX' : 'balance', 
 		'defaultXY' : true, 
+		'featuredRecipe' : false, 
 		'quadrantLabels' : ['pay down asap', 'pay next', 'pay when possible', 'no rush']
 	}, 
 	{
@@ -27,6 +29,7 @@ var recipes = [
 		'defaultY' : 'impact', 
 		'defaultX' : 'ease', 
 		'defaultXY' : true, 
+		'featuredRecipe' : true, 
 		'quadrantLabels' : ['strategic', 'high value', 'luxury', 'distractions']
 	}, 
 	{
@@ -37,6 +40,7 @@ var recipes = [
 		'defaultY' : 'urgency', 
 		'defaultX' : 'ease', 
 		'defaultXY' : true, 
+		'featuredRecipe' : true, 
 		'quadrantLabels' : ['do now', 'do soon', 'schedule/delegate', 'don\'t do']
 	}
 ];
@@ -51,6 +55,7 @@ function displayRecipes()
 
 		for (var i = 0; i < recipes.length; i++)
     	{
+    		if (recipes[i]['featuredRecipe'])
     		{
     			recipesdescription += '<div id="recipe_' + recipes[i]['id'] + '" style="border:1px solid gray; border-radius: 5px;" onclick="preSelectRecipe(this)"><h4>' + recipes[i]['recipeName'] + '</h4><h5 style="color: gray;">' + recipes[i]['recipeSubName'] + '</h5>' + recipes[i]['description'] + '</div><br>';
     		}
@@ -73,6 +78,7 @@ function preSelectRecipe(element)
 	
 	for (var i = 0; i < recipes.length; i++)
 	{
+		if (recipes[i]['featuredRecipe'])
 		{
 			document.getElementById('recipe_' + recipes[i]['id']).classList.remove('selectedRecipe');
 		}

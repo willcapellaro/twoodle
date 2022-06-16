@@ -19,7 +19,10 @@ function displayNewTwoodleMenu()
 		var html = '<select id="slcRecipe" onchange="">';
 		for (var i = 0; i < recipes.length; i++)
 		{
-			html += '<option id="optSlcRecipe_' + recipes[i]['id'] + '">' + recipes[i]['defaultY'] + '/' + recipes[i]['defaultX'] + '</option>';
+			if (!recipes[i]['featuredRecipe'])
+			{
+				html += '<option id="optSlcRecipe_' + recipes[i]['id'] + '">' + recipes[i]['defaultY'] + '/' + recipes[i]['defaultX'] + '</option>';
+			}
 		}
 		html += '</select>';
 		document.getElementById('matrixInput').innerHTML = html;
@@ -44,8 +47,6 @@ var validAxisNames = true;
 var validTwoodleName = true;
 function checkAuxValues()
 {
-	validAxisNames = true;
-	validTwoodleName = true;
 	if (document.getElementById('inputYAxisName'))
 	{
 		auxYAxisName = document.getElementById('inputYAxisName').value;
@@ -100,7 +101,6 @@ function checkAuxValues()
 function checkAuxValuesRename()
 {
 	validTwoodleName = true;
-	validAxisNames = true;
 	document.getElementById('divDuplicatedErrorRenameTwoodleName').innerHTML = '';
 	for (var i = 0; i < twoodles.length; i++)
 	{
@@ -163,21 +163,12 @@ function createTwoodle()
 		fillItemsList(twoodles[selectedTwoodleIndex]['items']);
 		document.getElementById('yAxis_name').value = twoodles[selectedTwoodleIndex]['defaultY'];
 		document.getElementById('xAxis_name').value = twoodles[selectedTwoodleIndex]['defaultX'];
-		yAxisName = twoodles[selectedTwoodleIndex]['defaultY'];
-		xAxisName = twoodles[selectedTwoodleIndex]['defaultX'];
 		selectTwoodle(twoodles[twoodles.length - 1]['id']);
 		document.getElementById('slcTwoodles').selectedIndex = twoodles.length;
-		$('#modalNewTwoodle').modal('hide');
 	}
-}
-function selectPreviousTwoodle()
-{
-	changeSelectedTwoodleIndex();
-	document.getElementById('slcTwoodles').selectedIndex = selectedTwoodleIndex + 1;
 }
 function renameTwoodle()
 {
-	checkAuxValuesRename();
 	if (validTwoodleName)
 	{
 		for (var i = 0; i < twoodles.length; i++)
@@ -189,7 +180,6 @@ function renameTwoodle()
 		}
 		saveValues();
 		fillTwoodlesSelect();
-		$('#modalRenameTwoodle').modal('hide');
 	}
 }
 function deleteTwoodle()

@@ -68,7 +68,7 @@ function loadValues()
 }
 function fillTwoodlesSelect(changeIndex = true)
 {
-	var html = '<option id="optSlcTwoodles_new" onclick="displayNewTwoodleMenu();">+ New Twoodle</option>';
+	var html = '<option id="optSlcTwoodles_new">+ New Twoodle</option>';
 	for (var i = 0; i < twoodles.length; i++)
 	{
 		html += '<option id="optSlcTwoodles_' + twoodles[i]['id'] + '">' + twoodles[i]['name'] + '</option>';
