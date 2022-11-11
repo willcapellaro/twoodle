@@ -45,4 +45,6 @@ to do
 
 !!!!! script section requires a solid writeup !!!!!
 !!!!! scripts require markup for coherence !!!!!
-!!!!! css directory requires clean up !!!!! 
+!!!!! css directory requires clean up - done, in testing !!!!! 
+!!!!! index head sorted, needs regression test !!!!! 
+!!!!! fonts appear broken, but not bad !!!!!
