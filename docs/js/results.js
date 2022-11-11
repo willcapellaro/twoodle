@@ -160,15 +160,15 @@ function drawResult()
     
     for (var i = 0; i < texts.length; i++)
     {
-        canvas.font = (fontPx*2) + "px 'Poppins'"; 
+        canvas.font = (fontPx*2) + "px 'Inter'"; 
         if (texts[i].length > 16)
         {
             var disminution = 0.01;
-            canvas.font = (fontPx * 1.99) + "px 'Poppins'";
+            canvas.font = (fontPx * 1.99) + "px 'Inter'";
             while (canvas.measureText(texts[i]).width >= (canvasSize[0] * 0.49))
             {
                 disminution += 0.01;
-                canvas.font = (fontPx * (2 - disminution)) + "px 'Poppins'";
+                canvas.font = (fontPx * (2 - disminution)) + "px 'Inter'";
             }
         }
         canvas.fillText(texts[i], (canvasSize[0] * cuadrantsPositions[i][0]) - (canvas.measureText(texts[i]).width * 0.5), (canvasSize[1] * cuadrantsPositions[i][1]) + (fontPx * 0.5));
@@ -180,7 +180,7 @@ function drawResult()
         var xText = 12;
         var yText = fontPx * 0.3;
 
-        canvas.font = fontPx + "px 'Poppins'";
+        canvas.font = fontPx + "px 'Inter'";
         var y = (canvasSize[1] * (1 - (twoodles[selectedTwoodleIndex]['yValues'][i]['value'] / 100)));
         var x;
         var xIndex;
@@ -213,7 +213,7 @@ function drawResult()
                 }
             }
         }
-        canvas.font = fontPx + "px 'Poppins'";
+        canvas.font = fontPx + "px 'Inter'";
         canvas.fillText(document.getElementById('item_name_' + twoodles[selectedTwoodleIndex]['yValues'][i]['index']).value, x + xText, y + yText);
         canvas.fillStyle = '';
         
