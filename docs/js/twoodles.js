@@ -121,7 +121,7 @@ function checkAuxValuesRename()
 		validAxisNames = false;
 	}
 }
-function createTwoodle()
+function itemsTwoodle()
 {
 	checkAuxValues();
 	if (validTwoodleName && validAxisNames)

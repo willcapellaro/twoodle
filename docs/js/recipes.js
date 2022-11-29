@@ -93,7 +93,7 @@ function selectRecipe()
 		SElbl = recipes[recipeIndex]['quadrantLabels'][2].toLowerCase();
 		SWlbl = recipes[recipeIndex]['quadrantLabels'][3].toLowerCase();
 
-		document.getElementById('recipeTitleCreateDiv').innerHTML = recipes[recipeIndex]['recipeSubName'];
+		document.getElementById('recipeTitleItemsDiv').innerHTML = recipes[recipeIndex]['recipeSubName'];
 		document.getElementById('recipeTitleRateYDiv').innerHTML = recipes[recipeIndex]['recipeSubName'];
 		document.getElementById('recipeTitleRateXDiv').innerHTML = recipes[recipeIndex]['recipeSubName'];
 		document.getElementById('recipeTitleSeeDiv').innerHTML = recipes[recipeIndex]['recipeSubName'];

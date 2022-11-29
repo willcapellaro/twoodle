@@ -58,7 +58,7 @@
 		<script type="text/javascript" src="./js/twoodles.js"></script>
 
 	</head>
-	<body onload="loadValues();menuItemClicked('create');saveValues();">
+	<body onload="loadValues();menuItemClicked('items');saveValues();">
 		<header>
 			<div>
 				<h1 id="title">Twoodle<span class="mobileHide"> a thinking tool</span></h1>
@@ -72,18 +72,18 @@
 		</div>
 		<nav id="menu">
 			<ul>
-				<button class="menuButton" onclick="menuItemClicked(this.id);" id="create">Create<span class="mobileHide"> your items</span></button>
+				<button class="menuButton" onclick="menuItemClicked(this.id);" id="items">Item<span class="mobileHide"></span></button> 
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="rateY"><span class="mobileHide">Rate</span> Y <span class="mobileHide">Axis</span></button>
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="rateX"><span class="mobileHide">Rate</span> X<span class="mobileHide"> Axis</span></button>
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="see"><span class="mobileHide">See</span> Matrix</button>
 			</ul>
 		</nav>
-		<div id="createDiv" class="activeTab">
+		<div id="ItemsDiv" class="activeTab">
 			<div class="inlineDiv">
 				<label">Value Scales</label>
 				<i class="bi bi-arrow-left-right"></i><button type="button" onclick="swap();" id="swapRestoreBtn">Swap X/Y</button>
 				<i class="bi bi-book-fill" onclick="displayRecipes();" data-toggle="modal" data-target="#modalRecipes"></i><p onclick="displayRecipes();" data-toggle="modal" data-target="#modalRecipes"> Recipes</p>
-				<p id="recipeTitleCreateDiv" class="labelFloatRight"></p>
+				<p id="recipeTitleItemsDiv" class="labelFloatRight"></p>
 			</div>
 			<div id="axisList" onchange="verifyAxisNames();saveValues();//saveAxisNames();">
 				<div class="item itemLabel" id="yAxis">
@@ -230,7 +230,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" onmousedown="selectPreviousTwoodle();" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary" onmousedown="createTwoodle();" id="btnCreateTwoodle">Create</button>
+						<button type="button" class="btn btn-primary" onmousedown="itemsTwoodle();" id="btnitemsTwoodle">items</button>
 					</div>
 				</div>
 			</div>
@@ -269,7 +269,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="deleteTwoodle()">Delete</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="deleteTwoodle()">Delete</button>
 					</div>
 				</div>
 			</div>

@@ -47,4 +47,4 @@ to do
 !!!!! scripts require markup for coherence !!!!!
 !!!!! css directory requires clean up - done, in testing !!!!! 
 !!!!! index head sorted, needs regression test !!!!! 
-!!!!! fonts appear broken, but not bad !!!!!
+!!!!! bug: quotes don't work in twoodle item labels !!!!!

@@ -216,7 +216,15 @@ label {
 }
 .deleteItemButton {
 	margin-left: 1em;
+	border: none;
+	outline: none;
+	box-shadow: none;
 }
+
+.deleteItemButton:hover {
+	box-shadow: none;
+}
+
 
 .deleteBtnGrey {
 	background-color: grey;

@@ -11,13 +11,13 @@ function menuItemClicked(item)
 	{
 		switch (item)
 		{
-			case "create":
+			case "items":
 				document.getElementById("rateYDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
-				document.getElementById("createDiv").style.display = "block";
+				document.getElementById("ItemsDiv").style.display = "block";
 				
-				document.getElementById('create').classList.add('activeTab');
+				document.getElementById('items').classList.add('activeTab');
 				document.getElementById('rateY').classList.remove('activeTab');
 				document.getElementById('rateX').classList.remove('activeTab');
 				document.getElementById('see').classList.remove('activeTab');
@@ -26,11 +26,11 @@ function menuItemClicked(item)
 				getItems();
 				saveValues();
 				fillLists('x');
-				document.getElementById("createDiv").style.display = "none";
+				document.getElementById("ItemsDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
 				
-				document.getElementById('create').classList.remove('activeTab');
+				document.getElementById('items').classList.remove('activeTab');
 				document.getElementById('rateY').classList.add('activeTab');
 				document.getElementById('rateX').classList.remove('activeTab');
 				document.getElementById('see').classList.remove('activeTab');
@@ -46,11 +46,11 @@ function menuItemClicked(item)
 				getItems();
 				saveValues();
 				fillLists('y');
-				document.getElementById("createDiv").style.display = "none";
+				document.getElementById("ItemsDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "none";
 				document.getElementById("rateYDiv").style.display = "none";
 				
-				document.getElementById('create').classList.remove('activeTab');
+				document.getElementById('items').classList.remove('activeTab');
 				document.getElementById('rateY').classList.remove('activeTab');
 				document.getElementById('rateX').classList.add('activeTab');
 				document.getElementById('see').classList.remove('activeTab');
@@ -70,12 +70,12 @@ function menuItemClicked(item)
 				fillLists('x');
 				distribute('y');
 				distribute('x');
-				document.getElementById("createDiv").style.display = "none";
+				document.getElementById("ItemsDiv").style.display = "none";
 				document.getElementById("rateYDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
 				document.getElementById("seeDiv").style.display = "block";
 				
-				document.getElementById('create').classList.remove('activeTab');
+				document.getElementById('items').classList.remove('activeTab');
 				document.getElementById('rateY').classList.remove('activeTab');
 				document.getElementById('rateX').classList.remove('activeTab');
 				document.getElementById('see').classList.add('activeTab');
@@ -196,13 +196,13 @@ function addItem()
 	$("#itemsList").append(`
 		<div id="item_` + nextId + `" onmouseup="getItems();">
 			<input class="itemName" type="text" value="Item ` + nextItemNumber + `" id="item_name_` + nextId + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
-			<button class="deleteItemButton" id="` + nextId + `" onclick="deleteItem(this.id);" onmouseover="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseout="itemsListSortable.addContainer(document.getElementById('itemsList'));">Delete</button>
+			<button class="deleteItemButton btn-link" id="` + nextId + `" onclick="deleteItem(this.id);" onmouseover="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseout="itemsListSortable.addContainer(document.getElementById('itemsList'));"><i class="bi bi-trash-fill"></i>  </button>
 			<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
 		</div>`
 	);
 	flagShareUpdate = true;
 	document.getElementById(c[0].id.split('_')[1]).disabled = false;
-	document.getElementById(c[0].id.split('_')[1]).className = 'itemBackGround';
+	document.getElementById(c[0].id.split('_')[1]).className = 'deleteItemButton btn-link';
 	verifyItemsNames(false);
 	if (validItemsNames)
 	{
@@ -332,6 +332,7 @@ function fillLists(axis = null, shareUpdate = true)
 		axisName = xAxisName;
 	}
 	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = 'Sort items from highest to lower "' + axisName + '"';
+
 	document.getElementById(axis + 'ItemsList').innerHTML = '';
 	var c = document.getElementById(axis + 'ItemsList').children;
 	if (!c.length)
@@ -376,7 +377,7 @@ function checkLblRecipes()
 			((xAxisName.toLowerCase() == recipes[i]['defaultY']) && (yAxisName.toLowerCase() == recipes[i]['defaultX'])))
 		{
 			index = i;
-			document.getElementById('recipeTitleCreateDiv').innerHTML = recipes[i]['recipeSubName'];
+			document.getElementById('recipeTitleItemsDiv').innerHTML = recipes[i]['recipeSubName'];
 			document.getElementById('recipeTitleRateYDiv').innerHTML = recipes[i]['recipeSubName'];
 			document.getElementById('recipeTitleRateXDiv').innerHTML = recipes[i]['recipeSubName'];
 			document.getElementById('recipeTitleSeeDiv').innerHTML = recipes[i]['recipeSubName'];
@@ -400,7 +401,7 @@ function checkLblRecipes()
 	}
 	if (index == -1)
 	{
-		document.getElementById('recipeTitleCreateDiv').innerHTML = 'Custom Recipe';
+		document.getElementById('recipeTitleItemsDiv').innerHTML = 'Custom Recipe';
 		document.getElementById('recipeTitleRateYDiv').innerHTML = 'Custom Recipe';
 		document.getElementById('recipeTitleRateXDiv').innerHTML = 'Custom Recipe';
 		document.getElementById('recipeTitleSeeDiv').innerHTML = 'Custom Recipe';
@@ -464,7 +465,7 @@ function fillItemsList(items)
 	    	$("#itemsList").append(`
 				<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
 					<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
-					<button class="deleteItemButton" id="` + items[i]['index'] + `" onclick="deleteItem(this.id);" onmouseover="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseout="itemsListSortable.addContainer(document.getElementById('itemsList'));">Delete</button>
+					<button class="deleteItemButton btn-link" aria-label="Delete" id="` + items[i]['index'] + `" onclick="deleteItem(this.id);" onmouseover="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseout="itemsListSortable.addContainer(document.getElementById('itemsList'));"><i class="bi bi-trash-fill"></i></button>
 					<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
 				</div>`
 			);
