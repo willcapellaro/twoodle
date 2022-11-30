@@ -134,18 +134,27 @@ button:focus {
 	outline: var(--primary-hover) 3px solid;
 }
 button:hover {
-	background-color: var(--primary-hover);
+/*	background-color: var(--primary-hover);*/
 	box-shadow: 0 14px 28px rgba(0,0,0,0.02), 0 5px 5px rgba(0,0,0,0.08);
 	border-color: var(--primary-hover);
+	opacity: .5;
+	box-shadow: none;
+	text-decoration: none;
 }
 .menuButton {
 	border-radius: 10px 10px 0 0;
 	border-bottom: 0;
 	box-shadow: none;
-	color: red;
+	color: dodgerblue;
 	background-color: transparent;
 	border: none;
 }
+.menuButton:hover {
+
+	text-decoration: none; !important
+}
+
+
 .localeStorageTabs {
 	border-radius: 10px 10px 0 0;
 	border-bottom: 0;
@@ -225,6 +234,19 @@ label {
 	box-shadow: none;
 }
 
+
+.linkBtn {
+	outline: none;
+	border: none;
+	box-shadow: none;
+	text-decoration: none; !important
+
+}
+
+.linkBtn:hover {
+	box-shadow: none;
+	text-decoration: none;
+}
 
 .deleteBtnGrey {
 	background-color: grey;
@@ -632,14 +654,27 @@ background-color: pink;
 
 	*/
 
-.activeTab {
+.activeTabButton {
 	background-color: var(--focus);
 	border: 4px var(--focus) solid;
-	border-bottom: 4px red solid;
+	border-bottom: 4px dodgerblue solid;
 }
+
+.tabHeading {
+	height: 2em; 
+	font-weight: 600;
+}
+
+.iSpace {
+	margin-left: 12px;
+	margin-right: 12px;
+	color: dodgerblue;
+}
+
 .resultsModalActiveTab {
-	border-bottom: 4px red solid;
+	border-bottom: 4px dodgerblue solid;
 }
+
 .selectedRecipe {
 	background-color: blue;
 }

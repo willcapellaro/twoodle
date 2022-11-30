@@ -61,18 +61,18 @@
 	<body onload="loadValues();menuItemClicked('items');saveValues();">
 		<header>
 			<div>
-				<h1 id="title">Twoodle<span class="mobileHide"> a thinking tool</span></h1>
+				<h1 id="title">Twoodle<span class="mobileHide"> alpha</span></h1>
 			</div>
 		</header>
 		<div id="twoodlesDiv">
 			Your twoodles
 			<select id="slcTwoodles" onchange="selectTwoodle();"></select>
-			<i class="bi bi-trash-fill" onclick="$('#modalDeleteTwoodle').modal('show');"></i>
-			<i class="bi bi-pencil-fill" onclick="displayRenameTwoodleModal();"></i>
+			<i style="color: dodgerblue" class="bi bi-trash-fill" onclick="$('#modalDeleteTwoodle').modal('show');"></i>
+			<i class="bi bi-pencil-fill" style="color: dodgerblue"  onclick="displayRenameTwoodleModal();"></i>
 		</div>
 		<nav id="menu">
 			<ul>
-				<button class="menuButton" onclick="menuItemClicked(this.id);" id="items">Item<span class="mobileHide"></span></button> 
+				<button class="menuButton" onclick="menuItemClicked(this.id);" id="items">Items<span class="mobileHide"></span></button> 
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="rateY"><span class="mobileHide">Rate</span> Y <span class="mobileHide">Axis</span></button>
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="rateX"><span class="mobileHide">Rate</span> X<span class="mobileHide"> Axis</span></button>
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="see"><span class="mobileHide">See</span> Matrix</button>
@@ -80,10 +80,13 @@
 		</nav>
 		<div id="ItemsDiv" class="activeTab">
 			<div class="inlineDiv">
-				<label">Value Scales</label>
-				<i class="bi bi-arrow-left-right"></i><button type="button" onclick="swap();" id="swapRestoreBtn">Swap X/Y</button>
-				<i class="bi bi-book-fill" onclick="displayRecipes();" data-toggle="modal" data-target="#modalRecipes"></i><p onclick="displayRecipes();" data-toggle="modal" data-target="#modalRecipes"> Recipes</p>
-				<p id="recipeTitleItemsDiv" class="labelFloatRight"></p>
+				<label class="tabHeading"><p id="recipeTitleItemsDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Items</label>
+				<div style="float: right;">
+				<button type="button" class="btn-link linkBtn" onclick="swap();" id="swapRestoreBtn"><i class="bi bi-arrow-left-right"></i> Swap X/Y</button>
+				<button class="btn-link linkBtn" type="button" onclick="displayRecipes()" data-toggle="modal" data-target="#modalRecipes";>
+				<i class="bi bi-book-fill"></i> Recipes</button>
+			</div>
+				
 			</div>
 			<div id="axisList" onchange="verifyAxisNames();saveValues();//saveAxisNames();">
 				<div class="item itemLabel" id="yAxis">
@@ -101,37 +104,35 @@
 			</div>
 			<div id="divDuplicatedError"></div>
 			<br>
-			<label>Items</label><label class="labelFloatRight"><span class="mobileHide">Drag items to change their order</span></label>
+
+
+
+			<label class="labelFloatRight"><span class="mobileHide">All items: Drag items to change their order on this tab only.</span></label>
 			<div id="itemsList" onchange="verifyItemsNames();" class="itemsListSortableStop"></div>
 			<button id="addButton" onclick="addItem();">+ Add an item</button>
-			<div><label>Actions</label>
-				<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
-				<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Results</button>
-			</div>
+
 		</div>
 		<div id="rateYDiv" class="activeTab">
-			<p id="recipeTitleRateYDiv" class="labelFloatRight"></p>
-			<label>Actions</label>
-			<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
-			<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Results</button>
+			
+			<div class="inlineDiv">
+				<label class="tabHeading"><p id="recipeTitleRateYDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Prioritization</label>
+			</div>
 			<label id="lblChangeY" class="labelFloatRight"></label>
 			<div id="yItemsList" class="valuesListSortableStop"></div>
 			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
 		<div id="rateXDiv" class="activeTab">
-			<p id="recipeTitleRateXDiv" class="labelFloatRight"></p>
-			<label>Actions</label>
-			<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
-			<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Results</button>
+			<div class="inlineDiv">
+				<label class="tabHeading"><p id="recipeTitleRateXDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Prioritization</label>
+			</div>
 			<label id="lblChangeX" class="labelFloatRight"></label>
 			<div id="xItemsList" class="valuesListSortableStop"></div>
 			<button id="addButton" onclick="addItem();">+ Add an item</button>
 		</div>
 		<div id="seeDiv" class="activeTab">
-			<p id="recipeTitleSeeDiv" class="labelFloatRight"></p>
-			<label>Actions</label>
-			<button data-toggle="modal" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option>
-			<button onclick="displayLocalStorage();" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Results</button>
+			<div class="inlineDiv">
+				<label class="tabHeading"><p id="recipeTitleSeeDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Results</label>
+			</div>
 			<div>
 				<div id="matrixNew" class="matrixGrid" >
 					<div class="matrixLabel smoke">
@@ -151,6 +152,14 @@
 			</div>
 		</div>
 		
+<div style="float: right; font-size: 10px;">
+			<div>
+				
+				<button data-toggle="modal" class="linkBtn btn-link" data-target="#modalClear" style="padding-bottom: 5px;">Clear Local Storage</option></button>
+				<button onclick="displayLocalStorage();" class="linkBtn btn-link" data-toggle="modal" data-target="#modalLocalStorage" style="padding-bottom: 5px;">Display Results</button>
+			</div>
+		</div>
+
 		<div class="modal fade" id="modalClear" tabindex="-1" role="dialog" aria-labelledby="modalClearTitle" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -265,7 +274,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<label id="lblDeleteTwoodle">This will permanently delete </label>
+						<label id="lblDeleteTwoodle">This will permanently delete this Twoodle, and its data. </label>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
