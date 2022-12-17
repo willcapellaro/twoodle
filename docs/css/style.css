@@ -123,11 +123,11 @@ h1, h2, h3, h4, h5, h6 {
 button {
 	background-color: var(--primary-active);
 	color: var(--btn-text);
-	border: 4px var(--primary-active) solid;
+/*	border: 4px var(--primary-active) solid;*/
 	padding: .5em 1em .5em 1em ;
 	margin: 1em 3px 0;
-	border-radius: 3px;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+/*	border-radius: 3px;*/
+/*	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
 /*  	transition: all 0.3s cubic-bezier(.25,.8,.25,1);*/
 }
 button:focus {
@@ -142,7 +142,7 @@ button:hover {
 	text-decoration: none;
 }
 .menuButton {
-	border-radius: 10px 10px 0 0;
+/*	border-radius: 10px 10px 0 0;*/
 	border-bottom: 0;
 	box-shadow: none;
 	color: dodgerblue;
@@ -223,14 +223,14 @@ label {
 	display: inline-block;
 	width: 10em;
 }
-.deleteItemButton {
+.editItemButton .deleteItemButton .moveItemButton {
 	margin-left: 1em;
 	border: none;
 	outline: none;
 	box-shadow: none;
 }
 
-.deleteItemButton:hover {
+.editItemButton .deleteItemButton .moveItemButton:hover {
 	box-shadow: none;
 }
 
@@ -286,12 +286,12 @@ label {
 	padding-top: 8px;
 }
 
-#seeDiv {
+#resultsDiv {
 	text-align: center: 
 	background-color: yellow;
 }
 
-#seeDiv div {
+#resultsDiv div {
 	margin-left: auto;
 	margin-right: auto; 
 /*	width: 600px;
@@ -308,7 +308,7 @@ label {
 .matrixGrid {
 	margin: auto;
 	display: grid; 
-	grid-template-rows: 3em 500px 3rem; 
+	grid-template-rows: 3em 200px 3rem; 
 	grid-template-columns: 3em 500px 3rem;
 }
 
@@ -475,7 +475,7 @@ display: block;
 {
 	display: none;
 }
-#seeDiv
+#resultsDiv
 {
 	display: none;
 }
@@ -568,15 +568,21 @@ header {
 	float: none;
 		background-color: yellow;
 }	
-#createDiv, #rateYDiv, #rateXDiv, #seeDiv { 
+#createDiv, #rateYDiv, #rateXDiv, #resultsDiv { 
     padding-left: 16px;
     padding-right: 16px;
     /*background-color: transparent;*/
 }
 
+
+#resultsDivGrid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
    .menuButton {
    	margin: 0;
-   	border-radius: 0rem;
+/*   	border-radius: 0rem;*/
    }
 
    .menuButton:nth-child(1) {
@@ -671,6 +677,12 @@ background-color: pink;
 	color: dodgerblue;
 }
 
+.iSpaceSm {
+	margin-left: 0px;
+	margin-right: 0px;
+	color: dodgerblue;
+}
+
 .resultsModalActiveTab {
 	border-bottom: 4px dodgerblue solid;
 }
@@ -696,4 +708,32 @@ background-color: pink;
 }
 .itemsListSortableStop {
 	/*background-color: orange;*/
+}
+
+.btn-link, .addItemButton, .modalButton
+{
+	float: right;
+}
+#lblAddTo
+{
+	float: right;
+	padding-right: 10px;
+}
+
+#lblMoveItemName
+{
+	padding-right: 10px;
+}
+
+.radio-button {
+  opacity: 0;
+}
+.radio-tile-label {
+	border: 1px solid gray;
+	width: 15%;
+	float: right;
+}
+.selectedUbicationButton
+{
+	background-color: gray;
 }

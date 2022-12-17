@@ -1,15 +1,3 @@
-var itemsListSortable = new Sortable.default(document.getElementById('itemsList'), {
-    draggable: 'div'
-});
-itemsListSortable.on('sortable:start', function(){
-    document.getElementById('itemsList').classList.remove('itemsListSortableStop');
-    document.getElementById('itemsList').classList.add('itemsListSortableStart');
-});
-itemsListSortable.on('sortable:stop', function(){
-    document.getElementById('itemsList').classList.remove('itemsListSortableStart');
-    document.getElementById('itemsList').classList.add('itemsListSortableStop');
-});
-
 var yItemsListSortable = new Sortable.default([], {
     draggable: 'div'
 });

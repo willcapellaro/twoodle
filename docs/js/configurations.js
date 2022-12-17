@@ -5,29 +5,32 @@ var distributing = false;
 var yAxisName;
 var xAxisName;
 
+var selectedItem;
+var selectedTwoodleMoveIndex;
+
 function menuItemClicked(item)
 {
-	if (validItemsNames && validAxisNames)
+	switch (item)
 	{
-		switch (item)
-		{
-			case "items":
-				document.getElementById("rateYDiv").style.display = "none";
-				document.getElementById("rateXDiv").style.display = "none";
-				document.getElementById("seeDiv").style.display = "none";
-				document.getElementById("ItemsDiv").style.display = "block";
-				
-				document.getElementById('items').classList.add('activeTabButton');
-				document.getElementById('rateY').classList.remove('activeTabButton');
-				document.getElementById('rateX').classList.remove('activeTabButton');
-				document.getElementById('see').classList.remove('activeTabButton');
-				break;
-			case "rateY":
+		case "items":
+			document.getElementById("rateYDiv").style.display = "none";
+			document.getElementById("rateXDiv").style.display = "none";
+			document.getElementById("resultsDiv").style.display = "none";
+			document.getElementById("ItemsDiv").style.display = "block";
+			
+			document.getElementById('items').classList.add('activeTabButton');
+			document.getElementById('rateY').classList.remove('activeTabButton');
+			document.getElementById('rateX').classList.remove('activeTabButton');
+			document.getElementById('see').classList.remove('activeTabButton');
+			break;
+		case "rateY":
+			if (validItemsNames && validAxisNames)
+			{
 				getItems();
 				saveValues();
 				fillLists('x');
 				document.getElementById("ItemsDiv").style.display = "none";
-				document.getElementById("seeDiv").style.display = "none";
+				document.getElementById("resultsDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
 				
 				document.getElementById('items').classList.remove('activeTabButton');
@@ -39,15 +42,16 @@ function menuItemClicked(item)
 					document.getElementById("rateYDiv").style.display = "block";
 					fillLists('y');
 				}
-				distribute('y');
-    			distribute('x');
-				break;
-			case "rateX":
+			}
+			break;
+		case "rateX":
+			if (validItemsNames && validAxisNames)
+			{
 				getItems();
 				saveValues();
 				fillLists('y');
 				document.getElementById("ItemsDiv").style.display = "none";
-				document.getElementById("seeDiv").style.display = "none";
+				document.getElementById("resultsDiv").style.display = "none";
 				document.getElementById("rateYDiv").style.display = "none";
 				
 				document.getElementById('items').classList.remove('activeTabButton');
@@ -59,31 +63,31 @@ function menuItemClicked(item)
 					document.getElementById("rateXDiv").style.display = "block";
 					fillLists('x');
 				}
-				distribute('y');
-    			distribute('x');
-				break;
-			case "see":
+			}
+			break;
+		case "see":
+			if (validItemsNames && validAxisNames)
+			{
 				getItems();
 				saveValues();
 				fillAxisNames();
 				fillLists('y');
 				fillLists('x');
-				distribute('y');
-				distribute('x');
 				document.getElementById("ItemsDiv").style.display = "none";
 				document.getElementById("rateYDiv").style.display = "none";
 				document.getElementById("rateXDiv").style.display = "none";
-				document.getElementById("seeDiv").style.display = "block";
+				document.getElementById("resultsDiv").style.display = "block";
 				
 				document.getElementById('items').classList.remove('activeTabButton');
 				document.getElementById('rateY').classList.remove('activeTabButton');
 				document.getElementById('rateX').classList.remove('activeTabButton');
 				document.getElementById('see').classList.add('activeTabButton');
 				drawResult();
-				break;
-			default:
-				break;
-		}
+				displayLocalStorage('quadrants');
+			}
+			break;
+		default:
+			break;
 	}
 }
 function distribute(axis)
@@ -184,25 +188,28 @@ function addItem()
 	var c = document.getElementById('itemsList').children;
 	if (c.length)
 	{
-		for (var i = 0; i < c.length; i++)
+		var i = 0;
+		while (i < c.length)
 		{
-			if (c[i].id.length)
+			if (Number(c[i].id.split('_')[1]) == nextId)
 			{
-				nextId += 1;
+				nextId++;
+				i = -1;
 			}
+			i++;
 		}
 	}
 	flagShareUpdate = false;
 	$("#itemsList").append(`
 		<div id="item_` + nextId + `" onmouseup="getItems();">
-			<input class="itemName" type="text" value="Item ` + nextItemNumber + `" id="item_name_` + nextId + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
-			<button class="deleteItemButton btn-link" id="` + nextId + `" onclick="deleteItem(this.id);" onmouseover="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseout="itemsListSortable.addContainer(document.getElementById('itemsList'));"><i class="bi bi-trash-fill"></i>  </button>
+			<input class="itemName" type="text" value="Item ` + nextItemNumber + `" id="item_name_` + nextId + `">
+			<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + nextId + `);"></i>
+			<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + nextId + `);"></i></div>
+			<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + nextId + `);"></i>
 			<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
 		</div>`
 	);
 	flagShareUpdate = true;
-	document.getElementById(c[0].id.split('_')[1]).disabled = false;
-	document.getElementById(c[0].id.split('_')[1]).className = 'deleteItemButton btn-link';
 	verifyItemsNames(false);
 	if (validItemsNames)
 	{
@@ -210,66 +217,232 @@ function addItem()
 		twoodles[selectedTwoodleIndex]['xValues'].push({'value' : 0, 'index' : nextId});
 		fillLists('y', false);
 		fillLists('x', false);
-		distribute('y');
-		distribute('x');
 		saveValues();
+		drawResult();
+		displayLocalStorage('quadrants');
+	}
+}
+function preMoveItem(id)
+{
+	document.getElementById('inputItemUrl').parentNode.style.display = 'block';
+	selectedItem = id;
+	for (var i = 0; i < twoodles[selectedTwoodleIndex]['items'].length; i++)
+	{
+		if (twoodles[selectedTwoodleIndex]['items'][i]['index'] == selectedItem)
+		{
+			document.getElementById('lblMoveItemName').innerHTML = 'Move Item "' + twoodles[selectedTwoodleIndex]['items'][i]['name'] + '" to';
+		}
+	}
+	var html = '';
+	for (var i = 0; i < twoodles.length; i++)
+	{
+		html += '<option id="optSlcTwoodlesMove_' + twoodles[i]['id'] + '">' + twoodles[i]['name'] + '</option>';
+	}
+	document.getElementById('slcTwoodlesMove').innerHTML = html;
+	$('#modalMove').modal('show');
+}
+function selectTwoodleMove()
+{
+	if (document.getElementById('slcTwoodlesMove').selectedIndex != -1)
+	{
+		var selectedTwoodleMove = Number(document.getElementById('slcTwoodlesMove').children[document.getElementById('slcTwoodlesMove').selectedIndex].id.split('_')[1]);
+		for (var i = 0; i < twoodles.length; i++)
+		{
+			if (twoodles[i]['id'] == selectedTwoodleMove)
+			{
+				selectedTwoodleMoveIndex = twoodles[i]['id'];
+			}
+		}
+	}
+}
+var ubication = 'bottom';
+function selectTwoodleTopBottom(e = document.getElementById('lblTop'))
+{
+	ubication = e.id.split('lbl')[1].toLowerCase();
+	e.classList.add('selectedUbicationButton');
+	document.getElementById('lblBottom').classList.remove('selectedUbicationButton');
+	if (ubication == 'bottom')
+	{
+		e.classList.add('selectedUbicationButton');
+		document.getElementById('lblTop').classList.remove('selectedUbicationButton');
+	}
+}
+function nextIndex(json, index)
+{
+	var exists = false;
+	for (var i = 0; i < json.length; i++)
+	{
+		if (json[i]['index'] == index)
+		{
+			exists = true;
+		}
+	}
+	if (!exists)
+	{
+		return index;
+	}
+	var minIndex = 0;
+	var i = 0;
+	while (i < json.length)
+	{
+		if (json[i]['index'] == minIndex)
+		{
+			minIndex++;
+			i = -1;
+		}
+		i++;
+	}
+	return minIndex;
+}
+function moveItem()
+{
+	selectTwoodleMove();
+	for (var j = 0; j < 3; j++)
+	{
+		var auxTwoodleValues = [];
+		var auxTwoodleValuesOrginal = [];
+		var auxValue;
+		for (var i = 0; i < twoodles[selectedTwoodleIndex][['yValues', 'xValues', 'items'][j]].length; i++)
+		{
+			if (twoodles[selectedTwoodleIndex][['yValues', 'xValues', 'items'][j]][i]['index'] == selectedItem)
+			{
+				if (ubication == 'top')
+				{
+					var n = nextIndex(auxTwoodleValues, twoodles[selectedTwoodleIndex][['yValues', 'xValues', 'items'][j]][i]['index']);
+					auxTwoodleValues.push(JSON.parse(JSON.stringify(twoodles[selectedTwoodleIndex][['yValues', 'xValues', 'items'][j]][i])));
+					if (selectedTwoodleIndex != selectedTwoodleMoveIndex)
+					{
+						auxTwoodleValues[auxTwoodleValues.length - 1]['index'] = n;
+					}
+				}
+				else
+				{
+					auxValue = twoodles[selectedTwoodleIndex][['yValues', 'xValues', 'items'][j]][i];
+				}
+			}
+			if (selectedTwoodleIndex != selectedTwoodleMoveIndex)
+			{
+				if (twoodles[selectedTwoodleIndex][['yValues', 'xValues', 'items'][j]][i]['index'] != selectedItem)
+				{
+					auxTwoodleValuesOrginal.push(JSON.parse(JSON.stringify(twoodles[selectedTwoodleIndex][['yValues', 'xValues', 'items'][j]][i])));
+				}
+			}
+		}
+		for (var i = 0; i < twoodles[selectedTwoodleMoveIndex][['yValues', 'xValues', 'items'][j]].length; i++)
+		{
+			if ((twoodles[selectedTwoodleMoveIndex][['yValues', 'xValues', 'items'][j]][i]['index'] != selectedItem) && (selectedTwoodleIndex == selectedTwoodleMoveIndex))
+			{
+				auxTwoodleValues.push(JSON.parse(JSON.stringify(twoodles[selectedTwoodleMoveIndex][['yValues', 'xValues', 'items'][j]][i])));
+			}
+			else
+			{
+				if (selectedTwoodleIndex != selectedTwoodleMoveIndex)
+				{
+					var n = nextIndex(auxTwoodleValues, twoodles[selectedTwoodleMoveIndex][['yValues', 'xValues', 'items'][j]][i]['index']);
+					auxTwoodleValues.push(JSON.parse(JSON.stringify(twoodles[selectedTwoodleMoveIndex][['yValues', 'xValues', 'items'][j]][i])));
+					auxTwoodleValues[auxTwoodleValues.length - 1]['index'] = n;
+				}
+			}
+		}
+		if (ubication == 'bottom')
+		{
+			var n = nextIndex(auxTwoodleValues, auxValue['index']);
+			auxTwoodleValues.push(JSON.parse(JSON.stringify(auxValue)));
+			if (selectedTwoodleIndex != selectedTwoodleMoveIndex)
+			{
+				auxTwoodleValues[auxTwoodleValues.length - 1]['index'] = n;
+			}
+		}
+		twoodles[selectedTwoodleMoveIndex][['yValues', 'xValues', 'items'][j]] = [...auxTwoodleValues];
+		auxTwoodleValues = [];
+
+		if (selectedTwoodleIndex != selectedTwoodleMoveIndex)
+		{
+			twoodles[selectedTwoodleIndex][['yValues', 'xValues', 'items'][j]] = [...auxTwoodleValuesOrginal];
+		}
+		auxTwoodleValuesOrginal = [];
+	}
+	yValues = twoodles[selectedTwoodleIndex]['yValues'];
+	xValues = twoodles[selectedTwoodleIndex]['xValues'];
+	items = twoodles[selectedTwoodleIndex]['items'];
+	fillItemsList();
+	fillLists('y');
+	fillLists('x');
+	drawResult();
+	displayLocalStorage('quadrants');
+}
+function preEditItem(id)
+{
+	document.getElementById('inputItemUrl').parentNode.style.display = 'block';
+	selectedItem = id;
+	for (var i = 0; i < twoodles[selectedTwoodleIndex]['items'].length; i++)
+	{
+		if (twoodles[selectedTwoodleIndex]['items'][i]['index'] == selectedItem)
+		{
+			if (!twoodles[selectedTwoodleIndex]['items'][i]['url'])
+			{
+				twoodles[selectedTwoodleIndex]['items'][i]['url'] = '';
+			}
+			if (!twoodles[selectedTwoodleIndex]['items'][i]['notes'])
+			{
+				twoodles[selectedTwoodleIndex]['items'][i]['notes'] = '';
+			}
+			document.getElementById('modalEditTitle').value = 'Edit "' + twoodles[selectedTwoodleIndex]['items'][i]['name'] + '"';
+			document.getElementById('inputItemName').value = twoodles[selectedTwoodleIndex]['items'][i]['name'];
+			document.getElementById('inputItemUrl').value = twoodles[selectedTwoodleIndex]['items'][i]['url'];
+			document.getElementById('inputNotes').value = twoodles[selectedTwoodleIndex]['items'][i]['notes'];
+		}
+	}
+	$('#modalEdit').modal('show');
+}
+function editItem()
+{
+	for (var i = 0; i < twoodles[selectedTwoodleIndex]['items'].length; i++)
+	{
+		if (twoodles[selectedTwoodleIndex]['items'][i]['index'] == selectedItem)
+		{
+			twoodles[selectedTwoodleIndex]['items'][i]['url'] = document.getElementById('inputItemUrl').value;
+			twoodles[selectedTwoodleIndex]['items'][i]['notes'] = document.getElementById('inputNotes').value;
+		}
+	}
+	document.getElementById('item_name_' + selectedItem).value = document.getElementById('inputItemName').value;
+	flagShareUpdate = true;
+	verifyItemsNames(false);
+	if (validItemsNames)
+	{
+		items = twoodles[selectedTwoodleIndex]['items'];
+		fillItemsList();
+		fillLists('y', false);
+		fillLists('x', false);
+		saveValues();
+		drawResult();
+		displayLocalStorage('quadrants');
 	}
 }
 function deleteItem(item)
 {
-	var items = document.getElementById('itemsList').children;
-	$('#item_' + Number(item)).remove();
-	var j = 0;
-	twoodles[selectedTwoodleIndex]['items'] = document.getElementById('itemsList').children;
+	for (var j = 0; j < 3; j++)
+	{
+		var auxValues = [];
+		for (var i = 0; i < twoodles[selectedTwoodleIndex][['yValues', 'xValues', 'items'][j]].length; i++)
+		{
+			if (twoodles[selectedTwoodleIndex][['yValues', 'xValues', 'items'][j]][i]['index'] != Number(item))
+			{
+				auxValues.push(JSON.parse(JSON.stringify(twoodles[selectedTwoodleIndex][['yValues', 'xValues', 'items'][j]][i])));
+			}
+		}
+		twoodles[selectedTwoodleIndex][['yValues', 'xValues', 'items'][j]] = [...auxValues];
+		auxValues = [];
+	}
 
-	for (var i = 0; i < twoodles[selectedTwoodleIndex]['items'].length; i++)
-	{
-		if (twoodles[selectedTwoodleIndex]['items'][i].id.length)
-		{
-			var subItems = document.getElementById(twoodles[selectedTwoodleIndex]['items'][i].id).children;
-			for (var k = 0; k < subItems.length; k++)
-			{
-				subItems[k].id = subItems[k].id.replace(subItems[k].id.split('_')[subItems[k].id.split('_').length - 1], j);
-			}
-			twoodles[selectedTwoodleIndex]['items'][i].id = 'item_' + j;
-			j += 1;
-		}
-	}
-	var auxValues = [];
-	for (var i = 0; i < twoodles[selectedTwoodleIndex]['yValues'].length; i++)
-	{
-		if (twoodles[selectedTwoodleIndex]['yValues'][i]['index'] != Number(item))
-		{
-			if (twoodles[selectedTwoodleIndex]['yValues'][i]['index'] < Number(item))
-			{
-				auxValues.push(twoodles[selectedTwoodleIndex]['yValues'][i]);
-			}
-			if (twoodles[selectedTwoodleIndex]['yValues'][i]['index'] > Number(item))
-			{
-				twoodles[selectedTwoodleIndex]['yValues'][i]['index'] -= 1;
-				auxValues.push(twoodles[selectedTwoodleIndex]['yValues'][i]);
-			}
-		}
-	}
-	twoodles[selectedTwoodleIndex]['yValues'] = auxValues;
-	auxValues = [];
-	for (var i = 0; i < twoodles[selectedTwoodleIndex]['xValues'].length; i++)
-	{
-		if (twoodles[selectedTwoodleIndex]['xValues'][i]['index'] != Number(item))
-		{
-			if (twoodles[selectedTwoodleIndex]['xValues'][i]['index'] < Number(item))
-			{
-				auxValues.push(twoodles[selectedTwoodleIndex]['xValues'][i]);
-			}
-			if (twoodles[selectedTwoodleIndex]['xValues'][i]['index'] > Number(item))
-			{
-				twoodles[selectedTwoodleIndex]['xValues'][i]['index'] -= 1;
-				auxValues.push(twoodles[selectedTwoodleIndex]['xValues'][i]);
-			}
-		}
-	}
-	twoodles[selectedTwoodleIndex]['xValues'] = auxValues;
-	getItems();
+	items = twoodles[selectedTwoodleIndex]['items'];
+	yValues = twoodles[selectedTwoodleIndex]['yValues'];
+	xValues = twoodles[selectedTwoodleIndex]['xValues'];
+	fillItemsList();
+	fillLists('y');
+	fillLists('x');
+	drawResult();
+	displayLocalStorage('quadrants');
 }
 function verifyItemsNames(shareUpdate = true)
 {
@@ -278,16 +451,17 @@ function verifyItemsNames(shareUpdate = true)
 	var c = document.getElementById('itemsList').children;
 	for (var i = 0; i < c.length; i++)
 	{
-		auxItems.push(document.getElementById('item_name_' + c[i].id.split('_')[1]).value);
+		auxItems.push([Number(c[i].id.split('_')[1]), document.getElementById('item_name_' + c[i].id.split('_')[1]).value]);
+		document.getElementById('lblItem_' + c[i].id.split('_')[1]).innerHTML = '';
 	}
 	for (var i = 0; i < auxItems.length - 1; i++)
 	{
 		for (var j = i + 1; j < auxItems.length; j++)
 		{
-			if (auxItems[i] == auxItems[j])
+			if (auxItems[i][1] == auxItems[j][1])
 			{
-				repetidos.push(i);
-				repetidos.push(j);
+				repetidos.push(auxItems[i][0]);
+				repetidos.push(auxItems[j][0]);
 			}
 		}
 	}
@@ -349,10 +523,27 @@ function fillLists(axis = null, shareUpdate = true)
 				n = twoodles[selectedTwoodleIndex]['items'][j]['name'];
 			}
 		}
+		var item = twoodles[selectedTwoodleIndex]['items'][0];
+		for (var j = 1; j < twoodles[selectedTwoodleIndex]['items'].length; j++)
+		{
+			if (values[i]['index'] == twoodles[selectedTwoodleIndex]['items'][j]['index'])
+			{
+				item = twoodles[selectedTwoodleIndex]['items'][j];
+			}
+		}
+		var linkHTML = '';
+    	if (item['url'])
+    	{
+    		linkHTML = '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + item['url'] + '\', \'_blank\');"></i></div>';
+    	}
 		$("#" + axis + "ItemsList").append(`
 			<div class="` + axis + `Item" id="` + axis + `_item_` + values[i]['index'] + `">
 				<label class="itemName">` + n + `</label>
-				<label id="value_` + axis + `_item_` + values[i]['index'] + `" class="itemValue">` + values[i]['value'] + `</label>
+				<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + item['index'] + `);"></i>
+				<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + item['index'] + `);"></i></div>
+				<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + item['index'] + `);"></i>` + 
+				linkHTML
+				 + `<label id="value_` + axis + `_item_` + values[i]['index'] + `" class="itemValue">` + values[i]['value'] + `</label>
 			</div>`
 		);
 	}
@@ -380,7 +571,7 @@ function checkLblRecipes()
 			document.getElementById('recipeTitleItemsDiv').innerHTML = recipes[i]['recipeSubName'];
 			document.getElementById('recipeTitleRateYDiv').innerHTML = recipes[i]['recipeSubName'];
 			document.getElementById('recipeTitleRateXDiv').innerHTML = recipes[i]['recipeSubName'];
-			document.getElementById('recipeTitleSeeDiv').innerHTML = recipes[i]['recipeSubName'];
+			document.getElementById('recipeTitleresultsDiv').innerHTML = recipes[i]['recipeSubName'];
 
 			auxDefaultX = recipes[i]['defaultX'];
 			auxDefaultY = recipes[i]['defaultY'];
@@ -404,7 +595,7 @@ function checkLblRecipes()
 		document.getElementById('recipeTitleItemsDiv').innerHTML = 'Custom Recipe';
 		document.getElementById('recipeTitleRateYDiv').innerHTML = 'Custom Recipe';
 		document.getElementById('recipeTitleRateXDiv').innerHTML = 'Custom Recipe';
-		document.getElementById('recipeTitleSeeDiv').innerHTML = 'Custom Recipe';
+		document.getElementById('recipeTitleresultsDiv').innerHTML = 'Custom Recipe';
 	}
 	return index;
 }
@@ -438,10 +629,20 @@ function getItems(shareUpdate = true)
 		}
 		if (ok)
 		{
+			var auxItems = twoodles[selectedTwoodleIndex]['items'];
 			twoodles[selectedTwoodleIndex]['items'] = [];
 			for (var i = 0; i < c.length; i++)
 			{
-				twoodles[selectedTwoodleIndex]['items'].push({'name' : document.getElementById('item_name_' + c[i].id.split('_')[1]).value, 'index' : Number(c[i].id.split('_')[1])});
+				if (!auxItems[i])
+				{
+					auxItems[i] = {'url' : '', 'notes' : ''};
+				}
+				twoodles[selectedTwoodleIndex]['items'].push({
+					'name' : document.getElementById('item_name_' + c[i].id.split('_')[1]).value, 
+					'index' : Number(c[i].id.split('_')[1]), 
+					'url' : auxItems[i]['url'], 
+					'notes' : auxItems[i]['notes']
+				});
 				document.getElementById('lblItem_' + c[i].id.split('_')[1]).innerHTML = '';
 			}
 			if (shareUpdate)
@@ -455,18 +656,46 @@ function getItems(shareUpdate = true)
 		}
 	}
 }
-function fillItemsList(items)
+function fillItemsList()
 {
 	document.getElementById('itemsList').innerHTML = '';
 	if (items)
 	{
+		var auxXValues = [...twoodles[selectedTwoodleIndex]['xValues']];
+		var auxYValues = [...twoodles[selectedTwoodleIndex]['yValues']];
 		for (var i = 0; i < items.length; i++)
 	    {
+	    	var linkHTML = '';
+	    	if (items[i]['url'])
+	    	{
+	    		linkHTML = '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+	    	}
+	    	var j = 0;
+	    	while (j < auxXValues.length)
+	    	{
+	    		var flag = true;
+	    		if (twoodles[selectedTwoodleIndex]['yValues'][j]['index'] == items[i]['index'])
+	    		{
+	    			flag = false;
+	    		}
+	    		if (twoodles[selectedTwoodleIndex]['xValues'][j]['index'] == items[i]['index'])
+	    		{
+	    			flag = false;
+	    		}
+	    		j++;
+	    		if (!flag)
+	    		{
+	    			j = auxXValues.length;
+	    		}
+	    	}
 	    	$("#itemsList").append(`
 				<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
-					<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `" onmouseup="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseleave="itemsListSortable.addContainer(document.getElementById('itemsList'));">
-					<button class="deleteItemButton btn-link" aria-label="Delete" id="` + items[i]['index'] + `" onclick="deleteItem(this.id);" onmouseover="itemsListSortable.removeContainer(document.getElementById('itemsList'));" onmouseout="itemsListSortable.addContainer(document.getElementById('itemsList'));"><i class="bi bi-trash-fill"></i></button>
-					<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+					<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
+					<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i>
+					<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+					<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i>` + 
+					linkHTML
+					 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
 				</div>`
 			);
 	    }

@@ -159,10 +159,12 @@ function itemsTwoodle()
 		selectedTwoodle = nextIndex;
 		localStorage.setItem('twoodles', JSON.stringify({'twoodles' : twoodles}));
 		fillTwoodlesSelect(false);
-
-		fillItemsList(twoodles[selectedTwoodleIndex]['items']);
+		items = twoodles[selectedTwoodleIndex]['items'];
+		fillItemsList();
 		document.getElementById('yAxis_name').value = twoodles[selectedTwoodleIndex]['defaultY'];
 		document.getElementById('xAxis_name').value = twoodles[selectedTwoodleIndex]['defaultX'];
+		document.getElementById('spanYAxis').value = twoodles[selectedTwoodleIndex]['defaultY'];
+		document.getElementById('spanXAxis').value = twoodles[selectedTwoodleIndex]['defaultX'];
 		yAxisName = twoodles[selectedTwoodleIndex]['defaultY'];
 		xAxisName = twoodles[selectedTwoodleIndex]['defaultX'];
 		selectTwoodle(twoodles[twoodles.length - 1]['id']);
@@ -230,24 +232,29 @@ function deleteTwoodle()
 	changeSelectedTwoodleIndex();
 	document.getElementById('yAxis_name').value = twoodles[selectedTwoodleIndex]['defaultY'];
 	document.getElementById('xAxis_name').value = twoodles[selectedTwoodleIndex]['defaultX'];
+	document.getElementById('spanYAxis').value = twoodles[selectedTwoodleIndex]['defaultY'];
+	document.getElementById('spanXAxis').value = twoodles[selectedTwoodleIndex]['defaultX'];
 	yAxisName = document.getElementById('yAxis_name').value;
 	xAxisName = document.getElementById('xAxis_name').value;
 	checkLblRecipes();
 }
 var selectedTwoodle;
-function selectTwoodle(selectedIndex = document.getElementById('slcTwoodles').selectedIndex)
+function selectTwoodle()
 {
 	if (document.getElementById('slcTwoodles').selectedIndex)
 	{
-		selectedTwoodle = Number(document.getElementById('slcTwoodles').children[selectedIndex].id.split('_')[1]);
+		selectedTwoodle = Number(document.getElementById('slcTwoodles').children[document.getElementById('slcTwoodles').selectedIndex].id.split('_')[1]);
 		changeSelectedTwoodleIndex();
-		var yValues = twoodles[selectedTwoodleIndex]['yValues'];
-		var xValues = twoodles[selectedTwoodleIndex]['xValues'];
-		fillItemsList(twoodles[selectedTwoodleIndex]['items']);
+		yValues = twoodles[selectedTwoodleIndex]['yValues'];
+		xValues = twoodles[selectedTwoodleIndex]['xValues'];
+		items = twoodles[selectedTwoodleIndex]['items'];
+		fillItemsList();
 		yAxisName = twoodles[selectedTwoodleIndex]['defaultY'];
 		xAxisName = twoodles[selectedTwoodleIndex]['defaultX'];
 		document.getElementById('yAxis_name').value = twoodles[selectedTwoodleIndex]['defaultY'];
 		document.getElementById('xAxis_name').value = twoodles[selectedTwoodleIndex]['defaultX'];
+		document.getElementById('spanYAxis').value = twoodles[selectedTwoodleIndex]['defaultY'];
+		document.getElementById('spanXAxis').value = twoodles[selectedTwoodleIndex]['defaultX'];
 		checkLblRecipes();
 	}
 	else
@@ -264,8 +271,9 @@ function selectTwoodle(selectedIndex = document.getElementById('slcTwoodles').se
 		menuItemClicked('rateX');
 		fillLists('x');
 	}
-	if (document.getElementById("seeDiv").style.display != "none")
+	if (document.getElementById("resultsDiv").style.display != "none")
 	{
 		menuItemClicked('see');
 	}
+	verifyItemsNames(false);
 }

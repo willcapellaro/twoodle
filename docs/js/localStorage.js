@@ -1,6 +1,6 @@
 var userID;
 var flagShareUpdate = true;
-var selectedTab = 'readable';
+var selectedTab = 'quadrants';
 var twoodles;
 var items = [];
 window.addEventListener('storage', () => {});
@@ -8,8 +8,10 @@ function saveAxisNames()
 {
 	if ((document.getElementById('yAxis_name').value != document.getElementById('xAxis_name').value) && twoodles[selectedTwoodleIndex])
 	{
-		twoodles[selectedTwoodleIndex]['defaultX'] = xAxisName;
+		document.getElementById('spanYAxis').innerHTML = yAxisName;
+		document.getElementById('spanXAxis').innerHTML = xAxisName;
 		twoodles[selectedTwoodleIndex]['defaultY'] = yAxisName;
+		twoodles[selectedTwoodleIndex]['defaultX'] = xAxisName;
 	}
 	checkLblRecipes();
 }
@@ -38,9 +40,9 @@ function loadValues()
 		}
 		else
 		{
-			yValues = twoodles[0]['yValues'];
-			xValues = twoodles[0]['xValues'];
-			items = twoodles[0]['items'];
+			yValues = twoodles[selectedTwoodle]['yValues'];
+			xValues = twoodles[selectedTwoodle]['xValues'];
+			items = twoodles[selectedTwoodle]['items'];
 		}
 	}
 	else
@@ -58,11 +60,14 @@ function loadValues()
 	}
 	fillTwoodlesSelect();
 	flagShareUpdate = false;
-	fillItemsList(twoodles[0]['items']);
+	items = twoodles[0]['items'];
+	fillItemsList();
 	yAxisName = twoodles[0]['defaultY'];
 	xAxisName = twoodles[0]['defaultX'];
 	document.getElementById('yAxis_name').value = twoodles[0]['defaultY'];
 	document.getElementById('xAxis_name').value = twoodles[0]['defaultX'];
+	document.getElementById('spanYAxis').innerHTML = twoodles[0]['defaultY'];
+	document.getElementById('spanXAxis').innerHTML = twoodles[0]['defaultX'];
 	selectedTwoodleIndex = 0;
 	flagShareUpdate = true;
 }
@@ -206,14 +211,30 @@ function displayLocalStorage(tab = 'readable')
 		                		{
 		                			if (xValues[k]['index'] == items[i]['index'])
         							{
-        								itemsNE += items[i]['name'] + '<br>';
+        								itemsNE += items[i]['name'];
+										itemsNE += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
+										itemsNE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										itemsNE += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
+										if (items[i]['url'])
+										{
+											itemsNE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+										}
+										itemsNE += '<br>';
         							}
 		                		}
 		                		else
 		                		{
 		                			if (yValues[j]['index'] == items[i]['index'])
         							{
-        								itemsNW += items[i]['name'] + '<br>';
+        								itemsNW += items[i]['name'];
+										itemsNW += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
+										itemsNW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										itemsNW += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
+										if (items[i]['url'])
+										{
+											itemsNW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+										}
+										itemsNW += '<br>';
         							}
 		                		}
 		                	}
@@ -223,14 +244,30 @@ function displayLocalStorage(tab = 'readable')
 		                		{
 		                			if (xValues[k]['index'] == items[i]['index'])
         							{
-        								itemsSE += items[i]['name'] + '<br>';
+        								itemsSE += items[i]['name'];
+										itemsSE += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
+										itemsSE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										itemsSE += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
+										if (items[i]['url'])
+										{
+											itemsSE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+										}
+										itemsSE += '<br>';
         							}
 		                		}
 		                		else
 		                		{
 		                			if (yValues[j]['index'] == items[i]['index'])
         							{
-        								itemsSW += items[i]['name'] + '<br>';
+        								itemsSW += items[i]['name'];
+										itemsSW += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
+										itemsSW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										itemsSW += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
+										if (items[i]['url'])
+										{
+											itemsSW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+										}
+										itemsSW += '<br>';
         							}
 		                		}
 		                	}
@@ -299,8 +336,12 @@ function clearValues()
 	}];
 	document.getElementById('yAxis_name').value = twoodles[0]['defaultY'];
 	document.getElementById('xAxis_name').value = twoodles[0]['defaultX'];
+	document.getElementById('spanYAxis').innerHTML = twoodles[0]['defaultY'];
+	document.getElementById('spanXAxis').innerHTML = twoodles[0]['defaultX'];
 	saveValues();
-	if (document.getElementById("seeDiv").style.display == "block")
+	document.getElementById('slcTwoodles').selectedIndex = 1;
+	selectTwoodle();
+	if (document.getElementById("resultsDiv").style.display == "block")
 	{
 		menuItemClicked('see');
 	}
@@ -311,6 +352,8 @@ function clearValues()
 	yAxisName = document.getElementById('yAxis_name').value;
 	xAxisName = document.getElementById('xAxis_name').value;
 	checkLblRecipes();
+	drawResult();
+	displayLocalStorage('quadrants');
 }
 function copyContent()
 {
@@ -376,6 +419,8 @@ function swap()
 	var auxX = twoodles[selectedTwoodleIndex]['defaultX'];
 	document.getElementById('yAxis_name').value = auxX;
 	document.getElementById('xAxis_name').value = auxY;
+	document.getElementById('spanYAxis').innerHTML = auxX;
+	document.getElementById('spanXAxis').innerHTML = auxY;
 	twoodles[selectedTwoodleIndex]['defaultY'] = document.getElementById('yAxis_name').value;
 	twoodles[selectedTwoodleIndex]['defaultX'] = document.getElementById('xAxis_name').value;
 	yAxisName = document.getElementById('yAxis_name').value;

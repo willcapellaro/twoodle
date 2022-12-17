@@ -96,10 +96,12 @@ function selectRecipe()
 		document.getElementById('recipeTitleItemsDiv').innerHTML = recipes[recipeIndex]['recipeSubName'];
 		document.getElementById('recipeTitleRateYDiv').innerHTML = recipes[recipeIndex]['recipeSubName'];
 		document.getElementById('recipeTitleRateXDiv').innerHTML = recipes[recipeIndex]['recipeSubName'];
-		document.getElementById('recipeTitleSeeDiv').innerHTML = recipes[recipeIndex]['recipeSubName'];
+		document.getElementById('recipeTitleresultsDiv').innerHTML = recipes[recipeIndex]['recipeSubName'];
 		
-		document.getElementById('xAxis_name').value = auxDefaultX;
 		document.getElementById('yAxis_name').value = auxDefaultY;
+		document.getElementById('xAxis_name').value = auxDefaultX;
+		document.getElementById('spanYAxis').innerHTML = auxDefaultY;
+		document.getElementById('spanXAxis').innerHTML = auxDefaultX;
 		verifyAxisNames();
 		saveValues();
 	}
