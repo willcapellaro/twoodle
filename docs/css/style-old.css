@@ -8,15 +8,11 @@
   --background-primary: white; 
   --background-secondary: #9FC3E9; 
   --alert: #FF698F; 
-  --highlight: hsl(120, 80%, 80%);
-/*  --paperPulp: hsl(30, 60%, 70%);*/
-  --paperPulp: hsl(180, 40%, 90%);
   /*--focus: #b1d;*/
 }
 
 html {
 	 	background-color: var(--background-primary);
-
 font-family: 'Inter', sans-serif;
 }
 
@@ -29,10 +25,9 @@ font-family: 'Inter', sans-serif;
  	padding-right: 100px;
  	padding-left: 100px;
  	padding-top: 20px;
- 	font-weight: 300;
+ 	font-weight: 700;
  	background-color: var(--background-primary)
  	color: var(--text-primary);
-
 }
 
 header {
@@ -43,7 +38,6 @@ header {
 	background-color: var(--background-primary);
 	padding: 0;
 	margin: 0;
-	z-index: 2;
 }
 header div {
 	display: inline;
@@ -71,7 +65,7 @@ nav {
 }
 h1, h2, h3, h4, h5, h6 {
 
-	font-weight: 300;
+	font-weight: 500;
   	color: var(--text-primary);
 }
 #title
@@ -89,12 +83,6 @@ h1, h2, h3, h4, h5, h6 {
 .noShadow {
 	box-shadow: none;
 }
-
-.note {
-	padding: 1em;
-	font-size: 1em;
-}
-
 .infoBtn {
 	padding-left: 4px; 
 	cursor: help; 
@@ -125,9 +113,6 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-font-smoothing: antialiased;
 }
 
-strong {
-	font-weight: 900;
-}
 
 
 .canvasLabel {
@@ -201,8 +186,6 @@ input {
 	padding: 4px;
 	background-color: var(--background-primary);
 	color: var(--text-primary);
-	font-weight: 300;
-	border: var(--background-primary) 1px solid;
 }
 #createDiv input {
 	border: 1px solid var(--field-border);
@@ -240,14 +223,14 @@ label {
 	display: inline-block;
 	width: 10em;
 }
-.deleteItemButton {
+.editItemButton .deleteItemButton .moveItemButton {
 	margin-left: 1em;
 	border: none;
 	outline: none;
 	box-shadow: none;
 }
 
-.deleteItemButton:hover {
+.editItemButton .deleteItemButton .moveItemButton:hover {
 	box-shadow: none;
 }
 
@@ -386,7 +369,6 @@ grid-column: 2 / 3; grid-row: 2 / 3;
 	margin-left: auto;
 	margin-right: auto;*/
 	margin-top: 0;
-
 	/*background-color: pink;*/
 /*	border: pink 2px solid;
 */}
@@ -643,6 +625,11 @@ header {
 }
 
 
+}
+
+
+}
+
 .localStorageContents {
 	text-align: center;
 }
@@ -681,7 +668,7 @@ background-color: pink;
 
 .tabHeading {
 	height: 2em; 
-	font-weight: 400;
+	font-weight: 600;
 }
 
 .iSpace {
@@ -721,4 +708,32 @@ background-color: pink;
 }
 .itemsListSortableStop {
 	/*background-color: orange;*/
+}
+
+.btn-link, .addItemButton, .modalButton
+{
+	float: right;
+}
+#lblAddTo
+{
+	float: right;
+	padding-right: 10px;
+}
+
+#lblMoveItemName
+{
+	padding-right: 10px;
+}
+
+.radio-button {
+  opacity: 0;
+}
+.radio-tile-label {
+	border: 1px solid gray;
+	width: 15%;
+	float: right;
+}
+.selectedUbicationButton
+{
+	background-color: gray;
 }
