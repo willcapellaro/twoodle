@@ -20,6 +20,32 @@ html {
 font-family: 'Inter', sans-serif;
 }
 
+.currentTopTap, .defaultTopTap, .currentTopTap:hover, .defaultTopTap:hover {
+	text-decoration: underline;
+		text-underline-offset: 8px;
+	text-decoration-thickness: 5px;
+	transition: 250ms;
+	text-decoration-color: white;
+
+}
+
+.currentTopTap {
+	text-decoration-color: var(--primary-hover);
+
+}
+
+.currentTopTap:hover {
+		text-decoration-color: var(--primary-hover);
+}
+
+.defaultTopTap {
+}
+
+.defaultTopTap:hover {
+			text-decoration-color: var(--primary-hover);
+
+}
+
 body {
 /*	width: 90vw;*/
 font-family: 'Inter', sans-serif;

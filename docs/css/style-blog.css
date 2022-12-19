@@ -1,20 +1,71 @@
+:root {
+  --primary-active: #2032B0;
+  --primary-hover: #61AFFF; 
+  --text-primary: #222;
+  --text-secondary: #737373;
+  --btn-text: white; 
+  --field-border: grey;
+  --background-primary: white; 
+  --background-secondary: #9FC3E9; 
+  --alert: #FF698F; 
+  --gentleBg: hsla(127, 56%, 70%, 0.58);
+  --gentleBg2: hsla(56, 76%, 70%, 0.58);
+  --highlight: hsl(120, 80%, 80%);
+/*  --paperPulp: hsl(30, 60%, 70%);*/
+  --paperPulp: hsl(180, 40%, 90%);
+  --rules: white;
+  --rulesBg: #e5e5f7;
+  --popColor: hsla(313, 100%, 39%, 1);
+  --bgVar1: lightgrey;
+  --bgVar2: white;
+  /*--focus: #b1d;*/
+}
+
 html {
 	background-color: grey;
+	background-color: #e5e5f7;
+opacity: 0.8;
+background-image: radial-gradient(var(--bgVar2) 1px, var(--bgVar1) 1px);
+background-size: 20px 20px;
+  background-attachment: fixed;
+  z-index: -1;
+  	opacity: 1;
 }
 
 body {
 	width: max(1000px);
 	background-color: white;
 	box-shadow: 10px 10px 10px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	font-family: 'Poppins', sans-serif;
+
+}
+
+h1,h2,h3,h4,h5,h6 {
+	padding: 1em 0 .5em 0;
+	font-weight: 600;
+}
+
+h2 strong {
+	font-weight: 800;
+	text-decoration: underline;
+	text-decoration-color: var(--popColor);
+	text-underline-offset: 6px;
+	text-decoration-thickness: 5px;
+}
+
+strong {
+	font-weight: 600;
 }
 
 h3 {
-	font-size: 1.3em;
+	font-size: 2.3em;
+	font-weight: 500;
 }
 
 h4 {
-	font-size: 1.2em;
+	font-size: 1.6em;
 }
+
 
 
 .note {
@@ -23,8 +74,35 @@ h4 {
 }
 
 .funBox {
-	background-color: yellow;
+	background-color: var(--gentleBg);
 	padding: 1em;
+	border-radius: 3px;
+}
+
+.alt {
+	background-color: var(--gentleBg2);
+}
+
+.blogIntro p:nth-child(1) {
+	padding-top: 1em;
+	font-size: 120%;
+	line-height: 180%;
+	font-weight: 400;
+/*	padding-left: 2em;
+	border-left: 2px red solid;*/
+}
+
+.colorLede {
+	font-weight: 700;
+	color: var(--popColor);
+}
+
+p {
+	font-weight: 300;
+	font-size: 18px;
+	text-align: justify;
+	line-height: 29px;
+	color: #555;
 }
 
 button {
@@ -78,6 +156,19 @@ input {
 	background-color: var(--paperPulp);
 /*		box-shadow: 10px 10px 10px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
 /*		margin-bottom: 5em;*/
+
+
+/*background-color: #e5e5f7;*/
+/*opacity: 1;
+background-image:  linear-gradient(var(--rules) 1px, transparent 1px), linear-gradient(to right, var(--rules) 1px, var(--paperPulp) 1px);
+background-size: 10px 10px;
+*/
+
+/*background-color: #e5e5f7;*/
+opacity: 1;
+background-image: radial-gradient(var(--rules) 1px, var(--paperPulp) 1px);
+background-size: 20px 20px;
+
 }
 
 .paperStock img {
@@ -85,17 +176,46 @@ input {
 }
 
 .paperMargin {
-	padding: 1em 2em;
+	padding: 2em 2em;
 }
 
 .paperStock #addButton {
+	margin-bottom: 0em;
+}
+
+.dateline {
+	opacity: .7;
+/*	text-transform: uppercase;*/
+	font-size: 90%;
+	letter-spacing: .5px;
+}
+
+.blogList li {
+	list-style: none;
+	padding: 0 1em 1em 1em;
+	margin-left: -1em;
+	border: 1px lightgrey; solid;
+	border-radius: 3px;
 	margin-bottom: 1em;
+		transition: 250ms;
+}
+
+.blogList li:hover {
+	background-color: lightgrey;
+	text-decoration: none;
+	transition: 250ms;
+}
+
+
+
+.blogList li:hover p {
+	text-decoration: none;
 }
 
 .tabHeading {
 	background-color: hsla(120, 80%, 0%, .12);
 	border-radius: 4px;
-	padding: 3px 8px 2px 8px;
+	padding: 2px 18px 3px 12px;
 	font-size: .7em;
 	font-weight: 500;
 	text-transform: uppercase;
