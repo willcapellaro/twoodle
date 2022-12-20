@@ -276,4 +276,6 @@ function selectTwoodle()
 		menuItemClicked('see');
 	}
 	verifyItemsNames(false);
+	document.getElementById('spanYAxis').innerHTML = yAxisName;
+	document.getElementById('spanXAxis').innerHTML = xAxisName;
 }

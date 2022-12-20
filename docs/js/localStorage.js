@@ -193,10 +193,12 @@ function displayLocalStorage(tab = 'readable')
 		if (tab == 'quadrants')
 		{
 			var quadrantsTexts = conditionals(xAxisName, yAxisName);
-			var itemsNE = '';
-			var itemsNW = '';
-			var itemsSE = '';
-			var itemsSW = '';
+			var html = {
+				'NE' : [], 
+				'NW' : [], 
+				'SE' : [], 
+				'SW' : []
+			}
 			for (var i = 0; i < items.length; i++)
             {
             	for (var j = 0; j < yValues.length; j++)
@@ -211,30 +213,32 @@ function displayLocalStorage(tab = 'readable')
 		                		{
 		                			if (xValues[k]['index'] == items[i]['index'])
         							{
-        								itemsNE += items[i]['name'];
-										itemsNE += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
-										itemsNE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
-										itemsNE += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
+        								var itemNE = items[i]['name'];
+										itemNE += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
+										itemNE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										itemNE += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
 										if (items[i]['url'])
 										{
-											itemsNE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+											itemNE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 										}
-										itemsNE += '<br>';
+										itemNE += '<br>';
+										html['NE'].push([itemNE, (yValues[j]['value'] + xValues[k]['value'])]);
         							}
 		                		}
 		                		else
 		                		{
 		                			if (yValues[j]['index'] == items[i]['index'])
         							{
-        								itemsNW += items[i]['name'];
-										itemsNW += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
-										itemsNW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
-										itemsNW += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
+        								var itemNW = items[i]['name'];
+										itemNW += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
+										itemNW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										itemNW += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
 										if (items[i]['url'])
 										{
-											itemsNW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+											itemNW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 										}
-										itemsNW += '<br>';
+										itemNW += '<br>';
+										html['NW'].push([itemNW, (yValues[j]['value'] + xValues[k]['value'])]);
         							}
 		                		}
 		                	}
@@ -244,30 +248,32 @@ function displayLocalStorage(tab = 'readable')
 		                		{
 		                			if (xValues[k]['index'] == items[i]['index'])
         							{
-        								itemsSE += items[i]['name'];
-										itemsSE += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
-										itemsSE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
-										itemsSE += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
+        								var itemSE = items[i]['name'];
+										itemSE += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
+										itemSE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										itemSE += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
 										if (items[i]['url'])
 										{
-											itemsSE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+											itemSE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 										}
-										itemsSE += '<br>';
+										itemSE += '<br>';
+										html['SE'].push([itemSE, (yValues[j]['value'] + xValues[k]['value'])]);
         							}
 		                		}
 		                		else
 		                		{
 		                			if (yValues[j]['index'] == items[i]['index'])
         							{
-        								itemsSW += items[i]['name'];
-										itemsSW += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
-										itemsSW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
-										itemsSW += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
+        								var itemSW = items[i]['name'];
+										itemSW += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
+										itemSW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										itemSW += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
 										if (items[i]['url'])
 										{
-											itemsSW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+											itemSW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 										}
-										itemsSW += '<br>';
+										itemSW += '<br>';
+										html['SW'].push([itemSW, (yValues[j]['value'] + xValues[k]['value'])]);
         							}
 		                		}
 		                	}
@@ -275,35 +281,32 @@ function displayLocalStorage(tab = 'readable')
 		        	}
 	            }
         	}
-
-			if (!itemsNE.length)
-			{
-        		itemsNE = 'No items<br>';
-			}
-			if (!itemsNW.length)
-			{
-				itemsNW = 'No items<br>';
-			}
-			if (!itemsSE.length)
-			{
-				itemsSE = 'No items<br>';
-			}
-			if (!itemsSW.length)
-			{
-				itemsSW = 'No items<br>';
-			}
-
-			localStorageText = '<img src="./img/quadrantNE.png">    ' + quadrantsTexts[0] + '<br>';
-			localStorageText += itemsNE + '<br>';
-
-			localStorageText += '<img src="./img/quadrantNW.png">    ' + quadrantsTexts[1] + '<br>';
-			localStorageText += itemsNW + '<br>';
-
-			localStorageText += '<img src="./img/quadrantSE.png">    ' + quadrantsTexts[2] + '<br>';
-			localStorageText += itemsSE + '<br>';
-
-			localStorageText += '<img src="./img/quadrantSW.png">    ' + quadrantsTexts[3] + '<br>';
-			localStorageText += itemsSW + '<br>';
+        	localStorageText = '';
+	    	for (var j = 0; j < 4; j++)
+	    	{
+		    	var i = 1;
+		    	while (i < html[['NE', 'NW', 'SE', 'SW'][j]].length)
+		    	{
+		    		if (html[['NE', 'NW', 'SE', 'SW'][j]][i][1] > html[['NE', 'NW', 'SE', 'SW'][j]][i - 1][1])
+		    		{
+		    			var aux = [...html[['NE', 'NW', 'SE', 'SW'][j]][i]];
+		    			html[['NE', 'NW', 'SE', 'SW'][j]][i] = [...html[['NE', 'NW', 'SE', 'SW'][j]][i - 1]];
+		    			html[['NE', 'NW', 'SE', 'SW'][j]][i - 1] = [...aux];
+		    			i = 0;
+		    		}
+		    		i++;
+		    	}
+	    		localStorageText += '<img src="./img/quadrant' + ['NE', 'NW', 'SE', 'SW'][j] + '.png">    ' + quadrantsTexts[j] + '<br>';
+		    	if (!html[['NE', 'NW', 'SE', 'SW'][j]].length)
+		    	{
+		    		localStorageText += 'No items';
+		    	}
+	    		for (i = 0; i < html[['NE', 'NW', 'SE', 'SW'][j]].length; i++)
+	        	{
+					localStorageText += html[['NE', 'NW', 'SE', 'SW'][j]][i][0];
+	        	}
+	        	localStorageText += '<br>'
+	    	}
 
 			document.getElementById('readableBtn').classList.remove('resultsModalActiveTab');
 			document.getElementById('quadrantsBtn').classList.add('resultsModalActiveTab');

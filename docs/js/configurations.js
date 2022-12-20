@@ -22,6 +22,7 @@ function menuItemClicked(item)
 			document.getElementById('rateY').classList.remove('activeTabButton');
 			document.getElementById('rateX').classList.remove('activeTabButton');
 			document.getElementById('see').classList.remove('activeTabButton');
+			fillItemsList();
 			break;
 		case "rateY":
 			if (validItemsNames && validAxisNames)
@@ -661,43 +662,136 @@ function fillItemsList()
 	document.getElementById('itemsList').innerHTML = '';
 	if (items)
 	{
-		var auxXValues = [...twoodles[selectedTwoodleIndex]['xValues']];
-		var auxYValues = [...twoodles[selectedTwoodleIndex]['yValues']];
+		xValues = twoodles[selectedTwoodleIndex]['xValues'];
+		yValues = twoodles[selectedTwoodleIndex]['yValues'];
+		var html = {
+			'NE' : [], 
+			'NW' : [], 
+			'SE' : [], 
+			'SW' : []
+		}
 		for (var i = 0; i < items.length; i++)
-	    {
-	    	var linkHTML = '';
+        {
+        	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
 	    		linkHTML = '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 	    	}
-	    	var j = 0;
-	    	while (j < auxXValues.length)
+	    	for (var j = 0; j < yValues.length; j++)
+        	{
+        		for (var k = 0; k < xValues.length; k++)
+        		{
+	                if ((yValues[j]['index'] == xValues[k]['index']) && (yValues[j]['value'] >= 50) && (xValues[k]['value'] >= 50) && (xValues[k]['index'] == items[i]['index']))
+	                {
+	                	html['NE'].push([`
+							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
+								<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
+								<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i>
+								<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+								<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i>` + 
+								linkHTML
+								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+							</div>`, (yValues[j]['value'] + xValues[k]['value'])]);
+	                }
+	        	}
+            }
+    	}
+		for (var i = 0; i < items.length; i++)
+        {
+        	var linkHTML = '';
+	    	if (items[i]['url'])
 	    	{
-	    		var flag = true;
-	    		if (twoodles[selectedTwoodleIndex]['yValues'][j]['index'] == items[i]['index'])
-	    		{
-	    			flag = false;
-	    		}
-	    		if (twoodles[selectedTwoodleIndex]['xValues'][j]['index'] == items[i]['index'])
-	    		{
-	    			flag = false;
-	    		}
-	    		j++;
-	    		if (!flag)
-	    		{
-	    			j = auxXValues.length;
-	    		}
+	    		linkHTML = '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 	    	}
-	    	$("#itemsList").append(`
-				<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
-					<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
-					<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i>
-					<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
-					<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i>` + 
-					linkHTML
-					 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
-				</div>`
-			);
-	    }
+	    	for (var j = 0; j < yValues.length; j++)
+        	{
+        		for (var k = 0; k < xValues.length; k++)
+        		{
+	                if ((yValues[j]['index'] == xValues[k]['index']) && (yValues[j]['value'] >= 50) && (xValues[k]['value'] < 50) && (yValues[j]['index'] == items[i]['index']))
+					{
+						html['NW'].push([`
+							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
+								<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
+								<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i>
+								<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+								<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i>` + 
+								linkHTML
+								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+							</div>`, (yValues[j]['value'] + xValues[k]['value'])]);
+	                }
+	        	}
+            }
+    	}
+		for (var i = 0; i < items.length; i++)
+        {
+        	var linkHTML = '';
+	    	if (items[i]['url'])
+	    	{
+	    		linkHTML = '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+	    	}
+	    	for (var j = 0; j < yValues.length; j++)
+        	{
+        		for (var k = 0; k < xValues.length; k++)
+        		{
+	                if ((yValues[j]['index'] == xValues[k]['index']) && (yValues[j]['value'] < 50) && (xValues[k]['value'] >= 50) && (xValues[k]['index'] == items[i]['index']))
+					{
+						html['SE'].push([`
+							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
+								<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
+								<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i>
+								<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+								<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i>` + 
+								linkHTML
+								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+							</(div>`, (yValues[j]['value'] + xValues[k]['value'])]);
+					}
+	        	}
+            }
+    	}
+    	for (var i = 0; i < items.length; i++)
+        {
+        	var linkHTML = '';
+	    	if (items[i]['url'])
+	    	{
+	    		linkHTML = '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+	    	}
+	    	for (var j = 0; j < yValues.length; j++)
+        	{
+        		for (var k = 0; k < xValues.length; k++)
+        		{
+	                if ((yValues[j]['index'] == xValues[k]['index']) && (yValues[j]['value'] < 50) && (xValues[k]['value'] < 50) && (yValues[j]['index'] == items[i]['index']))
+            		{
+	                	html['SW'].push([`
+							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
+								<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
+								<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i>
+								<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+								<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i>` + 
+								linkHTML
+								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+							</(div>`, (yValues[j]['value'] + xValues[k]['value'])]);
+	                }
+	        	}
+            }
+    	}
+    	for (var j = 0; j < 4; j++)
+    	{
+	    	var i = 1;
+	    	while (i < html[['NE', 'NW', 'SE', 'SW'][j]].length)
+	    	{
+	    		if (html[['NE', 'NW', 'SE', 'SW'][j]][i][1] > html[['NE', 'NW', 'SE', 'SW'][j]][i - 1][1])
+	    		{
+	    			var aux = [...html[['NE', 'NW', 'SE', 'SW'][j]][i]];
+	    			html[['NE', 'NW', 'SE', 'SW'][j]][i] = [...html[['NE', 'NW', 'SE', 'SW'][j]][i - 1]];
+	    			html[['NE', 'NW', 'SE', 'SW'][j]][i - 1] = [...aux];
+	    			i = 0;
+	    		}
+	    		i++;
+	    	}
+    		for (i = 0; i < html[['NE', 'NW', 'SE', 'SW'][j]].length; i++)
+        	{
+				$("#itemsList").append(html[['NE', 'NW', 'SE', 'SW'][j]][i][0]);
+        	}
+    	}
 	}
 }
