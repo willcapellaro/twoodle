@@ -202,12 +202,12 @@ function addItem()
 	}
 	flagShareUpdate = false;
 	$("#itemsList").append(`
-		<div id="item_` + nextId + `" onmouseup="getItems();">
+		<div id="item_` + nextId + `" onmouseup="getItems();" class="itemsListCard">
 			<input class="itemName" type="text" value="Item ` + nextItemNumber + `" id="item_name_` + nextId + `">
-			<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + nextId + `);"></i>
-			<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + nextId + `);"></i></div>
-			<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + nextId + `);"></i>
-			<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
+			<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + nextId + `);"></i></div>
+			<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + nextId + `);"></i></div>
+			<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + nextId + `);"></i></div>
+			<div><label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label></div>
 		</div>`
 	);
 	flagShareUpdate = true;
@@ -535,14 +535,14 @@ function fillLists(axis = null, shareUpdate = true)
 		var linkHTML = '';
     	if (item['url'])
     	{
-    		linkHTML = '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + item['url'] + '\', \'_blank\');"></i></div>';
+    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + item['url'] + '\', \'_blank\');"></i></div>';
     	}
 		$("#" + axis + "ItemsList").append(`
-			<div class="` + axis + `Item" id="` + axis + `_item_` + values[i]['index'] + `">
+			<div class="` + axis + `Item" id="` + axis + `_item_` + values[i]['index'] + `" class="rateListCard">
 				<label class="itemName">` + n + `</label>
-				<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + item['index'] + `);"></i>
-				<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + item['index'] + `);"></i></div>
-				<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + item['index'] + `);"></i>` + 
+				<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + item['index'] + `);"></i></div>
+				<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + item['index'] + `);"></i></div>
+				<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + item['index'] + `);"></i></div>` + 
 				linkHTML
 				 + `<label id="value_` + axis + `_item_` + values[i]['index'] + `" class="itemValue">` + values[i]['value'] + `</label>
 			</div>`
@@ -675,7 +675,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -684,13 +684,13 @@ function fillItemsList()
 	                if ((yValues[j]['index'] == xValues[k]['index']) && (yValues[j]['value'] >= 50) && (xValues[k]['value'] >= 50) && (xValues[k]['index'] == items[i]['index']))
 	                {
 	                	html['NE'].push([`
-							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
+							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
 								<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
-								<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i>
-								<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
-								<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i>` + 
+								<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i></div>
+								<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+								<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
 								linkHTML
-								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+								 + `<div><label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label></div>
 							</div>`, (yValues[j]['value'] + xValues[k]['value'])]);
 	                }
 	        	}
@@ -701,7 +701,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -710,13 +710,13 @@ function fillItemsList()
 	                if ((yValues[j]['index'] == xValues[k]['index']) && (yValues[j]['value'] >= 50) && (xValues[k]['value'] < 50) && (yValues[j]['index'] == items[i]['index']))
 					{
 						html['NW'].push([`
-							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
+							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
 								<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
-								<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i>
-								<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
-								<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i>` + 
+								<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i></div>
+								<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+								<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
 								linkHTML
-								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+								 + `<div><label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label></div>
 							</div>`, (yValues[j]['value'] + xValues[k]['value'])]);
 	                }
 	        	}
@@ -727,7 +727,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -736,13 +736,13 @@ function fillItemsList()
 	                if ((yValues[j]['index'] == xValues[k]['index']) && (yValues[j]['value'] < 50) && (xValues[k]['value'] >= 50) && (xValues[k]['index'] == items[i]['index']))
 					{
 						html['SE'].push([`
-							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
+							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
 								<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
-								<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i>
-								<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
-								<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i>` + 
+								<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i></div>
+								<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+								<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
 								linkHTML
-								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+								 + `<div><label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label></div>
 							</(div>`, (yValues[j]['value'] + xValues[k]['value'])]);
 					}
 	        	}
@@ -753,7 +753,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -762,13 +762,13 @@ function fillItemsList()
 	                if ((yValues[j]['index'] == xValues[k]['index']) && (yValues[j]['value'] < 50) && (xValues[k]['value'] < 50) && (yValues[j]['index'] == items[i]['index']))
             		{
 	                	html['SW'].push([`
-							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();">
+							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
 								<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
-								<i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i>
-								<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
-								<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i>` + 
+								<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i></div>
+								<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+								<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
 								linkHTML
-								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+								 + `<div><label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label></div>
 							</(div>`, (yValues[j]['value'] + xValues[k]['value'])]);
 	                }
 	        	}

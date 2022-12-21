@@ -214,12 +214,12 @@ function displayLocalStorage(tab = 'readable')
 		                			if (xValues[k]['index'] == items[i]['index'])
         							{
         								var itemNE = items[i]['name'];
-										itemNE += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
-										itemNE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
-										itemNE += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
+										itemNE += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
+										itemNE += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										itemNE += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
 										if (items[i]['url'])
 										{
-											itemNE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+											itemNE += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 										}
 										itemNE += '<br>';
 										html['NE'].push([itemNE, (yValues[j]['value'] + xValues[k]['value'])]);
@@ -230,12 +230,12 @@ function displayLocalStorage(tab = 'readable')
 		                			if (yValues[j]['index'] == items[i]['index'])
         							{
         								var itemNW = items[i]['name'];
-										itemNW += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
-										itemNW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
-										itemNW += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
+										itemNW += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
+										itemNW += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										itemNW += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
 										if (items[i]['url'])
 										{
-											itemNW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+											itemNW += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 										}
 										itemNW += '<br>';
 										html['NW'].push([itemNW, (yValues[j]['value'] + xValues[k]['value'])]);
@@ -249,12 +249,12 @@ function displayLocalStorage(tab = 'readable')
 		                			if (xValues[k]['index'] == items[i]['index'])
         							{
         								var itemSE = items[i]['name'];
-										itemSE += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
-										itemSE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
-										itemSE += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
+										itemSE += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
+										itemSE += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										itemSE += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
 										if (items[i]['url'])
 										{
-											itemSE += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+											itemSE += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 										}
 										itemSE += '<br>';
 										html['SE'].push([itemSE, (yValues[j]['value'] + xValues[k]['value'])]);
@@ -265,12 +265,12 @@ function displayLocalStorage(tab = 'readable')
 		                			if (yValues[j]['index'] == items[i]['index'])
         							{
         								var itemSW = items[i]['name'];
-										itemSW += '<i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i>';
-										itemSW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
-										itemSW += '<i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i>';
+										itemSW += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
+										itemSW += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										itemSW += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
 										if (items[i]['url'])
 										{
-											itemSW += '<div class="btn-link" style="border: none;"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+											itemSW += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 										}
 										itemSW += '<br>';
 										html['SW'].push([itemSW, (yValues[j]['value'] + xValues[k]['value'])]);
