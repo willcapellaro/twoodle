@@ -269,7 +269,8 @@ label {
 
 .lblRepeated {
 	padding-left: 4px;
-	color: red;/*color: var(--text-primary);*/
+	color: red;
+	/*color: var(--text-primary);*/
 }
 
 .rangeDiv {
