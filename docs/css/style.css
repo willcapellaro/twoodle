@@ -6,7 +6,8 @@
   --btn-text: white; 
   --field-border: grey;
   --background-primary: white; 
-  --background-secondary: #9FC3E9; 
+  --background-secondary: #9FC3E9;
+  --neutral-light: #BBB;  
   --alert: #FF698F; 
   /*--focus: #b1d;*/
 }
@@ -28,6 +29,11 @@ font-family: 'Inter', sans-serif;
  	font-weight: 700;
  	background-color: var(--background-primary)
  	color: var(--text-primary);
+ 	padding-bottom: 10em;
+}
+
+button {
+	background-color: red;
 }
 
 header {
@@ -119,14 +125,15 @@ h1, h2, h3, h4, h5, h6 {
 	color: var(--text-secondary);
 }
 
-
 button {
 	background-color: var(--primary-active);
 	color: var(--btn-text);
 /*	border: 4px var(--primary-active) solid;*/
 	padding: .5em 1em .5em 1em ;
 	margin: 1em 3px 0;
-/*	border-radius: 3px;*/
+
+	border-radius: 3px;
+	border: none;
 /*	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
 /*  	transition: all 0.3s cubic-bezier(.25,.8,.25,1);*/
 }
@@ -181,11 +188,14 @@ ul {
 	padding: 0;
 }
 input {
-	width: 300px;
+/*	width: 300px;*/
 	margin-left: 1em;
-	padding: 4px;
+	padding: 8px;
 	background-color: var(--background-primary);
 	color: var(--text-primary);
+	border: none;
+/*	text-decoration: underline;*/
+border-bottom: 1px solid var(--neutral-light);
 }
 #createDiv input {
 	border: 1px solid var(--field-border);
@@ -269,7 +279,13 @@ label {
 
 .lblRepeated {
 	padding-left: 4px;
-	color: red;
+	color: var(--alert);
+	/*color: var(--text-primary);*/
+}
+
+.lblRepeatedItem {
+	color: var(--alert);
+	font-size: 90%;
 	/*color: var(--text-primary);*/
 }
 
@@ -393,26 +409,80 @@ text-transform: uppercase;
 	top: 100px;
 }*/
 
-.xItem, .yItem {
-}
 
 .yItemsList {
-/*  display: grid;
-  grid-template-columns: repeat(auto-fill, 300px);
-  grid-template-rows: auto auto auto;*/
 }
 
 .itemValue {
 	display: none;
 }
 
-.yItemsList {
-/*	display: grid;
-  grid-template-columns: repeat(auto-fill, 300px);
-  grid-template-rows: auto auto auto;
-  background-color: red;
-  color: red;*/
+.itemsListCard, .rateListCard, .yItem, .xItem  {
+	border: 1px solid var(--neutral-light);
+	border-radius: 3px;
+	outline: none;
+	padding: 1em;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.06), 0 3px 6px rgba(0,0,0,0.03);
+  margin-bottom: 8px;
+  transition: 50ms;
+} 
+
+.itemsListCard {
+	display: grid;
+	grid-template-columns: 400px auto 20px 20px 20px;
+	grid-column-gap: 2em;
 }
+
+.itemsListCard input {
+	width: auto;
+}
+
+.itemsListCard i, .rateListCard i, .yItem i, .xItem i  {
+	font-size: 24px;
+	line-height: 1;
+		grid-row: 1 / 2;
+} 
+
+.itemsListCard i {
+/*	font-size: 24px;*/
+}
+
+
+.itemsListCard div:nth-child(2) {
+/*	background-color: pink;*/
+		grid-column: 3 / 4;
+
+}
+
+.itemsListCard div:nth-child(3) {
+/*	background-color: red;*/
+			grid-column: 4 / 5;
+
+}
+
+.itemsListCard div:nth-child(4) {
+/*	background-color: pink;*/
+			grid-column: 5 / 6;
+
+}
+
+.itemsListCard div:nth-child(5) {
+/*	background-color: blue;*/
+	grid-column: 2 / 3;
+	grid-row: 1 / 2;
+	line-height: 1;
+	height: 20px;
+	  display: inline-block;
+  align-self: flex-end;
+}
+
+
+
+.rateListCard:hover, .yItem:hover, .xItem:hover  {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.09);
+  transition: 50ms;
+
+} 
 
 #xItemsList .itemName, #yItemsList .itemName{
 	/*display: inline-block;*/
@@ -453,8 +523,8 @@ display: block;
 	/*background: var(--focus);*/
 }
 #itemsList div, #xItemsList div, #yItemsList div {
-	border: none;
-	border-bottom: 1px solid var(--field-border);
+/*	border: none;
+	border-bottom: 1px solid var(--field-border);*/
 }
 
 #itemsList, #xItemsList, #yItemsList {
@@ -695,7 +765,7 @@ background-color: pink;
 	color: green;
 }
 .clipboardInfoError {
-	color: red;
+	color: var(--alert);
 }
 
 .valuesListSortableStart {

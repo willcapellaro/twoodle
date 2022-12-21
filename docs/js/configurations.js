@@ -469,7 +469,7 @@ function verifyItemsNames(shareUpdate = true)
 	validItemsNames = !repetidos.length;
 	for (var i = 0; i < repetidos.length; i++)
 	{
-		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated"> (repeated name)</p>';
+		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated"> Oops, repeated name!</p>';
 	}
 	getItems(shareUpdate && flagShareUpdate);
 }
@@ -506,7 +506,7 @@ function fillLists(axis = null, shareUpdate = true)
 		values = [...twoodles[selectedTwoodleIndex]['xValues']];
 		axisName = xAxisName;
 	}
-	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = 'Sort items from highest <strong>' + axisName + '</strong> to lowest <strong> ' +  axisName + '</strong>';
+	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = 'Sort items from highest <strong>' + axisName + '</strong> to lowest <strong> ' +  axisName + '</strong> by dragging and dropping.';
 
 	document.getElementById(axis + 'ItemsList').innerHTML = '';
 	var c = document.getElementById(axis + 'ItemsList').children;
