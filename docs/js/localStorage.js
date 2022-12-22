@@ -29,7 +29,7 @@ function loadValues()
 		if (!twoodles.length)
 		{
 			twoodles = [{
-				'id' : 0, 
+				'index' : 0, 
 				'name' : 'Twoodle 1', 
 				'defaultY' : recipes[0]['defaultY'], 
 				'defaultX' : recipes[0]['defaultX'], 
@@ -48,7 +48,7 @@ function loadValues()
 	else
 	{
 		localStorage.setItem('twoodles', JSON.stringify({'twoodles' : [{
-			'id' : 0, 
+			'index' : 0, 
 			'name' : 'Twoodle 1', 
 			'defaultY' : recipes[0]['defaultY'], 
 			'defaultX' : recipes[0]['defaultX'], 
@@ -76,7 +76,7 @@ function fillTwoodlesSelect(changeIndex = true)
 	var html = '<option id="optSlcTwoodles_new" onclick="displayNewTwoodleMenu();">+ New Twoodle</option>';
 	for (var i = 0; i < twoodles.length; i++)
 	{
-		html += '<option id="optSlcTwoodles_' + twoodles[i]['id'] + '">' + twoodles[i]['name'] + '</option>';
+		html += '<option id="optSlcTwoodles_' + twoodles[i]['index'] + '">' + twoodles[i]['name'] + '</option>';
 	}
 	document.getElementById('slcTwoodles').innerHTML = html;
 	if (changeIndex)
@@ -329,7 +329,7 @@ function clearValues()
 	xAxisName = document.getElementById('xAxis_name').value;
 	document.getElementById('itemsList').innerHTML = '';
 	twoodles = [{
-		'id' : 0, 
+		'index' : 0, 
 		'name' : 'Twoodle 1', 
 		'defaultY' : recipes[0]['defaultY'], 
 		'defaultX' : recipes[0]['defaultX'], 

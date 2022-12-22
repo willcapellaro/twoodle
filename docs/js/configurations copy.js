@@ -207,7 +207,7 @@ function addItem()
 			<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + nextId + `);"></i></div>
 			<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + nextId + `);"></i></div>
 			<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + nextId + `);"></i></div>
-			<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
+			<div><label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label></div>
 		</div>`
 	);
 	flagShareUpdate = true;
@@ -237,7 +237,7 @@ function preMoveItem(id)
 	var html = '';
 	for (var i = 0; i < twoodles.length; i++)
 	{
-		html += '<option id="optSlcTwoodlesMove_' + twoodles[i]['index'] + '">' + twoodles[i]['name'] + '</option>';
+		html += '<option id="optSlcTwoodlesMove_' + twoodles[i]['id'] + '">' + twoodles[i]['name'] + '</option>';
 	}
 	document.getElementById('slcTwoodlesMove').innerHTML = html;
 	$('#modalMove').modal('show');
@@ -249,9 +249,9 @@ function selectTwoodleMove()
 		var selectedTwoodleMove = Number(document.getElementById('slcTwoodlesMove').children[document.getElementById('slcTwoodlesMove').selectedIndex].id.split('_')[1]);
 		for (var i = 0; i < twoodles.length; i++)
 		{
-			if (twoodles[i]['index'] == selectedTwoodleMove)
+			if (twoodles[i]['id'] == selectedTwoodleMove)
 			{
-				selectedTwoodleMoveIndex = twoodles[i]['index'];
+				selectedTwoodleMoveIndex = twoodles[i]['id'];
 			}
 		}
 	}
@@ -469,7 +469,7 @@ function verifyItemsNames(shareUpdate = true)
 	validItemsNames = !repetidos.length;
 	for (var i = 0; i < repetidos.length; i++)
 	{
-		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated"> (repeated name)</p>';
+		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated"> Oops, repeated name!</p>';
 	}
 	getItems(shareUpdate && flagShareUpdate);
 }
@@ -506,7 +506,7 @@ function fillLists(axis = null, shareUpdate = true)
 		values = [...twoodles[selectedTwoodleIndex]['xValues']];
 		axisName = xAxisName;
 	}
-	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = 'Sort items from highest <strong>' + axisName + '</strong> to lowest <strong> ' +  axisName + '</strong>';
+	document.getElementById('lblChange' + axis.toUpperCase()).innerHTML = 'Sort items from highest <strong>' + axisName + '</strong> to lowest <strong> ' +  axisName + '</strong> by dragging and dropping.';
 
 	document.getElementById(axis + 'ItemsList').innerHTML = '';
 	var c = document.getElementById(axis + 'ItemsList').children;
@@ -690,7 +690,7 @@ function fillItemsList()
 								<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
 								<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
 								linkHTML
-								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+								 + `<div><label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label></div>
 							</div>`, (yValues[j]['value'] + xValues[k]['value'])]);
 	                }
 	        	}
@@ -716,7 +716,7 @@ function fillItemsList()
 								<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
 								<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
 								linkHTML
-								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+								 + `<div><label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label></div>
 							</div>`, (yValues[j]['value'] + xValues[k]['value'])]);
 	                }
 	        	}
@@ -742,7 +742,7 @@ function fillItemsList()
 								<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
 								<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
 								linkHTML
-								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+								 + `<div><label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label></div>
 							</(div>`, (yValues[j]['value'] + xValues[k]['value'])]);
 					}
 	        	}
@@ -768,7 +768,7 @@ function fillItemsList()
 								<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
 								<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
 								linkHTML
-								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+								 + `<div><label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label></div>
 							</(div>`, (yValues[j]['value'] + xValues[k]['value'])]);
 	                }
 	        	}
