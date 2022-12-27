@@ -469,7 +469,7 @@ function verifyItemsNames(shareUpdate = true)
 	validItemsNames = !repetidos.length;
 	for (var i = 0; i < repetidos.length; i++)
 	{
-		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated"> (repeated name)</p>';
+		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeatedItem"> <i class="fas fa-exclamation-triangle inlineIcon"></i> Duplicate item name</p>';
 	}
 	getItems(shareUpdate && flagShareUpdate);
 }
@@ -540,9 +540,11 @@ function fillLists(axis = null, shareUpdate = true)
 		$("#" + axis + "ItemsList").append(`
 			<div class="` + axis + `Item" id="` + axis + `_item_` + values[i]['index'] + `" class="rateListCard">
 				<label class="itemName">` + n + `</label>
-				<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + item['index'] + `);"></i></div>
 				<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + item['index'] + `);"></i></div>
-				<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + item['index'] + `);"></i></div>` + 
+				<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + item['index'] + `);"></i></div>
+				<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + item['index'] + `);"></i>
+				</div>
+				` + 
 				linkHTML
 				 + `<label id="value_` + axis + `_item_` + values[i]['index'] + `" class="itemValue">` + values[i]['value'] + `</label>
 			</div>`

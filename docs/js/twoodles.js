@@ -26,7 +26,7 @@ function displayNewTwoodleMenu()
 	}
 	else
 	{
-		document.getElementById('matrixInput').innerHTML = '<input class="inputAxisNewTwoodle" type="text" id="inputYAxisName" value="' + auxYAxisName + '"><input class="inputAxisNewTwoodle" type="text" id="inputXAxisName" value="' + auxXAxisName + '"><div id="divDuplicatedErrorTwoodle"></div>';
+		document.getElementById('matrixInput').innerHTML = '<input class="inputAxisNewTwoodle" type="text" id="inputYAxisName" value="' + auxYAxisName + '"><br><input class="inputAxisNewTwoodle" type="text" id="inputXAxisName" value="' + auxXAxisName + '"><div id="divDuplicatedErrorTwoodle"></div>';
 	}
 }
 function displayRenameTwoodleModal()

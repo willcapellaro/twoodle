@@ -17,6 +17,7 @@ html {
 font-family: 'Inter', sans-serif;
 }
 
+
 body {
 /*	width: 90vw;*/
 font-family: 'Inter', sans-serif;
@@ -410,6 +411,15 @@ text-transform: uppercase;
 }*/
 
 
+.editModal label {
+	width: 5em;
+}
+
+#modalNewTwoodle .modalLeftLabel {
+		width: 10em;
+/*		background-color: red;*/
+}
+
 .yItemsList {
 }
 
@@ -427,6 +437,18 @@ text-transform: uppercase;
   transition: 50ms;
 } 
 
+.yItem, .xItem {
+	display: grid;
+	grid-template-columns: 1fr 20px 20px 20px 20px;
+		grid-column-gap: 2em;
+padding-right: 2em;
+}
+
+.infoText {
+	font-size: 80%;
+	opacity: .8;
+}
+
 .itemsListCard {
 	display: grid;
 	grid-template-columns: 400px auto 20px 20px 20px;
@@ -439,8 +461,9 @@ text-transform: uppercase;
 
 .itemsListCard i, .rateListCard i, .yItem i, .xItem i  {
 	font-size: 24px;
+/*^^ conflicts with icon sizing*/
 	line-height: 1;
-		grid-row: 1 / 2;
+	grid-row: 1 / 2;
 } 
 
 .itemsListCard i {
@@ -553,6 +576,16 @@ display: block;
 
   h1 .mobileHide  {
 font-size: 50%;}
+
+.inlineIcon {
+	height: 10px;
+}
+
+/*.inlineIcon i {
+	font-size: 50%;
+	height: 2px;
+}*/
+
 
 
 /*#yItemsList div, #xItemsList div {

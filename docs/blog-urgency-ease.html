@@ -28,7 +28,22 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+
+
+
 		<!-- fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+</style>
+
+
+
+
+
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -41,13 +56,15 @@
 	  <script defer data-domain="twoodle.xyz" src="https://plausible.io/js/plausible.js"></script>
 		
 		<!-- styles -->
-		<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+				<link id="cssFile" rel="stylesheet" type="text/css" href="css/style.css">
+		<link id="cssFile" rel="stylesheet" type="text/css" href="css/style-blog.css">
+
 
 		<!-- site scripts -->
 		<script type="text/javascript" src="./js/conditional-logic-draft.js"></script>
@@ -58,34 +75,33 @@
 		<script type="text/javascript" src="./js/twoodles.js"></script>
 
 	</head>
-	<body onload="loadValues();menuItemClicked('items');saveValues();displayLocalStorage('quadrants');selectTwoodleTopBottom();">
+	<body onload="loadValues();menuItemClicked('items');saveValues();menuItemClicked('rateY');menuItemClicked('rateX');menuItemClicked('see');displayLocalStorage('quadrants');">
 		<header>
 			<div>
-				<h1 id="title">Twoodle Alpha<span class="mobileHide"> <a class="currentTopTap" href="index.html">app</a> <a class="defaultTopTap" href="blog.html">blog</a></span></h1>
+				<h1 id="title">Twoodle Alpha<span class="mobileHide"> <a class="defaultTopTap" href="index.html">app</a> <a class="currentTopTap" href="blog.html">blog</a></span></h1>
 			</div>
 		</header>
+		<h2>Sklounsting <strong>Urgency-Ease</strong></h2>
 		<div id="twoodlesDiv">
-			Your twoodles
-			<select id="slcTwoodles" onchange="selectTwoodle();"></select>
+			Showing content
+			<select id="slcTwoodles" onchange="selectTwoodle();" class="selectr"></select>
 			<i style="color: dodgerblue" class="bi bi-trash-fill" onclick="$('#modalDeleteTwoodle').modal('show');"></i>
 			<i class="bi bi-pencil-fill" style="color: dodgerblue"  onclick="displayRenameTwoodleModal();"></i>
 		</div>
-		<nav id="menu">
+		<nav id="menu" style="display: none;">
 			<ul>
-				<button class="menuButton" onclick="menuItemClicked(this.id);" id="items">Items<span class="mobileHide"></span></button> 
+				<button class="menuButton" onclick="menuItemClicked(this.id);" id="items">Items</span></button> 
 				<i class="fa fa-caret-right iSpaceSm"></i>
-				<button class="menuButton" onclick="menuItemClicked(this.id)" id="rateY"><span class="mobileHide">Rate</span> <span class="mobileHide" id="spanYAxis"></span></button>
+				<button class="menuButton" onclick="menuItemClicked(this.id)" id="rateY"><span class="mobileHide">Rate</span> Y <span class="mobileHide">Axis</span></button>
 				<i class="fa fa-caret-right iSpaceSm"></i>
-				<button class="menuButton" onclick="menuItemClicked(this.id)" id="rateX"><span class="mobileHide">Rate</span> <span class="mobileHide" id="spanXAxis"></span></button>
+				<button class="menuButton" onclick="menuItemClicked(this.id)" id="rateX"><span class="mobileHide">Rate</span> X<span class="mobileHide"> Axis</span></button>
 				<i class="fa fa-caret-right iSpaceSm"></i>
 				<button class="menuButton" onclick="menuItemClicked(this.id)" id="see">Results</button>
 			</ul>
 		</nav>
 		<div id="ItemsDiv" class="activeTab">
-			<div class="inlineDiv">
+			<div class="inlineDiv" style="display: none;">
 				<label class="tabHeading"><p id="recipeTitleItemsDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Items</label>
-				<label class="tabHeading"><p id="recipeTitleItemsDiv" class="labelFloatRight"></p></i></label>
-				<button>Read a Blog Post about this Recipe</button>
 				<div style="float: right;">
 				<button type="button" class="btn-link linkBtn" onclick="swap();" id="swapRestoreBtn"><i class="bi bi-arrow-left-right"></i> Swap X/Y</button>
 				<button class="btn-link linkBtn" type="button" onclick="displayRecipes()" data-toggle="modal" data-target="#modalRecipes";>
@@ -93,7 +109,7 @@
 			</div>
 				
 			</div>
-			<div id="axisList" onchange="verifyAxisNames();saveValues();">
+			<div id="axisList" style="display: none" onchange="verifyAxisNames();saveValues();//saveAxisNames();">
 				<div class="item itemLabel" id="yAxis">
 					<i class="bi bi-arrow-down-up"></i><label>Y axis</label>
 					<br>
@@ -109,34 +125,91 @@
 			</div>
 			<div id="divDuplicatedError"></div>
 			<br>
-			<button id="addButton" class="addItemButton" onclick="addItem();">+ Add an item</button><br><br>
-			<div id="itemsList" onchange="verifyItemsNames();" class="itemsListSortableStop"></div>
 
+<!-- 	<div class="alert alert-warning" role="alert">
+  You don't have any Twoodles with this recipe yet. This is an interactive text, so we highly recommend you create one before reading through.<button class="btn-info float-end">Create one</button>
+</div>
+ -->
+	<div class="alert alert-warning" role="alert">
+  This Twoodle has been customized by swapping the X/Y axes. This shouldn't cause any errors, but be aware that supporting text might not make sense.<button class="btn-info float-end">Reset Axes</button>
+</div>
+
+<div class="blogIntro">
+			<p><span class="colorLede">The Importance-Urgency Matrix is a boardroom classic.</span> It serves a simple but effective way to manage tasks based on key criteria: what things are important and how pressing they are. It is sometimes called the Eisenhower Decision Matrix based on an efficiency-obsessed hobby farmer that popularized the recipe. Use it for task management when demands differ.</p>
+			<h3>Why it works</h3>
+			<p>The purpose of an Importance-Urgency Analysis is to help you identify the activities that you should prioritize and the ones you should ignore. By challenging instinctive responses, you regain control over your environment and external demands instead of being controlled by them. You can free up time by eliminating activities that have minimal value for long-term goals.</p>
+
+
+<p>
+
+
+
+There is no need to undergo specialized training in order to create an Importance-Urgency Matrix, and the opportunity costs will be minimal, except for your time.</p>
+<h3>When it doesn't work</h3>
+<p>Importance-Urgency doesn't take into account other criteria, such as ease of effort or appropriateness. If tasks have a wide range of difficulty, some taking hours and some requiring days or more, it's recommended to try the Impact-Ease matrix. If a variety of skills or strengths are required for a multitude of tasks, try Impact-Specialization (coming soon).</p>
+<p class="funBox"><strong>Avoid imitation recipes!</strong> Urgency-Importance sounds similar, but it is the devil's work. Kidding not kidding. Just be aware that the blog currently doesn't support swapping the X and Y axis.</p>
+</div> 
+<!-- end blogIntro -->
+			<h3>Recipe in Practice</h3>
+			<p class="funBox alt">Interact with some content to learn this recipe.</p> 
+			<p>To start, add a few items that are currently vying for your time:
+			<div class="paperStock tornBottom ">
+				<div class="paperMargin">
+					<div id="itemsList" onchange="verifyItemsNames();" class="itemsListSortableStop"></div>
+					<button id="addButton" class="primaryBtn" onclick="addItem();">+ Add an item</button>
+				</div>
+			</div>
 		</div>
+		<br><br>
+<h3>Prioritization</h3>
+			<p>Now that you have your items, sort them based  on their importance. Use drag and drop to sort your items. The top item should be the most important. Ignore timing for this exercise, think only of the value delivered by completing each task.</p>
+
+
+<div class="paperStock tornBottom tornTop">
+	<div class="paperMargin ">
 		<div id="rateYDiv" class="activeTab">
 			
 			<div class="inlineDiv">
-				<label class="tabHeading"><p id="recipeTitleRateYDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Prioritization</label>
+				<label class="tabHeading"><p id="recipeTitleRateYDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Prioritization<i class="fa fa-caret-right iSpace"></i>Importance</label>
 			</div>
-			<label id="lblChangeY" class="labelFloatRight"></label><button id="addButton" class="addItemButton" onclick="addItem();">+ Add an item</button><br><br>
+			<label id="lblChangeY" class="labelFloatRight"></label>
 			<div id="yItemsList" class="valuesListSortableStop"></div>
 		</div>
+		</div>
+	</div>
+		<br><br>
+		
+		<p>Now add the timing factor by sorting the items one more time. Only think of the clock and calendar here; Importance isn't important here. Think only of <strong>when</strong> each task needs to be completed. The first item should be utmost, last one chillaxed. </p>
+
+<div class="paperStock tornBottom tornTop">
+
+	<div class="paperMargin ">
+		<div id="rateYDiv" class="activeTab">
+
+
 		<div id="rateXDiv" class="activeTab">
+
 			<div class="inlineDiv">
-				<label class="tabHeading"><p id="recipeTitleRateXDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Prioritization</label>
+				<label class="tabHeading"><p id="recipeTitleRateXDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Prioritization<i class="fa fa-caret-right iSpace"></i>Urgency</label>
 			</div>
-			<label id="lblChangeX" class="labelFloatRight"></label><button id="addButton" class="addItemButton" onclick="addItem();">+ Add an item</button><br><br>
+			<label id="lblChangeX" class="labelFloatRight"></label>
 			<div id="xItemsList" class="valuesListSortableStop"></div>
 		</div>
-		<div id="resultsDiv" class="activeTab">
+</div>
+	</div>
+</div>
+<br><br>
+		<h3>Twoodle Results</h3>
+			<p>Finally, reap the benefits of your work. Because you're doing an Importance-Urgency twoodle, highest priority items are in the top right quad. Top left and bottom right are also of value. It's recommended to avoid those in the bottom left.</p>
+			<h4>Twoodle Matrix</h4>
+
+			<div class="paperStock tornBottom tornTop">
+
+				<div class="paperMargin ">
+		<div id="resultsDiv" class="activeTab" style="display: inline;">
 			<div class="inlineDiv">
-				<label class="tabHeading"><p id="recipeTitleresultsDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Results</label>
+				<label class="tabHeading"><p id="recipeTitleresultsDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Results<i class="fa fa-caret-right iSpace"></i>Matrix</label>
 			</div>
-			<button id="addButton" class="addItemButton" onclick="addItem();">+ Add an item</button><br><br>
-<!-- 			<div style="display: grid; grid-template-columns: 1fr 2fr;">
-				<div>col1</div>
-				<div>col2</div>
-			</div> -->
 			<div id="resultsDivGrid" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 600px;">
 				<div>
 					<div id="matrixNew" class="matrixGrid" >
@@ -155,28 +228,49 @@
 						<div id="canvasDiv"></div>
 					</div>
 				</div>
-				<div>	
-					<nav id="resultsModalNav">
-						<ul>
-							<button type="button" id="quadrantsBtn" class="localeStorageTabs" onclick="displayLocalStorage('quadrants');">Quadrants</button>
-							<button type="button" id="readableBtn" class="localeStorageTabs activeResultsModalTab" onclick="displayLocalStorage('readable');">Readable (Legacy)</button>
-							<button type="button" id="codeBtn" class="localeStorageTabs" onclick="displayLocalStorage('code');">Code (Legacy)</button>
-						</ul>
-					</nav>
-					<div class="modal-body" id="localStorageContents" style="background-color: white; padding-left: 2px; padding-top: 2px;"></div>
-					<div class="modal-footer">
-						<p id="clipboardInfo" class="clipboardInfoSuccess"></p>
-					</div>
-				</div>
-		</div>
-		<br>
-	<div style="float: left; font-size: 10px; opacity: .6;"> © 2022 Will Capellaro </div>	
-<div style="float: right; font-size: 10px;">
-			<div>
-				<button data-toggle="modal" class="linkBtn btn-link" data-target="#modalClear" style="padding-bottom: 5px; color: indianred;">Clear Local Storage</button>
-				<button type="button" class="btn btn-link" onclick="copyContent();">Copy Current Content</button>
 			</div>
 		</div>
+	</div>
+		</div>
+			<br>
+			<br>
+			<h4>Twoodle Results List</h4>
+<p>Matrixes are great and all, but who doesn't like a to-do list? Use this to work down the items in logical order. The top three all lead to success, and we recommend trying to stay in one mode at a time. The Avoid section is to be avoided, so we automatically collapse that. But take a look at the time and effort you're saving.</p>
+						<div class="paperStock tornTop">
+
+				<div class="paperMargin ">
+				<label class="tabHeading">Urgency & Importance<i class="fa fa-caret-right iSpace"></i>Results<i class="fa fa-caret-right iSpace"></i>List</label>
+				<br><br>
+
+			<div id="modalLocalStorage" tabindex="-1" role="dialog" aria-labelledby="modalLocalStorageTitle" aria-hidden="true">
+					<nav id="resultsModalNav">
+						<ul id="resultsTabsInBlog">
+							<button type="button" id="quadrantsBtn" class="localeStorageTabs" onclick="displayLocalStorage('quadrants');">Action List</button>
+							<button type="button" id="readableBtn" class="localeStorageTabs activeResultsModalTab" onclick="displayLocalStorage('readable');">YX Lists </button>
+							<button type="button" id="codeBtn" class="localeStorageTabs" onclick="displayLocalStorage('code');">Code</button>
+						</ul>
+					</nav>
+
+					<div style="display: grid; grid-template-columns: 2fr auto; grid-column-gap: 2em;">
+						<div id="localStorageContents"></div>
+							<p id="clipboardInfo" class="clipboardInfoSuccess"></p>
+							<p><strong>Act now! Also, later.</strong> Take this list into your favorite task management or note-taking app and keep checking in. (Twoodle will have task tracking soon!)<p>
+						<button type="button" class="primaryBtn" onclick="copyContent();">Copy Content</button>
+					</div>
+		</div>
+	</div>
+</div>
+		<br>
+
+	<h4>That's it! What did you think?</h4>
+	<p>TwoodleCorp prioritizes your input. Please <a href="">reach out</a> with any feedback. We're currently exploring what this blog thing is all about. We're about 25 years late, but hey. If this post helped you, or if you can think of improvements, drop us a line.</p>
+<br><br><br><br>
+	<div style="float: left; font-size: 10px; opacity: .6;"> © 2022 Will Capellaro </div>	
+	<div style="float: right; font-size: 10px;">
+		<div>			
+			<button data-toggle="modal" class="linkBtn btn-link" data-target="#modalClear" style="padding-bottom: 5px; color: indianred;">Clear Local Storage</option></button>
+		</div>
+	</div>
 
 		<div class="modal fade" id="modalClear" tabindex="-1" role="dialog" aria-labelledby="modalClearTitle" aria-hidden="true">
 			<div class="modal-dialog" role="document">
@@ -190,54 +284,6 @@
 					<div class="modal-body">
 						This could be bad.<hr/><button onclick="document.getElementById('modalClear').style.display = 'none';" class="btn-outline-secondary" data-dismiss="modal">Back away slowly</button>
 						<button onclick="clearValues();" class="btn-danger" data-dismiss="modal">Clear values</button></div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade" id="modalLocalStorage" tabindex="-1" role="dialog" aria-labelledby="modalLocalStorageTitle" aria-hidden="true">
-			<div class="modal-dialog" role="document"></div>
-		</div>
-		<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditTitle" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="modalEditTitle">Edit Item</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body editModal">
-						<label for="inputItemName">Title</label>
-
-						 <input class="inputItemName" type="text" id="inputItemName" placeholder="Item Name"><br><br>
-						<div>
-						<label for="inputItemUrl">Link Url</label>
-
-							 <input class="inputItemUrl" type="text" id="inputItemUrl"><button type="button" class="btn btn-link" onclick="document.getElementById('inputItemUrl').value = '';document.getElementById('inputItemUrl').parentNode.style.display = 'none';">Clear</button><br><br></div>
-						<label for="inputNotes">Notes</label>
-						<textarea id="inputNotes">Notes here</textarea><br>
-						<button class="modalButton" onclick="editItem();" data-dismiss="modal">Save</button>
-						<button class="btn-outline-secondary modalButton" data-dismiss="modal">Cancel</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade" id="modalMove" tabindex="-1" role="dialog" aria-labelledby="modalMoveTitle" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="modalMoveTitle">Move to Another Twoodle</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<label id="lblMoveItemName"></label><select id="slcTwoodlesMove"></select><br>
-						<label class="radio-tile-label" id="lblBottom" onclick="selectTwoodleTopBottom(this)"><center>bottom</center></label>
-						<label class="radio-tile-label" id="lblTop" onclick="selectTwoodleTopBottom()"><center>top</center></label>
-						<label id="lblAddTo">Add to </label><br><br>
-						<button class="modalButton" onclick="moveItem();" data-dismiss="modal">Confirm location</button>
-						<button class="btn-outline-secondary modalButton" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>
 			</div>
@@ -263,29 +309,24 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="modalNewTwoodleTitle">Create a Twoodle</h5>
+						<h5 class="modal-title" id="modalNewTwoodleTitle">New Twoodle</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body" onchange="checkAuxValues();">
-						<label class="modalLeftLabel" for="inputNewTwoodleName">Twoodle Name</label>
 						<input class="inputTwoodleName" type="text" id="inputNewTwoodleName" placeholder="Enter Twoodle Name">
-						<label style="margin-left: 13em;" class="infoText">255 characters max</label>
+						<label>255 characters max</label>
 						<div id="divDuplicatedErrorTwoodleName"></div>
-						<br>
-						<label class="modalLeftLabel" for="mr">Prioritization Type</label>
 						<input type="radio" id="mr" name="radioMatrix" value="mr" checked onchange="displayNewTwoodleMenu();">
 			            <label for="nm">Matrix Recipe</label>
 			            <input type="radio" id="cm" name="radioMatrix" value="cm" onchange="displayNewTwoodleMenu();">
 			            <label for="sm">Custom Matrix</label>
-
-			            <div style="margin-top: 2em; margin-left: 10em;" id="matrixInput"></div>
+			            <div id="matrixInput"></div>
 					</div>
 					<div class="modal-footer">
-
-						<button type="button" class="btn btn-secondary" onmousedown="selectPreviousTwoodle();" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary" onmousedown="itemsTwoodle();" id="btnitemsTwoodle">Create</button>
+						<button type="button" class="btn btn-primary" onmousedown="selectPreviousTwoodle();" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary" onmousedown="itemsTwoodle();" id="btnitemsTwoodle">items</button>
 					</div>
 				</div>
 			</div>

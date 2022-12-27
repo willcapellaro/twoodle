@@ -78,10 +78,10 @@
 	<body onload="loadValues();menuItemClicked('items');saveValues();menuItemClicked('rateY');menuItemClicked('rateX');menuItemClicked('see');displayLocalStorage('quadrants');">
 		<header>
 			<div>
-				<h1 id="title">Twoodle<span class="mobileHide"> blog</span></h1>
+				<h1 id="title">Twoodle Alpha<span class="mobileHide"> <a class="defaultTopTap" href="index.html">app</a> <a class="currentTopTap" href="blog.html">blog</a></span></h1>
 			</div>
 		</header>
-		<h2>Slaying <strong>Importance-Urgency</strong></h2>
+		<h2>Murdering <strong>Impact-Ease</strong></h2>
 		<div id="twoodlesDiv">
 			Showing content
 			<select id="slcTwoodles" onchange="selectTwoodle();" class="selectr"></select>
@@ -126,12 +126,24 @@
 			<div id="divDuplicatedError"></div>
 			<br>
 
+<!-- 	<div class="alert alert-warning" role="alert">
+  You don't have any Twoodles with this recipe yet. This is an interactive text, so we highly recommend you create one before reading through.<button class="btn-info float-end">Create one</button>
+</div>
+ -->
+	<div class="alert alert-warning" role="alert">
+  This Twoodle has been customized by swapping the X/Y axes. This shouldn't cause any errors, but be aware that supporting text might not make sense.<button class="btn-info float-end">Reset Axes</button>
+</div>
 
 <div class="blogIntro">
 			<p><span class="colorLede">The Importance-Urgency Matrix is a boardroom classic.</span> It serves a simple but effective way to manage tasks based on key criteria: what things are important and how pressing they are. It is sometimes called the Eisenhower Decision Matrix based on an efficiency-obsessed hobby farmer that popularized the recipe. Use it for task management when demands differ.</p>
 			<h3>Why it works</h3>
 			<p>The purpose of an Importance-Urgency Analysis is to help you identify the activities that you should prioritize and the ones you should ignore. By challenging instinctive responses, you regain control over your environment and external demands instead of being controlled by them. You can free up time by eliminating activities that have minimal value for long-term goals.</p>
+
+
 <p>
+
+
+
 There is no need to undergo specialized training in order to create an Importance-Urgency Matrix, and the opportunity costs will be minimal, except for your time.</p>
 <h3>When it doesn't work</h3>
 <p>Importance-Urgency doesn't take into account other criteria, such as ease of effort or appropriateness. If tasks have a wide range of difficulty, some taking hours and some requiring days or more, it's recommended to try the Impact-Ease matrix. If a variety of skills or strengths are required for a multitude of tasks, try Impact-Specialization (coming soon).</p>
