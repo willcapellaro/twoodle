@@ -92,7 +92,7 @@ function menuItemClicked(item)
 	}
 }
 function distribute(axis)
-{
+{//console.log(document.getElementById(axis + 'ItemsList').getElementsByClassName('itemValue'));
 	var c = document.getElementById(axis + 'ItemsList').getElementsByClassName('itemValue');
 	if (c.length)
 	{
@@ -169,58 +169,65 @@ function distribute(axis)
 				}
 		    }
 		}
-		distributing = false;
+		distributing = false;//console.log(twoodles[selectedTwoodleIndex]['yValues']);
 	}
 }
 function addItem()
 {
-	var nextItemNumber = 1;
-	for (var i = 0; i < twoodles[selectedTwoodleIndex]['items'].length; i++)
+	if (twoodles[selectedTwoodleIndex]['type'] == 'twoodle')
 	{
-		if (twoodles[selectedTwoodleIndex]['items'][i]['name'].toLowerCase().indexOf('item ') != -1)
+		var nextItemNumber = 1;
+		for (var i = 0; i < twoodles[selectedTwoodleIndex]['items'].length; i++)
 		{
-			if (Number(twoodles[selectedTwoodleIndex]['items'][i]['name'].toLowerCase().split('item ')[1]) >= nextItemNumber)
+			if (twoodles[selectedTwoodleIndex]['items'][i]['name'].toLowerCase().indexOf('item ') != -1)
 			{
-				nextItemNumber = Number(twoodles[selectedTwoodleIndex]['items'][i]['name'].toLowerCase().split('item ')[1]) + 1;
+				if (Number(twoodles[selectedTwoodleIndex]['items'][i]['name'].toLowerCase().split('item ')[1]) >= nextItemNumber)
+				{
+					nextItemNumber = Number(twoodles[selectedTwoodleIndex]['items'][i]['name'].toLowerCase().split('item ')[1]) + 1;
+				}
 			}
 		}
-	}
-	var nextId = 0;
-	var c = document.getElementById('itemsList').children;
-	if (c.length)
-	{
-		var i = 0;
-		while (i < c.length)
+		var nextId = 0;
+		var c = document.getElementById('itemsList').children;
+		if (c.length)
 		{
-			if (Number(c[i].id.split('_')[1]) == nextId)
+			var i = 0;
+			while (i < c.length)
 			{
-				nextId++;
-				i = -1;
+				if (Number(c[i].id.split('_')[1]) == nextId)
+				{
+					nextId++;
+					i = -1;
+				}
+				i++;
 			}
-			i++;
+		}
+		flagShareUpdate = false;
+		$("#itemsList").append(`
+			<div id="item_` + nextId + `" onmouseup="getItems();" class="itemsListCard">
+				<input class="itemName" type="text" value="Item ` + nextItemNumber + `" id="item_name_` + nextId + `">
+				<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + nextId + `);"></i></div>
+				<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + nextId + `);"></i></div>
+				<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + nextId + `);"></i></div>
+				<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
+			</div>`
+		);
+		flagShareUpdate = true;
+		verifyItemsNames(false);
+		if (validItemsNames)
+		{
+			twoodles[selectedTwoodleIndex]['yValues'].push({'value' : 0, 'index' : nextId});
+			twoodles[selectedTwoodleIndex]['xValues'].push({'value' : 0, 'index' : nextId});
+			fillLists('y', false);
+			fillLists('x', false);
+			saveValues();
+			drawResult();
+			displayLocalStorage('quadrants');
 		}
 	}
-	flagShareUpdate = false;
-	$("#itemsList").append(`
-		<div id="item_` + nextId + `" onmouseup="getItems();" class="itemsListCard">
-			<input class="itemName" type="text" value="Item ` + nextItemNumber + `" id="item_name_` + nextId + `">
-			<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + nextId + `);"></i></div>
-			<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + nextId + `);"></i></div>
-			<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + nextId + `);"></i></div>
-			<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
-		</div>`
-	);
-	flagShareUpdate = true;
-	verifyItemsNames(false);
-	if (validItemsNames)
+	else
 	{
-		twoodles[selectedTwoodleIndex]['yValues'].push({'value' : 0, 'index' : nextId});
-		twoodles[selectedTwoodleIndex]['xValues'].push({'value' : 0, 'index' : nextId});
-		fillLists('y', false);
-		fillLists('x', false);
-		saveValues();
-		drawResult();
-		displayLocalStorage('quadrants');
+		displayNewTwoodleMenu();
 	}
 }
 function preMoveItem(id)
@@ -469,7 +476,7 @@ function verifyItemsNames(shareUpdate = true)
 	validItemsNames = !repetidos.length;
 	for (var i = 0; i < repetidos.length; i++)
 	{
-		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeatedItem"> <i class="fas fa-exclamation-triangle inlineIcon"></i> Duplicate item name</p>';
+		document.getElementById('lblItem_' + repetidos[i]).innerHTML = '<class="lblRepeated"> (repeated name)</p>';
 	}
 	getItems(shareUpdate && flagShareUpdate);
 }
@@ -537,17 +544,20 @@ function fillLists(axis = null, shareUpdate = true)
     	{
     		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + item['url'] + '\', \'_blank\');"></i></div>';
     	}
+    	var iconsHTML = `
+    		<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + item['index'] + `);"></i></div>
+			<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + item['index'] + `);"></i></div>
+			<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + item['index'] + `);"></i></div>` + 
+			linkHTML;
+		if (twoodles[selectedTwoodleIndex]['type'] == 'array')
+		{
+			iconsHTML = '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (item['index'] + 2) + ');"> Open Twoodle</i></div>';
+		}
 		$("#" + axis + "ItemsList").append(`
 			<div class="` + axis + `Item" id="` + axis + `_item_` + values[i]['index'] + `" class="rateListCard">
-				<label class="itemName">` + n + `</label>
-				<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + item['index'] + `);"></i></div>
-				<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + item['index'] + `);"></i></div>
-				<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + item['index'] + `);"></i>
-				</div>
-				` + 
-				linkHTML
-				 + `<label id="value_` + axis + `_item_` + values[i]['index'] + `" class="itemValue">` + values[i]['value'] + `</label>
-			</div>`
+				<label class="itemName">` + n + `</label>` + iconsHTML + 
+				`<label id="value_` + axis + `_item_` + values[i]['index'] + `" class="itemValue">` + values[i]['value'] + `</label>` + 
+			`</div>`
 		);
 	}
 	distribute(axis);
@@ -685,15 +695,18 @@ function fillItemsList()
         		{
 	                if ((yValues[j]['index'] == xValues[k]['index']) && (yValues[j]['value'] >= 50) && (xValues[k]['value'] >= 50) && (xValues[k]['index'] == items[i]['index']))
 	                {
-	                	html['NE'].push([`
-							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
-								<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
-								<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i></div>
-								<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
-								<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
-								linkHTML
-								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
-							</div>`, (yValues[j]['value'] + xValues[k]['value'])]);
+	                	var iconsHTML = `<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i></div>
+							<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+							<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
+							linkHTML;
+	                	if (twoodles[selectedTwoodleIndex]['type'] == 'array')
+						{
+							iconsHTML = '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (items[i]['index'] + 2) + ');"> Open Twoodle</i></div>';
+						}
+	                	html['NE'].push([`<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
+							<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">`
+							+ iconsHTML + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+						</div>`, (yValues[j]['value'] + xValues[k]['value'])]);
 	                }
 	        	}
             }
@@ -711,15 +724,18 @@ function fillItemsList()
         		{
 	                if ((yValues[j]['index'] == xValues[k]['index']) && (yValues[j]['value'] >= 50) && (xValues[k]['value'] < 50) && (yValues[j]['index'] == items[i]['index']))
 					{
-						html['NW'].push([`
-							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
-								<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
-								<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i></div>
-								<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
-								<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
-								linkHTML
-								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
-							</div>`, (yValues[j]['value'] + xValues[k]['value'])]);
+						var iconsHTML = `<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i></div>
+							<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+							<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
+							linkHTML;
+						if (twoodles[selectedTwoodleIndex]['type'] == 'array')
+						{
+							iconsHTML = '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (items[i]['index'] + 2) + ');"> Open Twoodle</i></div>';
+						}
+						html['NW'].push([`<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
+							<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">`
+							+ iconsHTML + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+						</div>`, (yValues[j]['value'] + xValues[k]['value'])]);
 	                }
 	        	}
             }
@@ -737,15 +753,18 @@ function fillItemsList()
         		{
 	                if ((yValues[j]['index'] == xValues[k]['index']) && (yValues[j]['value'] < 50) && (xValues[k]['value'] >= 50) && (xValues[k]['index'] == items[i]['index']))
 					{
-						html['SE'].push([`
-							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
-								<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
-								<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i></div>
-								<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
-								<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
-								linkHTML
-								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
-							</(div>`, (yValues[j]['value'] + xValues[k]['value'])]);
+						var iconsHTML = `<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i></div>
+							<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+							<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
+							linkHTML;
+						if (twoodles[selectedTwoodleIndex]['type'] == 'array')
+						{
+							iconsHTML = '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (items[i]['index'] + 2) + ');"> Open Twoodle</i></div>';
+						}
+						html['SE'].push([`<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
+							<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">`
+							+ iconsHTML + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+						</div>`, (yValues[j]['value'] + xValues[k]['value'])]);
 					}
 	        	}
             }
@@ -763,15 +782,18 @@ function fillItemsList()
         		{
 	                if ((yValues[j]['index'] == xValues[k]['index']) && (yValues[j]['value'] < 50) && (xValues[k]['value'] < 50) && (yValues[j]['index'] == items[i]['index']))
             		{
-	                	html['SW'].push([`
-							<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
-								<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">
-								<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i></div>
-								<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
-								<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
-								linkHTML
-								 + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
-							</(div>`, (yValues[j]['value'] + xValues[k]['value'])]);
+	                	var iconsHTML = `<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + items[i]['index'] + `);"></i></div>
+							<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + items[i]['index'] + `);"></i></div>
+							<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + items[i]['index'] + `);"></i></div>` + 
+							linkHTML;
+            			if (twoodles[selectedTwoodleIndex]['type'] == 'array')
+						{
+							iconsHTML = '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (items[i]['index'] + 2) + ');"> Open Twoodle</i></div>';
+						}
+	                	html['SW'].push([`<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
+							<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">`
+							+ iconsHTML + `<label class="lblRepeatedItem" id="lblItem_` + items[i]['index'] + `"></label>
+						</div>`, (yValues[j]['value'] + xValues[k]['value'])]);
 	                }
 	        	}
             }

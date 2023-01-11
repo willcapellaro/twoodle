@@ -28,34 +28,58 @@ function loadValues()
 		twoodles = JSON.parse(localStorage.getItem('twoodles'))['twoodles'];
 		if (!twoodles.length)
 		{
-			twoodles = [{
+			twoodles = [
+				{
+					'index' : 0, 
+					'type' : 'array', 
+					'name' : 'All Twoodles', 
+					'defaultY' : recipes[0]['defaultY'], 
+					'defaultX' : recipes[0]['defaultX'], 
+					'items' : [], 
+					'xValues' : [], 
+					'yValues' : []
+				}, 
+				{
+					'index' : 1, 
+					'type' : 'twoodle', 
+					'name' : 'Twoodle 1', 
+					'defaultY' : recipes[0]['defaultY'], 
+					'defaultX' : recipes[0]['defaultX'], 
+					'items' : [], 
+					'xValues' : [], 
+					'yValues' : []
+				}
+			];
+		}
+		fillArray();//Pendiente comparar este if con el entregado.
+		yValues = twoodles[selectedTwoodle]['yValues'];
+		xValues = twoodles[selectedTwoodle]['xValues'];
+		items = twoodles[selectedTwoodle]['items'];
+	}
+	else
+	{
+		localStorage.setItem('twoodles', JSON.stringify({'twoodles' : [{
 				'index' : 0, 
+				'type' : 'array', 
+				'name' : 'All Twoodles', 
+				'defaultY' : recipes[0]['defaultY'], 
+				'defaultX' : recipes[0]['defaultX'], 
+				'items' : [], 
+				'xValues' : [], 
+				'yValues' : []
+			}, 
+			{
+				'index' : 1, 
+				'type' : 'twoodle', 
 				'name' : 'Twoodle 1', 
 				'defaultY' : recipes[0]['defaultY'], 
 				'defaultX' : recipes[0]['defaultX'], 
 				'items' : [], 
 				'xValues' : [], 
 				'yValues' : []
-			}];
-		}
-		else
-		{
-			yValues = twoodles[selectedTwoodle]['yValues'];
-			xValues = twoodles[selectedTwoodle]['xValues'];
-			items = twoodles[selectedTwoodle]['items'];
-		}
-	}
-	else
-	{
-		localStorage.setItem('twoodles', JSON.stringify({'twoodles' : [{
-			'index' : 0, 
-			'name' : 'Twoodle 1', 
-			'defaultY' : recipes[0]['defaultY'], 
-			'defaultX' : recipes[0]['defaultX'], 
-			'items' : [], 
-			'xValues' : [], 
-			'yValues' : []
-		}]}));
+			}
+		]}));
+		fillArray();
 		twoodles = JSON.parse(localStorage.getItem('twoodles'))['twoodles'];
 	}
 	fillTwoodlesSelect();
@@ -81,11 +105,11 @@ function fillTwoodlesSelect(changeIndex = true)
 	document.getElementById('slcTwoodles').innerHTML = html;
 	if (changeIndex)
 	{
-		document.getElementById('slcTwoodles').selectedIndex = selectedTwoodleIndex + 1;
+		selectTwoodle(selectedTwoodleIndex + 1);
 	}
 	if (document.getElementById('slcTwoodles').length == -1)
 	{
-		document.getElementById('slcTwoodles').selectedIndex = document.getElementById('slcTwoodles').length - 1;
+		selectTwoodle(document.getElementById('slcTwoodles').length - 1);
 	}
 }
 function localStorageSelected(selectedIndex)
@@ -213,32 +237,40 @@ function displayLocalStorage(tab = 'readable')
 		                		{
 		                			if (xValues[k]['index'] == items[i]['index'])
         							{
-        								var itemNE = items[i]['name'];
-										itemNE += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
-										itemNE += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
-										itemNE += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
+        								var iconsHTML = items[i]['name'];
+										iconsHTML += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
+										iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										iconsHTML += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
 										if (items[i]['url'])
 										{
-											itemNE += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 										}
-										itemNE += '<br>';
-										html['NE'].push([itemNE, (yValues[j]['value'] + xValues[k]['value'])]);
+        								if (twoodles[selectedTwoodleIndex]['type'] == 'array')
+										{
+											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (items[i]['index'] + 2) + ');"> Open Twoodle</i></div>';
+										}
+										iconsHTML += '<br>';
+										html['NE'].push([iconsHTML, (yValues[j]['value'] + xValues[k]['value'])]);
         							}
 		                		}
 		                		else
 		                		{
 		                			if (yValues[j]['index'] == items[i]['index'])
         							{
-        								var itemNW = items[i]['name'];
-										itemNW += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
-										itemNW += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
-										itemNW += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
+        								var iconsHTML = items[i]['name'];
+										iconsHTML += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
+										iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										iconsHTML += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
 										if (items[i]['url'])
 										{
-											itemNW += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 										}
-										itemNW += '<br>';
-										html['NW'].push([itemNW, (yValues[j]['value'] + xValues[k]['value'])]);
+        								if (twoodles[selectedTwoodleIndex]['type'] == 'array')
+										{
+											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (items[i]['index'] + 2) + ');"> Open Twoodle</i></div>';
+										}
+										iconsHTML += '<br>';
+										html['NW'].push([iconsHTML, (yValues[j]['value'] + xValues[k]['value'])]);
         							}
 		                		}
 		                	}
@@ -248,32 +280,40 @@ function displayLocalStorage(tab = 'readable')
 		                		{
 		                			if (xValues[k]['index'] == items[i]['index'])
         							{
-        								var itemSE = items[i]['name'];
-										itemSE += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
-										itemSE += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
-										itemSE += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
+        								var iconsHTML = items[i]['name'];
+										iconsHTML += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
+										iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										iconsHTML += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
 										if (items[i]['url'])
 										{
-											itemSE += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 										}
-										itemSE += '<br>';
-										html['SE'].push([itemSE, (yValues[j]['value'] + xValues[k]['value'])]);
+        								if (twoodles[selectedTwoodleIndex]['type'] == 'array')
+										{
+											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (items[i]['index'] + 2) + ');"> Open Twoodle</i></div>';
+										}
+										iconsHTML += '<br>';
+										html['SE'].push([iconsHTML, (yValues[j]['value'] + xValues[k]['value'])]);
         							}
 		                		}
 		                		else
 		                		{
 		                			if (yValues[j]['index'] == items[i]['index'])
         							{
-        								var itemSW = items[i]['name'];
-										itemSW += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
-										itemSW += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
-										itemSW += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
+        								var iconsHTML = items[i]['name'];
+										iconsHTML += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
+										iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
+										iconsHTML += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
 										if (items[i]['url'])
 										{
-											itemSW += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
 										}
-										itemSW += '<br>';
-										html['SW'].push([itemSW, (yValues[j]['value'] + xValues[k]['value'])]);
+        								if (twoodles[selectedTwoodleIndex]['type'] == 'array')
+										{
+											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (items[i]['index'] + 2) + ');"> Open Twoodle</i></div>';
+										}
+										iconsHTML += '<br>';
+										html['SW'].push([iconsHTML, (yValues[j]['value'] + xValues[k]['value'])]);
         							}
 		                		}
 		                	}
@@ -330,6 +370,17 @@ function clearValues()
 	document.getElementById('itemsList').innerHTML = '';
 	twoodles = [{
 		'index' : 0, 
+		'type' : 'array', 
+		'name' : 'All Twoodles', 
+		'defaultY' : recipes[0]['defaultY'], 
+		'defaultX' : recipes[0]['defaultX'], 
+		'items' : [], 
+		'xValues' : [], 
+		'yValues' : []
+	}, 
+	{
+		'index' : 1, 
+		'type' : 'twoodle', 
 		'name' : 'Twoodle 1', 
 		'defaultY' : recipes[0]['defaultY'], 
 		'defaultX' : recipes[0]['defaultX'], 
@@ -357,6 +408,9 @@ function clearValues()
 	checkLblRecipes();
 	drawResult();
 	displayLocalStorage('quadrants');
+	//fillItemsList();
+	fillArray();//Pendiente resolver.
+	selectTwoodle(selectedTwoodleIndex + 1);
 }
 function copyContent()
 {

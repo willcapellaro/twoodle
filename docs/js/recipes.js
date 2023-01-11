@@ -3,8 +3,7 @@ var recipes = [
 		'id' : 0, 
 		'recipeName' : 'Urgent or Important?', 
 		'recipeSubName' : 'Urgency vs Importance', 
-		'blog' : 'blog-urgency-importance.html', 
-		'description' : 'Manage your time better with this common matrix. Recommended when tasks differ.', 
+		'description' : 'Manage your time better with this common matrix. Good for lots of little annoyance.', 
 		'defaultY' : 'urgency', 
 		'defaultX' : 'importance', 
 		'defaultXY' : true, 
@@ -14,8 +13,7 @@ var recipes = [
 		'id' : 1, 
 		'recipeName' : 'Debt Destroyer', 
 		'recipeSubName' : 'Interest vs Balance', 
-		'blog' : 'blog-interest-balance.html', 
-		'description' : 'Got out of hock by paying down debts strategically.', 
+		'description' : 'Got out hock by getting smart about which debts to pay down first.', 
 		'defaultY' : 'interest', 
 		'defaultX' : 'balance', 
 		'defaultXY' : true, 
@@ -25,8 +23,7 @@ var recipes = [
 		'id' : 2, 
 		'recipeName' : 'Make an Impact', 
 		'recipeSubName' : 'Impact vs Ease', 
-		'blog' : 'blog-impact-ease.html', 
-		'description' : 'Find out what to focus on that will create lasting value with finite resources.', 
+		'description' : 'Find out what to focus on as a team or individual.', 
 		'defaultY' : 'impact', 
 		'defaultX' : 'ease', 
 		'defaultXY' : true, 
@@ -36,8 +33,7 @@ var recipes = [
 		'id' : 3, 
 		'recipeName' : 'Task Triage', 
 		'recipeSubName' : 'Urgency vs Ease', 
-		'blog' : 'blog-urgency-ease.html', 
-		'description' : 'Scarce time resources? Find your way out of the mess. Recommended when you have quantity of tasks', 
+		'description' : 'Scare resources? Find your way out of the mess.', 
 		'defaultY' : 'urgency', 
 		'defaultX' : 'ease', 
 		'defaultXY' : true, 
@@ -51,7 +47,7 @@ function displayRecipes()
 	document.getElementById('btnUseRecipe').classList.add('buttonGrey');
 	if (recipes.length)
 	{
-		recipesdescription = 'Twoodle\'s got you. Here are some of our cherished recipes for thinking fluidly:<br>';
+		recipesdescription = 'Twoodle\'s got you. Here are some of our cherised recipes for thinking:<br>';
 
 		for (var i = 0; i < recipes.length; i++)
     	{

@@ -61,14 +61,14 @@
 	<body onload="loadValues();menuItemClicked('items');saveValues();displayLocalStorage('quadrants');selectTwoodleTopBottom();">
 		<header>
 			<div>
-				<h1 id="title">Twoodle Alpha<span class="mobileHide"> <a class="currentTopTap" href="index.html">app</a> <a class="defaultTopTap" href="blog.html">blog</a></span></h1>
+				<h1 id="title">Twoodle<span class="mobileHide"> alpha</span></h1>
 			</div>
 		</header>
 		<div id="twoodlesDiv">
 			Your twoodles
 			<select id="slcTwoodles" onchange="selectTwoodle();"></select>
-			<i style="color: dodgerblue" class="bi bi-trash-fill" onclick="$('#modalDeleteTwoodle').modal('show');"></i>
-			<i class="bi bi-pencil-fill" style="color: dodgerblue"  onclick="displayRenameTwoodleModal();"></i>
+			<i id="trashBtn" style="color: dodgerblue" class="bi bi-trash-fill" onclick="$('#modalDeleteTwoodle').modal('show');"></i>
+			<i id="pencilBtn" class="bi bi-pencil-fill" style="color: dodgerblue"  onclick="displayRenameTwoodleModal();"></i>
 		</div>
 		<nav id="menu">
 			<ul>
@@ -84,8 +84,6 @@
 		<div id="ItemsDiv" class="activeTab">
 			<div class="inlineDiv">
 				<label class="tabHeading"><p id="recipeTitleItemsDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Items</label>
-				<label class="tabHeading"><p id="recipeTitleItemsDiv" class="labelFloatRight"></p></i></label>
-				<button>Read a Blog Post about this Recipe</button>
 				<div style="float: right;">
 				<button type="button" class="btn-link linkBtn" onclick="swap();" id="swapRestoreBtn"><i class="bi bi-arrow-left-right"></i> Swap X/Y</button>
 				<button class="btn-link linkBtn" type="button" onclick="displayRecipes()" data-toggle="modal" data-target="#modalRecipes";>
@@ -111,15 +109,53 @@
 			<br>
 			<button id="addButton" class="addItemButton" onclick="addItem();">+ Add an item</button><br><br>
 			<div id="itemsList" onchange="verifyItemsNames();" class="itemsListSortableStop"></div>
-
+			<div style="float: left; font-size: 10px; opacity: .6;"> © 2022 Will Capellaro </div>
+			<div style="float: right; font-size: 10px;">
+				<button data-toggle="modal" class="linkBtn btn-link" data-target="#modalClearItemsDiv" style="padding-bottom: 5px; color: indianred;">Clear Local Storage</button>
+			</div>
+			<div class="modal fade" id="modalClearItemsDiv" tabindex="-1" role="dialog" aria-labelledby="modalClearTitleItemsDiv" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalClearTitleItemsDiv">Delete all values?</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							This could be bad.<hr/><button onclick="document.getElementById('modalClearItemsDiv').style.display = 'none';" class="btn-outline-secondary" data-dismiss="modal">Back away slowly</button>
+							<button onclick="clearValues();" class="btn-danger" data-dismiss="modal">Clear values</button></div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="rateYDiv" class="activeTab">
-			
 			<div class="inlineDiv">
 				<label class="tabHeading"><p id="recipeTitleRateYDiv" class="labelFloatRight"></p><i class="fa fa-caret-right iSpace"></i>Prioritization</label>
 			</div>
 			<label id="lblChangeY" class="labelFloatRight"></label><button id="addButton" class="addItemButton" onclick="addItem();">+ Add an item</button><br><br>
 			<div id="yItemsList" class="valuesListSortableStop"></div>
+			<div style="float: left; font-size: 10px; opacity: .6;"> © 2022 Will Capellaro </div>
+			<div style="float: right; font-size: 10px;">
+				<button data-toggle="modal" class="linkBtn btn-link" data-target="#modalClearRateYDiv" style="padding-bottom: 5px; color: indianred;">Clear Local Storage</button>
+			</div>
+			<div class="modal fade" id="modalClearRateYDiv" tabindex="-1" role="dialog" aria-labelledby="modalClearTitleRateYDiv" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalClearTitleRateYDiv">Delete all values?</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							This could be bad.<hr/><button onclick="document.getElementById('modalClearRateYDiv').style.display = 'none';" class="btn-outline-secondary" data-dismiss="modal">Back away slowly</button>
+							<button onclick="clearValues();" class="btn-danger" data-dismiss="modal">Clear values</button></div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="rateXDiv" class="activeTab">
 			<div class="inlineDiv">
@@ -127,6 +163,26 @@
 			</div>
 			<label id="lblChangeX" class="labelFloatRight"></label><button id="addButton" class="addItemButton" onclick="addItem();">+ Add an item</button><br><br>
 			<div id="xItemsList" class="valuesListSortableStop"></div>
+			<div style="float: left; font-size: 10px; opacity: .6;"> © 2022 Will Capellaro </div>
+			<div style="float: right; font-size: 10px;">
+				<button data-toggle="modal" class="linkBtn btn-link" data-target="#modalClearRateXDiv" style="padding-bottom: 5px; color: indianred;">Clear Local Storage</button>
+			</div>
+			<div class="modal fade" id="modalClearRateXDiv" tabindex="-1" role="dialog" aria-labelledby="modalClearTitleRateXDiv" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalClearTitleRateXDiv">Delete all values?</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							This could be bad.<hr/><button onclick="document.getElementById('modalClearRateXDiv').style.display = 'none';" class="btn-outline-secondary" data-dismiss="modal">Back away slowly</button>
+							<button onclick="clearValues();" class="btn-danger" data-dismiss="modal">Clear values</button></div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="resultsDiv" class="activeTab">
 			<div class="inlineDiv">
@@ -138,7 +194,7 @@
 				<div>col2</div>
 			</div> -->
 			<div id="resultsDivGrid" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 600px;">
-				<div>
+				<div style="background-color: red">
 					<div id="matrixNew" class="matrixGrid" >
 						<div class="matrixLabel smoke">
 							<p class="canvasLabel" id="labelHighY"></p>
@@ -155,7 +211,7 @@
 						<div id="canvasDiv"></div>
 					</div>
 				</div>
-				<div>	
+				<div style="background-color: cyan;">	
 					<nav id="resultsModalNav">
 						<ul>
 							<button type="button" id="quadrantsBtn" class="localeStorageTabs" onclick="displayLocalStorage('quadrants');">Quadrants</button>
@@ -170,14 +226,11 @@
 				</div>
 		</div>
 		<br>
-	<div style="float: left; font-size: 10px; opacity: .6;"> © 2022 Will Capellaro </div>	
-<div style="float: right; font-size: 10px;">
-			<div>
-				<button data-toggle="modal" class="linkBtn btn-link" data-target="#modalClear" style="padding-bottom: 5px; color: indianred;">Clear Local Storage</button>
-				<button type="button" class="btn btn-link" onclick="copyContent();">Copy Current Content</button>
-			</div>
+		<div style="float: left; font-size: 10px; opacity: .6;"> © 2022 Will Capellaro </div>
+		<div style="float: right; font-size: 10px;">
+			<button data-toggle="modal" class="linkBtn btn-link" data-target="#modalClear" style="padding-bottom: 5px; color: indianred;">Clear Local Storage</button>
+			<button type="button" class="btn btn-link" onclick="copyContent();">Copy Current Content</button>
 		</div>
-
 		<div class="modal fade" id="modalClear" tabindex="-1" role="dialog" aria-labelledby="modalClearTitle" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -201,20 +254,14 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="modalEditTitle">Edit Item</h5>
+						<h5 class="modal-title" id="modalEditTitle"></h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body editModal">
-						<label for="inputItemName">Title</label>
-
-						 <input class="inputItemName" type="text" id="inputItemName" placeholder="Item Name"><br><br>
-						<div>
-						<label for="inputItemUrl">Link Url</label>
-
-							 <input class="inputItemUrl" type="text" id="inputItemUrl"><button type="button" class="btn btn-link" onclick="document.getElementById('inputItemUrl').value = '';document.getElementById('inputItemUrl').parentNode.style.display = 'none';">Clear</button><br><br></div>
-						<label for="inputNotes">Notes</label>
+					<div class="modal-body">
+						Name <input class="inputItemName" type="text" id="inputItemName" placeholder="Item Name"><br><br>
+						<div>Link Url <input class="inputItemUrl" type="text" id="inputItemUrl"><button type="button" class="btn btn-link" onclick="document.getElementById('inputItemUrl').value = '';document.getElementById('inputItemUrl').parentNode.style.display = 'none';">remove</button><br><br></div>
 						<textarea id="inputNotes">Notes here</textarea><br>
 						<button class="modalButton" onclick="editItem();" data-dismiss="modal">Save</button>
 						<button class="btn-outline-secondary modalButton" data-dismiss="modal">Cancel</button>
@@ -263,29 +310,24 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="modalNewTwoodleTitle">Create a Twoodle</h5>
+						<h5 class="modal-title" id="modalNewTwoodleTitle">New Twoodle</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body" onchange="checkAuxValues();">
-						<label class="modalLeftLabel" for="inputNewTwoodleName">Twoodle Name</label>
 						<input class="inputTwoodleName" type="text" id="inputNewTwoodleName" placeholder="Enter Twoodle Name">
-						<label style="margin-left: 13em;" class="infoText">255 characters max</label>
+						<label>255 characters max</label>
 						<div id="divDuplicatedErrorTwoodleName"></div>
-						<br>
-						<label class="modalLeftLabel" for="mr">Prioritization Type</label>
 						<input type="radio" id="mr" name="radioMatrix" value="mr" checked onchange="displayNewTwoodleMenu();">
 			            <label for="nm">Matrix Recipe</label>
 			            <input type="radio" id="cm" name="radioMatrix" value="cm" onchange="displayNewTwoodleMenu();">
 			            <label for="sm">Custom Matrix</label>
-
-			            <div style="margin-top: 2em; margin-left: 10em;" id="matrixInput"></div>
+			            <div id="matrixInput"></div>
 					</div>
 					<div class="modal-footer">
-
-						<button type="button" class="btn btn-secondary" onmousedown="selectPreviousTwoodle();" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary" onmousedown="itemsTwoodle();" id="btnitemsTwoodle">Create</button>
+						<button type="button" class="btn btn-primary" onmousedown="selectPreviousTwoodle();" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary" onmousedown="itemsTwoodle();" id="btnitemsTwoodle">items</button>
 					</div>
 				</div>
 			</div>
