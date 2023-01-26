@@ -1,6 +1,6 @@
 var userID;
 var flagShareUpdate = true;
-var selectedTab = 'quadrants';
+var selectedLocalStorageTab = 'quadrants';
 var twoodles;
 var items = [];
 window.addEventListener('storage', () => {});
@@ -51,7 +51,7 @@ function loadValues()
 				}
 			];
 		}
-		fillArray();//Pendiente comparar este if con el entregado.
+		fillArray(false);
 		yValues = twoodles[selectedTwoodle]['yValues'];
 		xValues = twoodles[selectedTwoodle]['xValues'];
 		items = twoodles[selectedTwoodle]['items'];
@@ -92,24 +92,27 @@ function loadValues()
 	document.getElementById('xAxis_name').value = twoodles[0]['defaultX'];
 	document.getElementById('spanYAxis').innerHTML = twoodles[0]['defaultY'];
 	document.getElementById('spanXAxis').innerHTML = twoodles[0]['defaultX'];
-	selectedTwoodleIndex = 0;
 	flagShareUpdate = true;
+	selectTwoodle(getTwoodleInSelect(selectedTwoodleIndex));
+	menuItemClicked(['items', 'rateY', 'rateX', 'see'][actualTab - 1]);
 }
 function fillTwoodlesSelect(changeIndex = true)
 {
-	var html = '<option id="optSlcTwoodles_new" onclick="displayNewTwoodleMenu();">+ New Twoodle</option>';
-	for (var i = 0; i < twoodles.length; i++)
+	var html = {
+		'NE' : [], 
+		'NW' : [], 
+		'SE' : [], 
+		'SW' : []
+	}
+	var html = '<option id="optSlcTwoodles_new" onclick="displayNewTwoodleMenu();">+ New Twoodle</option><option id="optSlcTwoodles_0">' + twoodles[0]['name'] + '</option>';
+	for (var i = 0; i < quadrantsOrder(0).length; i++)
 	{
-		html += '<option id="optSlcTwoodles_' + twoodles[i]['index'] + '">' + twoodles[i]['name'] + '</option>';
+		html += '<option id="optSlcTwoodles_' + quadrantsOrder(0)[i]['index'] + '">' + quadrantsOrder(0)[i]['name'] + '</option>';
 	}
 	document.getElementById('slcTwoodles').innerHTML = html;
 	if (changeIndex)
 	{
-		selectTwoodle(selectedTwoodleIndex + 1);
-	}
-	if (document.getElementById('slcTwoodles').length == -1)
-	{
-		selectTwoodle(document.getElementById('slcTwoodles').length - 1);
+		selectTwoodle(getTwoodleInSelect(selectedTwoodleIndex));
 	}
 }
 function localStorageSelected(selectedIndex)
@@ -126,7 +129,7 @@ function localStorageSelected(selectedIndex)
 function displayLocalStorage(tab = 'readable')
 {
 	document.getElementById('clipboardInfo').innerHTML = '';
-	selectedTab = tab;
+	selectedLocalStorageTab = tab;
 	var localStorageText = '';
 	xValues = JSON.parse(localStorage.getItem('twoodles'))['twoodles'][selectedTwoodleIndex]['xValues'];
 	yValues = JSON.parse(localStorage.getItem('twoodles'))['twoodles'][selectedTwoodleIndex]['yValues'];
@@ -247,7 +250,7 @@ function displayLocalStorage(tab = 'readable')
 										}
         								if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 										{
-											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (items[i]['index'] + 2) + ');"> Open Twoodle</i></div>';
+											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></div>';
 										}
 										iconsHTML += '<br>';
 										html['NE'].push([iconsHTML, (yValues[j]['value'] + xValues[k]['value'])]);
@@ -267,7 +270,7 @@ function displayLocalStorage(tab = 'readable')
 										}
         								if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 										{
-											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (items[i]['index'] + 2) + ');"> Open Twoodle</i></div>';
+											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></div>';
 										}
 										iconsHTML += '<br>';
 										html['NW'].push([iconsHTML, (yValues[j]['value'] + xValues[k]['value'])]);
@@ -290,7 +293,7 @@ function displayLocalStorage(tab = 'readable')
 										}
         								if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 										{
-											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (items[i]['index'] + 2) + ');"> Open Twoodle</i></div>';
+											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></div>';
 										}
 										iconsHTML += '<br>';
 										html['SE'].push([iconsHTML, (yValues[j]['value'] + xValues[k]['value'])]);
@@ -310,7 +313,7 @@ function displayLocalStorage(tab = 'readable')
 										}
         								if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 										{
-											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (items[i]['index'] + 2) + ');"> Open Twoodle</i></div>';
+											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></div>';
 										}
 										iconsHTML += '<br>';
 										html['SW'].push([iconsHTML, (yValues[j]['value'] + xValues[k]['value'])]);
@@ -408,8 +411,7 @@ function clearValues()
 	checkLblRecipes();
 	drawResult();
 	displayLocalStorage('quadrants');
-	//fillItemsList();
-	fillArray();//Pendiente resolver.
+	fillArray();
 	selectTwoodle(selectedTwoodleIndex + 1);
 }
 function copyContent()

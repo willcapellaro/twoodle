@@ -56,9 +56,10 @@
 		<script type="text/javascript" src="./js/localStorage.js"></script>
 		<script type="text/javascript" src="./js/recipes.js"></script>
 		<script type="text/javascript" src="./js/twoodles.js"></script>
+		<script type="text/javascript" src="./js/url.js"></script>
 
 	</head>
-	<body onload="loadValues();menuItemClicked('items');saveValues();displayLocalStorage('quadrants');selectTwoodleTopBottom();">
+	<body onload="readUrl();loadValues();saveValues();displayLocalStorage('quadrants');selectTwoodleTopBottom();">
 		<header>
 			<div>
 				<h1 id="title">Twoodle<span class="mobileHide"> alpha</span></h1>

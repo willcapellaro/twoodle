@@ -40,6 +40,63 @@ function displayRenameTwoodleModal()
 		}
 	}
 }
+function quadrantsOrder(itemsToOrderIndex)
+{
+	var auxItems = [];
+	for (var i = 0; i < twoodles[itemsToOrderIndex]['items'].length; i++)
+    {
+    	for (var j = 0; j < twoodles[itemsToOrderIndex]['yValues'].length; j++)
+    	{
+    		for (var k = 0; k < twoodles[itemsToOrderIndex]['xValues'].length; k++)
+    		{
+                if ((twoodles[itemsToOrderIndex]['yValues'][j]['index'] == twoodles[itemsToOrderIndex]['xValues'][k]['index']) && (twoodles[itemsToOrderIndex]['yValues'][j]['value'] >= 50) && (twoodles[itemsToOrderIndex]['xValues'][k]['value'] >= 50) && (twoodles[itemsToOrderIndex]['xValues'][k]['index'] == twoodles[itemsToOrderIndex]['items'][i]['index']))
+                {
+                	auxItems.push(twoodles[itemsToOrderIndex]['items'][i]);
+                }
+        	}
+        }
+	}
+	for (var i = 0; i < twoodles[itemsToOrderIndex]['items'].length; i++)
+    {
+    	for (var j = 0; j < twoodles[itemsToOrderIndex]['yValues'].length; j++)
+    	{
+    		for (var k = 0; k < twoodles[itemsToOrderIndex]['xValues'].length; k++)
+    		{
+                if ((twoodles[itemsToOrderIndex]['yValues'][j]['index'] == twoodles[itemsToOrderIndex]['xValues'][k]['index']) && (twoodles[itemsToOrderIndex]['yValues'][j]['value'] >= 50) && (twoodles[itemsToOrderIndex]['xValues'][k]['value'] < 50) && (twoodles[itemsToOrderIndex]['yValues'][j]['index'] == twoodles[itemsToOrderIndex]['items'][i]['index']))
+				{
+					auxItems.push(twoodles[itemsToOrderIndex]['items'][i]);
+                }
+        	}
+        }
+	}
+	for (var i = 0; i < twoodles[itemsToOrderIndex]['items'].length; i++)
+    {
+    	for (var j = 0; j < twoodles[itemsToOrderIndex]['yValues'].length; j++)
+    	{
+    		for (var k = 0; k < twoodles[itemsToOrderIndex]['xValues'].length; k++)
+    		{
+                if ((twoodles[itemsToOrderIndex]['yValues'][j]['index'] == twoodles[itemsToOrderIndex]['xValues'][k]['index']) && (twoodles[itemsToOrderIndex]['yValues'][j]['value'] < 50) && (twoodles[itemsToOrderIndex]['xValues'][k]['value'] >= 50) && (twoodles[itemsToOrderIndex]['xValues'][k]['index'] == twoodles[itemsToOrderIndex]['items'][i]['index']))
+				{
+					auxItems.push(twoodles[itemsToOrderIndex]['items'][i]);
+				}
+        	}
+        }
+	}
+	for (var i = 0; i < twoodles[itemsToOrderIndex]['items'].length; i++)
+    {
+    	for (var j = 0; j < twoodles[itemsToOrderIndex]['yValues'].length; j++)
+    	{
+    		for (var k = 0; k < twoodles[itemsToOrderIndex]['xValues'].length; k++)
+    		{
+                if ((twoodles[itemsToOrderIndex]['yValues'][j]['index'] == twoodles[itemsToOrderIndex]['xValues'][k]['index']) && (twoodles[itemsToOrderIndex]['yValues'][j]['value'] < 50) && (twoodles[itemsToOrderIndex]['xValues'][k]['value'] < 50) && (twoodles[itemsToOrderIndex]['yValues'][j]['index'] == twoodles[itemsToOrderIndex]['items'][i]['index']))
+        		{
+                	auxItems.push(twoodles[itemsToOrderIndex]['items'][i]);
+                }
+        	}
+        }
+	}
+	return auxItems;
+}
 var validAxisNames = true;
 var validTwoodleName = true;
 function checkAuxValues()
@@ -115,6 +172,14 @@ function checkAuxValuesRename()
 		document.getElementById('divDuplicatedErrorRenameTwoodleName').innerHTML = '<p class="lblRepeated">Error: empty label name</p>';
 		validTwoodleName = false;
 	}
+	if (validTwoodleName)
+	{
+		if (document.getElementById('inputRenameTwoodleName').value.split(' ').length > 2)
+		{
+			document.getElementById('divDuplicatedErrorRenameTwoodleName').innerHTML = '<p class="lblRepeated">Error: exceeds 2 spaces</p>';
+			validTwoodleName = false;
+		}
+	}
 	if (document.getElementById('inputRenameTwoodleName').value.length > 255)
 	{
 		document.getElementById('divDuplicatedErrorRenameTwoodleName').innerHTML = '<p class="lblRepeated">The name is taken 255 characters max</p>';
@@ -156,10 +221,7 @@ function itemsTwoodle()
 			'yValues' : []
 		};
 		twoodles.push(newTwoodle);
-		selectedTwoodleIndex = twoodles.length - 1;
-		selectedTwoodle = nextIndex;
-		localStorage.setItem('twoodles', JSON.stringify({'twoodles' : twoodles}));
-		fillTwoodlesSelect(false);
+		saveValues();
 		items = twoodles[selectedTwoodleIndex]['items'];
 		fillItemsList();
 		document.getElementById('yAxis_name').value = twoodles[selectedTwoodleIndex]['defaultY'];
@@ -168,9 +230,24 @@ function itemsTwoodle()
 		document.getElementById('spanXAxis').value = twoodles[selectedTwoodleIndex]['defaultX'];
 		yAxisName = twoodles[selectedTwoodleIndex]['defaultY'];
 		xAxisName = twoodles[selectedTwoodleIndex]['defaultX'];
-		selectTwoodle(twoodles[twoodles.length - 1]['index']);
-		//document.getElementById('slcTwoodles').selectedIndex = twoodles.length;
+		fillArray();
+		fillTwoodlesSelect(false);
+		selectTwoodle(getTwoodleInSelect(document.getElementById('inputNewTwoodleName').value, 'name'));
 		$('#modalNewTwoodle').modal('hide');
+	}
+}
+function getTwoodleInSelect(value, type = 'id')
+{
+	for (var i = 0; i < document.getElementById('slcTwoodles').children.length; i++)
+	{
+		if ((type == 'id') && (Number(document.getElementById('slcTwoodles').children[i]['id'].split('_')[1]) == value))
+		{
+			return i;
+		}
+		if ((type == 'name') && (document.getElementById('slcTwoodles').children[i].innerHTML == value))
+		{
+			return i;
+		}
 	}
 }
 function selectPreviousTwoodle()
@@ -183,29 +260,33 @@ function renameTwoodle()
 	checkAuxValuesRename();
 	if (validTwoodleName)
 	{
+		var aux = selectedTwoodleIndex;
 		for (var i = 0; i < twoodles.length; i++)
 		{
-			if (twoodles[i]['index'] == selectedTwoodle)
+			if (twoodles[i]['index'] == selectedTwoodleIndex)
 			{
 				twoodles[i]['name'] = document.getElementById('inputRenameTwoodleName').value;
 			}
 		}
-		saveValues();
+		fillArray();
 		fillTwoodlesSelect();
+		selectTwoodle(getTwoodleInSelect(aux));
 		$('#modalRenameTwoodle').modal('hide');
 	}
 }
+var deletedTwoodleIndex = -1;
 function deleteTwoodle()
 {
+	deletedTwoodleIndex = selectedTwoodleIndex;
 	var auxTwoodles = [];
 	for (var i = 0; i < twoodles.length; i++)
 	{
-		if (twoodles[i]['index'] != selectedTwoodle)
+		if (twoodles[i]['index'] != selectedTwoodleIndex)
 		{
 			auxTwoodles.push(twoodles[i]);
 		}
 	}
-	twoodles = auxTwoodles;
+	twoodles = [...auxTwoodles];
 	if (!twoodles.length)
 	{
 		twoodles = [
@@ -231,20 +312,10 @@ function deleteTwoodle()
 			}
 		];
 	}
-	fillArray();
 	localStorage.setItem('twoodles', JSON.stringify({'twoodles' : twoodles}));
+	fillArray();
 	fillTwoodlesSelect();
-	if (twoodles[selectedTwoodleIndex])
-	{
-		selectedTwoodle = twoodles[selectedTwoodleIndex]['index'];
-	}
-	else
-	{
-		selectedTwoodleIndex = 0;
-		selectedTwoodle = twoodles[0]['index'];
-		selectTwoodle(1);
-	}
-	changeSelectedTwoodleIndex();
+	selectTwoodle(1);
 	document.getElementById('yAxis_name').value = twoodles[selectedTwoodleIndex]['defaultY'];
 	document.getElementById('xAxis_name').value = twoodles[selectedTwoodleIndex]['defaultX'];
 	document.getElementById('spanYAxis').value = twoodles[selectedTwoodleIndex]['defaultY'];
@@ -253,19 +324,77 @@ function deleteTwoodle()
 	xAxisName = document.getElementById('xAxis_name').value;
 	checkLblRecipes();
 }
-function fillArray()
+function fillArray(save = true)
 {
-	twoodles[0]['items'] = [];
-	twoodles[0]['xValues'] = [];
-	twoodles[0]['yValues'] = [];
 	for (var i = 1; i < twoodles.length; i++)
 	{
+		for (var j = 0; j < twoodles[0]['items'].length; j++)
+		{
+			if (twoodles[0]['items'][j]['index'] == twoodles[i]['index'])
+			{
+				twoodles[0]['items'][j]['name'] = twoodles[i]['name'];
+			}
+		}
+	}
+	var auxItems = [...twoodles[0]['items']];
+	twoodles[0]['items'] = [];
+	var auxXValues = [...twoodles[0]['xValues']];
+	twoodles[0]['xValues'] = [];
+	var auxYValues = [...twoodles[0]['yValues']];
+	twoodles[0]['yValues'] = [];
+	
+	if ((twoodles.length - 1) > auxItems.length)
+	{
+		twoodles[0]['items'] = [...auxItems];
+		twoodles[0]['xValues'] = [...auxXValues];
+		twoodles[0]['yValues'] = [...auxYValues];
+		
 		twoodles[0]['items'].push({
-			'name' : twoodles[i]['name'], 
-			'index' : (i - 1)
+			'name' : twoodles[twoodles.length - 1]['name'], 
+			'index' : twoodles[twoodles.length - 1]['index']
 		});
-		twoodles[0]['yValues'].push({'value' : 0, 'index' : (i - 1)});
-		twoodles[0]['xValues'].push({'value' : 0, 'index' : (i - 1)});
+		twoodles[0]['yValues'].push({'value' : 0, 'index' : twoodles[twoodles.length - 1]['index']});
+		twoodles[0]['xValues'].push({'value' : 0, 'index' : twoodles[twoodles.length - 1]['index']});
+	}
+	if ((twoodles.length - 1) < auxItems.length)
+	{
+		for (var i = 0; i < auxItems.length; i++)
+		{
+			for (var j = 1; j < twoodles.length; j++)
+			{
+				if (twoodles[j]['index'] == auxItems[i]['index'])
+				{
+					twoodles[0]['items'].push({
+						'name' : auxItems[i]['name'], 
+						'index' : auxItems[i]['index']
+					});
+				}
+				if (twoodles[j]['index'] == auxYValues[i]['index'])
+				{
+					twoodles[0]['yValues'].push({'value' : 0, 'index' : auxYValues[i]['index']});
+				}
+				if (twoodles[j]['index'] == auxXValues[i]['index'])
+				{
+					twoodles[0]['xValues'].push({'value' : 0, 'index' : auxXValues[i]['index']});
+				}
+			}
+		}
+	}
+	if ((twoodles.length - 1) == auxItems.length)
+	{
+		twoodles[0]['items'] = [...auxItems];
+		twoodles[0]['xValues'] = [...auxXValues];
+		twoodles[0]['yValues'] = [...auxYValues];
+	}
+	if (save)
+	{
+		saveValues();
+	}
+	else
+	{
+		twoodles[0]['items'] = [...auxItems];
+		twoodles[0]['xValues'] = [...auxXValues];
+		twoodles[0]['yValues'] = [...auxYValues];
 	}
 }
 var selectedTwoodle;
@@ -277,8 +406,13 @@ function selectTwoodle(index = null)
 	}
 	if (document.getElementById('slcTwoodles').selectedIndex)
 	{
-		selectedTwoodle = Number(document.getElementById('slcTwoodles').children[document.getElementById('slcTwoodles').selectedIndex].id.split('_')[1]);
-		changeSelectedTwoodleIndex();
+		for (var i = 0; i < twoodles.length; i++)
+		{
+			if (document.getElementById('slcTwoodles').children[document.getElementById('slcTwoodles').selectedIndex].innerHTML == twoodles[i]['name'])
+			{
+				selectedTwoodleIndex = twoodles[i]['index'];
+			}
+		}
 		yValues = twoodles[selectedTwoodleIndex]['yValues'];
 		xValues = twoodles[selectedTwoodleIndex]['xValues'];
 		items = twoodles[selectedTwoodleIndex]['items'];
@@ -295,20 +429,10 @@ function selectTwoodle(index = null)
 	{
 		displayNewTwoodleMenu();
 	}
-	if (document.getElementById("rateYDiv").style.display != "none")
-	{
-		menuItemClicked('rateY');
-		fillLists('y');
-	}
-	if (document.getElementById("rateXDiv").style.display != "none")
-	{
-		menuItemClicked('rateX');
-		fillLists('x');
-	}
-	if (document.getElementById("resultsDiv").style.display != "none")
-	{
-		menuItemClicked('see');
-	}
+	menuItemClicked(['items', 'rateY', 'rateX', 'see'][actualTab - 1]);
+	fillLists('y');
+	fillLists('x');
+	
 	verifyItemsNames(false);
 	document.getElementById('trashBtn').style.opacity = 1;
 	document.getElementById('pencilBtn').style.opacity = 1;
@@ -317,4 +441,5 @@ function selectTwoodle(index = null)
 		document.getElementById('trashBtn').style.opacity = 0;
 		document.getElementById('pencilBtn').style.opacity = 0;
 	}
+	setUrl();
 }

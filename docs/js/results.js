@@ -50,6 +50,7 @@ function getIdsOrder(axis)
                 twoodles[selectedTwoodleIndex]['xValues'] = auxPreValues;
             }
             distribute(axis);
+            fillTwoodlesSelect();
             saveValues();
         }
     }
