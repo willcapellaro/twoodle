@@ -1,3 +1,10 @@
+window.addEventListener('popstate', function() {
+    readUrl();
+    loadValues();
+    saveValues();
+    displayLocalStorage('quadrants');
+    selectTwoodleTopBottom();
+});
 function readUrl()
 {
 	if (localStorage.getItem('twoodles'))
@@ -31,7 +38,15 @@ function getQueryVariable(variable)
 		var pair = vars[i].split("=");
 		if (pair[0] == variable)
 		{
-			return pair[1].replace('%20', ' ').replace('%20', ' ');
+			while (pair[1].indexOf('%20') != -1)
+			{
+				pair[1] = pair[1].replace('%20', ' ');
+			}
+			while (pair[1].indexOf('&') != -1)
+			{
+				pair[1] = pair[1].replace('&', '');
+			}
+			return pair[1];
 		}
 	}
 	return false;
@@ -39,7 +54,19 @@ function getQueryVariable(variable)
 
 function setUrl()
 {
-	var portions = (window.location + '').split('/');
+	var portions = '';
+	for (var i = 0; i < (window.location + '').length; i++)
+	{
+		if ((window.location + '')[i] != '?')
+		{
+			portions += (window.location + '')[i];
+		}
+		else
+		{
+			i = (window.location + '').length;
+		}
+	}
+	portions = portions.split('/');
 	if (portions[portions.length - 1].indexOf('index') != -1)
 	{
 		var url = portions[0];
@@ -50,7 +77,7 @@ function setUrl()
 		url += '/' + portions[portions.length - 1].split('?')[0];
 		if (selectedTwoodleIndex)
 		{
-			url += '?twoodle=' + twoodles[selectedTwoodleIndex]['name'];
+			url += '?twoodle=' + twoodles[selectedTwoodleIndex]['name'] + '&';
 		}
 		url += '?tab=' + actualTab;
 		history.pushState(null, "", url);
@@ -73,7 +100,7 @@ function setUrl()
 		url += portions[portions.length - 1].split('?')[0];
 		if (selectedTwoodleIndex)
 		{
-			url += '?twoodle=' + twoodles[selectedTwoodleIndex]['name'];
+			url += '?twoodle=' + twoodles[selectedTwoodleIndex]['name'] + '&';
 		}
 		url += '?tab=' + actualTab;
 		history.pushState(null, "", url);

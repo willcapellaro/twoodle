@@ -247,11 +247,13 @@ function preMoveItem(id)
 		}
 	}
 	var html = '';
-	for (var i = 0; i < twoodles.length; i++)
+	for (var i = 1; i < twoodles.length; i++)
 	{
 		html += '<option id="optSlcTwoodlesMove_' + twoodles[i]['index'] + '">' + twoodles[i]['name'] + '</option>';
 	}
 	document.getElementById('slcTwoodlesMove').innerHTML = html;
+	document.getElementById('slcTwoodlesMove').selectedIndex = selectedTwoodleIndex - 1;
+	selectTwoodleTopBottom();
 	$('#modalMove').modal('show');
 }
 function selectTwoodleMove()
@@ -547,7 +549,7 @@ function fillLists(axis = null, shareUpdate = true)
 		var linkHTML = '';
     	if (item['url'])
     	{
-    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + item['url'] + '\', \'_blank\');"></i></div>';
+    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + item['url'] + '\');"></i></div>';
     	}
     	var iconsHTML = `
     		<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + item['index'] + `);"></i></div>
@@ -661,6 +663,24 @@ function getItems(shareUpdate = true)
 					'url' : auxItems[i]['url'], 
 					'notes' : auxItems[i]['notes']
 				});
+				if (twoodles[selectedTwoodleIndex]['type'] == 'array')
+				{
+					var aux = selectedTwoodleIndex;
+					for (var j = 0; j < twoodles.length; j++)
+					{
+						if (twoodles[j]['index'] == Number(c[i].id.split('_')[1]))
+						{
+							for (var k = 0; k < document.getElementById('slcTwoodles').children.length; k++)
+							{
+								if (document.getElementById('slcTwoodles').children[k].innerHTML == twoodles[j]['name'])
+								{
+									document.getElementById('slcTwoodles').children[k].innerHTML = document.getElementById('item_name_' + c[i].id.split('_')[1]).value;
+								}
+							}
+							twoodles[j]['name'] = document.getElementById('item_name_' + c[i].id.split('_')[1]).value;
+						}
+					}
+				}
 				document.getElementById('lblItem_' + c[i].id.split('_')[1]).innerHTML = '';
 			}
 			if (shareUpdate)
@@ -692,7 +712,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -721,7 +741,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -750,7 +770,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -779,7 +799,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\', \'_blank\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
