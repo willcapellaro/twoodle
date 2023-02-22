@@ -69,7 +69,8 @@
 			Your twoodles
 			<select id="slcTwoodles" onchange="selectTwoodle();"></select>
 			<i id="trashBtn" style="color: dodgerblue" class="bi bi-trash-fill" onclick="$('#modalDeleteTwoodle').modal('show');"></i>
-			<i id="pencilBtn" class="bi bi-pencil-fill" style="color: dodgerblue"  onclick="displayRenameTwoodleModal();"></i>
+			<i id="pencilBtn" class="bi bi-pencil-fill" style="color: dodgerblue" onclick="displayRenameTwoodleModal();"></i>
+			<i id="addTwoodleBtn" class="bi bi-plus-lg" style="color: dodgerblue" onclick="displayNewTwoodleMenu();"></i>
 		</div>
 		<nav id="menu">
 			<ul>
@@ -194,15 +195,15 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="modalEditTitle"></h5>
+						<h5 class="modal-title" id="modalEditTitle">Edit Item</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
 						Name <input class="inputItemName" type="text" id="inputItemName" placeholder="Item Name"><br><br>
-						<div>Link Url <input class="inputItemUrl" type="text" id="inputItemUrl"><button type="button" class="btn btn-link" onclick="document.getElementById('inputItemUrl').value = '';document.getElementById('inputItemUrl').parentNode.style.display = 'none';">remove</button><br><br></div>
-						<textarea id="inputNotes">Notes here</textarea><br>
+						<div>Link Url <input class="inputItemUrl" type="text" id="inputItemUrl"><button type="button" class="btn btn-link" onclick="document.getElementById('inputItemUrl').value = '';">remove</button><br><br></div>
+						Notes <br><textarea id="inputNotes">Notes here</textarea><br>
 						<button class="btn btn-primary modalButton" id="editItemBtn" onclick="editItem();" data-dismiss="modal">Save</button>
 						<button class="btn btn-outline-secondary modalButton" data-dismiss="modal">Cancel</button>
 					</div>
@@ -266,13 +267,13 @@
 			            <div id="matrixInput"></div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" onmousedown="selectPreviousTwoodle();" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary" id="itemsTwoodleBtn" onmousedown="itemsTwoodle();" id="btnitemsTwoodle">Create</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary" id="itemsTwoodleBtn" onclick="itemsTwoodle();" id="btnitemsTwoodle">Create</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="modalRenameTwoodle" tabindex="-3" role="dialog" aria-labelledby="modalRenameTwoodleTitle" aria-hidden="true">
+		<div class="modal fade" id="modalRenameTwoodle" onkeyup="detectKey(event, this);" tabindex="-3" role="dialog" aria-labelledby="modalRenameTwoodleTitle" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -287,7 +288,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary" id="renameTwoodleBtn" onmousedown="renameTwoodle()" id="btnRenameTwoodle">Save</button>
+						<button type="button" class="btn btn-primary" id="renameTwoodleBtn" onclick="renameTwoodle()">Save</button>
 					</div>
 				</div>
 			</div>

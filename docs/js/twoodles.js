@@ -32,13 +32,8 @@ function displayNewTwoodleMenu()
 function displayRenameTwoodleModal()
 {
 	$('#modalRenameTwoodle').modal('show');
-	for (var i = 0; i < twoodles.length; i++)
-	{
-		if (twoodles[i]['index'] == selectedTwoodle)
-		{
-			document.getElementById('inputRenameTwoodleName').value = twoodles[i]['name'];
-		}
-	}
+	document.getElementById('divDuplicatedErrorRenameTwoodleName').innerHTML = '';
+	document.getElementById('inputRenameTwoodleName').value = twoodles[selectedTwoodleIndex]['name'];
 }
 function quadrantsOrder(itemsToOrderIndex)
 {
@@ -161,7 +156,7 @@ function checkAuxValuesRename()
 	document.getElementById('divDuplicatedErrorRenameTwoodleName').innerHTML = '';
 	for (var i = 0; i < twoodles.length; i++)
 	{
-		if (document.getElementById('inputRenameTwoodleName').value.toLowerCase() == twoodles[i]['name'].toLowerCase())
+		if ((document.getElementById('inputRenameTwoodleName').value.toLowerCase() == twoodles[i]['name'].toLowerCase()) && (i != selectedTwoodleIndex))
 		{
 			document.getElementById('divDuplicatedErrorRenameTwoodleName').innerHTML = '<p class="lblRepeated">Error: duplicated name</p>';
 			validTwoodleName = false;
@@ -249,11 +244,6 @@ function getTwoodleInSelect(value, type = 'id')
 			return i;
 		}
 	}
-}
-function selectPreviousTwoodle()
-{
-	changeSelectedTwoodleIndex();
-	document.getElementById('slcTwoodles').selectedIndex = selectedTwoodleIndex + 1;
 }
 function renameTwoodle()
 {
@@ -404,31 +394,25 @@ function selectTwoodle(index = null)
 	{
 		document.getElementById('slcTwoodles').selectedIndex = index;
 	}
-	if (document.getElementById('slcTwoodles').selectedIndex)
+	for (var i = 0; i < twoodles.length; i++)
 	{
-		for (var i = 0; i < twoodles.length; i++)
+		if (document.getElementById('slcTwoodles').children[document.getElementById('slcTwoodles').selectedIndex].innerHTML == twoodles[i]['name'])
 		{
-			if (document.getElementById('slcTwoodles').children[document.getElementById('slcTwoodles').selectedIndex].innerHTML == twoodles[i]['name'])
-			{
-				selectedTwoodleIndex = twoodles[i]['index'];
-			}
+			selectedTwoodleIndex = twoodles[i]['index'];
 		}
-		yValues = twoodles[selectedTwoodleIndex]['yValues'];
-		xValues = twoodles[selectedTwoodleIndex]['xValues'];
-		items = twoodles[selectedTwoodleIndex]['items'];
-		fillItemsList();
-		yAxisName = twoodles[selectedTwoodleIndex]['defaultY'];
-		xAxisName = twoodles[selectedTwoodleIndex]['defaultX'];
-		document.getElementById('yAxis_name').value = twoodles[selectedTwoodleIndex]['defaultY'];
-		document.getElementById('xAxis_name').value = twoodles[selectedTwoodleIndex]['defaultX'];
-		document.getElementById('spanYAxis').value = twoodles[selectedTwoodleIndex]['defaultY'];
-		document.getElementById('spanXAxis').value = twoodles[selectedTwoodleIndex]['defaultX'];
-		checkLblRecipes();
 	}
-	else
-	{
-		displayNewTwoodleMenu();
-	}
+	yValues = twoodles[selectedTwoodleIndex]['yValues'];
+	xValues = twoodles[selectedTwoodleIndex]['xValues'];
+	items = twoodles[selectedTwoodleIndex]['items'];
+	fillItemsList();
+	yAxisName = twoodles[selectedTwoodleIndex]['defaultY'];
+	xAxisName = twoodles[selectedTwoodleIndex]['defaultX'];
+	document.getElementById('yAxis_name').value = twoodles[selectedTwoodleIndex]['defaultY'];
+	document.getElementById('xAxis_name').value = twoodles[selectedTwoodleIndex]['defaultX'];
+	document.getElementById('spanYAxis').value = twoodles[selectedTwoodleIndex]['defaultY'];
+	document.getElementById('spanXAxis').value = twoodles[selectedTwoodleIndex]['defaultX'];
+	checkLblRecipes();
+
 	menuItemClicked(['items', 'rateY', 'rateX', 'see'][actualTab - 1]);
 	fillLists('y');
 	fillLists('x');
@@ -436,7 +420,7 @@ function selectTwoodle(index = null)
 	verifyItemsNames(false);
 	document.getElementById('trashBtn').style.opacity = 1;
 	document.getElementById('pencilBtn').style.opacity = 1;
-	if (document.getElementById('slcTwoodles').selectedIndex == 1)
+	if (document.getElementById('slcTwoodles').selectedIndex == 0)
 	{
 		document.getElementById('trashBtn').style.opacity = 0;
 		document.getElementById('pencilBtn').style.opacity = 0;

@@ -105,8 +105,8 @@ function fillTwoodlesSelect(changeIndex = true)
 		'NW' : [], 
 		'SE' : [], 
 		'SW' : []
-	}
-	var html = '<option id="optSlcTwoodles_new" onclick="displayNewTwoodleMenu();">+ New Twoodle</option><option id="optSlcTwoodles_0">' + twoodles[0]['name'] + '</option>';
+	};
+	var html = '<option id="optSlcTwoodles_0">' + twoodles[0]['name'] + '</option>';
 	for (var i = 0; i < quadrantsOrder(0).length; i++)
 	{
 		html += '<option id="optSlcTwoodles_' + quadrantsOrder(0)[i]['index'] + '">' + quadrantsOrder(0)[i]['name'] + '</option>';
@@ -248,7 +248,7 @@ function displayLocalStorage(tab = 'readable')
 										iconsHTML += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
 										if (items[i]['url'])
 										{
-											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\');"></i></div>';
+											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
 										}
         								if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 										{
@@ -268,7 +268,7 @@ function displayLocalStorage(tab = 'readable')
 										iconsHTML += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
 										if (items[i]['url'])
 										{
-											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\');"></i></div>';
+											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
 										}
         								if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 										{
@@ -291,7 +291,7 @@ function displayLocalStorage(tab = 'readable')
 										iconsHTML += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
 										if (items[i]['url'])
 										{
-											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\');"></i></div>';
+											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
 										}
         								if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 										{
@@ -311,7 +311,7 @@ function displayLocalStorage(tab = 'readable')
 										iconsHTML += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
 										if (items[i]['url'])
 										{
-											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\');"></i></div>';
+											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
 										}
         								if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 										{
@@ -398,7 +398,7 @@ function clearValues()
 	document.getElementById('spanYAxis').innerHTML = twoodles[0]['defaultY'];
 	document.getElementById('spanXAxis').innerHTML = twoodles[0]['defaultX'];
 	saveValues();
-	document.getElementById('slcTwoodles').selectedIndex = 1;
+	document.getElementById('slcTwoodles').selectedIndex = 0;
 	selectTwoodle();
 	if (document.getElementById("resultsDiv").style.display == "block")
 	{
@@ -406,7 +406,7 @@ function clearValues()
 	}
 	fillTwoodlesSelect();
 	selectedTwoodleIndex = 0;
-	document.getElementById('slcTwoodles').selectedIndex = 1;
+	document.getElementById('slcTwoodles').selectedIndex = 0;
 	yAxisName = document.getElementById('yAxis_name').value;
 	xAxisName = document.getElementById('xAxis_name').value;
 	checkLblRecipes();

@@ -237,7 +237,6 @@ function addItem()
 }
 function preMoveItem(id)
 {
-	document.getElementById('inputItemUrl').parentNode.style.display = 'block';
 	selectedItem = id;
 	for (var i = 0; i < twoodles[selectedTwoodleIndex]['items'].length; i++)
 	{
@@ -388,7 +387,6 @@ function moveItem()
 }
 function preEditItem(id)
 {
-	document.getElementById('inputItemUrl').parentNode.style.display = 'block';
 	selectedItem = id;
 	for (var i = 0; i < twoodles[selectedTwoodleIndex]['items'].length; i++)
 	{
@@ -549,7 +547,7 @@ function fillLists(axis = null, shareUpdate = true)
 		var linkHTML = '';
     	if (item['url'])
     	{
-    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + item['url'] + '\');"></i></div>';
+    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + item['url'] + '\');"></i></div>';
     	}
     	var iconsHTML = `
     		<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + item['index'] + `);"></i></div>
@@ -712,7 +710,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -741,7 +739,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -770,7 +768,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -799,7 +797,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.open(\'' + items[i]['url'] + '\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
