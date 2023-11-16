@@ -68,9 +68,9 @@
 		<div id="twoodlesDiv">
 			Your twoodles
 			<select id="slcTwoodles" onchange="selectTwoodle();"></select>
-			<i id="trashBtn" style="color: dodgerblue" class="bi bi-trash-fill" onclick="$('#modalDeleteTwoodle').modal('show');"></i>
-			<i id="pencilBtn" class="bi bi-pencil-fill" style="color: dodgerblue" onclick="displayRenameTwoodleModal();"></i>
-			<i id="addTwoodleBtn" class="bi bi-plus-lg" style="color: dodgerblue" onclick="displayNewTwoodleMenu();"></i>
+			<i id="trashBtn" class="bi bi-trash-fill" onclick="$('#modalDeleteTwoodle').modal('show');"></i>
+			<i id="pencilBtn" class="bi bi-pencil-fill" onclick="displayRenameTwoodleModal();"></i>
+			<i id="addTwoodleBtn" class="bi bi-plus-lg" onclick="displayNewTwoodleMenu();"></i>
 		</div>
 		<nav id="menu">
 			<ul>
@@ -95,13 +95,13 @@
 			</div>
 			<div id="axisList" onchange="verifyAxisNames();saveValues();">
 				<div class="item itemLabel" id="yAxis">
-					<i class="bi bi-arrow-down-up"></i><label>Y axis</label>
+					<i class="bi bi-arrow-down-up"></i><label>&nbsp; vertical axis</label>
 					<br>
 					<input class="itemName" type="text" value="importance" id="yAxis_name">
 					<label class="lblRepeatedItem" id="lblYAxisRepeated"></label>
 				</div>
 				<div class="item itemLabel" id="xAxis">
-					<i class="bi bi-arrow-left-right"></i><label">X axis</label>
+					<i class="bi bi-arrow-left-right"></i><label>&nbsp; horizontal axis</label>
 					<br>
 					<input class="itemName" type="text" value="urgency" id="xAxis_name">
 					<label class="lblRepeatedItem" id="lblXAxisRepeated"></label>
@@ -132,7 +132,7 @@
 			</div>
 			<button id="addButton" class="btn btn-primary addItemButton" onclick="addItem();">+ Add an item</button><br><br>
 			<div id="resultsDivGrid" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 600px;">
-				<div style="background-color: red">
+				<div style="background-color: white">
 					<div id="matrixNew" class="matrixGrid" >
 						<div class="matrixLabel smoke">
 							<p class="canvasLabel" id="labelHighY"></p>
