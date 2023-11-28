@@ -1,20 +1,20 @@
 :root {
-  --dark: #473D33;
+/*  --dark: #473D33;
   --light: #fff;
   --btn-text: red; 
-  --alert: #473D33; 
+  --alert: #473D33; */
 }
 
 html {
- 	background-color: var(--light);
+/* 	background-color: var(--light);*/
 }
 
 body {
  	padding-right: 100px;
  	padding-left: 100px;
  	padding-top: 20px;
- 	background-color: var(--light);
- 	color: var(--dark);
+/* 	background-color: var(--light);*/
+/* 	color: var(--dark);*/
 }
 
 header {
@@ -109,24 +109,6 @@ h1, h2, h3, h4, h5, h6 {
 	opacity: .6;
 }
 
-button {
-	background-color: var(--dark);
-	color: var(--btn-text);
-	padding: .5em 1em .5em 1em ;
-	margin: 1em 3px 0;
-}
-
-button:focus {
-	outline: var(--dark) 3px solid;
-}
-
-button:hover {
-	box-shadow: 0 14px 28px rgba(0,0,0,0.02), 0 5px 5px rgba(0,0,0,0.08);
-	border-color: var(--dark);
-	opacity: .5;
-	box-shadow: none;
-	text-decoration: none;
-}
 
 .menuButton {
 	border-bottom: 0;
@@ -348,21 +330,11 @@ button.btn-link.linkBtn {
 }
 
 .xRange .yRange {
-	color: pink;
 	width: 10em;
-}
-
-.xItem, .yItem {
-}
-
-.yItemsList {
 }
 
 .itemValue {
 	display: none;
-}
-
-.yItemsList {
 }
 
 #xItemsList .itemName, #yItemsList .itemName{
@@ -391,7 +363,6 @@ display: block;
 	max-width: 300px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	color: var(--dark);
 }
 
 .lblLowY, .lblLowX {
@@ -439,199 +410,4 @@ font-size: 50%;
 	margin-left: 12px;
 	margin-right: 12px;
 	color: var(--light);
-}
-
-
-/*------------------------------------------------------------------------------------------------------------------------------*/
-
-/*
-@media (prefers-color-scheme: white) {
-	:root {
-	}
-	#canvas {
-		box-shadow: 3px 3px 30px black;
-
-
-	}
-}
-
-*/
-
-/*------------------------------------------------------------------------------------------------------------------------------*/
-
-@media screen and (max-width: 700px) {
-
-body {
-	font-size: 1.25rem;
-	padding-left: 0px;
-	padding-right: 0px;
-	padding-top: 0;
-}
-
-.active {
-	border-bottom: 4px var(--dark) solid;
-}
-
-#menu ul {
-	border-bottom: none;
-}
-
-.mobileHide  {
-   display: none; 
-}
-
-#title {
-	display: block;
-	text-align: center;
-	font-size: 1.5rem !important;
-	margin-top: 0 !important;
-}
-
-header {
-	padding: 0;
-	margin: 0;
-}
-
-.headerTag {
-	float: none;
-	background-color: yellow;
-}	
-
-#createDiv, #rateYDiv, #rateXDiv, #resultsDiv { 
-    padding-left: 16px;
-    padding-right: 16px;
-}
-
-#resultsDivGrid {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-}
-
-.menuButton {
-   	margin: 0;
-}
-
-.menuButton:nth-child(1) {
-   	border-top-left-radius: 2rem;
-   	border-bottom-left-radius: 2rem;
-}
-
-
-.menuButton:nth-child(4) {
-	border-top-right-radius: 2rem;
-	border-bottom-right-radius: 2rem;
-}
-
-#title {
-	font-size: 2rem; 
-	margin-top: 1rem;}
-
-.matrixGrid {
-	display: grid; 
-	grid-template-columns: 3em 70vw 3rem;
-	grid-template-rows: 2em 70vw 2rem; 
-}
-
-#canvas {
-	box-shadow: 3px 3px 30px #ddd;
-	display: block;
-	width: 70vw;
-	height: 70vw;
-	margin: 0;
-	padding: 0;
-}
-
-.matrixCenter {
-	left: 0;
-}
-
-.lblLowY, .lblLowX, .lblHighY, .lblHighX {
-	display: none;
-}
-
-.localStorageContents {
-	text-align: center;
-}
-.recipesContents {
-	text-align: center;
-}
-
-.activeTabButton {
-	background-color: var(--focus);
-	border: 4px var(--focus) solid;
-	border-bottom: 4px #473D33 solid;
-}
-
-.tabHeading {
-	height: 2em; 
-	font-weight: 600;
-}
-
-#twoodlesDiv i {
-	color: var(--dark);
-}
-
-.i, #i, i {
-	color: var(--light);
-}
-
-.iSpaceSm {
-	margin-left: 0px;
-	margin-right: 0px;
-	color: var(--dark);
-}
-
-.resultsModalActiveTab {
-	border-bottom: 4px var(--light) solid;
-}
-
-.selectedRecipe {
-	background-color: blue;
-}
-
-.clipboardInfoSuccess {
-	color: green;
-}
-
-.clipboardInfoError {
-	color: red;
-}
-
-.valuesListSortableStart {
-	background-color: lightgrey;
-}
-
-.itemsListSortableStart {
-	background-color: lightgrey;
-}
-
-.btn-link, .addItemButton, .modalButton {
-	float: right;
-}
-
-#lblAddTo {
-	float: right;
-	padding-right: 10px;
-}
-
-#lblMoveItemName {
-	padding-right: 10px;
-}
-
-.radio-button {
-  opacity: 0;
-}
-
-.radio-tile-label {
-	border: 1px solid gray;
-	width: 15%;
-	float: right;
-}
-
-.selectedUbicationButton {
-	background-color: gray;
-}
-
-.arrowIcon, .trashIconm, .pencilIcon, .linkIcon {
-	border: none;
 }
