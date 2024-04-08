@@ -122,7 +122,6 @@ button:focus {
 
 button:hover {
 	box-shadow: 0 14px 28px rgba(0,0,0,0.02), 0 5px 5px rgba(0,0,0,0.08);
-	border: 1px solid black;
 	border-color: var(--dark);
 	opacity: .5;
 	box-shadow: none;
@@ -385,6 +384,13 @@ button.btn-link.linkBtn {
 	padding: .5em 1em .5em 1em;
 }
 
+/* testing flexbox */
+/* #itemsList {
+	background-color: red;
+	display: flex;
+	flex-wrap: wrap;
+} */
+
 .labelFloatRight {
 display: block;
 }
@@ -408,11 +414,17 @@ display: block;
 
 #xItemsList, #itemsList, #yItemsList {
 	line-height: 1.5em;
+	/* display: flex;
+	flex-wrap: wrap; */
 }
 
 #itemsList div, #xItemsList div, #yItemsList div {
 	border: none;
 	padding: 10px;
+	display: grid;
+	grid-template-columns: 1fr auto auto auto;
+	/* width: 400px; */
+	/* border: 1px black solid; */
 }
 
 .item {
