@@ -369,6 +369,11 @@ button.btn-link.linkBtn {
 #xItemsList .itemName, #yItemsList .itemName{
 }
 
+.btn-link {
+	background-color: red;
+	color: red;
+}
+
 .btn-link i {
 	color: dodgerblue;
 	font-size: 18px;
@@ -420,10 +425,10 @@ display: block;
 
 #itemsList div, #xItemsList div, #yItemsList div {
 	border: none;
-	padding: 10px;
+	padding: 0 0;
 	display: grid;
 	grid-template-columns: 1fr auto auto auto;
-	/* width: 400px; */
+	grid-column-gap: 5px;
 	/* border: 1px black solid; */
 }
 
@@ -651,10 +656,9 @@ header {
 	background-color: gray;
 }
 
-.arrowIcon, .trashIconm, .pencilIcon, .linkIcon {
+.arrowIcon, .trashIcon, .pencilIcon, .linkIcon {
 	border: none;
 }
-
 .cursorMe {
 	/* background-color: red; */
 }
