@@ -122,10 +122,12 @@ button:focus {
 
 button:hover {
 	box-shadow: 0 14px 28px rgba(0,0,0,0.02), 0 5px 5px rgba(0,0,0,0.08);
+	border: 1px solid black;
 	border-color: var(--dark);
 	opacity: .5;
 	box-shadow: none;
 	text-decoration: none;
+	
 }
 
 .menuButton {
@@ -369,12 +371,12 @@ button.btn-link.linkBtn {
 }
 
 .btn-link i {
-	color: #473D33;
+	color: dodgerblue;
 	font-size: 18px;
 }
 
 #addButton {
-	background-color: #473D33;
+	background-color: dodgerblue;
 	border: none;
 }
 
@@ -639,4 +641,8 @@ header {
 
 .arrowIcon, .trashIconm, .pencilIcon, .linkIcon {
 	border: none;
+}
+
+.cursorMe {
+	/* background-color: red; */
 }

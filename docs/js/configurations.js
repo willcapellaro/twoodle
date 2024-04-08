@@ -547,7 +547,7 @@ function fillLists(axis = null, shareUpdate = true)
 		var linkHTML = '';
     	if (item['url'])
     	{
-    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + item['url'] + '\');"></i></div>';
+    		linkHTML = '<div class="btn-link linkIcon cursorMe"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + item['url'] + '\');"></i></div>';
     	}
     	var iconsHTML = `
     		<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + item['index'] + `);"></i></div>
@@ -556,7 +556,7 @@ function fillLists(axis = null, shareUpdate = true)
 			linkHTML;
 		if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 		{
-			iconsHTML = '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(' + (item['index'] + 2) + ');"> Open Twoodle</i></div>';
+			iconsHTML = '<div class="btn-link linkIcon cursorMe"><i class="fa fa-th-large" onclick="selectTwoodle(' + (item['index'] + 2) + ');"> DOpen Twoodle</i></div>';
 		}
 		$("#" + axis + "ItemsList").append(`
 			<div class="` + axis + `Item" id="` + axis + `_item_` + values[i]['index'] + `" class="rateListCard">
@@ -710,7 +710,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon cursorMe"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -724,7 +724,7 @@ function fillItemsList()
 							linkHTML;
 	                	if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 						{
-							iconsHTML = '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></div>';
+							iconsHTML = '<button class="btn-link linkIcon cursorMe"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></button>';
 						}
 	                	html['NE'].push([`<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
 							<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">`
@@ -739,7 +739,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon cursorMe"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -753,7 +753,7 @@ function fillItemsList()
 							linkHTML;
 						if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 						{
-							iconsHTML = '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></div>';
+							iconsHTML = '<div class="btn-link linkIcon cursorMe"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> BOpen Twoodle</i></div>';
 						}
 						html['NW'].push([`<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
 							<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">`
@@ -768,7 +768,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon cursorMe"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -782,7 +782,7 @@ function fillItemsList()
 							linkHTML;
 						if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 						{
-							iconsHTML = '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></div>';
+							iconsHTML = '<div class="btn-link linkIcon cursorMe"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> BOpen Twoodle</i></div>';
 						}
 						html['SE'].push([`<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
 							<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">`
@@ -797,7 +797,7 @@ function fillItemsList()
         	var linkHTML = '';
 	    	if (items[i]['url'])
 	    	{
-	    		linkHTML = '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
+	    		linkHTML = '<div class="btn-link linkIcon cursorMe"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
 	    	}
 	    	for (var j = 0; j < yValues.length; j++)
         	{
@@ -811,7 +811,7 @@ function fillItemsList()
 							linkHTML;
             			if (twoodles[selectedTwoodleIndex]['type'] == 'array')
 						{
-							iconsHTML = '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></div>';
+							iconsHTML = '<button class="btn-link linkIcon cursorMe"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></button>';
 						}
 	                	html['SW'].push([`<div id="item_` + items[i]['index'] + `" onmouseup="getItems();" class="itemsListCard">
 							<input class="itemName" type="text" value="` + items[i]['name'] + `" id="item_name_` + items[i]['index'] + `">`
