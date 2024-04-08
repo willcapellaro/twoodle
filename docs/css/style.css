@@ -394,6 +394,11 @@ display: block;
 	color: var(--dark);
 }
 
+.itemsListCard {
+	display: grid;
+	grid-template-columns: 1fr auto auto auto;
+}
+
 .lblLowY, .lblLowX {
 	display: inline-block;
 	text-align: right;
