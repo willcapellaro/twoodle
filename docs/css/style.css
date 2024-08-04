@@ -418,10 +418,80 @@ display: block;
 }
 
 #xItemsList, #itemsList, #yItemsList {
-	line-height: 1.5em;
+	
 	/* display: flex;
 	flex-wrap: wrap; */
+	padding-bottom: 100px;
 }
+
+#xItemsList div:nth-child(even), #yItemsList div:nth-child(even) {
+  background-color: ghostwhite;
+}
+
+#yItemsList  div:nth-child(1 ) { font-size: 30px; }
+#yItemsList  div:nth-child(2 ) { font-size: 28px; }
+#yItemsList  div:nth-child(3 ) { font-size: 26px; }
+#yItemsList  div:nth-child(4 ) { font-size: 24px; }
+#yItemsList  div:nth-child(5 ) { font-size: 22px; }
+#yItemsList  div:nth-child(6 ) { font-size: 20px; }
+#yItemsList  div:nth-child(7 ) { font-size: 18px; }
+#yItemsList  div:nth-child(8 ) { font-size: 16px; }
+#yItemsList  div:nth-child(9 ) { font-size: 14px; }
+#yItemsList  div:nth-child(10) { font-size: 13px; }
+#yItemsList  div:nth-child(11) { font-size: 12px; }
+#yItemsList  div:nth-child(12) { font-size: 11.5px; }
+#yItemsList  div:nth-child(13) { font-size: 11px; }
+#yItemsList  div:nth-child(14) { font-size: 10.75px; }
+#yItemsList  div:nth-child(15) { font-size: 10.5px; }
+#yItemsList  div:nth-child(16) { font-size: 10.25px; }
+#yItemsList  div:nth-child(17) { font-size: 10px; }
+#yItemsList  div:nth-child(18) { font-size: 9.75px; }
+#yItemsList  div:nth-child(19) { font-size: 9.5px; }
+#yItemsList  div:nth-child(20) { font-size: 9.25px; }
+#yItemsList  div:nth-child(21) { font-size: 9px; }
+#yItemsList  div:nth-child(22) { font-size: 9px; }
+#yItemsList  div:nth-child(23) { font-size: 9px; }
+#yItemsList  div:nth-child(24) { font-size: 9px; }
+#yItemsList  div:nth-child(25) { font-size: 9px; }
+#yItemsList  div:nth-child(26) { font-size: 9px; }
+#yItemsList  div:nth-child(27) { font-size: 9px; }
+#yItemsList  div:nth-child(28) { font-size: 9px; }
+#yItemsList  div:nth-child(29) { font-size: 9px; }
+#yItemsList  div:nth-child(30) { font-size: 9px; }
+
+
+#xItemsList  div:nth-child(1 ) { font-size: 30px; }
+#xItemsList  div:nth-child(2 ) { font-size: 28px; }
+#xItemsList  div:nth-child(3 ) { font-size: 26px; }
+#xItemsList  div:nth-child(4 ) { font-size: 24px; }
+#xItemsList  div:nth-child(5 ) { font-size: 22px; }
+#xItemsList  div:nth-child(6 ) { font-size: 20px; }
+#xItemsList  div:nth-child(7 ) { font-size: 18px; }
+#xItemsList  div:nth-child(8 ) { font-size: 16px; }
+#xItemsList  div:nth-child(9 ) { font-size: 14px; }
+#xItemsList  div:nth-child(10) { font-size: 13px; }
+#xItemsList  div:nth-child(11) { font-size: 12px; }
+#xItemsList  div:nth-child(12) { font-size: 11.5px; }
+#xItemsList  div:nth-child(13) { font-size: 11px; }
+#xItemsList  div:nth-child(14) { font-size: 10.75px; }
+#xItemsList  div:nth-child(15) { font-size: 10.5px; }
+#xItemsList  div:nth-child(16) { font-size: 10.25px; }
+#xItemsList  div:nth-child(17) { font-size: 10px; }
+#xItemsList  div:nth-child(18) { font-size: 9.75px; }
+#xItemsList  div:nth-child(19) { font-size: 9.5px; }
+#xItemsList  div:nth-child(20) { font-size: 9.25px; }
+#xItemsList  div:nth-child(21) { font-size: 9px; }
+#xItemsList  div:nth-child(22) { font-size: 9px; }
+#xItemsList  div:nth-child(23) { font-size: 9px; }
+#xItemsList  div:nth-child(24) { font-size: 9px; }
+#xItemsList  div:nth-child(25) { font-size: 9px; }
+#xItemsList  div:nth-child(26) { font-size: 9px; }
+#xItemsList  div:nth-child(27) { font-size: 9px; }
+#xItemsList  div:nth-child(28) { font-size: 9px; }
+#xItemsList  div:nth-child(29) { font-size: 9px; }
+#xItemsList  div:nth-child(30) { font-size: 9px; }
+
+
 
 #itemsList div, #xItemsList div, #yItemsList div {
 	border: none;
