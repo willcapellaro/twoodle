@@ -149,7 +149,7 @@ function displayLocalStorage(tab = 'readable')
 				{
 					if (xValues[i]['index'] == items[j]['index'])
 					{
-						localStorageText += items[j]['name'] + '<br>';
+						localStorageText += items[j]['name'] + '<br><!--LSLine152-->';
 					}
 				}
 			}
@@ -212,7 +212,7 @@ function displayLocalStorage(tab = 'readable')
 				localStorageText += 'yValues:<br>';
 				for (var i = 0; i < yValues.length; i++)
 		    	{
-		    		localStorageText += 'value: ' + yValues[i]['value'] + ', index: ' + yValues[i]['index'] + '<br>';
+		    		localStorageText += '<!--line215-->' + 'value: ' + yValues[i]['value'] + ', index: ' + yValues[i]['index'] + '<br>';
 		    	}
 			}
 			document.getElementById('readableBtn').classList.remove('resultsModalActiveTab');
@@ -242,10 +242,13 @@ function displayLocalStorage(tab = 'readable')
 		                		{
 		                			if (xValues[k]['index'] == items[i]['index'])
         							{
-        								var iconsHTML = items[i]['name'];
+        								var iconsHTML = '<!--LS245-->' + '<div class="BOFFO">';
+        								iconsHTML += items[i]['name'];
+        								iconsHTML += '<div class="tab4actionCluster" style="display: grid; grid-template-columns: auto auto auto 1fr; grid-column-gap: 8px; color: red">';
 										iconsHTML += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
 										iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
 										iconsHTML += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
+										iconsHTML += '</div>';										
 										if (items[i]['url'])
 										{
 											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
@@ -254,7 +257,7 @@ function displayLocalStorage(tab = 'readable')
 										{
 											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></div>';
 										}
-										iconsHTML += '<br>';
+										iconsHTML += '<br><!--LS line 259-->';
 										html['NE'].push([iconsHTML, (yValues[j]['value'] + xValues[k]['value'])]);
         							}
 		                		}
@@ -262,10 +265,13 @@ function displayLocalStorage(tab = 'readable')
 		                		{
 		                			if (yValues[j]['index'] == items[i]['index'])
         							{
-        								var iconsHTML = items[i]['name'];
+        								var iconsHTML = '<!--LSline267-->';
+        								iconsHTML += items[i]['name'];
+        								iconsHTML += '<div class="tab4actionCluster" style="display: grid; grid-template-columns: auto auto auto 1fr; grid-column-gap: 8px; color: red">';
 										iconsHTML += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
 										iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
 										iconsHTML += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
+										iconsHTML += '</div>';
 										if (items[i]['url'])
 										{
 											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
@@ -274,7 +280,7 @@ function displayLocalStorage(tab = 'readable')
 										{
 											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></div>';
 										}
-										iconsHTML += '<br>';
+										iconsHTML += '<br><!--LS line 281-->';
 										html['NW'].push([iconsHTML, (yValues[j]['value'] + xValues[k]['value'])]);
         							}
 		                		}
@@ -285,10 +291,13 @@ function displayLocalStorage(tab = 'readable')
 		                		{
 		                			if (xValues[k]['index'] == items[i]['index'])
         							{
-        								var iconsHTML = items[i]['name'];
+        								var iconsHTML = '<!--LSline239-->';
+        								iconsHTML += items[i]['name'];
+        								iconsHTML += '<div class="tab4actionCluster" style="display: grid; grid-template-columns: auto auto auto 1fr; grid-column-gap: 8px; color: red">';
 										iconsHTML += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
 										iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
 										iconsHTML += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
+										iconsHTML += '</div>';
 										if (items[i]['url'])
 										{
 											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
@@ -297,7 +306,7 @@ function displayLocalStorage(tab = 'readable')
 										{
 											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></div>';
 										}
-										iconsHTML += '<br>';
+										iconsHTML += '<br><!--LS line 306-->';
 										html['SE'].push([iconsHTML, (yValues[j]['value'] + xValues[k]['value'])]);
         							}
 		                		}
@@ -305,10 +314,13 @@ function displayLocalStorage(tab = 'readable')
 		                		{
 		                			if (yValues[j]['index'] == items[i]['index'])
         							{
-        								var iconsHTML = items[i]['name'];
+        								var iconsHTML = '<!--LSLine316-->';
+        								iconsHTML += items[i]['name'];
+        								iconsHTML += '<div class="tab4actionCluster" style="display: grid; grid-template-columns: auto auto auto 1fr; grid-column-gap: 8px; color: red">';
 										iconsHTML += '<div class="trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(' + items[i]['index'] + ');"></i></div>';
 										iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(' + items[i]['index'] + ');"></i></div>';
 										iconsHTML += '<div class="pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(' + items[i]['index'] + ');"></i></div>';
+										iconsHTML += '</div>';
 										if (items[i]['url'])
 										{
 											iconsHTML += '<div class="btn-link linkIcon"><i class="fa-solid fa-link" onclick="window.location.replace(\'' + items[i]['url'] + '\');"></i></div>';
@@ -317,7 +329,7 @@ function displayLocalStorage(tab = 'readable')
 										{
 											iconsHTML = items[i]['name'] + '<div class="btn-link linkIcon"><i class="fa fa-th-large" onclick="selectTwoodle(getTwoodleInSelect(' + items[i]['index'] + '));"> Open Twoodle</i></div>';
 										}
-										iconsHTML += '<br>';
+										iconsHTML += '<br><!--LS line 328-->';
 										html['SW'].push([iconsHTML, (yValues[j]['value'] + xValues[k]['value'])]);
         							}
 		                		}
@@ -326,7 +338,7 @@ function displayLocalStorage(tab = 'readable')
 		        	}
 	            }
         	}
-        	localStorageText = '';
+        	localStorageText = '<!--line340-->' + '<div class="wholeQuadrantsDiv">';
 	    	for (var j = 0; j < 4; j++)
 	    	{
 		    	var i = 1;
@@ -350,7 +362,7 @@ function displayLocalStorage(tab = 'readable')
 	        	{
 					localStorageText += html[['NE', 'NW', 'SE', 'SW'][j]][i][0];
 	        	}
-	        	localStorageText += '<br>'
+	        	localStorageText += '<!--line364-->' + '<br>' + '</div>';
 	    	}
 
 			document.getElementById('readableBtn').classList.remove('resultsModalActiveTab');

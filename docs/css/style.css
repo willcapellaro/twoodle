@@ -646,6 +646,29 @@ header {
 .localStorageContents {
 	text-align: center;
 }
+/*not working*/
+
+#localStorageContents {
+	text-align: center;
+}
+/*not working*/
+
+.tab4actionCluster {
+	grid-template-columns: auto auto auto;
+		background-color: red;
+		color: red;
+		display: none;
+}
+
+#resultsDiv div {
+	color: red;
+}
+
+.wholeQuadrantsDiv {
+	color: red;
+	background-color: red;
+}
+
 .recipesContents {
 	text-align: center;
 }

@@ -211,7 +211,7 @@ function addItem()
 		$("#itemsList").append(`
 			<div id="item_` + nextId + `" onmouseup="getItems();" class="itemsListCard">
 				<input class="itemName" type="text" value="Item ` + nextItemNumber + `" id="item_name_` + nextId + `">
-				<div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + nextId + `);"></i></div>
+				<div class="tab4cluster"><div class="btn-link trashIcon"><i class="bi bi-trash-fill btn-link" onclick="deleteItem(` + nextId + `);"></i></div>
 				<div class="btn-link arrowIcon"><i class="fa-solid fa-arrow-up-from-bracket" data-target="#modalMove" onclick="preMoveItem(` + nextId + `);"></i></div>
 				<div class="btn-link pencilIcon"><i class="bi bi-pencil-fill btn-link" data-target="#modalEdit" onclick="preEditItem(` + nextId + `);"></i></div>
 				<label class="lblRepeatedItem" id="lblItem_` + nextId + `"></label>
