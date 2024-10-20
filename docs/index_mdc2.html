@@ -83,7 +83,7 @@
   }
 
   /* Draggable list container */
-#draggable-list {
+#draggable-list #draggable-list-horizontal {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -272,7 +272,35 @@ transition: .1s;
             background-color: red;
         }
 
+<!-- CSS for swipe animation -->
+<style>
+  .tab-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+      display: none;
+  }
 
+  .tab-content.active {
+      opacity: 1;
+      display: block;
+  }
+
+  .slide-in-left {
+      transform: translateX(-100%);
+  }
+
+  .slide-in-right {
+      transform: translateX(100%);
+  }
+
+  .slide-active {
+      transform: translateX(0);
+  }
+</style>
 
 </style>
 
@@ -304,27 +332,26 @@ transition: .1s;
 ████████████████████████████████████████████████████████████████████████████
 ████████████████████████████████████████████████████████████████████████████
  -->
-  <nav id="menu">
+<nav id="menu">
     <div class="mdc-tab-bar" role="tablist">
       <div class="mdc-tab-scroller">
         <div class="mdc-tab-scroller__scroll-area">
           <div class="mdc-tab-scroller__scroll-content">
 
-            <!-- Tab 1: Items -->
-            <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" id="tab-items">
+            <!-- Tab 1: Work List -->
+            <button class="mdc-tab" role="tab" aria-selected="true" id="tab-items" onclick="setActiveTab('tab-items')">
               <span class="mdc-tab__content">
                 <span class="mdc-tab__icon material-icons" aria-hidden="true">checklist</span>
                 <span class="mdc-tab__text-label">Work List</span>
               </span>
-              <span class="mdc-tab-indicator mdc-tab-indicator--active">
+              <span class="mdc-tab-indicator">
                 <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
               </span>
               <span class="mdc-tab__ripple"></span>
             </button>
 
-
-            <!-- Tab 2: Rate Y -->
-            <button class="mdc-tab" role="tab" id="tab-rateY">
+            <!-- Tab 2: Urgency -->
+            <button class="mdc-tab" role="tab" id="tab-rateY" onclick="setActiveTab('tab-rateY')">
               <span class="mdc-tab__content">
                 <span class="mdc-tab__icon material-icons" aria-hidden="true">swap_vert</span>
                 <span class="mdc-tab__text-label">Urgency</span>
@@ -335,8 +362,8 @@ transition: .1s;
               <span class="mdc-tab__ripple"></span>
             </button>
 
-            <!-- Tab 3: Rate X -->
-            <button class="mdc-tab" role="tab" id="tab-rateX">
+            <!-- Tab 3: Importance -->
+            <button class="mdc-tab" role="tab" id="tab-rateX" onclick="setActiveTab('tab-rateX')">
               <span class="mdc-tab__content">
                 <span class="mdc-tab__icon material-icons" aria-hidden="true">swap_horiz</span>
                 <span class="mdc-tab__text-label">Importance</span>
@@ -347,8 +374,8 @@ transition: .1s;
               <span class="mdc-tab__ripple"></span>
             </button>
 
-            <!-- Tab 4: Results -->
-            <button class="mdc-tab" role="tab" id="tab-results">
+            <!-- Tab 4: Twoodle -->
+            <button class="mdc-tab" role="tab" id="tab-results" onclick="setActiveTab('tab-results')">
               <span class="mdc-tab__content">
                 <span class="mdc-tab__icon material-icons" aria-hidden="true">window</span>
                 <span class="mdc-tab__text-label">Twoodle</span>
@@ -359,13 +386,13 @@ transition: .1s;
               <span class="mdc-tab__ripple"></span>
             </button>
 
-
-
           </div>
         </div>
       </div>
     </div>
-  </nav>
+</nav>
+
+
 
 
 
@@ -575,11 +602,17 @@ cancel -->
   <div class="mdc-dialog__scrim"></div>
 </div>
 
+<!-- Content for each tab -->
+<div id="content-items">Content for Work List</div>
+<div id="content-rateY" style="display:none;">Content for Urgency</div>
+<div id="content-rateX" style="display:none;">Content for Importance</div>
+<div id="content-results" style="display:none;">Content for Twoodle</div>
 
 
 
   <!-- Sections for each tab -->
-  <div id="ItemsDiv">
+<div id="ItemsDiv">
+
 
 
 
@@ -760,6 +793,8 @@ cancel -->
   <script src="js/scripts_mdc2.js"></script>
   <script> mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button')); </script>
 
+
+
   <script>
     // Initialize MDC text fields for all elements
     window.addEventListener('DOMContentLoaded', (event) => {
@@ -916,6 +951,140 @@ cancel -->
         new Sortable(document.getElementById('draggable-list-horizontal'), sortableOptions);
     });
 </script>
+
+<!-- Script to handle active tab state -->
+<!-- <script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const tabs = document.querySelectorAll('.mdc-tab');
+      const activeTab = localStorage.getItem('activeTab') || 'tab-items'; // Default to 'tab-items'
+
+      // Function to set the active tab and store in localStorage
+      window.setActiveTab = function (tabId) {
+          // Remove active state from all tabs
+          tabs.forEach(tab => tab.classList.remove('mdc-tab--active'));
+          tabs.forEach(tab => tab.setAttribute('aria-selected', 'false'));
+
+          // Add active state to the selected tab
+          const selectedTab = document.getElementById(tabId);
+          selectedTab.classList.add('mdc-tab--active');
+          selectedTab.setAttribute('aria-selected', 'true');
+
+          // Save active tab to localStorage
+          localStorage.setItem('activeTab', tabId);
+      };
+
+      // Activate the tab stored in localStorage
+      setActiveTab(activeTab);
+  });
+</script> -->
+
+<!-- Script to handle active tab state with MDC -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const tabBar = new mdc.tabBar.MDCTabBar(document.querySelector('.mdc-tab-bar')); // MDC initialization
+
+      // Retrieve active tab from localStorage, default to 'tab-items'
+      const activeTab = localStorage.getItem('activeTab') || 'tab-items';
+
+      // Find the corresponding index of the active tab
+      const tabs = document.querySelectorAll('.mdc-tab');
+      let activeIndex = 0;
+      tabs.forEach((tab, index) => {
+          if (tab.id === activeTab) {
+              activeIndex = index;
+          }
+      });
+
+      // Activate the correct tab on page load
+      tabBar.activateTab(activeIndex);
+
+      // Function to handle tab switching and store active tab in localStorage
+      window.setActiveTab = function (tabId) {
+          const index = Array.from(tabs).findIndex(tab => tab.id === tabId);
+          tabBar.activateTab(index);
+          localStorage.setItem('activeTab', tabId);
+      };
+  });
+</script>
+
+<!-- Script to handle active tab state with swipe gestures and animation -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const tabBar = new mdc.tabBar.MDCTabBar(document.querySelector('.mdc-tab-bar')); // MDC initialization
+
+      // Retrieve active tab from localStorage, default to 'tab-items'
+      const tabs = document.querySelectorAll('.mdc-tab');
+      const contents = {
+          'tab-items': document.getElementById('ItemsDiv'),
+          'tab-rateY': document.getElementById('rateYDiv'),
+          'tab-rateX': document.getElementById('rateXDiv'),
+          'tab-results': document.getElementById('resultsDiv')
+      };
+      let activeTab = localStorage.getItem('activeTab') || 'tab-items';
+
+      function showContent(tabId, direction = null) {
+          Object.values(contents).forEach(content => {
+              content.classList.remove('slide-active', 'slide-in-left', 'slide-in-right', 'active');
+          });
+
+          const newContent = contents[tabId];
+          if (direction === 'left') {
+              newContent.classList.add('slide-in-left');
+          } else if (direction === 'right') {
+              newContent.classList.add('slide-in-right');
+          }
+
+          setTimeout(() => {
+              newContent.classList.add('slide-active', 'active');
+          }, 50);
+      }
+
+      function setActiveTab(tabId, direction = null) {
+          const index = Array.from(tabs).findIndex(tab => tab.id === tabId);
+          tabBar.activateTab(index);
+          localStorage.setItem('activeTab', tabId);
+          showContent(tabId, direction);
+      }
+
+      // Initialize the active tab and content
+      setActiveTab(activeTab);
+
+      // Swipe detection for mobile
+      let startX = 0;
+      let currentIndex = Array.from(tabs).findIndex(tab => tab.id === activeTab);
+
+      function handleTouchStart(e) {
+          startX = e.touches[0].clientX;
+      }
+
+      function handleTouchMove(e) {
+          if (!startX) return;
+          const endX = e.touches[0].clientX;
+          const diffX = startX - endX;
+
+          // If swipe distance is significant enough (e.g., 50px), switch tabs with animation
+          if (Math.abs(diffX) > 50) {
+              if (diffX > 0 && currentIndex < tabs.length - 1) {
+                  // Swipe left (next tab)
+                  currentIndex++;
+                  setActiveTab(tabs[currentIndex].id, 'left');
+              } else if (diffX < 0 && currentIndex > 0) {
+                  // Swipe right (previous tab)
+                  currentIndex--;
+                  setActiveTab(tabs[currentIndex].id, 'right');
+              }
+              startX = 0; // Reset swipe start position
+          }
+      }
+
+      // Add swipe event listeners to the tab content container
+      Object.values(contents).forEach(content => {
+          content.addEventListener('touchstart', handleTouchStart, { passive: true });
+          content.addEventListener('touchmove', handleTouchMove, { passive: true });
+      });
+  });
+</script>
+
 </body>
 </html>
 
@@ -925,42 +1094,49 @@ cancel -->
 
 <!-- 
 
-fix sortable pseudo classes styling
-need ghost drag item !
-add card buttons (delete, edit, web link / open twoodle)
-add card title editing
-add card accordion with description
-add description editing
-make title a link when there is a url
-when switching between rankings, animate the cards into their new place ???
-optional # ranking display
-# of items within
-timer/dates
+FEATURE
+[] populate results fourpane
+[] Repopulate text based on axes
 
+[] # of items within
+[] Delete a twoodle
+[] timer/dates
+[] Rename Axes on its Tab
+
+[DONE] stay on current tab during refresh
+
+REWIRE
+[] Local storage
+[] add twoodle, switch twoodle, delete twoodle
+[] Results Tab Canvas Version / [] Results Tab Switcher
+[] Rename Tabs Dynamically
 
 FE
-Swap XY
-Card Controls - Trash, Move, Edit
-"Rate Y" and X rename H V
-
-Results Tab Four pane
-Results Tab Canvas Version
-Results Tab Switcher
-sidebar
-add twoodle, switch twoodle, delete twoodle
-stay on current tab during refresh
+[] Card Controls - Trash, Move, Edit
+[] Sidebar
+[] Swap XY control (temp) - put on matrix displays only
+[] add card buttons (delete, edit, web link / open twoodle)
+[] fix sortable pseudo classes styling
 
 
-Rename Tabs Dynamically
-Underline edit
-Better Card Type
-Play with ghost drag etc pseudostyles
+[] cross-list highlighting
+[] optional # ranking display
+[] when switching between rankings, animate the cards into their new place ???
+[] need ghost drag item !
+[] add card title inline editing / [] make title a link when there is a url
+[] add description editing
+[] add card accordion with description
+[] Better Card Type
+[] baroqueness
+[] *swipable panes
 
-BE
-Delete a twoodle
-Rename Axes on its Tab
-Local storage
+[done] "Rate Y" and X rename H V
+[done]Results Tab Four pane
 
+??
+[] research if tab content scrolling had MDC support, replace vanilla JS
+
+*unplanned extra
 
  -->
 <!-- https://fsymbols.com/generators/carty/ -->
