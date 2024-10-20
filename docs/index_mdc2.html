@@ -15,8 +15,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <!-- draggable -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
 
 
 
@@ -88,6 +87,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+
 }
 
 /* Draggable item style */
@@ -879,59 +879,43 @@ cancel -->
     });
   </script>
 
+
+<!-- draggable new bit -->
+
+
+
+
+
 <!-- draggable -->
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Enable Sortable.js on the list of cards
-            new Sortable(document.getElementById('draggable-list'), {
-                animation: 150, // Animation when dragging
-                ghostClass: 'sortable-ghost', // Class name for the dragged item
-                chosenClass: 'sortable-chosen', // Class applied to the item being dragged
-                dragClass: 'sortable-drag' // Class for the drag state
-            });
-        });
-    </script>
-        <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Enable Sortable.js on the list of cards
-            new Sortable(document.getElementById('draggable-list'), {
-                animation: 150, // Animation when dragging
-                ghostClass: 'sortable-ghost', // Class name for the placeholder of the dragged item
-                chosenClass: 'sortable-chosen', // Class applied to the item being dragged
-                dragClass: 'sortable-drag', // Class for the drag state
-                onEnd: function (/**Event*/evt) {
-                    evt.item.classList.remove('sortable-drag');
-                }
-            });
-        });
-    </script>
-        <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Enable Sortable.js on the list of cards
-            new Sortable(document.getElementById('draggable-list-horizontal'), {
-                animation: 150, // Animation when dragging
-                ghostClass: 'sortable-ghost', // Class name for the dragged item
-                chosenClass: 'sortable-chosen', // Class applied to the item being dragged
-                dragClass: 'sortable-drag' // Class for the drag state
-            });
-        });
-    </script>
-        <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Enable Sortable.js on the list of cards
-            new Sortable(document.getElementById('draggable-list-horizontal'), {
-                animation: 150, // Animation when dragging
-                ghostClass: 'sortable-ghost', // Class name for the placeholder of the dragged item
-                chosenClass: 'sortable-chosen', // Class applied to the item being dragged
-                dragClass: 'sortable-drag', // Class for the drag state
-                onEnd: function (/**Event*/evt) {
-                    evt.item.classList.remove('sortable-drag');
-                }
-            });
-        });
-    </script>
+<!-- Unified Draggable Script with Mobile Check -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to detect if the user is on a mobile device
+        function isMobileDevice() {
+            return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        }
 
+        // Common Sortable options for both vertical and horizontal lists
+        const sortableOptions = {
+            animation: 150, // Smooth animation while dragging
+            ghostClass: 'sortable-ghost', // Style for the placeholder of the dragged item
+            chosenClass: 'sortable-chosen', // Class for the chosen item
+            dragClass: 'sortable-drag', // Class for the item being dragged
+            preventOnFilter: true, // Prevent touch scrolling interference
+            forceFallback: isMobileDevice(), // Enable fallback for mobile devices only
+            onEnd: function (evt) {
+                evt.item.classList.remove('sortable-drag'); // Remove drag class after drop
+            }
+        };
+
+        // Initialize Sortable on vertical list
+        new Sortable(document.getElementById('draggable-list'), sortableOptions);
+
+        // Initialize Sortable on horizontal list
+        new Sortable(document.getElementById('draggable-list-horizontal'), sortableOptions);
+    });
+</script>
 </body>
 </html>
 
