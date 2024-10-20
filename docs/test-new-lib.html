@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: white;
+        }
+        li {
+            padding: 10px;
+            margin: 5px;
+            background: #007bff;
+            color: white;
+            border-radius: 3px;
+            cursor: move;
+        }
+        li.dragging {
+            opacity: 0.5;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const list = document.getElementById('sortable-list');
+            Sortable.create(list, {
+                animation: 150,
+                chosenClass: "dragging",
+                onEnd: function (evt) {
+                    console.log(`Item moved from index ${evt.oldIndex} to ${evt.newIndex}`);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <h1>Drag and Drop List</h1>
+    <ul id="sortable-list">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+        <li>Item 5</li>
+    </ul>
+
+</body>
+</html>

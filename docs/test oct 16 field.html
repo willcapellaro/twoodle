@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDC Form Fields in Cards</title>
+  <!-- Include MDC CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/14.0.0/material-components-web.min.css">
+  <!-- Include MDC JavaScript -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/14.0.0/material-components-web.min.js"></script>
+  <style>
+    .mdc-card {
+      margin: 20px;
+      padding: 16px;
+      width: 100%;
+      max-width: 400px;
+    }
+    .mdc-text-field {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- First Card with a Text Field -->
+  <div class="mdc-card">
+    <h2 class="mdc-typography--headline6">First Name</h2>
+    <label class="mdc-text-field mdc-text-field--filled">
+      <span class="mdc-floating-label mdc-floating-label--float-above" id="label-id-1">First Name</span>
+      <input type="text" class="mdc-text-field__input" aria-labelledby="label-id-1" value="John">
+      <span class="mdc-line-ripple"></span>
+    </label>
+  </div>
+
+  <!-- Second Card with a Text Field -->
+  <div class="mdc-card">
+    <h2 class="mdc-typography--headline6">Last Name</h2>
+    <label class="mdc-text-field mdc-text-field--filled">
+      <span class="mdc-floating-label mdc-floating-label--float-above" id="label-id-2">Last Name</span>
+      <input type="text" class="mdc-text-field__input" aria-labelledby="label-id-2" value="Doe">
+      <span class="mdc-line-ripple"></span>
+    </label>
+  </div>
+
+  <script>
+    // Initialize MDC components
+    window.addEventListener('DOMContentLoaded', (event) => {
+      // Initialize all text fields
+      const textFields = document.querySelectorAll('.mdc-text-field');
+      textFields.forEach(function(textField) {
+        new mdc.textField.MDCTextField(textField);
+      });
+    });
+  </script>
+</body>
+</html>

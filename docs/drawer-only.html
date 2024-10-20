@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDC Drawer Example</title>
+  
+  <!-- Material Components Web CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+  
+  <link rel="stylesheet" href="css/styles_mdc2.css"> <!-- Optional if you have custom styles -->
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Main Layout for Drawer and Content -->
+  <div class="mdc-drawer-app-content">
+    <!-- Drawer -->
+    <aside class="mdc-drawer mdc-drawer--dismissible mdc-top-app-bar--fixed-adjust">
+      <div class="mdc-drawer__header">
+        <h3 class="mdc-drawer__title">Twoodles</h3>
+        <!-- Search Bar and Add Twoodle -->
+        <div class="mdc-text-field mdc-text-field--with-leading-icon">
+          <i class="material-icons mdc-text-field__icon" tabindex="0">search</i>
+          <input class="mdc-text-field__input" id="search-twoodles" type="text" placeholder="Find Twoodles">
+          <label class="mdc-floating-label" for="search-twoodles"></label>
+          <div class="mdc-line-ripple"></div>
+        </div>
+        <button class="mdc-icon-button material-icons" title="Add a Twoodle">add</button>
+      </div>
+
+      <div class="mdc-drawer__content">
+        <!-- Shortlist of Twoodles -->
+        <nav class="mdc-list">
+          <a class="mdc-list-item mdc-list-item--activated" href="#" aria-current="page">
+            <span class="mdc-list-item__text">All Twoodles</span>
+          </a>
+          <hr class="mdc-list-divider">
+          <!-- 6 Most Recent Twoodles -->
+          <a class="mdc-list-item" href="#">
+            <span class="mdc-list-item__text">Recent Twoodle 1</span>
+          </a>
+          <a class="mdc-list-item" href="#">
+            <span class="mdc-list-item__text">Recent Twoodle 2</span>
+          </a>
+          <a class="mdc-list-item" href="#">
+            <span class="mdc-list-item__text">Recent Twoodle 3</span>
+          </a>
+          <a class="mdc-list-item" href="#">
+            <span class="mdc-list-item__text">Recent Twoodle 4</span>
+          </a>
+          <a class="mdc-list-item" href="#">
+            <span class="mdc-list-item__text">Recent Twoodle 5</span>
+          </a>
+          <a class="mdc-list-item" href="#">
+            <span class="mdc-list-item__text">Recent Twoodle 6</span>
+          </a>
+          <button class="mdc-button mdc-button--outlined" style="margin-left: 16px;">More</button>
+        </nav>
+      </div>
+
+      <!-- Settings Button (Sticky to Bottom) -->
+      <footer class="mdc-drawer__footer">
+        <a class="mdc-list-item" href="#">
+          <i class="material-icons mdc-list-item__graphic" aria-hidden="true">settings</i>
+          <span class="mdc-list-item__text">Settings</span>
+        </a>
+      </footer>
+    </aside>
+
+    <!-- Top App Bar and Main Content -->
+    <div class="mdc-drawer-app-content">
+      <header class="mdc-top-app-bar">
+        <div class="mdc-top-app-bar__row">
+          <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+            <button class="material-icons mdc-top-app-bar__navigation-icon">menu</button>
+            <span class="mdc-top-app-bar__title">Twoodle Dashboard</span>
+          </section>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <!-- Existing tabs and content -->
+        <nav id="menu">
+          <div class="mdc-tab-bar" role="tablist">
+            <div class="mdc-tab-scroller">
+              <div class="mdc-tab-scroller__scroll-area">
+                <div class="mdc-tab-scroller__scroll-content">
+                  <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" id="tab-items">
+                    <span class="mdc-tab__content">
+                      <span class="mdc-tab__icon material-icons" aria-hidden="true">inventory</span>
+                      <span class="mdc-tab__text-label">Items</span>
+                    </span>
+                    <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                      <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                    </span>
+                    <span class="mdc-tab__ripple"></span>
+                  </button>
+                  <button class="mdc-tab" role="tab" id="tab-rateY">
+                    <span class="mdc-tab__content">
+                      <span class="mdc-tab__icon material-icons" aria-hidden="true">trending_up</span>
+                      <span class="mdc-tab__text-label">Rate Y</span>
+                    </span>
+                    <span class="mdc-tab-indicator">
+                      <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                    </span>
+                    <span class="mdc-tab__ripple"></span>
+                  </button>
+                  <button class="mdc-tab" role="tab" id="tab-rateX">
+                    <span class="mdc-tab__content">
+                      <span class="mdc-tab__icon material-icons" aria-hidden="true">bar_chart</span>
+                      <span class="mdc-tab__text-label">Rate X</span>
+                    </span>
+                    <span class="mdc-tab-indicator">
+                      <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                    </span>
+                    <span class="mdc-tab__ripple"></span>
+                  </button>
+                  <button class="mdc-tab" role="tab" id="tab-results">
+                    <span class="mdc-tab__content">
+                      <span class="mdc-tab__icon material-icons" aria-hidden="true">check_circle</span>
+                      <span class="mdc-tab__text-label">Results</span>
+                    </span>
+                    <span class="mdc-tab-indicator">
+                      <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                    </span>
+                    <span class="mdc-tab__ripple"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Sections for each tab -->
+        <div id="ItemsDiv">Items content</div>
+        <div id="rateYDiv" style="display: none;">Rate Y content</div>
+        <div id="rateXDiv" style="display: none;">Rate X content</div>
+        <div id="resultsDiv" style="display: none;">Results content</div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Material Components Web JavaScript -->
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <script>
+    // Initialize MDC components
+    const drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
+    const topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.querySelector('.mdc-top-app-bar'));
+
+    // Drawer toggle for the menu button
+    document.querySelector('.mdc-top-app-bar__navigation-icon').addEventListener('click', () => {
+      drawer.open = !drawer.open;
+    });
+  </script>
+</body>
+</html>
