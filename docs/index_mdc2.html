@@ -8,7 +8,13 @@
   <!-- Material Components Web CSS -->
    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
   <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
   <link rel="stylesheet" href="css/styles_mdc2.css"> <!-- Optional if you have custom styles -->
+  
+  <!-- MDC CSS -->
+
+<!-- MDC JS -->
+
   <!-- Material Components Web JavaScript -->
   
     <!-- Material Icons -->
@@ -393,9 +399,6 @@ transition: .1s;
 </nav>
 
 
-
-
-
 <!-- 
 ██████████████████████████████████████████████
 █░░░░░░░░░░░░░░█░░░░░░░░░░░░███░░░░░░░░░░░░███
@@ -611,7 +614,7 @@ cancel -->
 
 
   <!-- Sections for each tab -->
-<div id="ItemsDiv">
+<div id="ItemsDiv" class="mdc-tab-content">
 
 
 
@@ -647,14 +650,58 @@ cancel -->
 ─────────────────────────────────────────────────────────────────────────────────────────────────
  -->
 
-  <div id="rateYDiv" style="display: none;">
+  <div id="rateYDiv" class="mdc-tab-content" style="display: none;">
 
     <h1>Rate your items by Urgency</h1>
 <h2>These things can't wait</h2>
     <div id="draggable-list">
-        <div class="mdc-card">
-            <p>Card 1: Simple text content</p>
+<div class="mdc-card priorityCard">
+    <!-- Drag zone icon -->
+    <div class="drag-icon">
+        <!-- You can replace with your drag icon -->
+        <span>🟰</span>
+    </div>
+    
+    <!-- Title -->
+    <h3 class="mdc-typography--headline6">Card Title</h3>
+
+    <!-- Description -->
+    <p class="mdc-typography--body2">This is a description for the card, detailing what it entails.</p>
+    
+    <!-- Material chip button with sub-items -->
+    <button class="mdc-chip-set">
+        <div class="mdc-chip" role="row">
+            <span role="gridcell">
+                <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">window</i>
+                <span class="mdc-chip__text">22 Sub-items</span>
+            </span>
         </div>
+    </button>
+
+    <!-- More actions dropdown -->
+    <div class="mdc-menu-surface--anchor">
+        <button class="mdc-button mdc-button--outlined" id="more-actions">
+            <span class="mdc-button__label">More Actions</span>
+            <i class="material-icons">arrow_drop_down</i>
+        </button>
+        <div class="mdc-menu mdc-menu-surface" role="menu" aria-hidden="true">
+            <ul class="mdc-list" role="menu">
+                <li class="mdc-list-item" role="menuitem">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">edit</i>
+                    <span class="mdc-list-item__text">Edit</span>
+                </li>
+                <li class="mdc-list-item" role="menuitem">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">swap_vert</i>
+                    <span class="mdc-list-item__text">Move</span>
+                </li>
+                <li class="mdc-list-item" role="menuitem">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">delete</i>
+                    <span class="mdc-list-item__text">Trash</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
         <div class="mdc-card">
             <p>Card 2: More simple text</p>
@@ -693,7 +740,7 @@ cancel -->
    -->
 
 
-  <div id="rateXDiv" style="display: none;">
+  <div id="rateXDiv" class="mdc-tab-content" style="display: none;">
 
     <h1>Rate your items by Importance</h1>
 <h2>These things are important</h2>
@@ -735,7 +782,7 @@ cancel -->
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
  -->
 
-  <div id="resultsDiv" style="display: none;">
+  <div id="resultsDiv" class="mdc-tab-content" style="display: none;">
     <h1>Twoodle Matrix</h1>
     <h2>2 dimensional prioritization of <span class="axes_code_type">urgency</span> and <span class="axes_code_type">importance</span></h2>
     <div id="twoodle-matrix-grid-version">
@@ -1007,7 +1054,7 @@ cancel -->
   });
 </script>
 
-<!-- Script to handle active tab state with swipe gestures and animation -->
+<!-- Script to handle active tab state -->
 <script>
   document.addEventListener('DOMContentLoaded', function () {
       const tabBar = new mdc.tabBar.MDCTabBar(document.querySelector('.mdc-tab-bar')); // MDC initialization
@@ -1022,28 +1069,16 @@ cancel -->
       };
       let activeTab = localStorage.getItem('activeTab') || 'tab-items';
 
-      function showContent(tabId, direction = null) {
-          Object.values(contents).forEach(content => {
-              content.classList.remove('slide-active', 'slide-in-left', 'slide-in-right', 'active');
-          });
-
-          const newContent = contents[tabId];
-          if (direction === 'left') {
-              newContent.classList.add('slide-in-left');
-          } else if (direction === 'right') {
-              newContent.classList.add('slide-in-right');
-          }
-
-          setTimeout(() => {
-              newContent.classList.add('slide-active', 'active');
-          }, 50);
+      function showContent(tabId) {
+          Object.values(contents).forEach(content => content.style.display = 'none');
+          contents[tabId].style.display = 'block';
       }
 
-      function setActiveTab(tabId, direction = null) {
+      function setActiveTab(tabId) {
           const index = Array.from(tabs).findIndex(tab => tab.id === tabId);
           tabBar.activateTab(index);
           localStorage.setItem('activeTab', tabId);
-          showContent(tabId, direction);
+          showContent(tabId);
       }
 
       // Initialize the active tab and content
@@ -1062,17 +1097,16 @@ cancel -->
           const endX = e.touches[0].clientX;
           const diffX = startX - endX;
 
-          // If swipe distance is significant enough (e.g., 50px), switch tabs with animation
+          // If swipe distance is significant enough (e.g., 50px), switch tabs
           if (Math.abs(diffX) > 50) {
               if (diffX > 0 && currentIndex < tabs.length - 1) {
                   // Swipe left (next tab)
                   currentIndex++;
-                  setActiveTab(tabs[currentIndex].id, 'left');
               } else if (diffX < 0 && currentIndex > 0) {
                   // Swipe right (previous tab)
                   currentIndex--;
-                  setActiveTab(tabs[currentIndex].id, 'right');
               }
+              setActiveTab(tabs[currentIndex].id);
               startX = 0; // Reset swipe start position
           }
       }
@@ -1083,6 +1117,20 @@ cancel -->
           content.addEventListener('touchmove', handleTouchMove, { passive: true });
       });
   });
+</script>
+
+<script>
+    // Initialize the MDC menu component
+    const menuElement = document.querySelector('#more-actions-menu');
+    const menu = new mdc.menu.MDCMenu(menuElement);
+
+    // Find the button that triggers the dropdown
+    const buttonElement = document.querySelector('#more-actions-button');
+
+    // Add a click listener to toggle the menu open
+    buttonElement.addEventListener('click', () => {
+        menu.open = !menu.open;
+    });
 </script>
 
 </body>
