@@ -277,7 +277,7 @@ transition: .1s;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             background-color: red;
         }
-
+</style>
 <!-- CSS for swipe animation -->
 <style>
   .tab-content {
@@ -308,7 +308,16 @@ transition: .1s;
   }
 </style>
 
-</style>
+
+
+
+
+<script type="text/javascript">
+  
+  import {MDCList} from "@material/list";
+const list = MDCList.attachTo(document.querySelector('.mdc-list'));
+list.wrapFocus = true;
+</script>
 
 </head>
 <body>
@@ -338,6 +347,14 @@ transition: .1s;
 ████████████████████████████████████████████████████████████████████████████
 ████████████████████████████████████████████████████████████████████████████
  -->
+
+<nav id="sidebar">
+  <div>a</div>
+  <div>b</div>
+  <div>c</div>
+</nav>
+
+
 <nav id="menu">
     <div class="mdc-tab-bar" role="tablist">
       <div class="mdc-tab-scroller">

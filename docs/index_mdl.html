@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDL Tabs and Permanent Drawer</title>
+  
+  <!-- Material Design Lite CSS and Icons -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <style>
+    .mdl-layout__drawer {
+      width: 240px;
+    }
+    .mdl-layout__content {
+      padding: 16px;
+      margin-left: 240px;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+
+
+  <!-- MDL Layout with Permanent Drawer -->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <!-- Drawer (Navigation Sidebar) -->
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Twoodle</span>
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="#" onclick="showTab('content-items')"><i class="material-icons">checklist</i> Work List</a>
+        <a class="mdl-navigation__link" href="#" onclick="showTab('content-rateY')"><i class="material-icons">swap_vert</i> Urgency</a>
+        <a class="mdl-navigation__link" href="#" onclick="showTab('content-rateX')"><i class="material-icons">swap_horiz</i> Importance</a>
+        <a class="mdl-navigation__link" href="#" onclick="showTab('content-results')"><i class="material-icons">window</i> Twoodle</a>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="mdl-layout__content">
+      <header class="mdl-layout__header mdl-layout__header--transparent">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">My Application</span>
+        </div>
+      </header>
+
+      <!-- Tab Content Sections -->
+      <section id="content-items" class="tab-content active">
+        <h1>Work List</h1>
+        <p>Content for Work List</p>
+
+      </section>
+
+      <section id="content-rateY" class="tab-content">
+        <h1>Rate your items by Urgency</h1>
+        <p>These things can't wait</p>
+        <!-- Cards and draggable list structure -->
+
+<!-- Wide card with share menu button -->
+<style>
+.demo-card-wide.mdl-card {
+  width: 512px;
+}
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url('../assets/demos/welcome_card.jpg') center / cover;
+}
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+</style>
+
+<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text">Welcome</h2>
+  </div>
+  <div class="mdl-card__supporting-text">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    Mauris sagittis pellentesque lacus eleifend lacinia...
+  </div>
+  <div class="mdl-card__actions mdl-card--border">
+    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      Get Started
+    </a>
+  </div>
+  <div class="mdl-card__menu">
+    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+      <i class="material-icons">share</i>
+    </button>
+  </div>
+</div>
+
+
+      </section>
+
+      <section id="content-rateX" class="tab-content">
+        <h1>Rate your items by Importance</h1>
+        <p>These things are important</p>
+        <!-- Cards and draggable list structure -->
+      </section>
+
+      <section id="content-results" class="tab-content">
+        <h1>Twoodle Matrix</h1>
+        <p>2-dimensional prioritization of urgency and importance</p>
+        <!-- Twoodle matrix grid structure -->
+      </section>
+    </main>
+  </div>
+
+  <!-- MDL JavaScript -->
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+  <!-- Script to toggle active tab content -->
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    }
+  </script>
+</body>
+</html>

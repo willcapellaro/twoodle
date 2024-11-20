@@ -10,6 +10,7 @@ body {
   font-optical-sizing: auto;
   font-weight: <weight>;
   font-style: normal;
+
 }
 
 /* Optionally, apply different weights to specific elements */
@@ -28,6 +29,9 @@ font-weight: 300;}
 nav {
 
 }
+
+#sidebar { 
+display:grid; }
 
 /* Ensure the Inter font is applied to the tab labels */
 .mdc-tab__text-label {
@@ -71,13 +75,28 @@ nav {
   }
 }
 
-@media (min-width: 700px) {
+
+@media only screen and (max-width: 599px) {
+ body {
+  display: grid;
+  grid-template-rows: auto auto;
+ }
+
+}
+
+
+@media only screen and (min-width: 600px) {
 
   body {
     max-width: 700px;
-    margin-left: auto;
+    margin-left: 2em;
+    margin-top: 2em;
     margin-right: auto;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 4em;
   }
 }
 
-``
+

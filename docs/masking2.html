@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Masked Buttons Example</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: black; /* Black web page background */
+      color: white;
+    }
+
+    .header {
+      position: relative;
+      background-color: #333; /* Charcoal for testing */
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .rainbow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300%;
+      height: 300px; /* Larger rainbow rectangle */
+      background: conic-gradient(
+        #f00,
+        #ff0,
+        #0f0,
+        #0ff,
+        #00f,
+        #f0f,
+        #f00
+      );
+      animation: spin 5s linear infinite;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+      z-index: 1; /* Keep links above the rainbow graphic */
+    }
+
+    .footer-links a {
+      font-size: 18px;
+      text-decoration: none;
+      color: transparent; /* Fully transparent text */
+      -webkit-mask: text; /* Masking with text */
+      mask: text;
+      -webkit-mask-composite: destination-in;
+      mask-composite: intersect;
+      background: conic-gradient(
+        #f00,
+        #ff0,
+        #0f0,
+        #0ff,
+        #00f,
+        #f0f,
+        #f00
+      ); /* Apply rainbow gradient */
+      background-clip: text;
+      animation: spin 5s linear infinite;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .footer-links a:hover {
+      color: white; /* Highlight text on hover */
+    }
+
+    @keyframes spin {
+      from {
+        transform: translateX(-50%) rotate(0deg);
+      }
+      to {
+        transform: translateX(-50%) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="rainbow"></div>
+    <nav class="footer-links">
+      <a href="#about">About Us</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+      <a href="#privacy">Privacy Policy</a>
+      <a href="#terms">Terms of Use</a>
+    </nav>
+  </header>
+</body>
+</html>
