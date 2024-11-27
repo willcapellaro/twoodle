@@ -1,0 +1,201 @@
+<html>
+<style>
+html {background-color: gold;
+	    overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+	-webkit-scroll-snap-type: y mandatory;
+	scroll-behavior: smooth;
+		font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
+
+}
+body {padding: 0; margin: 0;}
+
+.margintext {
+	padding: 1em;
+}
+
+.legoinstrux {
+	padding: 2em; 
+	text-align: center; 
+	width: auto; 
+	height: 100vh;  
+	padding-right: 2em;   
+	scroll-snap-align: start;
+}
+
+.legoinstrux h2 {
+	text-align: left;
+	position: absolute;
+	padding-left: .5em;
+	padding-top: -.5em;
+	margin-top: .34em;
+	font-size: 48px;
+}
+
+.legoinstrux h1 {
+/*	padding-top: 40vh; 
+	padding-bottom: 30vh;*/}
+
+.legoinstrux div {
+	background-color: #C5E3EC;
+	height: 90%; 
+	margin-top: auto; 
+	margin-bottom: auto; 
+	border-radius: 3px; 
+	box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+	position: relative;
+}
+
+.legoinstrux div img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+a {text-decoration: none; color: navy; margin-right: 1em;}
+a:hover {border-bottom: 1px navy solid;}
+ul {
+	font-size: 20px; 
+	list-style-type: none; 
+	padding: 0; 
+	margin: 0;
+	line-height: 3em;
+}
+li {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+
+.inset a {
+  outline: 2px solid gold;
+  outline-offset: -5px;
+}
+
+li a {
+	display: inline-block;
+	width: 2em;
+	text-align: center;
+	background-color: white;
+	padding: 0 8px 0 8px;
+	margin: 0;
+	margin-bottom: 5px;
+	border-radius: 4px;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+	border: none;
+
+}
+
+.current {
+	opacity: .6;
+}
+
+li a:hover {
+	background-color: whitesmoke;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.05);
+	outline: blue 1px;
+		border: none;
+
+}
+li a:focus {
+	background-color: blue;
+	color: white;
+	outline: none;
+}
+
+.inset a:focus {
+  outline: 2px solid gold;
+  outline-offset: -5px;
+}
+.smallh2 {
+	display: block;
+	font-size: 50%;
+	margin-right: 1em;
+	opacity: .6;
+}
+
+.xs {
+ max-height: 40%;
+}
+
+
+html {background-color: yellow;}
+
+@media only screen and (min-width: 700px) and (max-width: 1199px){
+html {background-color: orange;} 
+}
+
+@media only screen and (min-width: 1200px){
+html {background-color: red;}
+
+.legoinstrux {
+	padding-left: 24em;
+}
+
+.margintext {
+	position: fixed; 
+	top: 1em; 
+	left: 2em; 
+	width: 20em;
+	padding: 0;
+}
+
+
+}
+</style>
+
+<body>
+<div class="margintext">
+	<h1><a href="#diva">Pelican</a></h1>
+	<h3>30571</h3>
+	<p>Along with retail sale at multiple locations around the world, this set was available as a gift with purchases exceeding 699 RMB at the LEGO Stores in Beijing, China and Shanghai, China (Disneytown) during the entire month of September 2019 and at the LEGO Store in Shanghai, China (People's Square) between September 1 and September 26, 2019.
+	</p>
+
+	<h3>Steps</h3>
+	<ul>
+		<li><a href="#i1" class="current">1</a> </li>
+		<li><a href="#i2">2</a> </li>
+		<li><a href="#i3">3</a> </li>
+		<li><a href="#i4">4</a> </li>
+		<li><a href="#i5">5</a> </li>
+		<li><a href="#i6">6</a> </li>
+		<li><a href="#i7">7</a> </li>
+		<li><a href="#i8">8</a> </li>
+		<li><a href="#i9">9</a> </li>
+		<li><a href="#i10">10</a></li>
+		<li><a href="#i11">11</a></li>
+		<li><a href="#i12">12</a></li>
+		<li><a href="#i13">13</a></li>
+		<li><a href="#i14">14</a></li>
+		<li class="inset"><a href="#i15">1</a></li>
+		<li class="inset"><a href="#i16">2</a></li>
+		<li class="inset"><a href="#i17">3</a></li>
+		<li class="inset"><a href="#i18">4</a></li>
+	</ul>
+
+</div>
+
+	<div class="legoinstrux" id="i1"><div><h2>1</h2><img class="item xs" src="1.svg" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i2"><div><h2>2</h2><img class="item" src="2.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i3"><div><h2>3</h2><img class="item" src="3.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i4"><div><h2>4</h2><img class="item" src="4.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i5"><div><h2>5</h2><img class="item" src="5.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i6"><div><h2>6</h2><img class="item" src="6.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i7"><div><h2>7</h2><img class="item" src="7.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i8"><div><h2>8</h2><img class="item tall" src="8.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i9"><div><h2>9</h2><img class="item tall" src="9.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i10"><div><h2>10</h2><img class="item" src="10.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i11"><div><h2>11</h2><img class="item" src="11.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i12"><div><h2>12</h2><img class="item tall" src="12.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i13"><div><h2>13</h2><img class="item tall" src="13.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i14"><div><h2>14</h2><img class="item" src="14.1.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i15"><div><h2><span class="smallh2">14</span>1</h2><img class="item" src="14.2.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i16"><div><h2><span class="smallh2">14</span>2</h2><img class="item" src="14.3.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i17"><div><h2><span class="smallh2">14</span>3</h2><img class="item" src="14.4.png" alt="instruction image"></div></div>
+	<div class="legoinstrux" id="i18"><div><h2><span class="smallh2">14</span>4</h2><img class="item" src="14.5.png" alt="instruction image"></div></div>
+</body>
+
+</html>
