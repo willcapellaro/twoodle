@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizcom Keyboard Shortcuts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Onest', sans-serif;
+            background-color: #121212;
+            color: #E0E0E0;
+            margin: 0;
+            padding: 0 2em;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #searchInput::placeholder {
+            font-family: 'Onest', sans-serif;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+        .search-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #BB86FC;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .search-title input {
+            background: none;
+            border: none;
+            font-size: inherit;
+            color: inherit;
+            outline: none;
+            width: 100%;
+        }
+        .open-button {
+            background-color: #BB86FC;
+            color: #121212;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .key {
+                display: inline-block;
+                padding: 5px 12px;
+                margin: 2px;
+                border-radius: 6px;
+                background-color: #2E0249; /* Dark purple background */
+                color: #dcc; /* White text */
+                font-weight: semibold;
+                border: 1px solid #BB86FC; /* Light purple outline */
+                border-bottom: 4px solid #BB86FC; /* Thicker bottom outline to represent keys */
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Soft shadow */
+                text-align: center;
+                font-size: 1rem; /* Keep font size uniform */
+            }
+        .tabs {
+            display: flex;
+            margin-top: 20px;
+            border-bottom: 2px solid #444;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+            background-color: #1F1B24;
+            color: #BB86FC;
+            margin-right: 10px;
+        }
+        .tab.active {
+            background-color: #BB86FC;
+            color: #121212;
+            border-bottom: none;
+        }
+        .tab .hint {
+            font-size: 0.8rem;
+            color: #BB86FC;
+            margin-left: 10px;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+        .hint .key {
+            display: inline-block;
+            padding: 3px 8px;
+            margin: 0 2px;
+            border-radius: 4px;
+            background-color: #2E0249; /* Dark purple background */
+            color: #BB86FC; /* Light purple text */
+            font-weight: bold;
+            border: 1px solid #BB86FC; /* Light purple outline */
+            border-bottom: 2px solid #BB86FC; /* Thinner bottom outline */
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15); /* Soft shadow */
+            font-size: 0.7rem; /* Smaller size */
+            text-align: center;
+        }
+        .tab.active  .hint  {
+            color: #2E0249; /* Light purple text */
+        }
+        .tab.active  .hint .key  {
+            color: #2E0249; /* Light purple text */
+            background-color: #BB86FC; /* Dark purple background */
+            border: 1px solid #2E0249; /* Light purple outline */
+        }
+        .hint i {
+            font-size: 0.8rem;
+            color: #BB86FC; /* Match the hint style */
+            margin-right: 2px;
+            vertical-align: middle; /* Aligns the icon with text */
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        .shortcuts-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+
+        }
+        .shortcuts-table th, .shortcuts-table td {
+            padding: 10px;
+            text-align: left;
+        }
+        .shortcuts-table th {
+            background-color: #1F1B24;
+            color: #E0E0E0;
+        }
+        .shortcuts-table td {
+            background-color: #2C2C2C;
+            border-bottom: 1px solid #444;
+        }
+        table i {
+            width: 2em;
+        }
+        table tr td:nth-child(1) {
+            width: 40%;
+        }
+        table tr td:nth-child(2) {
+            width: 30%;
+        }
+
+        table tr td:nth-child(3) i {
+            width: auto;
+            padding-right: .5em;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+        .qualifier
+        { opacity:.8;
+        color: #BB86FC ;
+        font-size: .8em;
+        margin-left: 1em;
+    }
+        .qualifier i
+        {
+            margin: none;
+            width: auto;
+        }
+
+/* Mobile: Small screens */
+@media (max-width: 767px) {
+    body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    td {
+        font-size: 10px;
+    }
+    table i {
+        font-size: 16px;
+        margin: 0;
+        width: 1.5em;
+    }
+    table span i {
+        font-size: 10px;
+    }
+    .key {
+            padding: 3px 8px;
+            margin: 0 2px;
+            border-radius: 4px;
+                        font-size: 0.7rem; /* Smaller size */
+
+    }
+    .tab {
+    padding: 4px 8x;
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+    background-color: #1F1B24;
+    color: #BB86FC;
+    margin-right: 5px;
+    font-size: 12px;
+}
+    .tab .key {
+        display: none;
+    }
+    .open-button {
+        display: none;
+    }
+    .search-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #BB86FC;
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+            gap: 10px;
+        }
+
+        table tr td:nth-child(1) {
+            width: auto;
+        }
+        table tr td:nth-child(2) {
+            width: auto;
+        }
+        th { 
+        font-size:12px }
+
+        
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="search-title">
+            <i class="fas fa-search"></i>
+            <input id="searchInput" type="text" placeholder="Vizcom Shortcuts" oninput="filterShortcuts()" autocomplete="off" pattern="[a-zA-Z]*">
+        </div>
+        <a href="https://app.vizcom.ai/workbench/" target="_blank" class="open-button">Open Vizcom</a>
+    </div>
+
+<div class="tabs">
+    <div class="tab active" onclick="showSection('general')">
+        General
+        <span class="hint">
+            <span class="key">1</span>
+        </span>
+    </div>
+    <div class="tab" onclick="showSection('workbench')">
+        Workbench
+        <span class="hint">
+            <span class="key">2</span>
+        </span>
+    </div>
+    <div class="tab" onclick="showSection('2d-studio')">
+        2D Studio
+        <span class="hint">
+             <span class="key">3</span>
+        </span>
+    </div>
+</div>
+
+<div class="section active" id="general">
+    <table class="shortcuts-table">
+        <tr><th>Action</th><th>Keyboard</th><th>Mouse</th></tr>
+        <tr data-title="Pan"><td><i class="fas fa-arrows-alt icon"></i>Pan</td><td></td><td><span class="key">Space</span> + <span class="key"><i class="fas fa-mouse-pointer"></i>Drag</span></td></tr>
+        <tr data-title="Zoom In/Out"><td><i class="fas fa-search-plus icon"></i>Zoom In/Out</td>
+            <td><span class="key">⌘</span> + <span class="key">+</span> / <span class="key">-</span></td>
+            <td><span class="key">⌘</span> + <span class="key"><i class="fas fa-mouse-pointer"></i>Drag</span></td>
+        </tr>
+        <tr data-title="Undo"><td><i class="fas fa-undo icon"></i>Undo</td><td><span class="key">⌘</span> + <span class="key">Z</span></td><td></td></tr>
+        <tr data-title="Redo"><td><i class="fas fa-redo icon"></i>Redo</td><td><span class="key">⌘</span> + <span class="key">Shift</span> + <span class="key">Z</span></td><td></td></tr>
+        <tr data-title="Reset View"><td><i class="fas fa-sync icon"></i>Reset View</td><td><span class="key">Esc</span></td><td></td></tr>
+        <tr data-title="Delete"><td><i class="fas fa-trash icon"></i>Delete</td><td><span class="key">Delete</span></td><td></td></tr>
+        <tr data-title="Copy"><td><i class="fas fa-copy icon"></i>Copy</td><td><span class="key">⌘</span> + <span class="key">C</span></td><td></td></tr>
+        <tr data-title="Paste"><td><i class="fas fa-paste icon"></i>Paste</td><td><span class="key">⌘</span> + <span class="key">V</span></td><td></td></tr>
+    </table>
+</div>
+
+<div class="section" id="workbench">
+    <table class="shortcuts-table">
+        <tr><th>Action</th><th>Keyboard</th><th>Mouse</th></tr>
+        <tr data-title="Enter 2D Studio"><td><i class="fas fa-pencil-alt icon"></i>Enter 2D Studio</td><td></td><td><span class="key"><i class="fas fa-mouse-pointer"></i>Double Click</span></td></tr>
+        <tr data-title="Text Tool"><td><i class="fas fa-font icon"></i>Text Tool</td><td><span class="key">T</span></td><td></td></tr>
+        <tr data-title="Pan Canvas"><td><i class="fas fa-arrows-alt icon"></i>Pan Canvas</td><td>
+            <span class="key">↑</span> /
+            <span class="key">↓</span> /
+            <span class="key">←</span> /
+            <span class="key">→</span></td><td></td>
+        </tr>
+        <tr data-title="Bring to Front"><td><i class="fas fa-layer-group icon"></i>Bring to Front / Back</td>
+            <td><span class="key">[</span> / <span class="key">]</span></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+
+<div class="section" id="2d-studio">
+    <table class="shortcuts-table">
+        <tr><th>Action</th><th>Keyboard</th><th>Mouse</th></tr>
+        <tr data-title="Rotate Canvas"><td><i class="fas fa-sync-alt icon"></i>Rotate Canvas</td>
+            <td></td>
+            <td><span class="key">R</span> + <span class="key"><i class="fas fa-mouse-pointer"></i>Drag</span></td>
+        </tr>
+        <tr data-title="Brush Tool"><td><i class="fas fa-brush icon"></i>Brush Tool</td><td><span class="key">B</span></td><td></td></tr>
+        <tr data-title="Eraser Tool"><td><i class="fas fa-eraser icon"></i>Eraser Tool</td><td><span class="key">E</span></td><td></td></tr>
+        <tr data-title="Move Tool"><td><i class="fas fa-arrows-alt icon"></i>Move Tool</td><td><span class="key">M</span></td><td></td></tr>
+        <tr data-title="Skew Tool"><td><i class="fas fa-expand-arrows-alt icon"></i>Skew Tool</td><td><span class="key">T</span></td><td></td></tr>
+        <tr data-title="Paint Bucket Tool"><td><i class="fas fa-fill-drip icon"></i>Paint Bucket Tool</td><td><span class="key">V</span></td><td></td></tr>
+        <tr data-title="New Layer"><td><i class="fas fa-layer-group icon"></i>New Layer</td><td><span class="key">N</span></td><td></td></tr>
+        <tr data-title="Line Shape Tool"><td><i class="fas fa-minus icon"></i>Line Shape Tool</td><td><span class="key">L</span></td><td></td></tr>
+        <tr data-title="Ellipse Shape Tool"><td><i class="fas fa-circle icon"></i>Ellipse Shape Tool</td><td><span class="key">O</span></td><td></td></tr>
+        <tr data-title="Box Shape Tool"><td><i class="fas fa-square icon"></i>Box Shape Tool</td><td><span class="key">U</span></td><td></td></tr>
+        <tr data-title="Selection Tools"><td><i class="fas fa-mouse-pointer icon"></i>Selection Tools</td><td><span class="key">G</span></td><td></td></tr>
+        <tr data-title="Flip Canvas"><td><i class="fas fa-retweet icon"></i>Flip Canvas</td><td><span class="key">F</span></td><td></td></tr>
+        <tr data-title="Resize Brush"><td><i class="fas fa-brush icon"></i>Resize Brush</td>
+            <td><span class="key">[</span> / <span class="key">]</span></td>
+            <td><span class="key">S</span> + <span class="key"><i class="fas fa-mouse-pointer"></i>Drag</span></td>
+        </tr>
+        <tr data-title="Pick Color"><td><i class="fas fa-eye-dropper icon"></i>Pick Color<span class="qualifier"><i class="fas fa-brush icon"></i>While drawing</span></td>
+            <td></td>
+            <td><span class="key">⌥</span> + <span class="key">Click</span></td>
+        </tr>
+        <tr data-title="Add Remove from Selection"><td><i class="fas fa-eye-dropper icon"></i>Add to / Remove from Selection</td>
+            <td><span class="key">Shift</span> / <span class="key">⌥</span></td>
+            <td></td>
+        </tr>
+
+    </table>
+</div>
+
+<script>
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+        document.querySelector(`.tab[onclick="showSection('${sectionId}')"]`).classList.add('active');
+    }
+
+    function filterShortcuts() {
+        const searchInput = document.getElementById('searchInput');
+        searchInput.value = searchInput.value.replace(/[^a-zA-Z]/g, ''); // Only allow letters
+
+        const query = searchInput.value.toLowerCase();
+        document.querySelectorAll('tr[data-title]').forEach(row => {
+            const title = row.getAttribute('data-title').toLowerCase();
+            row.style.display = title.includes(query) ? '' : 'none';
+        });
+    }
+
+    document.addEventListener('keydown', (event) => {
+        // Intercept Cmd + F (or Ctrl + F on Windows/Linux)
+        if ((event.metaKey || event.ctrlKey) && event.key === 'f') {
+            event.preventDefault();
+            document.getElementById('searchInput').focus();
+        }
+
+        // Reset search with Escape key
+        if (event.key === 'Escape') {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = '';
+            filterShortcuts();
+        }
+    });
+
+    // Add input event listener to run the filtering
+    document.getElementById('searchInput').addEventListener('input', filterShortcuts);
+
+    document.addEventListener('keydown', (event) => {
+    // Switch tabs with Shift + 1/2/3 or just 1/2/3
+    if (event.key === '1') {
+        showSection('general');
+    } else if (event.key === '2') {
+        showSection('workbench');
+    } else if (event.key === '3') {
+        showSection('2d-studio');
+    }
+
+    // Intercept Command + F for focusing the search
+    if ((event.metaKey || event.ctrlKey) && event.key === 'f') {
+        event.preventDefault();
+        document.getElementById('searchInput').focus();
+    }
+
+    // Reset search with Escape
+    if (event.key === 'Escape') {
+        const searchInput = document.getElementById('searchInput');
+        searchInput.value = '';
+        filterShortcuts();
+    }
+});
+
+    // save tab location on reset
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+        document.querySelector(`.tab[onclick="showSection('${sectionId}')"]`).classList.add('active');
+
+        // Save the active tab to localStorage
+        localStorage.setItem('activeTab', sectionId);
+    }
+
+    function filterShortcuts() {
+        const searchInput = document.getElementById('searchInput');
+        searchInput.value = searchInput.value.replace(/[^a-zA-Z]/g, ''); // Only allow letters
+
+        const query = searchInput.value.toLowerCase();
+        document.querySelectorAll('tr[data-title]').forEach(row => {
+            const title = row.getAttribute('data-title').toLowerCase();
+            row.style.display = title.includes(query) ? '' : 'none';
+        });
+    }
+
+    document.addEventListener('keydown', (event) => {
+        // Intercept Command + F for focusing the search
+        if ((event.metaKey || event.ctrlKey) && event.key === 'f') {
+            event.preventDefault();
+            document.getElementById('searchInput').focus();
+        }
+
+        // Reset search with Escape
+        if (event.key === 'Escape') {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = '';
+            filterShortcuts();
+        }
+    });
+
+    // Add input event listener to run the filtering
+    document.getElementById('searchInput').addEventListener('input', filterShortcuts);
+
+    // Restore the active tab after refresh
+    window.addEventListener('load', () => {
+        const savedTab = localStorage.getItem('activeTab');
+        if (savedTab) {
+            showSection(savedTab);
+        } else {
+            showSection('general'); // Default to the "General" tab
+        }
+    });
+
+
+</script>
+</body>
+</html>
