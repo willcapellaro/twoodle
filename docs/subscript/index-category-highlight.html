@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Select Class</title>
+    <style>
+        /* Default select style */
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        /* Styles for each category */
+        .category-entertainment {
+            background-color: lightblue;
+        }
+
+        .category-utilities {
+            background-color: lightgreen;
+        }
+
+        .category-software {
+            background-color: lightyellow;
+        }
+
+        .category-other {
+            background-color: lightgray;
+        }
+
+        .category-unknown {
+            background-color: lightpink;
+        }
+
+        .category-ending_service {
+            background-color: lightcoral;
+        }
+
+        .category-check {
+            background-color: lightgoldenrodyellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dynamic Class Change for Select</h1>
+    <p>Select a category to see the background change:</p>
+
+    <!-- Select element -->
+    <select id="categorySelect" data-index="0" data-field="category">
+        <option value="entertainment">Entertainment</option>
+        <option value="utilities">Utilities</option>
+        <option value="software">Software</option>
+        <option value="other">Other</option>
+        <option value="unknown">Unknown</option>
+        <option value="ending_service">Ending Service</option>
+        <option value="check">Check</option>
+    </select>
+
+    <!-- Script -->
+    <script>
+        // Target all select elements with the id 'categorySelect'
+        document.querySelectorAll('#categorySelect').forEach((selectElement) => {
+            // Add an event listener for the 'change' event
+            selectElement.addEventListener('change', (event) => {
+                // Get the selected option value
+                const selectedValue = event.target.value;
+
+                // Remove any existing class that starts with 'category-'
+                event.target.className = [...event.target.classList]
+                    .filter(className => !className.startsWith('category-'))
+                    .join(' ');
+
+                // Add the new class based on the selected value
+                event.target.classList.add(`category-${selectedValue}`);
+            });
+        });
+    </script>
+</body>
+</html>

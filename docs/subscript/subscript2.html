@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub Scribe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container sketchy-border">
+        <h1>Sub Scribe</h1>
+        
+        <!-- Total Cost Summary -->
+        <div class="total-summary">
+            <div id="total-cost"></div>
+            <div id="total-monthly"></div>
+            <div id="total-annual"></div>
+        </div>
+
+        <!-- Chart Containers -->
+        <div class="chart-container">
+            <div id="monthly-chart" class="chart"></div>
+            <div id="annual-chart" class="chart"></div>
+        </div>
+
+        <!-- Subscription Data Table -->
+        <div class="table-container" id="subscription-table"></div>
+    </div>
+
+    <script>
+        const currentDay = new Date().getDate();
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth() + 1;
+
+        // Initialize or load subscriptions from local storage
+        const loadData = () => {
+            return JSON.parse(localStorage.getItem("subscriptions")) || [];
+        };
+
+        const subscriptionData = loadData();
+
+        // Function to create the input grid
+        function createInputGrid() {
+            let gridHTML = `
+                <div class="input-label">Name</div>
+                <div class="input-label">Cost</div>
+                <div class="input-label">Period</div>
+                <div class="input-label">Charge Date</div>
+                <div class="input-label">Active</div>
+                <div class="input-label">Notes</div>
+            `;
+            for (let i = 0; i < 50; i++) {
+                gridHTML += `
+                    <input type="text" placeholder="Subscription Name" data-field="name">
+                    <input type="number" placeholder="Cost" data-field="cost">
+                    <select data-field="period">
+                        <option value="monthly">Monthly</option>
+                        <option value="annual">Annual</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <input type="date" data-field="chargeDate">
+                    <input type="checkbox" data-field="active">
+                    <input type="text" placeholder="Notes" data-field="notes">
+                `;
+            }
+            $('#subscription-table').html(gridHTML);
+        }
+
+        // Function to update local storage and charts
+        function updateData() {
+            const rows = document.querySelectorAll('.table-container input');
+            const subscriptions = [];
+            rows.forEach((input, index) => {
+                const rowIndex = Math.floor(index / 6);
+                if (!subscriptions[rowIndex]) subscriptions[rowIndex] = {};
+                subscriptions[rowIndex][input.dataset.field] = input.value;
+            });
+
+            // Save updated subscriptions to local storage
+            localStorage.setItem("subscriptions", JSON.stringify(subscriptions));
+
+            // Re-render charts with updated data
+            renderCharts(subscriptions);
+        }
+
+        // Render Monthly and Annual Charts
+        function renderCharts(data) {
+            const monthlyData = [];
+            const annualData = [];
+
+            data.forEach((item) => {
+                if (item.cost && item.period) {
+                    let cost = parseFloat(item.cost);
+                    let chargeDate = new Date(item.chargeDate);
+                    if (item.period === "monthly") {
+                        const dayOfMonth = chargeDate.getDate();
+                        monthlyData.push([dayOfMonth, cost]);
+                    }
+                    if (item.period === "annual") {
+                        const dayOfYear = getDayOfYear(chargeDate);
+                        annualData.push([dayOfYear, cost]);
+                    }
+                }
+            });
+
+            Highcharts.chart('monthly-chart', {
+                chart: { type: 'scatter' },
+                title: { text: 'Monthly Subscription Costs' },
+                xAxis: {
+                    min: 1,
+                    max: 31,
+                    title: { text: 'Day of Month' },
+                    plotLines: [{
+                        color: 'red',
+                        width: 2,
+                        value: currentDay,
+                        label: { text: 'Today', align: 'center' }
+                    }]
+                },
+                yAxis: { title: { text: 'Cost ($)' }, min: 0 },
+                series: [{
+                    name: 'Costs',
+                    data: monthlyData
+                }]
+            });
+
+            Highcharts.chart('annual-chart', {
+                chart: { type: 'scatter' },
+                title: { text: 'Annual Subscription Costs' },
+                xAxis: {
+                    min: 1,
+                    max: 366,
+                    title: { text: 'Day of Year' },
+                    plotLines: [{
+                        color: 'red',
+                        width: 2,
+                        value: getDayOfYear(new Date()),
+                        label: { text: 'Today', align: 'center' }
+                    }]
+                },
+                yAxis: { title: { text: 'Cost ($)' }, min: 0 },
+                series: [{
+                    name: 'Costs',
+                    data: annualData
+                }]
+            });
+        }
+
+        // Helper function to get the day of the year
+        function getDayOfYear(date) {
+            const start = new Date(date.getFullYear(), 0, 0);
+            const diff = date - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            return Math.floor(diff / oneDay);
+        }
+
+        // Render the app
+        createInputGrid();
+        renderCharts(subscriptionData);
+
+        // Update data and charts when any input changes
+        $(document).on('change', 'input, select', updateData);
+    </script>
+
+    <style>
+        body {
+            font-family: 'Dancing Script', cursive;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            border: 2px dashed #444;
+            background-color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #333;
+        }
+
+        .total-summary {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Layout for chart containers */
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .chart {
+            width: 100%;
+            height: 400px;
+        }
+
+        .table-container {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-gap: 10px;
+        }
+
+        input, select, checkbox {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        /* Sketchy border for the container */
+        .sketchy-border {
+            border: 2px dashed #333;
+            padding: 20px;
+        }
+
+        /* Responsive layout adjustments */
+        @media (min-width: 768px) {
+            .chart-container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .chart {
+                flex: 1;
+                min-width: 48%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .chart-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagonal Hatching Effect</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 300px;
+      height: 100px;
+      background: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .box {
+      width: 50px;
+      height: 50px;
+      background-image: repeating-linear-gradient(
+        135deg,
+        #ff5722 0%,
+        #ff5722 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      background-size: 4px 4px;
+      transition: background-size 0.3s ease, width 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .box:hover {
+      background-size: 8px 8px; /* Thicker lines on hover */
+      width: 100%; /* Expand width on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box"></div>
+  </div>
+</body>
+</html>

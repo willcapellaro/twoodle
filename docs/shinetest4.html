@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webcam Reflection Shine</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #ffffff;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 150px);
+    gap: 20px;
+  }
+
+  .box {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    background-color: var(--color, #ccc);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .box[data-shine] {
+    --glossiness: 0px;
+    --opacity: 0;
+  }
+
+  .box[data-shine="30"] {
+    --opacity: 0.3;
+    --glossiness: 4px;
+  }
+
+  .box[data-shine="60"] {
+    --opacity: 0.6;
+    --glossiness: 8px;
+  }
+
+  .box[data-shine="100"] {
+    --opacity: 1;
+    --glossiness: 12px;
+  }
+
+  .box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, var(--opacity));
+    mix-blend-mode: overlay;
+    z-index: 2;
+  }
+
+  .box::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("#");
+    filter: blur(var(--glossiness));
+    z-index: 1;
+  }
+
+  video.webcam {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1); /* Mirror effect */
+    z-index: -1;
+    filter: blur(20px);
+  }
+
+  .controls {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+  }
+</style>
+</head>
+<body>
+<div class="controls">
+  <label for="cameraSelect">Select Camera: </label>
+  <select id="cameraSelect"></select>
+</div>
+<div class="grid">
+  <div class="box" data-shine="30"></div>
+  <div class="box" data-shine="60"></div>
+  <div class="box" data-shine="100"></div>
+  <div class="box" data-shine="none"></div>
+  <div class="box" data-shine="30"></div>
+  <div class="box" data-shine="60"></div>
+  <div class="box" data-shine="100"></div>
+  <div class="box" data-shine="none"></div>
+</div>
+<video autoplay playsinline muted class="webcam"></video>
+
+<script>
+  const video = document.querySelector('.webcam');
+  const cameraSelect = document.getElementById('cameraSelect');
+
+  async function setupWebcam() {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+      // Populate camera selector
+      cameraSelect.innerHTML = videoDevices.map((device, index) =>
+        `<option value="${device.deviceId}">${device.label || `Camera ${index + 1}`}</option>`
+      ).join('');
+
+      // Set initial camera
+      if (videoDevices.length > 0) {
+        startStream(videoDevices[0].deviceId);
+      }
+
+      cameraSelect.addEventListener('change', (e) => {
+        startStream(e.target.value);
+      });
+    } catch (error) {
+      console.error('Error accessing webcam:', error);
+    }
+  }
+
+  async function startStream(deviceId) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { deviceId: { exact: deviceId } }
+      });
+      video.srcObject = stream;
+    } catch (error) {
+      console.error('Error starting stream:', error);
+    }
+  }
+
+  setupWebcam();
+</script>
+</body>
+</html>
