@@ -199,6 +199,12 @@
                         font-size: 0.7rem; /* Smaller size */
 
     }
+.tabs {
+    display: flex; /* Enable Flexbox */
+    justify-content: center; /* Center tabs horizontally */
+    gap: 0px; /* Add spacing between tabs */
+    margin: 20px 0; /* Optional: Add vertical spacing around the tabs */
+}
     .tab {
     padding: 4px 8x;
     cursor: pointer;
@@ -226,15 +232,27 @@
         }
 
         table tr td:nth-child(1) {
-            width: auto;
+            width: 30vw;
         }
         table tr td:nth-child(2) {
             width: auto;
         }
         th { 
-        font-size:12px }
+        display: none;
+         }
 
-        
+    .shortcuts-table tr {
+        display: grid; /* Make rows grid containers */
+        grid-template-columns: auto 1fr auto; /* All cells in a single column */
+        grid-template-rows: auto auto; /* Ensure rows adjust to content */
+        gap: 0px; /* Add spacing between stacked items */
+
+    }
+
+            .shortcuts-table td:nth-child(2):empty,
+    .shortcuts-table td:nth-child(3):empty {
+        display: none; /* Hide empty cells */
+    }
 }
 
 
@@ -273,17 +291,46 @@
 <div class="section active" id="general">
     <table class="shortcuts-table">
         <tr><th>Action</th><th>Keyboard</th><th>Mouse</th></tr>
-        <tr data-title="Pan"><td><i class="fas fa-arrows-alt icon"></i>Pan</td><td></td><td><span class="key">Space</span> + <span class="key"><i class="fas fa-mouse-pointer"></i>Drag</span></td></tr>
-        <tr data-title="Zoom In/Out"><td><i class="fas fa-search-plus icon"></i>Zoom In/Out</td>
+        <tr data-title="Pan">
+            <td><i class="fas fa-arrows-alt icon"></i>Pan</td>
+            <td></td>
+            <td><span class="key">Space</span> + <span class="key"><i class="fas fa-mouse-pointer"></i>Drag</span></td>
+        </tr>
+        <tr data-title="Zoom In/Out">
+            <td><i class="fas fa-search-plus icon"></i>Zoom In/Out</td>
             <td><span class="key">⌘</span> + <span class="key">+</span> / <span class="key">-</span></td>
             <td><span class="key">⌘</span> + <span class="key"><i class="fas fa-mouse-pointer"></i>Drag</span></td>
         </tr>
-        <tr data-title="Undo"><td><i class="fas fa-undo icon"></i>Undo</td><td><span class="key">⌘</span> + <span class="key">Z</span></td><td></td></tr>
-        <tr data-title="Redo"><td><i class="fas fa-redo icon"></i>Redo</td><td><span class="key">⌘</span> + <span class="key">Shift</span> + <span class="key">Z</span></td><td></td></tr>
-        <tr data-title="Reset View"><td><i class="fas fa-sync icon"></i>Reset View</td><td><span class="key">Esc</span></td><td></td></tr>
-        <tr data-title="Delete"><td><i class="fas fa-trash icon"></i>Delete</td><td><span class="key">Delete</span></td><td></td></tr>
-        <tr data-title="Copy"><td><i class="fas fa-copy icon"></i>Copy</td><td><span class="key">⌘</span> + <span class="key">C</span></td><td></td></tr>
-        <tr data-title="Paste"><td><i class="fas fa-paste icon"></i>Paste</td><td><span class="key">⌘</span> + <span class="key">V</span></td><td></td></tr>
+        <tr data-title="Undo">
+            <td><i class="fas fa-undo icon"></i>Undo</td>
+            <td><span class="key">⌘</span> + <span class="key">Z</span></td>
+            <td></td>
+        </tr>
+        <tr data-title="Redo">
+            <td><i class="fas fa-redo icon"></i>Redo</td>
+            <td><span class="key">⌘</span> + <span class="key">Shift</span> + <span class="key">Z</span></td>
+            <td></td>
+        </tr>
+        <tr data-title="Reset View">
+            <td><i class="fas fa-sync icon"></i>Reset View</td>
+            <td><span class="key">Esc</span></td>
+            <td></td>
+        </tr>
+        <tr data-title="Delete">
+            <td><i class="fas fa-trash icon"></i>Delete</td>
+            <td><span class="key">Delete</span></td>
+            <td></td>
+        </tr>
+        <tr data-title="Copy">
+            <td><i class="fas fa-copy icon"></i>Copy</td>
+            <td><span class="key">⌘</span> + <span class="key">C</span></td>
+            <td></td>
+        </tr>
+        <tr data-title="Paste">
+            <td><i class="fas fa-paste icon"></i>Paste</td>
+            <td><span class="key">⌘</span> + <span class="key">V</span></td>
+            <td></td>
+        </tr>
     </table>
 </div>
 
