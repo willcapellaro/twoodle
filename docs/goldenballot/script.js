@@ -85,30 +85,39 @@ function renderCategory(ballotContainer, sidebarLinks, category, index) {
         <h2>${category.title}</h2>
         <div class="drag-container" id="drag-${index}">
             ${savedOrder
-                .map(
-                    (nomination) => `
-                <div class="nomination" data-id="${nomination}">
-                    <span>${nomination}</span>
-                    <div class="chip-container">
-                        <div class="toggle-chip seen-it ${getChipState(index, nomination, 'seen-it')}">
-                            <i class="fas fa-eye"></i> Seen it
+                .map((nomination) => {
+                    const name = typeof nomination === "string" ? nomination : nomination.name;
+                    const backdropUrl =
+                        nomination.backdrop && typeof nomination !== "string"
+                            ? `https://image.tmdb.org/t/p/w780${nomination.backdrop}`
+                            : "imgs/testimg.jpg"; // Use test image for now
+
+                    return `
+                        <div class="nomination" data-id="${name}">
+                            <div class="backdrop-container">
+                                <img src="${backdropUrl}" alt="${name}" class="backdrop-image">
+                            </div>
+                            <span>${name}</span>
+                            <div class="chip-container">
+                                <div class="toggle-chip seen-it ${getChipState(index, name, 'seen-it')}">
+                                    <i class="fas fa-eye"></i> Seen it
+                                </div>
+                                <div class="toggle-chip love-it ${getChipState(index, name, 'love-it')}">
+                                    <i class="fas fa-heart"></i> Love it!
+                                </div>
+                                <div class="toggle-chip hate-it ${getChipState(index, name, 'hate-it')}">
+                                    <i class="fas fa-thumbs-down"></i> Hate it
+                                </div>
+                            </div>
                         </div>
-                        <div class="toggle-chip love-it ${getChipState(index, nomination, 'love-it')}">
-                            <i class="fas fa-heart"></i> Love it!
-                        </div>
-                        <div class="toggle-chip hate-it ${getChipState(index, nomination, 'hate-it')}">
-                            <i class="fas fa-thumbs-down"></i> Hate it
-                        </div>
-                    </div>
-                </div>`
-                )
+                    `;
+                })
                 .join("")}
         </div>
     `;
 
     ballotContainer.appendChild(categoryElement);
 }
-
 // Enable drag-and-drop using SortableJS
 function enableDragAndDrop() {
     const dragContainers = document.querySelectorAll(".drag-container");
@@ -194,8 +203,11 @@ function parseMarkdown(mdText) {
         if (line.startsWith("##")) {
             if (currentCategory) categories.push(currentCategory);
             currentCategory = { title: line.replace("##", "").trim(), nominations: [] };
-        } else if (line.startsWith("-")) {
-            currentCategory.nominations.push(line.replace("- Nominee:", "").trim());
+        } else if (line.startsWith("- Nominee:")) {
+            const parts = line.split(" | Backdrop: ");
+            const name = parts[0].replace("- Nominee: ", "").trim();
+            const backdrop = parts[1]?.trim();
+            currentCategory.nominations.push({ name, backdrop });
         }
     });
     if (currentCategory) categories.push(currentCategory);

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Poster Test</title>
+    <title>TMDb Asset Types Test</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -20,21 +20,31 @@
 
         main {
             text-align: center;
-            max-width: 600px;
+            max-width: 800px;
             margin: auto;
         }
 
-        .poster-container {
+        .asset-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-top: 2em;
+            border: 1px solid #ddd;
+            padding: 1em;
+            border-radius: 8px;
+            background: #fff;
+            width: 100%;
         }
 
-        .movie-poster {
-            width: 200px;
+        .asset-container img {
+            width: 300px;
             height: auto;
             border-radius: 8px;
+            margin: 1em 0;
+        }
+
+        .asset-label {
+            font-weight: bold;
             margin-top: 1em;
         }
     </style>
@@ -42,53 +52,81 @@
 <body>
     <main>
         <header>
-            <h1>Movie Poster Test</h1>
+            <h1>TMDb Asset Types Test</h1>
+            <p>Fetching and displaying assets for "CLOSE YOUR EYES"</p>
         </header>
-        <div id="posters">
-            <p>Fetching posters for "CLOSE YOUR EYES" and "WILD ROBOT"...</p>
+        <div id="assets">
+            <p>Loading assets...</p>
         </div>
     </main>
     <script>
-        const apiKey = "YOUR_API_KEY"; // Replace with your TMDb API key
-        const movies = ["CLOSE YOUR EYES", "WILD ROBOT"];
+        const apiKey = "8e1d26d7e8dc3e7cb95d4c26d5ae4234";
+        const apiToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZTFkMjZkN2U4ZGMzZTdjYjk1ZDRjMjZkNWFlNDIzNCIsIm5iZiI6MTczNTg2NDA5My43MTEsInN1YiI6IjY3NzcyZjFkNmQ3Y2EwMGU3ODcyNDUzYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.q2UOQH5Fo-UDKTNJvgz7cqUXwZ3oz2aLJfmKU_pFqzE";
 
-        async function fetchMoviePoster(movieTitle) {
+        async function fetchMovieAssets(movieTitle) {
             try {
-                const response = await fetch(
-                    `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(movieTitle)}&year=2025&api_key=${apiKey}`
-                );
-                const data = await response.json();
+                // Search for the movie
+                const searchResponse = await fetch(`https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(movieTitle)}&api_key=${apiKey}`, {
+                    headers: { Authorization: `Bearer ${apiToken}` }
+                });
+                const searchData = await searchResponse.json();
+                const movieId = searchData.results[0]?.id;
 
-                if (data.results && data.results.length > 0) {
-                    const posterUrl = `https://image.tmdb.org/t/p/w500${data.results[0].poster_path}`;
-                    return { title: data.results[0].title, posterUrl };
+                if (!movieId) {
+                    throw new Error("Movie not found");
                 }
-                return { title: movieTitle, posterUrl: "default_poster.jpg" }; // Default image path
+
+                // Fetch movie images
+                const imagesResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${apiKey}`, {
+                    headers: { Authorization: `Bearer ${apiToken}` }
+                });
+                const imagesData = await imagesResponse.json();
+
+                return {
+                    poster: `https://image.tmdb.org/t/p/w500${imagesData.posters[0]?.file_path || ''}`,
+                    backdrop: `https://image.tmdb.org/t/p/w780${imagesData.backdrops[0]?.file_path || ''}`,
+                    logo: `https://image.tmdb.org/t/p/original${imagesData.logos[0]?.file_path || ''}`,
+                };
             } catch (error) {
-                console.error(`Error fetching poster for ${movieTitle}:`, error);
-                return { title: movieTitle, posterUrl: "default_poster.jpg" }; // Default image path
+                console.error("Error fetching assets:", error);
+                return null;
             }
         }
 
-        async function displayMoviePosters() {
-            const posterContainer = document.getElementById("posters");
-            posterContainer.innerHTML = "";
+        async function displayMovieAssets() {
+            const assetContainer = document.getElementById("assets");
+            assetContainer.innerHTML = "";
 
-            for (const movie of movies) {
-                const { title, posterUrl } = await fetchMoviePoster(movie);
+            const movieTitle = "CLOSE YOUR EYES";
+            const assets = await fetchMovieAssets(movieTitle);
 
-                const movieElement = document.createElement("div");
-                movieElement.classList.add("poster-container");
-                movieElement.innerHTML = `
-                    <p>${title}</p>
-                    <img src="${posterUrl}" alt="${title}" class="movie-poster">
+            if (!assets) {
+                assetContainer.innerHTML = "<p>Unable to load assets.</p>";
+                return;
+            }
+
+            // Display assets
+            const { poster, backdrop, logo } = assets;
+
+            const createAssetElement = (label, imageUrl) => {
+                if (!imageUrl) return `<p>${label}: Not Available</p>`;
+                return `
+                    <div class="asset-container">
+                        <span class="asset-label">${label}</span>
+                        <img src="${imageUrl}" alt="${label}" />
+                    </div>
                 `;
-                posterContainer.appendChild(movieElement);
-            }
+            };
+
+            assetContainer.innerHTML = `
+                ${createAssetElement("Poster", poster)}
+                ${createAssetElement("Backdrop", backdrop)}
+                ${createAssetElement("Logo", logo)}
+            `;
         }
 
-        // Fetch and display posters on load
-        displayMoviePosters();
+        // Load assets on page load
+        displayMovieAssets();
     </script>
 </body>
 </html>

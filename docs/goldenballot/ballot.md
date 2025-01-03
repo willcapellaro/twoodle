@@ -1,12 +1,12 @@
 # 2025 Golden Globes Ballot
 
 ## Best Motion Picture – Drama
-- Nominee: The Brutalist
-- Nominee: A Complete Unknown
-- Nominee: Conclave
-- Nominee: Dune: Part Two
-- Nominee: Nickel Boys
-- Nominee: September 5
+- Nominee: The Brutalist | Backdrop: /path/to/the_brutalist_backdrop.jpg
+- Nominee: A Complete Unknown | Backdrop: /path/to/a_complete_unknown_backdrop.jpg
+- Nominee: Conclave | Backdrop: /path/to/conclave_backdrop.jpg
+- Nominee: Dune: Part Two | Backdrop: /path/to/dune_part_two_backdrop.jpg
+- Nominee: Nickel Boys | Backdrop: /path/to/nickel_boys_backdrop.jpg
+- Nominee: September 5 | Backdrop: /path/to/september_5_backdrop.jpg
 
 ## Best Motion Picture – Musical or Comedy
 - Nominee: Anora
