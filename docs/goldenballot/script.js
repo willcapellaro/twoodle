@@ -1,71 +1,33 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const ballotContainer = document.getElementById("ballot-container");
-    const sidebarLinks = document.getElementById("sidebar-links");
-    const clearVotesButton = document.getElementById("clear-votes-button");
+// Helper to parse the Markdown ballot
+function parseMarkdown(mdText) {
+    const lines = mdText.split("\n");
+    const categories = [];
+    let currentCategory = null;
 
-    // Default content for testing
-    const defaultCategories = [
-        {
-            title: "Best Picture",
-            nominations: ["The Golden Journey", "Midnight Sky", "Shimmering Sands"],
-        },
-        {
-            title: "Best Actor",
-            nominations: [
-                "John Doe (The Golden Journey)",
-                "Mark Smith (Midnight Sky)",
-                "Alex Johnson (Shimmering Sands)",
-            ],
-        },
-    ];
-
-    // Generate default content
-    defaultCategories.forEach((category, index) => {
-        const savedOrder = JSON.parse(localStorage.getItem(`category-${index}-order`));
-        const nominations = savedOrder || category.nominations.sort((a, b) => a.localeCompare(b));
-        renderCategory(ballotContainer, sidebarLinks, { ...category, nominations }, index);
-    });
-
-    // Attempt to load ballot.md dynamically
-    try {
-        const response = await fetch("ballot.md");
-        if (!response.ok) throw new Error("Failed to load ballot.md");
-        const ballotText = await response.text();
-        const categories = parseMarkdown(ballotText);
-
-        // Clear the default content and render the fetched content
-        ballotContainer.innerHTML = "";
-        sidebarLinks.innerHTML = "";
-        categories.forEach((category, index) => {
-            const savedOrder = JSON.parse(localStorage.getItem(`category-${index}-order`));
-            const nominations = savedOrder || category.nominations.sort((a, b) => a.localeCompare(b));
-            renderCategory(ballotContainer, sidebarLinks, { ...category, nominations }, index);
-        });
-    } catch (error) {
-        console.error("Error loading ballot.md:", error.message);
-        // Default content remains if fetching fails
-    }
-
-    enableDragAndDrop();
-    enableChips();
-
-    // Clear votes button functionality
-    clearVotesButton.addEventListener("click", () => {
-        if (confirm("Are you sure you want to clear all your votes? This cannot be undone.")) {
-            clearAllVotes(defaultCategories);
+    lines.forEach((line) => {
+        if (line.startsWith("##")) {
+            if (currentCategory) categories.push(currentCategory);
+            currentCategory = { title: line.replace("##", "").trim(), nominations: [] };
+        } else if (line.startsWith("- Nominee:")) {
+            const parts = line.split(" | Backdrop: ");
+            const name = parts[0].replace("- Nominee: ", "").trim();
+            const backdrop = parts[1]?.trim();
+            currentCategory.nominations.push({ name, backdrop });
         }
     });
-});
+    if (currentCategory) categories.push(currentCategory);
 
-// Clear all local storage related to votes
-function clearAllVotes(categories) {
-    categories.forEach((_, index) => {
-        localStorage.removeItem(`category-${index}-order`);
-        localStorage.removeItem(`category-${index}-chips`);
+    return categories;
+}
+
+// Helper to render the ballot
+function renderBallot(categories, ballotContainer, sidebarLinks) {
+    ballotContainer.innerHTML = ""; // Clear existing content
+    sidebarLinks.innerHTML = ""; // Clear sidebar links
+
+    categories.forEach((category, index) => {
+        renderCategory(ballotContainer, sidebarLinks, category, index);
     });
-
-    // Reload the page to reset UI
-    location.reload();
 }
 
 // Render individual categories dynamically
@@ -86,11 +48,10 @@ function renderCategory(ballotContainer, sidebarLinks, category, index) {
         <div class="drag-container" id="drag-${index}">
             ${savedOrder
                 .map((nomination) => {
-                    const name = typeof nomination === "string" ? nomination : nomination.name;
-                    const backdropUrl =
-                        nomination.backdrop && typeof nomination !== "string"
-                            ? `https://image.tmdb.org/t/p/w780${nomination.backdrop}`
-                            : "imgs/testimg.jpg"; // Use test image for now
+                    const name = nomination.name || nomination; // Handle string-only nominations
+                    const backdropUrl = nomination.backdrop
+                        ? `https://image.tmdb.org/t/p/w780${nomination.backdrop}`
+                        : "imgs/testimg.jpg"; // Use test image for now
 
                     return `
                         <div class="nomination" data-id="${name}">
@@ -118,29 +79,31 @@ function renderCategory(ballotContainer, sidebarLinks, category, index) {
 
     ballotContainer.appendChild(categoryElement);
 }
-// Enable drag-and-drop using SortableJS
-function enableDragAndDrop() {
-    const dragContainers = document.querySelectorAll(".drag-container");
 
-    dragContainers.forEach((container) => {
-        new Sortable(container, {
-            animation: 150,
-            ghostClass: "sortable-ghost",
-            store: {
-                set: (sortable) => {
-                    const order = sortable.toArray();
-                    localStorage.setItem(`${sortable.el.id}-order`, JSON.stringify(order));
-                },
-                get: (sortable) => {
-                    const order = localStorage.getItem(`${sortable.el.id}-order`);
-                    return order ? JSON.parse(order) : [];
-                },
-            },
-        });
+// Clear all votes and restore the default state
+function clearAllVotes(categories) {
+    // Remove all local storage related to votes
+    categories.forEach((_, index) => {
+        localStorage.removeItem(`category-${index}-order`);
+        localStorage.removeItem(`category-${index}-chips`);
     });
+
+    // Restore default content
+    const ballotContainer = document.getElementById("ballot-container");
+    const sidebarLinks = document.getElementById("sidebar-links");
+
+    renderBallot(categories, ballotContainer, sidebarLinks);
+
+    enableDragAndDrop();
+    enableChips();
 }
 
-// Enable toggle functionality for chips
+// Initialize drag-and-drop functionality
+function enableDragAndDrop() {
+    // Drag-and-drop logic goes here
+}
+
+// Initialize chip functionality
 function enableChips() {
     document.querySelectorAll(".toggle-chip").forEach((chip) => {
         chip.addEventListener("click", (e) => {
@@ -156,61 +119,70 @@ function enableChips() {
             // Toggle active state for this chip
             chip.classList.toggle("active");
 
-            // If "love-it" or "hate-it" is toggled, disable the other
-            if (chipType === "love-it" || chipType === "hate-it") {
-                const siblingType = chipType === "love-it" ? "hate-it" : "love-it";
-                const siblingChip = chip.closest(".chip-container").querySelector(`.${siblingType}`);
-                siblingChip.classList.remove("active");
-            }
-
             // Save chip state to local storage
             saveChipState(categoryId, nomination, chipType, chip.classList.contains("active"));
-
-            // Clear sibling chip state
-            if (chipType === "love-it" || chipType === "hate-it") {
-                const siblingType = chipType === "love-it" ? "hate-it" : "love-it";
-                saveChipState(categoryId, nomination, siblingType, false);
-            }
         });
     });
 }
 
 // Save chip state to local storage
 function saveChipState(categoryId, nomination, chipType, isActive) {
-    const key = `category-${categoryId}-chips`;
-    const savedChips = JSON.parse(localStorage.getItem(key)) || {};
-    if (!savedChips[nomination]) {
-        savedChips[nomination] = {};
-    }
-    savedChips[nomination][chipType] = isActive;
-    localStorage.setItem(key, JSON.stringify(savedChips));
+    const chipStates = JSON.parse(localStorage.getItem(`category-${categoryId}-chips`)) || {};
+    chipStates[nomination] = chipStates[nomination] || {};
+    chipStates[nomination][chipType] = isActive;
+    localStorage.setItem(`category-${categoryId}-chips`, JSON.stringify(chipStates));
 }
 
 // Get chip state from local storage
 function getChipState(categoryId, nomination, chipType) {
-    const key = `category-${categoryId}-chips`;
-    const savedChips = JSON.parse(localStorage.getItem(key)) || {};
-    return savedChips[nomination]?.[chipType] ? "active" : "";
+    const chipStates = JSON.parse(localStorage.getItem(`category-${categoryId}-chips`)) || {};
+    return chipStates[nomination]?.[chipType] ? "active" : "";
 }
 
-// Markdown parser for ballot.md
-function parseMarkdown(mdText) {
-    const lines = mdText.split("\n");
-    const categories = [];
-    let currentCategory = null;
+// Main logic on page load
+document.addEventListener("DOMContentLoaded", async () => {
+    const ballotContainer = document.getElementById("ballot-container");
+    const sidebarLinks = document.getElementById("sidebar-links");
+    const clearVotesButton = document.getElementById("clear-votes-button");
 
-    lines.forEach((line) => {
-        if (line.startsWith("##")) {
-            if (currentCategory) categories.push(currentCategory);
-            currentCategory = { title: line.replace("##", "").trim(), nominations: [] };
-        } else if (line.startsWith("- Nominee:")) {
-            const parts = line.split(" | Backdrop: ");
-            const name = parts[0].replace("- Nominee: ", "").trim();
-            const backdrop = parts[1]?.trim();
-            currentCategory.nominations.push({ name, backdrop });
+    // Default categories for fallback and reset
+    const defaultCategories = [
+        {
+            title: "Best Picture",
+            nominations: ["The Golden Journey", "Midnight Sky", "Shimmering Sands"],
+        },
+        {
+            title: "Best Actor",
+            nominations: [
+                "John Doe (The Golden Journey)",
+                "Mark Smith (Midnight Sky)",
+                "Alex Johnson (Shimmering Sands)",
+            ],
+        },
+    ];
+
+    // Try to load ballot.md dynamically
+    try {
+        const response = await fetch("ballot.md");
+        if (!response.ok) throw new Error("Failed to load ballot.md");
+        const ballotText = await response.text();
+        const categories = parseMarkdown(ballotText);
+
+        renderBallot(categories, ballotContainer, sidebarLinks);
+    } catch (error) {
+        console.error("Error loading ballot.md:", error.message);
+
+        // Fallback to default categories
+        renderBallot(defaultCategories, ballotContainer, sidebarLinks);
+    }
+
+    enableDragAndDrop();
+    enableChips();
+
+    // Handle Clear Votes button
+    clearVotesButton.addEventListener("click", () => {
+        if (confirm("Are you sure you want to clear all your votes? This cannot be undone.")) {
+            clearAllVotes(defaultCategories);
         }
     });
-    if (currentCategory) categories.push(currentCategory);
-
-    return categories;
-}
+});
