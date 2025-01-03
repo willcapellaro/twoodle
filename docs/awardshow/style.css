@@ -1,0 +1,204 @@
+body {
+    font-family: 'Playfair Display', sans-serif;
+    color: #866a2d;
+    margin: 0;
+    display: flex;
+}
+
+.sidebar {
+    background-color: #c4a454;
+    width: 200px;
+    padding: 1em;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.sidebar h2 {
+    margin: 0 0 1em;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin: 0.5em 0;
+}
+
+main {
+    flex: 1;
+    padding: 1em;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+h1 {
+    font-size: 2em;
+    color: #866a2d;
+}
+
+.category {
+    margin-bottom: 2em;
+}
+
+.nomination {
+    background: #fff;
+    border: 1px solid #866a2d;
+    padding: 1em;
+    margin: 0.5em 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+}
+
+.toggle-chip {
+    border: 1px solid #866a2d;
+    padding: 0.2em 0.5em;
+    margin-left: 0.5em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.toggle-chip.active {
+    background: #866a2d;
+    color: #fff;
+}
+
+.drag-container {
+    display: grid;
+    gap: .5em;
+
+}
+
+/* Chip container */
+.chip-container {
+    display: flex;
+    gap: 0.5em;
+    margin-top: 0.5em;
+}
+
+/* Toggle chip styles */
+.toggle-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    border: 1px solid #866a2d;
+    border-radius: 16px;
+    padding: 0.3em 0.8em;
+    cursor: pointer;
+    font-size: 0.9em;
+    color: #866a2d;
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#reset-container {
+    text-align: center;
+    margin-top: 2em;
+}
+
+#clear-votes-button {
+    background-color: #866a2d;
+    color: white;
+    font-size: 1em;
+    padding: 0.8em 1.5em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#clear-votes-button:hover {
+    background-color: #c4a454;
+    color: #fff;
+}
+
+.toggle-chip i {
+    font-size: 1em;
+}
+
+/* Active chip styles */
+.toggle-chip.active {
+    background-color: #866a2d;
+    color: white;
+    border-color: #866a2d;
+}
+
+/* Hover effect */
+.toggle-chip:hover {
+    background-color: #c4a454;
+    color: white;
+    border-color: #c4a454;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #c4a454;
+    padding: 1em;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+#view-toggle {
+    margin-bottom: 1.5em;
+    text-align: center;
+}
+
+#toggle-view-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    border: 1px solid #866a2d;
+    background-color: transparent;
+    border-radius: 8px;
+    font-family: 'Playfair Display', sans-serif;
+    font-size: 0.9em;
+    font-weight: 700;
+    color: #866a2d;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+#toggle-view-button:nth-child(1) {
+    border-radius: 12px 12px 0 0;
+}
+
+#toggle-view-button:nth-child(2) {
+    border-radius: 0 0 12px 12px;
+}
+
+
+#toggle-view-button:hover {
+    background-color: #866a2d;
+    color: white;
+}
+
+#toggle-view-button span {
+    font-size: 0.85em;
+}
+
+#toggle-view-button .state-1,
+#toggle-view-button .state-3 {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+#toggle-view-button .state-2,
+#toggle-view-button .state-4 {
+    font-size: 0.85em;
+    color: #666;
+}
