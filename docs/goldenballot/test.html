@@ -3,130 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TMDb Asset Types Test</title>
+    <title>Download Backdrops</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            padding: 20px;
             background-color: #f5f5f5;
-            color: #333;
         }
 
-        main {
+        h1 {
             text-align: center;
-            max-width: 800px;
-            margin: auto;
+            margin-bottom: 20px;
         }
 
-        .asset-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 2em;
-            border: 1px solid #ddd;
-            padding: 1em;
-            border-radius: 8px;
+        .movie-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .movie-item {
+            text-align: center;
             background: #fff;
-            width: 100%;
-        }
-
-        .asset-container img {
-            width: 300px;
-            height: auto;
+            border: 1px solid #ddd;
             border-radius: 8px;
-            margin: 1em 0;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .asset-label {
+        .movie-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .movie-title {
+            padding: 10px;
+            font-size: 1em;
             font-weight: bold;
-            margin-top: 1em;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
         }
     </style>
 </head>
 <body>
-    <main>
-        <header>
-            <h1>TMDb Asset Types Test</h1>
-            <p>Fetching and displaying assets for "CLOSE YOUR EYES"</p>
-        </header>
-        <div id="assets">
-            <p>Loading assets...</p>
-        </div>
-    </main>
+    <h1>Download Backdrops</h1>
+    <div class="movie-list">
+        <!-- Movie Items Here -->
+    </div>
+
     <script>
-        const apiKey = "8e1d26d7e8dc3e7cb95d4c26d5ae4234";
-        const apiToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZTFkMjZkN2U4ZGMzZTdjYjk1ZDRjMjZkNWFlNDIzNCIsIm5iZiI6MTczNTg2NDA5My43MTEsInN1YiI6IjY3NzcyZjFkNmQ3Y2EwMGU3ODcyNDUzYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.q2UOQH5Fo-UDKTNJvgz7cqUXwZ3oz2aLJfmKU_pFqzE";
+        const movies = [
+            { title: "The Brutalist", backdrop: "/abc123xyz.jpg" },
+            { title: "A Complete Unknown", backdrop: "/def456uvw.jpg" },
+            { title: "Conclave", backdrop: "/ghi789rst.jpg" },
+            { title: "Dune: Part Two", backdrop: "/jkl012mno.jpg" },
+            { title: "Nickel Boys", backdrop: "/mno345pqr.jpg" },
+            { title: "September 5", backdrop: "/stu678vwx.jpg" },
+        ];
 
-        async function fetchMovieAssets(movieTitle) {
-            try {
-                // Search for the movie
-                const searchResponse = await fetch(`https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(movieTitle)}&api_key=${apiKey}`, {
-                    headers: { Authorization: `Bearer ${apiToken}` }
-                });
-                const searchData = await searchResponse.json();
-                const movieId = searchData.results[0]?.id;
+        const baseUrl = "https://image.tmdb.org/t/p/original";
 
-                if (!movieId) {
-                    throw new Error("Movie not found");
-                }
+        const movieList = document.querySelector(".movie-list");
 
-                // Fetch movie images
-                const imagesResponse = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${apiKey}`, {
-                    headers: { Authorization: `Bearer ${apiToken}` }
-                });
-                const imagesData = await imagesResponse.json();
+        movies.forEach((movie) => {
+            const backdropUrl = `${baseUrl}${movie.backdrop}`;
+            const movieItem = document.createElement("div");
+            movieItem.classList.add("movie-item");
 
-                return {
-                    poster: `https://image.tmdb.org/t/p/w500${imagesData.posters[0]?.file_path || ''}`,
-                    backdrop: `https://image.tmdb.org/t/p/w780${imagesData.backdrops[0]?.file_path || ''}`,
-                    logo: `https://image.tmdb.org/t/p/original${imagesData.logos[0]?.file_path || ''}`,
-                };
-            } catch (error) {
-                console.error("Error fetching assets:", error);
-                return null;
-            }
-        }
-
-        async function displayMovieAssets() {
-            const assetContainer = document.getElementById("assets");
-            assetContainer.innerHTML = "";
-
-            const movieTitle = "CLOSE YOUR EYES";
-            const assets = await fetchMovieAssets(movieTitle);
-
-            if (!assets) {
-                assetContainer.innerHTML = "<p>Unable to load assets.</p>";
-                return;
-            }
-
-            // Display assets
-            const { poster, backdrop, logo } = assets;
-
-            const createAssetElement = (label, imageUrl) => {
-                if (!imageUrl) return `<p>${label}: Not Available</p>`;
-                return `
-                    <div class="asset-container">
-                        <span class="asset-label">${label}</span>
-                        <img src="${imageUrl}" alt="${label}" />
-                    </div>
-                `;
-            };
-
-            assetContainer.innerHTML = `
-                ${createAssetElement("Poster", poster)}
-                ${createAssetElement("Backdrop", backdrop)}
-                ${createAssetElement("Logo", logo)}
+            movieItem.innerHTML = `
+                <a href="${backdropUrl}" download>
+                    <img src="${backdropUrl}" alt="${movie.title}">
+                    <div class="movie-title">${movie.title}</div>
+                </a>
             `;
-        }
 
-        // Load assets on page load
-        displayMovieAssets();
+            movieList.appendChild(movieItem);
+        });
     </script>
 </body>
 </html>
