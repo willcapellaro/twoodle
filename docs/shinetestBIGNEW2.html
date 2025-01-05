@@ -35,31 +35,92 @@ body {
 }
 
 .box::after {
-  content: "";
-  position: absolute;
+  content: ""; /* Required for ::after to work */
+  position: absolute; /* Ensures ::after is positioned */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
-  background-size: cover;
-  background-repeat: no-repeat;
-  opacity: 0.3; /* Subtle overlay */
-  z-index: 3; /* Above all layers */
+  background-size: 30px 30px; /* Adjust as needed */
+  background-repeat: repeat; /* Ensures tiling */
+  z-index: 3; /* Layering */
+  opacity: var(--texture-opacity, 0.3); /* Dynamic opacity based on tilt */
+  pointer-events: none; /* Prevents interaction */
 }
 
-.box:nth-child(1)::after { background-image: url('https://www.transparenttextures.com/patterns/gplay.png'); }
-.box:nth-child(2)::after { background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png'); }
-.box:nth-child(3)::after { background-image: url('https://www.transparenttextures.com/patterns/subtle-light.png'); }
-.box:nth-child(4)::after { background-image: url('https://www.transparenttextures.com/patterns/shattered.png'); }
-.box:nth-child(5)::after { background-image: url('https://www.transparenttextures.com/patterns/tiny-checkers.png'); }
-.box:nth-child(6)::after { background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png'); }
-.box:nth-child(7)::after { background-image: url('https://www.transparenttextures.com/patterns/gray-floral.png'); }
-.box:nth-child(8)::after { background-image: url('https://www.transparenttextures.com/patterns/white-carbon.png'); }
-.box:nth-child(9)::after { background-image: url('https://www.transparenttextures.com/patterns/silver.png'); }
-.box:nth-child(10)::after { background-image: url('https://www.transparenttextures.com/patterns/small-crystals.png'); }
-.box:nth-child(11)::after { background-image: url('https://www.transparenttextures.com/patterns/dust.png'); }
-.box:nth-child(12)::after { background-image: url('https://www.transparenttextures.com/patterns/diagonal-stripes.png'); }
+/*A*/ .box:nth-child(1)  { --box-color: #866a2d }
+/*B*/ .box:nth-child(2)  { --box-color: #866a2d }
+/*C*/ .box:nth-child(3)  { --box-color: #866a2d }
+/*D*/ .box:nth-child(4)  { --box-color: #866a2d }
+/*E*/ .box:nth-child(5)  { --box-color: #866a2d }
+/*F*/ .box:nth-child(6)  { --box-color: #866a2d }
+/*G*/ .box:nth-child(7)  { --box-color: #866a2d }
+/*H*/ .box:nth-child(8)  { --box-color: #866a2d }
+/*I*/ .box:nth-child(9)  { --box-color: #866a2d }
+/*J*/ .box:nth-child(10) { --box-color: #866a2d }
+/*K*/ .box:nth-child(11) { --box-color: #866a2d }
+/*L*/ .box:nth-child(12) { --box-color: #866a2d }
+
+
+
+/*colors
+#866a2d
+#1c1c1c
+#f5f5f5
+#abb8c3
+*/
+
+/*A*/ .box:nth-child(1)::after  { background-image: url('https://www.transparenttextures.com/patterns/gplay.png');                 }   
+/*B*/ .box:nth-child(2)::after  { background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png');           }              
+/*C*/ .box:nth-child(3)::after  { background-image: url('https://www.transparenttextures.com/patterns/subtle-light.png');          }               
+/*D*/ .box:nth-child(4)::after  { background-image: url('https://www.transparenttextures.com/patterns/shattered.png');             }            
+/*E*/ .box:nth-child(5)::after  { background-image: url('https://www.transparenttextures.com/patterns/tiny-checkers.png');         }                
+/*F*/ .box:nth-child(6)::after  { background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');             }            
+/*G*/ .box:nth-child(7)::after {   background-image: url('https://www.transparenttextures.com/patterns/gray-floral.png');}
+/*H*/ .box:nth-child(8)::after  { background-image: url('https://www.transparenttextures.com/patterns/white-carbon.png');          }               
+/*I*/ .box:nth-child(9)::after  { background-image: url('https://www.transparenttextures.com/patterns/silver.png');                }         
+/*J*/ .box:nth-child(10)::after { background-image: url('https://www.transparenttextures.com/patterns/small-crystals.png');       }                  
+/*K*/ .box:nth-child(11)::after { background-image: url('https://www.transparenttextures.com/patterns/dust.png');                 }        
+/*L*/ .box:nth-child(12)::after { background-image: url('https://www.transparenttextures.com/patterns/diagonal-stripes.png');     }     
+
+/*A*/ .box:nth-child(1)::after  {   background-size: 10vh 10vh; /* Controls texture size */  }
+/*B*/ .box:nth-child(2)::after  {   background-size: 10vh 10vh; /* Controls texture size */  }
+/*C*/ .box:nth-child(3)::after  {   background-size: 10vh 10vh; /* Controls texture size */  }
+/*D*/ .box:nth-child(4)::after  {   background-size: 10vh 10vh; /* Controls texture size */  }
+/*E*/ .box:nth-child(5)::after  {   background-size: 10vh 10vh; /* Controls texture size */  }
+/*F*/ .box:nth-child(6)::after  {   background-size: 10vh 10vh; /* Controls texture size */  }
+/*G*/ .box:nth-child(7)::after  {   background-size: 10vh 10vh; /* Controls texture size */  }
+/*H*/ .box:nth-child(8)::after  {   background-size: 10vh 10vh; /* Controls texture size */  }
+/*I*/ .box:nth-child(9)::after  {   background-size: 10vh 10vh; /* Controls texture size */  }
+/*J*/ .box:nth-child(10)::after {   background-size: 10vh 10vh; /* Controls texture size */  }
+/*K*/ .box:nth-child(11)::after {   background-size: 10vh 10vh; /* Controls texture size */  }
+/*L*/ .box:nth-child(12)::after {   background-size: 10vh 10vh; /* Controls texture size */  }
+
+/*A*/ .box:nth-child(1)::after  {    opacity: 0.3; /* Subtle overlay */  }
+/*B*/ .box:nth-child(2)::after  {    opacity: 0.9 /* Subtle overlay */  }
+/*C*/ .box:nth-child(3)::after  {    opacity: 0.9; /* Subtle overlay */  }
+/*D*/ .box:nth-child(4)::after  {    opacity: 0.9; /* Subtle overlay */  }
+/*E*/ .box:nth-child(5)::after  {    opacity: 0.9; /* Subtle overlay */  }
+/*F*/ .box:nth-child(6)::after  {    opacity: 0.9; /* Subtle overlay */  }
+/*G*/ .box:nth-child(7)::after  {    opacity: 0.3; /* Subtle overlay */  }
+/*H*/ .box:nth-child(8)::after  {    opacity: 0.9; /* Subtle overlay */  }
+/*I*/ .box:nth-child(9)::after  {    opacity: 0.9; /* Subtle overlay */  }
+/*J*/ .box:nth-child(10)::after {    opacity: 0.9; /* Subtle overlay */  }
+/*K*/ .box:nth-child(11)::after {    opacity: 0.3; /* Subtle overlay */  }
+/*L*/ .box:nth-child(12)::after {    opacity: 0.9; /* Subtle overlay */  }
+
+.box:nth-child(1)::after, .box:nth-child(2)::after,.box:nth-child(3)::after, .box:nth-child(4)::after, .box:nth-child(5)::after, .box:nth-child(6)::after, .box:nth-child(7)::after, .box:nth-child(8)::after, .box:nth-child(9)::after, .box:nth-child(10)::afte, .box:nth-child(11)::afte, .box:nth-child(12)::after 
+{
+  content: ""; /* Required for ::after to work */
+  position: absolute; /* Ensures ::after is positioned */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: repeat; /* Ensures the texture tiles */
+  z-index: 3; /* Ensures it is layered correctly */
+  pointer-events: none; /* Prevents interference */
+}
 
 .box .webcam {
   position: absolute;
@@ -89,40 +150,40 @@ body {
 </head>
 <body>
 <div class="grid">
-  <div class="box" data-shine="30" style="--box-color: #866a2d;">
+  <div class="box" data-shine="30">
     <video autoplay playsinline muted class="webcam"></video><span>A</span>
   </div>
-  <div class="box" data-shine="60" style="--box-color: #1c1c1c;">
+  <div class="box" data-shine="60">
     <video autoplay playsinline muted class="webcam"></video><span>B</span>
   </div>
-  <div class="box" data-shine="100" style="--box-color: #f5f5f5;">
+  <div class="box" data-shine="100" >
     <video autoplay playsinline muted class="webcam"></video><span>C</span>
   </div>
-  <div class="box" data-shine="none" style="--box-color: #abb8c3;">
+  <div class="box" data-shine="none">
     <video autoplay playsinline muted class="webcam"></video><span>D</span>
   </div>
-  <div class="box" data-shine="30" style="--box-color: #866a2d;">
+  <div class="box" data-shine="30">
     <video autoplay playsinline muted class="webcam"></video><span>E</span>
   </div>
-  <div class="box" data-shine="60" style="--box-color: #1c1c1c;">
+  <div class="box" data-shine="60">
     <video autoplay playsinline muted class="webcam"></video><span>F</span>
   </div>
-  <div class="box" data-shine="100" style="--box-color: #f5f5f5;">
+  <div class="box" data-shine="100">
     <video autoplay playsinline muted class="webcam"></video><span>G</span>
   </div>
-  <div class="box" data-shine="none" style="--box-color: #abb8c3;">
+  <div class="box" data-shine="none">
     <video autoplay playsinline muted class="webcam"></video><span>H</span>
   </div>
-  <div class="box" data-shine="30" style="--box-color: #866a2d;">
+  <div class="box" data-shine="30">
     <video autoplay playsinline muted class="webcam"></video><span>I</span>
   </div>
-  <div class="box" data-shine="60" style="--box-color: #1c1c1c;">
+  <div class="box" data-shine="60">
     <video autoplay playsinline muted class="webcam"></video><span>J</span>
   </div>
-  <div class="box" data-shine="100" style="--box-color: #f5f5f5;">
+  <div class="box" data-shine="100">
     <video autoplay playsinline muted class="webcam"></video><span>K</span>
   </div>
-  <div class="box" data-shine="none" style="--box-color: #abb8c3;">
+  <div class="box" data-shine="none">
     <video autoplay playsinline muted class="webcam"></video><span>L</span>
   </div>
 </div>
@@ -150,6 +211,27 @@ async function setupWebcam() {
 }
 
 setupWebcam();
+
+
+document.addEventListener('mousemove', (e) => {
+  const { clientX: x, clientY: y } = e;
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+
+  const rotateX = (y - centerY) * 0.01;
+  const rotateY = (x - centerX) * -0.01;
+
+  const alpha = Math.min(Math.max(0.2, 1 - Math.abs(rotateX + rotateY) / 2), 0.8);
+
+  document.querySelector('.grid').style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+  // Adjust texture opacity dynamically
+  const boxes = document.querySelectorAll('.box');
+  boxes.forEach((box) => {
+    box.style.setProperty('--texture-opacity', alpha);
+  });
+});
+
 </script>
 </body>
 </html>

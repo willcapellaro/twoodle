@@ -1,0 +1,1642 @@
+[
+    {
+        "category": "Best Motion Picture - Drama",
+        "work_title": "A Complete Unknown",
+        "work_code": "acompleteunknown",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Drama",
+        "work_title": "Conclave",
+        "work_code": "conclave",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Drama",
+        "work_title": "Dune: Part Two",
+        "work_code": "duneparttwo",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Drama",
+        "work_title": "Nickel Boys",
+        "work_code": "nickelboys",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Drama",
+        "work_title": "September 5",
+        "work_code": "september5",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Drama",
+        "work_title": "The Brutalist",
+        "work_code": "thebrutalist",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Musical or Comedy",
+        "work_title": "A Real Pain",
+        "work_code": "arealpain",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Musical or Comedy",
+        "work_title": "Anora",
+        "work_code": "anora",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Musical or Comedy",
+        "work_title": "Challengers",
+        "work_code": "challengers",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Musical or Comedy",
+        "work_title": "Emilia Pérez",
+        "work_code": "emiliapérez",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Musical or Comedy",
+        "work_title": "The Substance",
+        "work_code": "thesubstance",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Musical or Comedy",
+        "work_title": "Wicked",
+        "work_code": "wicked",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Animated",
+        "work_title": "Flow",
+        "work_code": "flow",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Motion Picture - Animated",
+        "work_title": "Inside Out 2",
+        "work_code": "insideout2",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Motion Picture - Animated",
+        "work_title": "Memoir of a Snail",
+        "work_code": "memoirofasnail",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Motion Picture - Animated",
+        "work_title": "Moana 2",
+        "work_code": "moana2",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Motion Picture - Animated",
+        "work_title": "The Wild Robot",
+        "work_code": "thewildrobot",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Motion Picture - Animated",
+        "work_title": "Wallace & Gromit: Vengeance Most Fowl",
+        "work_code": "wallace&gromitvengeancemostfowl",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Motion Picture – Non-English Language",
+        "work_title": "All We Imagine as Light",
+        "work_code": "allweimagineaslight",
+        "song_title": null,
+        "country": "France, India, Luxembourg, Netherlands",
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Motion Picture – Non-English Language",
+        "work_title": "Emilia Pérez",
+        "work_code": "emiliapérez",
+        "song_title": null,
+        "country": "France",
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Motion Picture – Non-English Language",
+        "work_title": "I'm Still Here",
+        "work_code": "i'mstillhere",
+        "song_title": null,
+        "country": "Brazil",
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Motion Picture – Non-English Language",
+        "work_title": "The Girl With The Needle",
+        "work_code": "thegirlwiththeneedle",
+        "song_title": null,
+        "country": "Poland, Sweden, Denmark",
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Motion Picture – Non-English Language",
+        "work_title": "The Seed of The Sacred Fig",
+        "work_code": "theseedofthesacredfig",
+        "song_title": null,
+        "country": "Germany, France, Iran",
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Motion Picture – Non-English Language",
+        "work_title": "Vermiglio",
+        "work_code": "vermiglio",
+        "song_title": null,
+        "country": "Italy",
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Motion Picture – Drama",
+        "work_title": "Maria",
+        "work_code": "maria",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Angelina Jolie",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Motion Picture – Drama",
+        "work_title": "I'm Still Here",
+        "work_code": "i'mstillhere",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Fernanda Torres",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Motion Picture – Drama",
+        "work_title": "Lee",
+        "work_code": "lee",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Kate Winslet",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Motion Picture – Drama",
+        "work_title": "Babygirl",
+        "work_code": "babygirl",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Nicole Kidman",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Motion Picture – Drama",
+        "work_title": "The Last Showgirl",
+        "work_code": "thelastshowgirl",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Pamela Anderson",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Motion Picture – Drama",
+        "work_title": "The Room Next Door",
+        "work_code": "theroomnextdoor",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Tilda Swinton",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Motion Picture – Drama",
+        "work_title": "The Brutalist",
+        "work_code": "thebrutalist",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Adrien Brody",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Motion Picture – Drama",
+        "work_title": "Sing Sing",
+        "work_code": "singsing",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Colman Domingo",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Motion Picture – Drama",
+        "work_title": "Queer",
+        "work_code": "queer",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Daniel Craig",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Motion Picture – Drama",
+        "work_title": "Conclave",
+        "work_code": "conclave",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Ralph Fiennes",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Motion Picture – Drama",
+        "work_title": "The Apprentice",
+        "work_code": "theapprentice",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Sebastian Stan",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Motion Picture – Drama",
+        "work_title": "A Complete Unknown",
+        "work_code": "acompleteunknown",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Timothée Chalamet",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Motion Picture – Musical or Comedy",
+        "work_title": "Nightbitch",
+        "work_code": "nightbitch",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Amy Adams",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Motion Picture – Musical or Comedy",
+        "work_title": "Wicked",
+        "work_code": "wicked",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Cynthia Erivo",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Motion Picture – Musical or Comedy",
+        "work_title": "The Substance",
+        "work_code": "thesubstance",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Demi Moore",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Motion Picture – Musical or Comedy",
+        "work_title": "Emilia Pérez",
+        "work_code": "emiliapérez",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Karla Sofìa Gascón",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Motion Picture – Musical or Comedy",
+        "work_title": "Anora",
+        "work_code": "anora",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Mikey Madison",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Motion Picture – Musical or Comedy",
+        "work_title": "Challengers",
+        "work_code": "challengers",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Zendaya",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Motion Picture – Musical or Comedy",
+        "work_title": "Saturday Night",
+        "work_code": "saturdaynight",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Gabriel LaBelle",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Motion Picture – Musical or Comedy",
+        "work_title": "Hit Man",
+        "work_code": "hitman",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Glen Powell",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Motion Picture – Musical or Comedy",
+        "work_title": "Heretic",
+        "work_code": "heretic",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Hugh Grant",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Motion Picture – Musical or Comedy",
+        "work_title": "A Real Pain",
+        "work_code": "arealpain",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jesse Eisenberg",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Motion Picture – Musical or Comedy",
+        "work_title": "Kinds of Kindness",
+        "work_code": "kindsofkindness",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jesse Plemons",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Motion Picture – Musical or Comedy",
+        "work_title": "A Different Man",
+        "work_code": "adifferentman",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Sebastian Stan",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Supporting Role in any Motion Picture",
+        "work_title": "Wicked",
+        "work_code": "wicked",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Ariana Grande",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Supporting Role in any Motion Picture",
+        "work_title": "The Brutalist",
+        "work_code": "thebrutalist",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Felicity Jones",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Supporting Role in any Motion Picture",
+        "work_title": "Conclave",
+        "work_code": "conclave",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Isabella Rossellini",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Supporting Role in any Motion Picture",
+        "work_title": "The Substance",
+        "work_code": "thesubstance",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Margaret Qualley",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Supporting Role in any Motion Picture",
+        "work_title": "Emilia Pérez",
+        "work_code": "emiliapérez",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Selena Gomez",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Supporting Role in any Motion Picture",
+        "work_title": "Emilia Pérez",
+        "work_code": "emiliapérez",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Zoe Saldaña",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor in a Supporting Role in any Motion Picture",
+        "work_title": "Gladiator II",
+        "work_code": "gladiatorii",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Denzel Washington",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor in a Supporting Role in any Motion Picture",
+        "work_title": "A Complete Unknown",
+        "work_code": "acompleteunknown",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Edward Norton",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor in a Supporting Role in any Motion Picture",
+        "work_title": "The Brutalist",
+        "work_code": "thebrutalist",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Guy Pearce",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor in a Supporting Role in any Motion Picture",
+        "work_title": "The Apprentice",
+        "work_code": "theapprentice",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jeremy Strong",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor in a Supporting Role in any Motion Picture",
+        "work_title": "A Real Pain",
+        "work_code": "arealpain",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Kieran Culkin",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor in a Supporting Role in any Motion Picture",
+        "work_title": "Anora",
+        "work_code": "anora",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Yura Borisov",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Director - Motion Picture",
+        "work_title": "The Brutalist",
+        "work_code": "thebrutalist",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Brady Corbet",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Director - Motion Picture",
+        "work_title": "The Substance",
+        "work_code": "thesubstance",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Coralie Fargeat",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Director - Motion Picture",
+        "work_title": "Conclave",
+        "work_code": "conclave",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Edward Berger",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Director - Motion Picture",
+        "work_title": "Emilia Pérez",
+        "work_code": "emiliapérez",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jacques Audiard",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Director - Motion Picture",
+        "work_title": "All We Imagine as Light",
+        "work_code": "allweimagineaslight",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Payal Kapadia",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Director - Motion Picture",
+        "work_title": "Anora",
+        "work_code": "anora",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Sean Baker",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Screenplay - Motion Picture",
+        "work_title": "The Brutalist",
+        "work_code": "thebrutalist",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Brady Corbet, Mona Fastvold",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Screenplay - Motion Picture",
+        "work_title": "The Substance",
+        "work_code": "thesubstance",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Coralie Fargeat",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Screenplay - Motion Picture",
+        "work_title": "Emilia Pérez",
+        "work_code": "emiliapérez",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jacques Audiard",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Screenplay - Motion Picture",
+        "work_title": "A Real Pain",
+        "work_code": "arealpain",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jesse Eisenberg",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Screenplay - Motion Picture",
+        "work_title": "Conclave",
+        "work_code": "conclave",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Peter Straughan",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Screenplay - Motion Picture",
+        "work_title": "Anora",
+        "work_code": "anora",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Sean Baker",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Original Score - Motion Picture",
+        "work_title": "Emilia Pérez",
+        "work_code": "emiliapérez",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Clément Ducol, Camille",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Original Score - Motion Picture",
+        "work_title": "The Brutalist",
+        "work_code": "thebrutalist",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Daniel Blumberg",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Original Score - Motion Picture",
+        "work_title": "Dune: Part Two",
+        "work_code": "duneparttwo",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Hans Zimmer",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Original Score - Motion Picture",
+        "work_title": "The Wild Robot",
+        "work_code": "thewildrobot",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Kris Bowers",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Original Score - Motion Picture",
+        "work_title": "Challengers",
+        "work_code": "challengers",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Trent Reznor, Atticus Ross",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Original Score - Motion Picture",
+        "work_title": "Conclave",
+        "work_code": "conclave",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Volker Bertelmann",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Original Song - Motion Picture",
+        "work_title": "The Last Showgirl",
+        "work_code": "thelastshowgirl",
+        "song_title": "Beautiful That Way",
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Andrew Wyatt, Miley Cyrus, Lykke Li",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Original Song - Motion Picture",
+        "work_title": "Challengers",
+        "work_code": "challengers",
+        "song_title": "Compress / Repress",
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Trent Reznor, Atticus Ross, Luca Guadagnino",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Original Song - Motion Picture",
+        "work_title": "Emilia Pérez",
+        "work_code": "emiliapérez",
+        "song_title": "El Mal",
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Clément Ducol, Camille, Jacques Audiard",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Original Song - Motion Picture",
+        "work_title": "Better Man",
+        "work_code": "betterman",
+        "song_title": "Forbidden Road",
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Robbie Williams, Freddy Wexler, Sacha Skarbek",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Original Song - Motion Picture",
+        "work_title": "The Wild Robot",
+        "work_code": "thewildrobot",
+        "song_title": "Kiss The Sky",
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Ali Tamposi, Delacey, Jordan K. Johnson, Maren Morris, Michael Pollack, Stefan Johnson",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Original Song - Motion Picture",
+        "work_title": "Emilia Pérez",
+        "work_code": "emiliapérez",
+        "song_title": "Mi Camino",
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Clément Ducol, Camille",
+        "trailer-link": null
+    },
+    {
+        "category": "Cinematic and Box Office Achievement",
+        "work_title": "Alien: Romulus",
+        "work_code": "alienromulus",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Cinematic and Box Office Achievement",
+        "work_title": "Beetlejuice Beetlejuice",
+        "work_code": "beetlejuicebeetlejuice",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Cinematic and Box Office Achievement",
+        "work_title": "Deadpool & Wolverine",
+        "work_code": "deadpool&wolverine",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Cinematic and Box Office Achievement",
+        "work_title": "Gladiator II",
+        "work_code": "gladiatorii",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Cinematic and Box Office Achievement",
+        "work_title": "Inside Out 2",
+        "work_code": "insideout2",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Cinematic and Box Office Achievement",
+        "work_title": "The Wild Robot",
+        "work_code": "thewildrobot",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Cinematic and Box Office Achievement",
+        "work_title": "Twisters",
+        "work_code": "twisters",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Cinematic and Box Office Achievement",
+        "work_title": "Wicked",
+        "work_code": "wicked",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Series - Drama",
+        "work_title": "The Diplomat",
+        "work_code": "thediplomat",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Series - Drama",
+        "work_title": "Mr. & Mrs. Smith",
+        "work_code": "mr&mrssmith",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Series - Drama",
+        "work_title": "Shogun",
+        "work_code": "shogun",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Series - Drama",
+        "work_title": "Slow Horses",
+        "work_code": "slowhorses",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Series - Drama",
+        "work_title": "Squid Game",
+        "work_code": "squidgame",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Series - Drama",
+        "work_title": "The Day of the Jackal",
+        "work_code": "thedayofthejackal",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Series - Musical or Comedy",
+        "work_title": "Abbott Elementary",
+        "work_code": "abbottelementary",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Series - Musical or Comedy",
+        "work_title": "The Bear",
+        "work_code": "thebear",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Series - Musical or Comedy",
+        "work_title": "Hacks",
+        "work_code": "hacks",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Series - Musical or Comedy",
+        "work_title": "Nobody Wants This",
+        "work_code": "nobodywantsthis",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Series - Musical or Comedy",
+        "work_title": "Only Murders in the Building",
+        "work_code": "onlymurdersinthebuilding",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Series - Musical or Comedy",
+        "work_title": "The Gentlemen",
+        "work_code": "thegentlemen",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Limited Series, Anthology Series, or Motion Picture Made for Television",
+        "work_title": "Baby Reindeer",
+        "work_code": "babyreindeer",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Limited Series, Anthology Series, or Motion Picture Made for Television",
+        "work_title": "Disclaimer",
+        "work_code": "disclaimer",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Limited Series, Anthology Series, or Motion Picture Made for Television",
+        "work_title": "Monsters: The Lyle and Erik Menendez Story",
+        "work_code": "monstersthelyleanderikmenendezstory",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Limited Series, Anthology Series, or Motion Picture Made for Television",
+        "work_title": "Ripley",
+        "work_code": "ripley",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Limited Series, Anthology Series, or Motion Picture Made for Television",
+        "work_title": "The Penguin",
+        "work_code": "thepenguin",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Television Limited Series, Anthology Series, or Motion Picture Made for Television",
+        "work_title": "True Detective: Night Country",
+        "work_code": "truedetectivenightcountry",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": null,
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Television Series – Drama",
+        "work_title": "Shogun",
+        "work_code": "shogun",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Anna Sawai",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Television Series – Drama",
+        "work_title": "House of the Dragon",
+        "work_code": "houseofthedragon",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Emma D'Arcy",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Television Series – Drama",
+        "work_title": "Matlock",
+        "work_code": "matlock",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Kathy Bates",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Television Series – Drama",
+        "work_title": "Black Doves",
+        "work_code": "blackdoves",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Keira Knightley",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Television Series – Drama",
+        "work_title": "The Diplomat",
+        "work_code": "thediplomat",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Keri Russell",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Television Series – Drama",
+        "work_title": "Mr. & Mrs. Smith",
+        "work_code": "mr&mrssmith",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Maya Erskine",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor In A Television Series - Drama",
+        "work_title": "Landman",
+        "work_code": "landman",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Billy Bob Thornton",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor In A Television Series - Drama",
+        "work_title": "Mr. & Mrs. Smith",
+        "work_code": "mr&mrssmith",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Donald Glover",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor In A Television Series - Drama",
+        "work_title": "The Day of the Jackal",
+        "work_code": "thedayofthejackal",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Eddie Redmayne",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor In A Television Series - Drama",
+        "work_title": "Slow Horses",
+        "work_code": "slowhorses",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Gary Oldman",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor In A Television Series - Drama",
+        "work_title": "Shogun",
+        "work_code": "shogun",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Hiroyuki Sanada",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor In A Television Series - Drama",
+        "work_title": "Presumed Innocent",
+        "work_code": "presumedinnocent",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jake Gyllenhaal",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Television Series – Musical or Comedy",
+        "work_title": "The Bear",
+        "work_code": "thebear",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Ayo Edebiri",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Television Series – Musical or Comedy",
+        "work_title": "Hacks",
+        "work_code": "hacks",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jean Smart",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Television Series – Musical or Comedy",
+        "work_title": "Agatha All Along",
+        "work_code": "agathaallalong",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Kathryn Hahn",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Television Series – Musical or Comedy",
+        "work_title": "Nobody Wants This",
+        "work_code": "nobodywantsthis",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Kristen Bell",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Television Series – Musical or Comedy",
+        "work_title": "Abbott Elementary",
+        "work_code": "abbottelementary",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Quinta Brunson",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Television Series – Musical or Comedy",
+        "work_title": "Only Murders in the Building",
+        "work_code": "onlymurdersinthebuilding",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Selena Gomez",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor in a Television Series - Musical or Comedy",
+        "work_title": "Nobody Wants This",
+        "work_code": "nobodywantsthis",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Adam Brody",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor in a Television Series - Musical or Comedy",
+        "work_title": "Shrinking",
+        "work_code": "shrinking",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jason Segel",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor in a Television Series - Musical or Comedy",
+        "work_title": "The Bear",
+        "work_code": "thebear",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jeremy Allen White",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor in a Television Series - Musical or Comedy",
+        "work_title": "Only Murders in the Building",
+        "work_code": "onlymurdersinthebuilding",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Martin Short",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor in a Television Series - Musical or Comedy",
+        "work_title": "Only Murders in the Building",
+        "work_code": "onlymurdersinthebuilding",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Steve Martin",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by an Actor in a Television Series - Musical or Comedy",
+        "work_title": "A Man on the Inside",
+        "work_code": "amanontheinside",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Ted Danson",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+        "work_title": "Disclaimer",
+        "work_code": "disclaimer",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Cate Blanchett",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+        "work_title": "The Penguin",
+        "work_code": "thepenguin",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Cristin Milioti",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+        "work_title": "True Detective: Night Country",
+        "work_code": "truedetectivenightcountry",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jodie Foster",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+        "work_title": "The Regime",
+        "work_code": "theregime",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Kate Winslet",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+        "work_title": "Feud: Capote vs. The Swans",
+        "work_code": "feudcapotevstheswans",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Naomi Watts",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+        "work_title": "Griselda",
+        "work_code": "griselda",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Sofía Vergara",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Supporting Role on Television",
+        "work_title": "The Diplomat",
+        "work_code": "thediplomat",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Allison Janney",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Supporting Role on Television",
+        "work_title": "Ripley",
+        "work_code": "ripley",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Dakota Fanning",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Supporting Role on Television",
+        "work_title": "Hacks",
+        "work_code": "hacks",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Hannah Einbinder",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Supporting Role on Television",
+        "work_title": "Baby Reindeer",
+        "work_code": "babyreindeer",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jessica Gunning",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Supporting Role on Television",
+        "work_title": "True Detective: Night Country",
+        "work_code": "truedetectivenightcountry",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Kali Reis",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Female Actor in a Supporting Role on Television",
+        "work_title": "The Bear",
+        "work_code": "thebear",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Liza Colón-Zayas",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+        "work_title": "Ripley",
+        "work_code": "ripley",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Andrew Scott",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+        "work_title": "The Penguin",
+        "work_code": "thepenguin",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Colin Farrell",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+        "work_title": "Monsters: The Lyle and Erik Menendez Story",
+        "work_code": "monstersthelyleanderikmenendezstory",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Cooper Koch",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+        "work_title": "A Gentleman in Moscow",
+        "work_code": "agentlemaninmoscow",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Ewan McGregor",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+        "work_title": "Disclaimer",
+        "work_code": "disclaimer",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Kevin Kline",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television",
+        "work_title": "Baby Reindeer",
+        "work_code": "babyreindeer",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Richard Gadd",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Supporting Role on Television",
+        "work_title": "La Máquina",
+        "work_code": "lamáquina",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Diego Luna",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Supporting Role on Television",
+        "work_title": "The Bear",
+        "work_code": "thebear",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Ebon Moss–Bachrach",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Supporting Role on Television",
+        "work_title": "Shrinking",
+        "work_code": "shrinking",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Harrison Ford",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Supporting Role on Television",
+        "work_title": "Slow Horses",
+        "work_code": "slowhorses",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Jack Lowden",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Supporting Role on Television",
+        "work_title": "Monsters: The Lyle and Erik Menendez Story",
+        "work_code": "monstersthelyleanderikmenendezstory",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Javier Bardem",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance by a Male Actor in a Supporting Role on Television",
+        "work_title": "Shogun",
+        "work_code": "shogun",
+        "song_title": null,
+        "country": null,
+        "nominee_code": null,
+        "nominee_name": "Tadanobu Asano",
+        "trailer-link": null
+    },
+    {
+        "category": "Best Performance in Stand-Up Comedy on Television",
+        "work_title": "Love You",
+        "work_code": "loveyou",
+        "song_title": null,
+        "country": null,
+        "nominee_code": "adamSander",
+        "nominee_name": "Adam Sandler",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Performance in Stand-Up Comedy on Television",
+        "work_title": "Single Lady",
+        "work_code": "singlelady",
+        "song_title": null,
+        "country": null,
+        "nominee_code": "aliWong",
+        "nominee_name": "Ali Wong",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Performance in Stand-Up Comedy on Television",
+        "work_title": "What Had Happened Was",
+        "work_code": "whathadhappenedwas",
+        "song_title": null,
+        "country": null,
+        "nominee_code": "jamieFoxx",
+        "nominee_name": "Jamie Foxx",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Performance in Stand-Up Comedy on Television",
+        "work_title": "Someday You'll Die",
+        "work_code": "somedayyou'lldie",
+        "song_title": null,
+        "country": null,
+        "nominee_code": "nikkiGlaser",
+        "nominee_name": "Nikki Glaser",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Performance in Stand-Up Comedy on Television",
+        "work_title": "More Feelings",
+        "work_code": "morefeelings",
+        "song_title": null,
+        "country": null,
+        "nominee_code": "ramyYoussel",
+        "nominee_name": "Ramy Youssef",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Performance in Stand-Up Comedy on Television",
+        "work_title": "Dad Man Walking",
+        "work_code": "dadmanwalking",
+        "song_title": null,
+        "country": null,
+        "nominee_code": "sethMeyers",
+        "nominee_name": "Seath Meyers",
+        "trailer-link": "https://trailer-link.com"
+    }
+]
