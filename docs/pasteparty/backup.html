@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Paste Party!</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <style>
     body {
@@ -24,11 +22,6 @@
       justify-content: center;
       align-items: center;
       gap: 10px;
-    }
-    button {
-      display: block;
-      width: 30%;
-      height: 100%;
     }
     h1 span:first-child {
       transform: scaleX(-1);
@@ -90,7 +83,7 @@
       margin-right: auto;
       text-align: left;
       display: grid;
-      grid-template-rows: 6vh 12vh 6vh 6vh auto;
+      grid-template-rows: auto 1fr auto auto auto;
     }
     .field-group {
       margin-bottom: 20px;
@@ -180,10 +173,6 @@ textarea {
   margin-right: 22px;
 }
 
-.copy-btn i {
-  font-size: 4vh;
-}
-
 </style>
 </head>
 <body>
@@ -209,7 +198,7 @@ textarea {
       <div style="display: flex; align-items: center;">
         <span class="locked-domain">https://linkedin.com/in/</span>
         <input type="text" id="linkedin" placeholder="your-profile">
-        <button class="copy-btn" onclick="copyToClipboard('linkedin', 'https://linkedin.com/in/')"><i class="fa-brands fa-linkedin"></i>  </button>
+        <button class="copy-btn" onclick="copyToClipboard('linkedin', 'https://linkedin.com/in/')">Copy</button>
       </div>
     </div>
     <div class="field-group">
@@ -221,7 +210,7 @@ textarea {
           <option value="">base</option>
         </select>
                 <button class="copy-btn" onclick="updatePortfolioDropdown()">Load Projects</button>
-        <button class="copy-btn" onclick="copyPortfolio()"><i class="fa-solid fa-briefcase"></i>  </button>
+        <button class="copy-btn" onclick="copyPortfolio()">Copy</button>
       </div>
       <div id="textAreaDiv">
         <textarea id="portfolioTextarea" placeholder="Add sub-links, one per line..." style="width: 100%; margin-top: 10px;"></textarea>
@@ -232,13 +221,13 @@ textarea {
       <div style="display: flex; align-items: center;">
         <span class="locked-domain">https://github.com/</span>
         <input type="text" id="github" placeholder="your-username">
-        <button class="copy-btn" onclick="copyToClipboard('github', 'https://github.com/')"><i class="fa-brands fa-github"></i>  </button>
+        <button class="copy-btn" onclick="copyToClipboard('github', 'https://github.com/')">Copy</button>
       </div>
     </div>
     <div class="field-group">
       <label for="other">Other</label>
       <div style="display: flex; align-items: center;"><input type="text" id="other" placeholder="Any other link">
-      <button class="copy-btn" onclick="copyToClipboard('other')"><i class="fa-solid fa-link"></i>  </button>
+      <button class="copy-btn" onclick="copyToClipboard('other')">Copy</button>
     </div>
     <div style="margin-top: 20px; text-align: center;">
   <h3>Copies Made: <span id="copyCount">0</span></h3>
@@ -246,7 +235,9 @@ textarea {
     </div>
   </div>
 </div>
-Main <a href="/backup.html"> back to backup </a>
+
+Backup<a href="/index.html"> back to main </a>
+
   <script>
 
 const modeToggle = document.getElementById("modeToggle");
