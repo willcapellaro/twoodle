@@ -1,0 +1,231 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+  }
+  
+  #practice-column, #compose-column {
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  #practice-column {
+    width: 60%;
+    background: #f4f4f4;
+    border-right: 1px solid #ddd;
+  }
+  
+  #compose-column {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+  }
+  
+  #compose-column.collapsed {
+    display: none;
+  }
+  
+  
+  .card {
+    font-family: 'Roboto', sans-serif;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background: #fff;
+  }
+  
+  .card h3 {
+    margin: 0;
+  }
+  
+  .tags {
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  #search {
+    margin-bottom: 10px;
+  }
+  
+  #compose-area {
+    flex: 1;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 10px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  label[for="toggle-key-points"],
+  label[for="toggle-script"] {
+    user-select: none; /* Disable text selection */
+    cursor: pointer;   /* Ensure pointer cursor for usability */
+  }
+
+  .tag-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  
+  .tag-filters button {
+    background-color: dodgerblue;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .tag-filters button:hover {
+    background-color: #c0c0c0;
+  }
+  
+  .tag-filters button.active {
+    background-color: #007bff;
+    color: white;
+  }
+
+  #compose-column {
+    transition: width 0.3s ease, padding 0.3s ease;
+  }
+  
+  #compose-column.collapsed {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  #compose-content {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  #compose-column.collapsed #compose-content {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  body {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  #practice-column {
+    flex: 3; /* Expandable when the compose column is collapsed */
+    padding: 20px;
+    overflow-y: auto;
+    transition: flex 0.3s ease;
+  }
+  
+  #toggle-column {
+    flex: 0 0 20px; /* Slightly wider for better click area */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e0e0e0;
+  }
+  
+  #toggle-compose-column {
+    transform: rotate(-90deg); /* Rotate text 90 degrees counterclockwise */
+    background: transparent;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9em;
+    color: #333;
+    padding: 5px;
+    text-align: center;
+    
+  }
+  
+  #toggle-compose-column {
+    flex: 2; /* Default width of the compose column */
+    padding: 20px;
+    overflow-y: auto;
+    transition: flex 0.3s ease;
+    user-select: none;
+  }
+  
+  #compose-column.collapsed {
+    flex: 0; /* Collapse the compose column completely */
+    padding: 0; /* Remove padding when collapsed */
+    overflow: hidden; /* Hide content */
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    text-align: left;
+  }
+  
+  #modal-close {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .section {
+    padding: 14px 14px;
+    margin: 8px;
+    display: grid;
+    grid-template-columns: 140px auto; /* Two-column layout */
+    grid-auto-rows: min-content; /* Rows adjust dynamically based on content height */
+    gap: 8px; /* Add spacing between rows and columns */
+    border-radius: 6px;
+    /* outline: 1px solid #c0c0c0; */
+    /* outline-offset: 1px; */
+  }
+  
+  /* Heading (e.g., "Situation", "Task", etc.) */
+  .section h4 {
+    margin: 0; /* Remove default margins */
+    text-align: center; /* Center text horizontally */
+    font-size: 1.2rem; /* Adjust font size */
+    font-weight: bold; /* Make heading bold */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    grid-column: 1 / 2; /* Place in the first column */
+    grid-row: 1 / -1; /* Span all rows in this grid item */
+    height: auto;
+  }
+  
+  /* Content paragraphs (text) */
+  .section p {
+    margin: 0; /* Remove default margins */
+    line-height: 1.5; /* Set consistent line spacing */
+    align-self: start; /* Align paragraphs to the top */
+    grid-column: 2 / 3; /* Place in the second column */
+  }
+  /* Hide entire sections that do not contain a <p> element */
+.section:not(:has(p)) {
+  display: none;
+}
