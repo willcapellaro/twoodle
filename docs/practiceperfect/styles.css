@@ -192,3 +192,40 @@ body {
     font-size: 20px;
     cursor: pointer;
   }
+  .section {
+    padding: 14px 14px;
+    margin: 8px;
+    display: grid;
+    grid-template-columns: 140px auto; /* Two-column layout */
+    grid-auto-rows: min-content; /* Rows adjust dynamically based on content height */
+    gap: 8px; /* Add spacing between rows and columns */
+    border-radius: 6px;
+    /* outline: 1px solid #c0c0c0; */
+    /* outline-offset: 1px; */
+  }
+  
+  /* Heading (e.g., "Situation", "Task", etc.) */
+  .section h4 {
+    margin: 0; /* Remove default margins */
+    text-align: center; /* Center text horizontally */
+    font-size: 1.2rem; /* Adjust font size */
+    font-weight: bold; /* Make heading bold */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    grid-column: 1 / 2; /* Place in the first column */
+    grid-row: 1 / -1; /* Span all rows in this grid item */
+    height: auto;
+  }
+  
+  /* Content paragraphs (text) */
+  .section p {
+    margin: 0; /* Remove default margins */
+    line-height: 1.5; /* Set consistent line spacing */
+    align-self: start; /* Align paragraphs to the top */
+    grid-column: 2 / 3; /* Place in the second column */
+  }
+  /* Hide entire sections that do not contain a <p> element */
+.section:not(:has(p)) {
+  display: none;
+}

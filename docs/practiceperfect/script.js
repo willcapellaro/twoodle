@@ -20,12 +20,40 @@ let lastSubmittedContent = ''; // Track the last submitted content
 function loadCards() {
   const cardsContainer = document.getElementById('cards');
   cardsContainer.innerHTML = '';
-  cardsData.forEach(({ title, tags, keyPoints, script }) => {
+  cardsData.forEach(({ title, tags, keyPoints, sections, script }) => {
+    const situation = sections.SSS.map(text => `<p>${text}</p>`).join('');
+    const task = sections.TTT.map(text => `<p>${text}</p>`).join('');
+    const actions = sections.AAA.map(text => `<p>${text}</p>`).join('');
+    const results = sections.RRR.map(text => `<p>${text}</p>`).join('');
+    const experience = sections.EEE.map(text => `<p>${text}</p>`).join('');
+
     const card = document.createElement('div');
     card.classList.add('card');
     card.innerHTML = `
       <h3>${title}</h3>
       <div class="tags">${tags}</div>
+      <div class="sections">
+        <div class="section situation" style="background-color: #f8d7da;">
+          <h4>Situation</h4>
+          ${situation}
+        </div>
+        <div class="section task" style="background-color: #d1ecf1;">
+          <h4>Task</h4>
+          ${task}
+        </div>
+        <div class="section actions" style="background-color: #d4edda;">
+          <h4>Actions</h4>
+          ${actions}
+        </div>
+        <div class="section results" style="background-color: #fff3cd;">
+          <h4>Results</h4>
+          ${results}
+        </div>
+        <div class="section experience" style="background-color: #e2e3e5;">
+          <h4>Experience & Evaluation</h4>
+          ${experience}
+        </div>
+      </div>
       <div class="key-points">
         <h4>Key Points</h4>
         <ul>
@@ -33,8 +61,8 @@ function loadCards() {
         </ul>
       </div>
       <div class="script">
-        <h4>Script</h4>
-        <p>${script}</p>
+        <h4>Additional Text</h4>
+        ${script.split('\n').map(paragraph => `<p>${paragraph.trim()}</p>`).join('')}
       </div>
     `;
     cardsContainer.appendChild(card);
@@ -44,10 +72,29 @@ function loadCards() {
 // Generate markdown from cards data
 function generateMarkdown() {
   return cardsData
-    .map(({ title, tags, keyPoints, script }) =>
-      `${title}\n${tags}\n${keyPoints.map(point => `- ${point}`).join('\n')}\n${script}`
-    )
-    .join('\n\n');
+    .map(({ title, tags, keyPoints, sections, script }) => {
+      const situation = sections.SSS.map(line => `SSS ${line}`).join('\n');
+      const task = sections.TTT.map(line => `TTT ${line}`).join('\n');
+      const actions = sections.AAA.map(line => `AAA ${line}`).join('\n');
+      const results = sections.RRR.map(line => `RRR ${line}`).join('\n');
+      const experience = sections.EEE.map(line => `EEE ${line}`).join('\n');
+      const keyPointsMarkdown = keyPoints.map(point => `- ${point}`).join('\n');
+
+      return [
+        title,
+        tags,
+        situation,
+        task,
+        actions,
+        results,
+        experience,
+        keyPointsMarkdown,
+        script, // Regular script text
+      ]
+        .filter(Boolean) // Remove empty sections
+        .join('\n');
+    })
+    .join('\n\n'); // Separate cards with double newlines
 }
 
 // Update the markdown text area with current cards data
@@ -72,15 +119,26 @@ function loadFromLocalStorage() {
 // Parse markdown into card data
 function parseMarkdown(markdown) {
   return markdown.split('\n\n').map(block => {
-    const [title, tags, ...rest] = block.split('\n');
+    const [title, tags, ...lines] = block.split('\n');
     const keyPoints = [];
     let script = '';
+    const sections = { SSS: [], TTT: [], AAA: [], RRR: [], EEE: [] };
 
-    rest.forEach(line => {
-      if (line.startsWith('-')) {
+    lines.forEach(line => {
+      if (line.startsWith('SSS')) {
+        sections.SSS.push(line.slice(3).trim());
+      } else if (line.startsWith('TTT')) {
+        sections.TTT.push(line.slice(3).trim());
+      } else if (line.startsWith('AAA')) {
+        sections.AAA.push(line.slice(3).trim());
+      } else if (line.startsWith('RRR')) {
+        sections.RRR.push(line.slice(3).trim());
+      } else if (line.startsWith('EEE')) {
+        sections.EEE.push(line.slice(3).trim());
+      } else if (line.startsWith('-')) {
         keyPoints.push(line.slice(1).trim());
       } else {
-        script += `${line}\n`;
+        script += `${line.trim()}\n`;
       }
     });
 
@@ -88,6 +146,7 @@ function parseMarkdown(markdown) {
       title: title.trim(),
       tags: tags.trim(),
       keyPoints,
+      sections,
       script: script.trim(),
     };
   });

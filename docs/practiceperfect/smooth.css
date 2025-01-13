@@ -1,0 +1,34 @@
+.container {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "breadcrumb breadcrumb"
+    "content sidebar"
+    "footer footer";
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.header {
+  grid-area: header;
+}
+
+.breadcrumb {
+  grid-area: breadcrumb;
+}
+
+.content {
+  grid-area: content;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.footer {
+  grid-area: footer;
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
