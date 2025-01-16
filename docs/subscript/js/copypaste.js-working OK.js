@@ -127,7 +127,7 @@ function parseCSV(csvText) {
     });
 }
 
-// Function to process and validate dates
+// Helper function to process and validate dates
 function processDate(dateString, fallbackYear) {
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -166,69 +166,6 @@ function isValidMonthDay(month, day) {
     );
 }
 
-// Function to clean up data by removing blank rows and moving filled rows to the top
-function cleanUpData() {
-    try {
-        const data = loadData(); // Load data from localStorage
-
-        // Filter out blank rows and move filled rows to the top
-        const cleanedData = data.filter(item => item.name || item.cost);
-
-        // Save the cleaned data
-        saveData(cleanedData);
-
-        // Reload and render the updated data
-        createInputGrid(cleanedData);
-        renderCharts(cleanedData);
-
-        alert("Data cleaned up! Blank rows have been removed.");
-    } catch (err) {
-        console.error("Failed to clean up data: ", err);
-        alert("Error: Could not clean up data.");
-    }
-}
-
-// Function to sort data alphabetically by name
-function sortDataAZ() {
-    try {
-        const data = loadData(); // Load data from localStorage
-
-        // Sort data alphabetically by name
-        const sortedData = data.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
-
-        // Save and render the sorted data
-        saveData(sortedData);
-        createInputGrid(sortedData);
-        renderCharts(sortedData);
-
-        alert("Data sorted A-Z!");
-    } catch (err) {
-        console.error("Failed to sort data A-Z: ", err);
-        alert("Error: Could not sort data.");
-    }
-}
-
-// Function to sort data by cost
-// Function to sort data by cost (descending order)
-function sortDataByCost() {
-    try {
-        const data = loadData(); // Load data from localStorage
-
-        // Sort data by cost (descending)
-        const sortedData = data.sort((a, b) => (b.cost || 0) - (a.cost || 0));
-
-        // Save and render the sorted data
-        saveData(sortedData);
-        createInputGrid(sortedData);
-        renderCharts(sortedData);
-
-        alert("Data sorted by cost (highest to lowest)!");
-    } catch (err) {
-        console.error("Failed to sort data by cost: ", err);
-        alert("Error: Could not sort data.");
-    }
-}
-
 // Attach event listeners to buttons, ensuring elements exist in the DOM
 const copyButton = document.getElementById("copy-data");
 if (copyButton) {
@@ -238,19 +175,4 @@ if (copyButton) {
 const mergeButton = document.getElementById("merge-data");
 if (mergeButton) {
     mergeButton.addEventListener("click", mergeDataFromClipboard);
-}
-
-const cleanUpButton = document.getElementById("clean-up-data");
-if (cleanUpButton) {
-    cleanUpButton.addEventListener("click", cleanUpData);
-}
-
-const sortAZButton = document.getElementById("sort-az");
-if (sortAZButton) {
-    sortAZButton.addEventListener("click", sortDataAZ);
-}
-
-const sortCostButton = document.getElementById("sort-cost");
-if (sortCostButton) {
-    sortCostButton.addEventListener("click", sortDataByCost);
 }
