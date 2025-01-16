@@ -8,14 +8,14 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15,415,1,1,1&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,CRSV,MONO@-15,415,1,1,1&display=swap" rel="stylesheet">
 
 </head>
 <body>
     <div class="container sketchy-border">
           <div id="containerX"></div>
 
-        <h1>Sub Scribe</h1>
+        <h1>subtractr</h1>
 
         <div class="chart-container">
             <div id="monthly-chart" class="chart"></div>
@@ -104,7 +104,7 @@
             for (let i = 0; i < 50; i++) {
                 const sub = data[i] || {};
                 gridHTML += `<div class="tableGrid">
-                                                            <input type="checkbox" ${sub.active ? "checked" : ""} data-index="${i}" data-field="active">
+                                                            <input type=x? "checked" : ""} data-index="${i}" data-field="active">
 
                     <input type="text" placeholder="Subscription Name" value="${sub.name || ''}" data-index="${i}" data-field="name">
                     <input type="number" placeholder="Cost" class="tabulation right" value="${sub.cost || ''}" data-index="${i}" data-field="cost">
@@ -148,9 +148,8 @@
 
         // Render Monthly and Annual Charts
         function renderCharts(data) {
-const monthlyData = JSON.parse(localStorage.getItem('monthlyData')) || [];
-const annualData = JSON.parse(localStorage.getItem('annualData')) || [];
-
+            const monthlyData = [];
+            const annualData = [];
 
                     // Map each category to a color
         const categoryColors = {
@@ -256,7 +255,7 @@ const annualData = JSON.parse(localStorage.getItem('annualData')) || [];
         initializeApp();
     </script>
 
-<script>
+    <script>
 document.addEventListener('DOMContentLoaded', () => {
     const CATEGORY_CLASS_PREFIX = 'category-';
 
@@ -311,84 +310,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Run the initial setup
     initializeCategoryClasses();
     attachCategoryListeners();
+});
 
-    // Monthly and annual data (replace with actual dynamic data)
-    const monthlyData = [
-      { name: 'Netflix', y: 100, category: 'Entertainment' },
-      { name: 'Hulu', y: 70, category: 'Entertainment' },
-      { name: 'Spotify', y: 50, category: 'Entertainment' },
-      { name: 'Electric Bill', y: 150, category: 'Utilities' },
-      { name: 'Water Bill', y: 60, category: 'Utilities' },
-      { name: 'Adobe Subscription', y: 200, category: 'Software' },
-      { name: 'Microsoft 365', y: 100, category: 'Software' },
-      { name: 'Grocery', y: 80, category: 'Other' },
-      { name: 'Phone Bill', y: 70, category: 'Other' }
-    ];
-
-    const annualData = [
-      { name: 'The Onion', y: 14, category: 'Entertainment' },
-      { name: 'New Yorker', y: 20, category: 'Entertainment' }
-    ];
-
-    // Summing annual costs by category
-    const annualCategoryData = {};
-    annualData.forEach(point => {
-      if (!annualCategoryData[point.category]) {
-          annualCategoryData[point.category] = {
-              total: 0,
-              charges: []
-          };
-      }
-      annualCategoryData[point.category].total += point.y;
-      annualCategoryData[point.category].charges.push(point);
-    });
-
-    const categoryColors = {
-      Entertainment: '#FF0000',
-      Utilities: '#0000FF',
-      Software: '#008000',
-      Other: '#FFA500',
-      Unknown: '#A52A2A',
-      Ending_Service: '#000000',
-      Check: '#800080'
-    };
-
-    const categoryData = {};
-
-    monthlyData.forEach(point => {
-      if (!categoryData[point.category]) {
-          categoryData[point.category] = {
-              total: 0,
-              charges: []
-          };
-      }
-      categoryData[point.category].total += point.y;
-      categoryData[point.category].charges.push(point);
-    });
-
-    // console.log(categoryData);
-
-    const seriesData = Object.keys(categoryData).map(category => {
-      const categoryInfo = categoryData[category];
-      categoryInfo.charges.sort((a, b) => b.y - a.y);
-      
-      return {
-        name: category,
-        y: categoryInfo.total,
-        color: categoryColors[category],
-        topCharges: categoryInfo.charges.slice(0, 5),
-        annualNote: annualCategoryData[category]
-          ? `Annual costs: $${annualCategoryData[category].total} (${annualCategoryData[category].charges.map(a => a.name).join(', ')})`
-          : ''
-      };
-    });
-
-    function tooltipFormatter() {
-      const topCharges = this.point.topCharges.map(point => `${point.name}: $${point.y}`).join('<br>');
-      const annualNote = this.point.annualNote ? `<br><br>${this.point.annualNote}` : '';
-
-      return `<b>${this.point.name}</b><br>Total: $${this.y}<br>Top 5:<br>${topCharges}${annualNote}`;
-    }
 
     Highcharts.chart('containerX', {
       chart: {
@@ -398,11 +321,10 @@ document.addEventListener('DOMContentLoaded', () => {
         type: 'pie'
       },
       title: {
-        text: 'Monthly Subscription Costs by Category'
+        text: 'Browser market shares in January, 2018'
       },
       tooltip: {
-        useHTML: true,
-        formatter: tooltipFormatter
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
       },
       plotOptions: {
         pie: {
@@ -410,19 +332,38 @@ document.addEventListener('DOMContentLoaded', () => {
           cursor: 'pointer',
           dataLabels: {
             enabled: true,
-            format: '<b>{point.name}</b>: ${point.y:.2f} ({point.percentage:.1f}%)'
+            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
           }
         }
       },
       series: [{
-        name: 'Costs',
+        name: 'Brands',
         colorByPoint: true,
-        data: seriesData
+        data: [{
+          name: 'Chrome',
+          y: 61.41,
+          sliced: true,
+          selected: true
+        }, {
+          name: 'Internet Explorer',
+          y: 11.84
+        }, {
+          name: 'Firefox',
+          y: 10.85
+        }, {
+          name: 'Edge',
+          y: 4.67
+        }, {
+          name: 'Safari',
+          y: 4.18
+        }, {
+          name: 'Others',
+          y: 7.05
+        }]
       }]
     });
-});
-</script>
 
+    </script>
 
 </body>
 </html>

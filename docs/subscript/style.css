@@ -74,6 +74,12 @@ input::placeholder {
     stroke-width: 2;
 }
 
+input[type="date"] {
+    font-family: sans-serif; /* Ensure readability */
+    width: auto; /* Let the browser adjust width */
+    min-width: 150px; /* Ensure enough space for full date */
+}
+
 .total-summary {
     font-size: 16px;
     margin-top: 10px;
