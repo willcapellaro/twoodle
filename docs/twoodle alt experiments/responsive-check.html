@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breakpoint Test</title>
+    <style>
+        /* Default styles (mobile first) */
+        body {
+            font-family: sans-serif;
+            background-color: #f0f0f0; /* Light gray for mobile */
+            margin: 0;
+            padding: 10px;
+        }
+
+        .container {
+            padding: 10px;
+            border: 1px solid #ccc; /* Added a border to the container */
+        }
+
+        h1 {
+            font-size: 20px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column on mobile */
+            gap: 10px;
+        }
+
+        .grid-item {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        /* Styles for larger screens (600px and up) */
+        @media only screen and (min-width: 600px) {
+            body {
+                background-color: #e0f2f7; /* Light blue for desktop */
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+            .grid-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* Two columns on desktop */
+                gap: 20px;
+            }
+
+            .container {
+                max-width: 960px; /* Set a max-width for larger screens */
+                margin: 0 auto;

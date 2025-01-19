@@ -13,7 +13,20 @@
 </head>
 <body>
     <div class="container sketchy-border">
+        <div style="margin: 30px 0;">
+            <button id="clear-data" >Clear All</button>
+            <button id="copy-data">Copy to Clipboard</button>
+            <button id="merge-data">Import from Clipboard</button>
+            <button id="clean-up-data">Clean Up</button>
+            <button id="sort-az">Sort A-Z</button>
+            <button id="sort-cost">Sort by Cost</button>
+        </div>
+        <div class="table-container" id="subscription-table"></div>
+
+        
+
           <div id="containerX"></div>
+        <div class="table-container" id="subscription-table"></div>
 
         <h1>Sub Scribe</h1>
 
@@ -27,16 +40,8 @@
             <div id="total-annual"></div>
         </div>
 
-        <div class="table-container" id="subscription-table"></div>
 
-        <div style="margin-top: 20px;">
-            <button id="clear-data" style="margin-right: 10px;">Clear All Data</button>
-            <button id="copy-data" style="margin-right: 10px;">Copy Data to Clipboard</button>
-            <button id="clean-up-data" style="margin-right: 10px;">Clean Up Data</button>
-            <button id="merge-data" style="margin-top: 20px;">Merge Data</button>
-            <button id="sort-az" style="margin-top: 20px;">Sort A-Z</button>
-            <button id="sort-cost" style="margin-top: 20px;">Sort by Cost</button>
-        </div>
+
     </div>
 
     <script src="js/index8_script.js"></script>
