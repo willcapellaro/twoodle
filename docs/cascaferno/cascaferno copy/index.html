@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Dependency Finder</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: #f5f5f5;
+            transition: background-color 0.3s;
+        }
+
+        body.hover {
+            background-color: #e0f7fa;
+        }
+
+        #drop-zone {
+            font-size: 1.5rem;
+            color: #666;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+        }
+
+        #results {
+            margin-top: 20px;
+            text-align: left;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <div id="drop-zone">Drop a JavaScript file here to find dependencies</div>
+    <div id="results"></div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const results = document.getElementById('results');
+
+        // Add hover effect
+        document.body.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            document.body.classList.add('hover');
+        });
+
+        document.body.addEventListener('dragleave', () => {
+            document.body.classList.remove('hover');
+        });
+
+        // Handle file drop
+        document.body.addEventListener('drop', async (e) => {
+            e.preventDefault();
+            document.body.classList.remove('hover');
+
+            const file = e.dataTransfer.files[0];
+            if (file && file.type === 'application/javascript') {
+                results.innerHTML = `<p>Processing file: <strong>${file.name}</strong></p>`;
+
+                try {
+                    const directoryHandle = await window.showDirectoryPicker();
+                    results.innerHTML += `<p>Searching directory...</p>`;
+                    await analyzeDirectory(directoryHandle, file.name);
+                } catch (err) {
+                    results.innerHTML += `<p>Error: ${err.message}</p>`;
+                }
+            } else {
+                results.innerHTML = `<p>Please drop a valid JavaScript file.</p>`;
+            }
+        });
+
+        // Analyze directory for dependencies
+        async function analyzeDirectory(directoryHandle, targetFileName) {
+            let references = [];
+            for await (const [name, handle] of directoryHandle.entries()) {
+                if (handle.kind === 'file' && name.endsWith('.html')) {
+                    const file = await handle.getFile();
+                    const content = await file.text();
+                    if (content.includes(targetFileName)) {
+                        references.push(name);
+                    }
+                }
+            }
+
+            if (references.length > 0) {
+                results.innerHTML += `<p>Found references in:</p><ul>${references.map((ref) => `<li>${ref}</li>`).join('')}</ul>`;
+            } else {
+                results.innerHTML += `<p>No references found.</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
