@@ -27,6 +27,11 @@
             padding: 20px;
             border: 2px dashed #ccc;
             border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+
+        #drop-zone.hover {
+            border-color: #009688;
         }
 
         #results {
@@ -37,30 +42,30 @@
     </style>
 </head>
 <body>
-    <div id="drop-zone">Drop a JavaScript file here to find dependencies</div>
+    <div id="drop-zone" class="hover">Drop a JavaScript file here to find dependencies</div>
     <div id="results"></div>
 
     <script>
         const dropZone = document.getElementById('drop-zone');
         const results = document.getElementById('results');
 
-        // Add hover effect
+        // Handle hover state
         document.body.addEventListener('dragover', (e) => {
             e.preventDefault();
-            document.body.classList.add('hover');
+            dropZone.classList.add('hover');
         });
 
         document.body.addEventListener('dragleave', () => {
-            document.body.classList.remove('hover');
+            dropZone.classList.remove('hover');
         });
 
         // Handle file drop
         document.body.addEventListener('drop', async (e) => {
             e.preventDefault();
-            document.body.classList.remove('hover');
+            dropZone.classList.remove('hover');
 
             const file = e.dataTransfer.files[0];
-            if (file && file.type === 'application/javascript') {
+            if (file && file.name.endsWith('.js')) {
                 results.innerHTML = `<p>Processing file: <strong>${file.name}</strong></p>`;
 
                 try {
@@ -71,7 +76,7 @@
                     results.innerHTML += `<p>Error: ${err.message}</p>`;
                 }
             } else {
-                results.innerHTML = `<p>Please drop a valid JavaScript file.</p>`;
+                results.innerHTML = `<p>Please drop a valid JavaScript file (.js).</p>`;
             }
         });
 
