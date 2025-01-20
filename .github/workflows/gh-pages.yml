@@ -1,0 +1,28 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Trigger this workflow when changes are pushed to the 'main' branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3  # Pulls your repository code
+
+      - name: Install dependencies
+        run: |
+          npm install  # Adjust this to match your project's dependencies
+          npm run build  # Replace with your actual build command, e.g., for React, Gatsby, etc.
+
+      - name: Disable Jekyll
+        run: touch docs/.nojekyll  # Creates a .nojekyll file in your output directory
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub automatically provides this token
+          publish_dir: ./docs  # Replace with your actual build output directory
