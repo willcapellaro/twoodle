@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Card Example</title>
+    <style>
+        /* Card styling */
+        .card {
+            width: 300px;
+            padding: 20px;
+            margin: 50px auto;
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #ffffff;
+            font-family: 'IBM Plex Sans', sans-serif;
+            text-align: center;
+        }
+
+        /* Editable text styling */
+        .editable {
+            display: inline-block;
+            position: relative;
+            padding: 5px;
+            color: #ffffff;
+            font-size: 20px;
+            cursor: text;
+            transition: border-bottom 0.3s ease;
+        }
+
+        /* Hover underline */
+        .editable::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);  /* 50% opacity for hover */
+            width: 0;
+            transition: width 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Hover effect with 50% opacity underline */
+        .editable:hover::before {
+            width: 100%;  /* Span only the text width */
+        }
+
+        /* Editing (focus) state with gradient text */
+        .editable[contenteditable="true"] {
+            outline: none;
+            background: linear-gradient(45deg, #ff6ec4, #7873f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Underline animation while editing */
+        .editable[contenteditable="true"]::before {
+            background: rgba(255, 255, 255, 1);  /* Full opacity */
+            width: 100%;
+            animation: fadeUnderline .4s forwards;  /* Faster fade out + moves down */
+        }
+
+        /* Keyframes for underline animation: fade out + move down */
+        @keyframes fadeUnderline {
+            0% {
+                opacity: 1;
+                bottom: -3px;
+            }
+            50% {
+                opacity: .3;
+                bottom: -7;
+            }
+            100% {
+                opacity: 0;
+                bottom: -11px;  /* Moves the line down as it fades */
+            }
+        }
+
+        /* Reset to white after editing */
+        .editable:not([contenteditable="true"]) {
+            -webkit-text-fill-color: white;  /* Text goes back to white */
+            background: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Card container -->
+    <div class="card">
+        <span class="editable" id="editable-text">Click to Edit Me!</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const editableText = document.getElementById('editable-text');
+
+            // Make the text contenteditable on click
+            editableText.addEventListener('click', function () {
+                editableText.setAttribute('contenteditable', 'true');
+                editableText.focus();
+            });
+
+            // Stop editing when focus is lost (blur event)
+            editableText.addEventListener('blur', function () {
+                editableText.removeAttribute('contenteditable');
+            });
+
+            // Stop editing when Enter key is pressed
+            editableText.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();  // Prevent newline from being added
+                    editableText.blur(); // Trigger the blur event
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1367 @@
+{
+    "categories": [
+      {
+        "title": "Best Motion Picture - Drama",
+        "nominations": [
+            {
+                "name":            "A Complete Unknown",
+                "pictureTitle":    "A Complete Unknown",
+                "letteringArt":    "complete.jpg",
+                "backdropImage":   "complete.jpg",
+                "posterImage":     "link-to-poster.jpg",
+                "trailerLink":     "https://trailer-link.com"
+              },
+              {
+                "name":            "Conclave",
+                "pictureTitle":    "Conclave",
+                "letteringArt":    "duncomplete.jpg",
+                "backdropImage":   "conclave.jpg",
+                "posterImage":     "link-to-poster.jpg",
+                "trailerLink":     "https://trailer-link.com"
+              },
+              {
+                "name":            "Dune: Part Two",
+                "pictureTitle":    "Dune: Part Two",
+                "letteringArt":    "dune2.jpg",
+                "backdropImage":   "dune2.jpg",
+                "posterImage":     "link-to-poster.jpg",
+                "trailerLink":     "https://trailer-link.com"
+              },
+              {
+                "name":            "Nickel Boys",
+                "pictureTitle":    "Nickel Boys",
+                "letteringArt":    "complete.jpg",
+                "backdropImage":   "Best_Motion_Picture_-_Drama_Nickel_Boys_Poster_Cover_Art.webp",
+                "posterImage":     "link-to-poster.jpg",
+                "trailerLink":     "https://trailer-link.com"
+              },
+              {
+                "name":            "September 5",
+                "pictureTitle":    "September 5",
+                "letteringArt":    "complete.jpg",
+                "backdropImage":   "sept5.jpg",
+                "posterImage":     "link-to-poster.jpg",
+                "trailerLink":     "https://trailer-link.com"
+              },
+              {
+                "name":            "The Brutalist",
+                "pictureTitle":    "The Brutalist",
+                "letteringArt":    "complete.jpg",
+                "backdropImage":   "brutalist.jpg",
+                "posterImage":     "link-to-poster.jpg",
+                "trailerLink":     "https://trailer-link.com"
+              }
+        ]
+      },
+      {   "title": "Best Motion Picture - Musical or Comedy",
+        "nominations": [
+          {
+            "name":            "A Real Pain",
+            "pictureTitle":    "A Real Pain",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "Anora",
+            "pictureTitle":    "Anora",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "Challengers",
+            "pictureTitle":    "Challengers",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "Emilia Pérez",
+            "pictureTitle":    "Emilia Pérez",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "The Substance",
+            "pictureTitle":    "The Substance",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "Wicked",
+            "pictureTitle":    "Wicked",
+            "letteringArt":    "wicked.jpg",
+            "backdropImage":   "wicked.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Motion Picture – Non-English Language",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by a Female Actor in a Motion Picture – Drama",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by a Male Actor in a Motion Picture – Drama ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by a Female Actor in a Motion Picture – Musical or Comedy ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by a Male Actor in a Motion Picture – Musical or Comedy        ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by a Female Actor in a Supporting Role in any Motion Picture  ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by an Actor in a Supporting Role in any Motion Picture ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Director - Motion Picture",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Screenplay - Motion Picture",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Original Score - Motion Picture",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Original Song - Motion Picture        ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Cinematic and Box Office Achievement        ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Television Series - Drama",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Television Series - Musical or Comedy        ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Television Limited Series, Anthology Series, or Motion Picture Made for Television",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by a Female Actor in a Television Series – Drama        ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by an Actor In A Television Series - Drama        ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "  Best Performance by a Female Actor in a Television Series – Musical or Comedy",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by an Actor in a Television Series - Musical or Comedy        ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by a Female Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by a Female Actor in a Supporting Role on Television  ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by a Male Actor in a Limited Series, Anthology Series, or a Motion Picture Made for Television   ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by a Male Actor in a Supporting Role on Television   ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance in Stand-Up Comedy on Television        ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by a Female Actor in a Television Series – Drama  ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {
+        "title": "Best Performance by a Female Actor in a Television Series – Drama  ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {    "title": "Best Performance by a Female Actor in a Television Series – Drama   ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      },
+      {    "title": "Best Performance by a Female Actor in a Television Series – Drama       ",
+        "nominations": [
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          },
+          {
+            "name":            "",
+            "pictureTitle":    "",
+            "letteringArt":    "complete.jpg",
+            "backdropImage":   "complete.jpg",
+            "posterImage":     "link-to-poster.jpg",
+            "trailerLink":     "https://trailer-link.com"
+          }
+        ]
+      }
+    ]
+  }

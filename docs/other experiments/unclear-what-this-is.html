@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifiable Sectioned Checklist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .section h2 {
+            margin: 0;
+        }
+        .checklist {
+            list-style-type: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 5px 0;
+        }
+        .include-section {
+            margin-bottom: 10px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Holiday Shutdown Checklist</h1>
+
+        <div class="section" id="section1">
+            <label class="include-section">
+                <input type="checkbox" id="include1"> Include Section 1: Lighting Shutdown
+            </label>
+            <h2>Lighting Shutdown</h2>
+            <ul class="checklist">
+                <li><label><input type="checkbox" id="item1"> Turn off overhead lights</label></li>
+                <li><label><input type="checkbox" id="item2"> Turn off signage lights</label></li>
+                <li><label><input type="checkbox" id="item3"> Turn off desk lamps</label></li>
+            </ul>
+        </div>
+
+        <div class="section" id="section2">
+            <label class="include-section">
+                <input type="checkbox" id="include2"> Include Section 2: HVAC Shutdown
+            </label>
+            <h2>HVAC Shutdown</h2>
+            <ul class="checklist">
+                <li><label><input type="checkbox" id="item4"> Turn off heating</label></li>
+                <li><label><input type="checkbox" id="item5"> Turn off air conditioning</label></li>
+                <li><label><input type="checkbox" id="item6"> Set thermostat to energy-saving mode</label></li>
+            </ul>
+        </div>
+
+        <div class="section" id="section3">
+            <label class="include-section">
+                <input type="checkbox" id="include3"> Include Section 3: Equipment Shutdown
+            </label>
+            <h2>Equipment Shutdown</h2>
+            <ul class="checklist">
+                <li><label><input type="checkbox" id="item7"> Unplug computers</label></li>
+                <li><label><input type="checkbox" id="item8"> Shut down servers</label></li>
+                <li><label><input type="checkbox" id="item9"> Unplug printers</label></li>
+                <li><label><input type="checkbox" id="item10"> Power off non-essential equipment</label></li>
+            </ul>
+        </div>
+
+        <div class="section" id="section4">
+            <label class="include-section">
+                <input type="checkbox" id="include4"> Include Section 4: Water and Plumbing
+            </label>
+            <h2>Water and Plumbing</h2>
+            <ul class="checklist">
+                <li><label><input type="checkbox" id="item11"> Turn off water supply</label></li>
+                <li><label><input type="checkbox" id="item12"> Check for leaks</label></li>
+                <li><label><input type="checkbox" id="item13"> Drain unused pipes</label></li>
+            </ul>
+        </div>
+
+        <div class="section" id="section5">
+            <label class="include-section">
+                <input type="checkbox" id="include5"> Include Section 5: Security Shutdown
+            </label>
+            <h2>Security Shutdown</h2>
+            <ul class="checklist">
+                <li><label><input type="checkbox" id="item14"> Set security alarms</label></li>
+                <li><label><input type="checkbox" id="item15"> Lock all doors</label></li>
+                <li><label><input type="checkbox" id="item16"> Notify security team</label></li>
+                <li><label><input type="checkbox" id="item17"> Test emergency systems</label></li>
+            </ul>
+        </div>
+
+        <button id="generateUrl">Generate Shareable URL</button>
+    </div>
+
+    <script>
+        function getChecklistStatus() {
+            const sections = {};
+            for (let i = 1; i <= 5; i++) {
+                sections[`include${i}`] = document.getElementById(`include${i}`).checked ? 'included' : 'excluded';
+                for (let j = 1; j <= 6; j++) {
+                    let itemId = `item${(i-1)*6 + j}`;
+                    if (document.getElementById(itemId)) {
+                        sections[itemId] = document.getElementById(itemId).checked ? 'checked' : 'unchecked';
+                    }
+                }
+            }
+            return sections;
+        }
+
+        function generateShareableUrl() {
+            const checklist = getChecklistStatus();
+            const queryParams = new URLSearchParams(checklist).toString();
+            const shareableUrl = `${window.location.origin}${window.location.pathname}?${queryParams}`;
+            alert(`Shareable URL: ${shareableUrl}`);
+        }
+
+        document.getElementById('generateUrl').addEventListener('click', generateShareableUrl);
+
+        function loadChecklistFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            for (let i = 1; i <= 5; i++) {
+                const includeStatus = urlParams.get(`include${i}`);
+                if (includeStatus === 'included') {
+                    document.getElementById(`include${i}`).checked = true;
+                    document.getElementById(`section${i}`).style.display = 'block';
+                } else {
+                    document.getElementById(`section${i}`).style.display = 'none';
+                }
+
+                for (let j = 1; j <= 6; j++) {
+                    let itemId = `item${(i-1)*6 + j}`;
+                    if (document.getElementById(itemId)) {
+                        const itemStatus = urlParams.get(itemId);
+                        if (itemStatus === 'checked') {
+                            document.getElementById(itemId).checked = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        window.onload = loadChecklistFromUrl;
+    </script>
+</body>
+</html>

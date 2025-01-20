@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Textures.js Transition Effect</title>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/textures@1.2.0/dist/textures.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f8f8f8;
+    }
+    #example {
+      width: 500px;
+      height: 300px;
+    }
+    svg rect {
+      transition: opacity 0.5s ease-in-out, filter 0.5s ease-in-out; /* Smooth transitions */
+    }
+    svg rect.hover-effect {
+      filter: blur(2px); /* Optional hover effect */
+    }
+  </style>
+</head>
+<body>
+
+<div id="example"></div>
+
+<script>
+  // Step 1: Create an SVG canvas
+  var svg = d3.select("#example")
+    .append("svg")
+    .attr("width", 500)
+    .attr("height", 300);
+
+  // Step 2: Define the initial texture
+  var initialTexture = textures.lines()
+    .orientation("vertical")
+    .strokeWidth(2)
+    .stroke("#738AFF")
+    .background("#FFC973");
+
+  // Step 3: Define the hover texture
+  var hoverTexture = textures.lines()
+    .orientation("vertical", "horizontal")
+    .strokeWidth(2) // Thicker lines
+    .stroke("#738AFF")
+    .background("#FFC973");
+
+  // Step 4: Add textures to the SVG
+  svg.call(initialTexture);
+  svg.call(hoverTexture);
+
+  // Step 5: Create two overlapping rectangles
+  var initialRect = svg.append("rect")
+    .attr("x", 50)
+    .attr("y", 50)
+    .attr("width", 400)
+    .attr("height", 200)
+    .style("fill", initialTexture.url())
+    .style("opacity", 1); // Fully visible initially
+
+  var hoverRect = svg.append("rect")
+    .attr("x", 50)
+    .attr("y", 50)
+    .attr("width", 400)
+    .attr("height", 200)
+    .style("fill", hoverTexture.url())
+    .style("opacity", 0); // Hidden initially
+
+  // Step 6: Add hover interaction
+  svg.on("mouseover", function() {
+    initialRect.style("opacity", 0); // Fade out initial texture
+    hoverRect.style("opacity", 1); // Fade in hover texture
+  });
+
+  svg.on("mouseout", function() {
+    initialRect.style("opacity", 1); // Fade in initial texture
+    hoverRect.style("opacity", 0); // Fade out hover texture
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+/* Default styles (mobile first) */
+body {
+    background-color: red; /* Very light gray for mobile */
+    margin: 0;
+    padding: 10px;
+}
+
+
+
+.tabulation {
+    font-family: 'Recursive', monospace;
+}
+
+.right {
+    text-align: right;
+}
+
+.category-entertainment {
+    color: dodgerblue;
+}
+
+select p::before {
+    content: "•";
+    color: red;
+    margin-right: 8px;
+    font-size: 1.2em;
+}
+
+.container {
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+}
+
+.tableGridHeader {
+    display: none;
+}
+
+.tableGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-gap: 8px;
+    padding-bottom: 0.5em;
+}
+
+input, select, checkbox {
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    border: none;
+    box-sizing: border-box;
+}
+
+input::placeholder {
+    color: tan;
+}
+
+.chart-container {
+    margin-top: 20px;
+}
+
+.chart {
+    width: 100%;
+    height: 300px;
+}
+
+.highlight-day {
+    stroke: red;
+    stroke-width: 2;
+}
+
+input[type="date"] {
+    font-family: sans-serif; /* Ensure readability */
+    width: auto; /* Let the browser adjust width */
+    min-width: 150px; /* Ensure enough space for full date */
+}
+
+.total-summary {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.sketchy-border {
+    border: 2px dashed #333;
+    padding: 10px;
+}
+
+/* Styles for larger screens (600px and up) */
+@media only screen and (min-width: 600px) {
+    body {
+        background-color: blue; /* Light blue for desktop */
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: auto;
+        padding: 20px;
+        border: 2px dashed #444;
+        background-color: #fff;
+    }
+
+    .tableGridHeader {
+        display: grid;
+        grid-template-columns: 3em 1fr 7em 5em 7em 1fr 1fr 1fr;
+        grid-gap: 16px;
+        padding-bottom: 0.5em;
+    }
+
+    .tableGrid {
+        grid-template-columns: 3em 1fr 7em 5em 7em 1fr 1fr 1fr;
+        grid-gap: 16px;
+    }
+
+    input, select {
+        font-size: 16px;
+    }
+
+    .chart {
+        height: 400px;
+    }
+
+    .total-summary {
+        font-size: 20px;
+        margin-top: 20px;
+    }
+}

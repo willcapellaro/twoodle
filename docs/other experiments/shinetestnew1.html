@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webcam Reflection Shine</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #ffffff;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 150px);
+    gap: 20px;
+  }
+
+.box {
+  position: relative; /* Ensure the video positions relative to this */
+  width: 150px;
+  height: 150px;
+  background: var(--bg-color, #ccc); /* Background color */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+  .box[data-shine]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, var(--shine-opacity, 0.5));
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+.box[data-shine="none"] .webcam {
+  opacity: 0; /* Completely transparent */
+}
+
+.box[data-shine="30"] .webcam {
+  opacity: 0.3; /* 30% opacity */
+}
+
+.box[data-shine="60"] .webcam {
+  opacity: 0.6; /* 60% opacity */
+}
+
+.box[data-shine="100"] .webcam {
+  opacity: 1; /* Fully visible */
+}
+
+.webcam {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* Mirror effect */
+  filter: blur(20px); /* Apply blur if needed */
+  mix-blend-mode: luminosity; /* Luminosity blending mode */
+  pointer-events: none;
+  z-index: 1;
+}
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="box" data-shine="none">
+    <video autoplay playsinline muted class="webcam"></video>
+  </div>
+  <div class="box" data-shine="30">
+    <video autoplay playsinline muted class="webcam"></video>
+  </div>
+  <div class="box" data-shine="60">
+    <video autoplay playsinline muted class="webcam"></video>
+  </div>
+  <div class="box" data-shine="100">
+    <video autoplay playsinline muted class="webcam"></video>
+  </div>
+</div>
+
+<script>
+async function setupWebcam() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const videoElements = document.querySelectorAll('.webcam');
+    
+    videoElements.forEach(video => {
+      video.srcObject = stream;
+    });
+  } catch (error) {
+    console.error('Error accessing webcam:', error);
+  }
+}
+
+setupWebcam();
+</script>
+</body>
+</html>

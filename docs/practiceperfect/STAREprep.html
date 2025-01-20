@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STARE Portfolio Defense Prep</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .dropdown {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        select, input[type="text"] {
+            padding: 10px;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .form-section label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-section textarea {
+            width: 100%;
+            min-height: 100px;
+            resize: vertical;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .helper-text {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        #guidance {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f1f1f1;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+
+        #guidance h2 {
+            margin-top: 0;
+        }
+
+        #encouragement {
+            font-size: 0.9rem;
+            color: #007BFF;
+            margin-top: 5px;
+        }
+
+        .encouragement-animation {
+            animation: bounce 0.3s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <h1>STARE Portfolio Defense Prep</h1>
+    <div class="dropdown">
+        <select id="portfolio-selector">
+            <option value="new" selected>Create New Portfolio Page</option>
+        </select>
+        <input type="text" id="portfolio-name" placeholder="Enter a portfolio name">
+        <button id="create-portfolio">Create</button>
+    </div>
+    <form id="stare-form">
+        <div class="form-section" data-field="situation">
+            <label for="situation">S - Situation</label>
+            <textarea id="situation"></textarea>
+            <div class="helper-text">Describe the situation.</div>
+            <div id="encouragement"></div>
+        </div>
+        <div class="form-section" data-field="task">
+            <label for="task">T - Task</label>
+            <textarea id="task"></textarea>
+            <div class="helper-text">What task were you trying to achieve?</div>
+        </div>
+        <div class="form-section" data-field="action">
+            <label for="action">A - Action</label>
+            <textarea id="action"></textarea>
+            <div class="helper-text">What action did you take?</div>
+        </div>
+        <div class="form-section" data-field="result">
+            <label for="result">R - Result</label>
+            <textarea id="result"></textarea>
+            <div class="helper-text">What was the end result?</div>
+        </div>
+        <div class="form-section" data-field="environment">
+            <label for="environment">E - Environment</label>
+            <textarea id="environment"></textarea>
+            <div class="helper-text">What was the setting, your role, etc.?</div>
+        </div>
+        <div class="form-section" data-field="notes">
+            <label for="notes">Additional Notes</label>
+            <textarea id="notes"></textarea>
+            <div class="helper-text">Any extra thoughts or comments.</div>
+        </div>
+    </form>
+    <div id="guidance">
+        <h2>How to Prepare for an Interview</h2>
+        <p>Interview questions will relate to both your experience and our values. We encourage you to try and relate your responses back to these:</p>
+        <ul>
+            <li>Review the job description, the duties listed, and the skills required.</li>
+            <li>Be personal, i.e., talk about you (I), not just the team (we).</li>
+            <li>Research the company website and other sources to better understand their market and industry.</li>
+            <li>Think of examples of your past work experience and accomplishments, regardless of size, and areas where you learned and grew.</li>
+            <li>Explain what you did, how you did it, and why you did it.</li>
+            <li>Ask about the goals of the position and the manager’s expectations to better understand the role.</li>
+            <li>Relax and take your time to answer; ask for clarification if needed.</li>
+        </ul>
+    </div>
+    <script>
+        const portfolioSelector = document.getElementById('portfolio-selector');
+        const portfolioNameInput = document.getElementById('portfolio-name');
+        const createPortfolioButton = document.getElementById('create-portfolio');
+        const formFields = document.querySelectorAll('.form-section textarea');
+
+        // Load portfolio names and data from local storage
+        const portfolios = JSON.parse(localStorage.getItem('portfolios') || '{}');
+        Object.keys(portfolios).forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            portfolioSelector.appendChild(option);
+        });
+
+        // Autosave form data to local storage
+        formFields.forEach(field => {
+            const fieldId = field.id;
+            field.value = localStorage.getItem(fieldId) || '';
+            field.addEventListener('input', () => {
+                localStorage.setItem(fieldId, field.value);
+            });
+            field.addEventListener('blur', () => showEncouragement(field));
+        });
+
+        // Create a new portfolio page
+        createPortfolioButton.addEventListener('click', () => {
+            const name = portfolioNameInput.value.trim();
+            if (name && !portfolios[name]) {
+                portfolios[name] = {};
+                localStorage.setItem('portfolios', JSON.stringify(portfolios));
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                portfolioSelector.appendChild(option);
+                portfolioNameInput.value = '';
+                alert(`Portfolio "${name}" created!`);
+            } else {
+                alert('Portfolio name is required or already exists.');
+            }
+        });
+
+        // Encourage the user to type more
+        function showEncouragement(field) {
+            const encouragement = document.getElementById('encouragement');
+            if (field.value.trim().length < 50) {
+                encouragement.textContent = 'You can add more details! 🌟';
+                encouragement.classList.add('encouragement-animation');
+                setTimeout(() => encouragement.classList.remove('encouragement-animation'), 300);
+            } else {
+                encouragement.textContent = '';
+            }
+        }
+
+        // Populate form fields when switching between portfolios
+portfolioSelector.addEventListener('change', () => {
+    const selectedPortfolio = portfolioSelector.value;
+    if (portfolios[selectedPortfolio]) {
+        formFields.forEach(field => {
+            const fieldId = field.id;
+            field.value = portfolios[selectedPortfolio][fieldId] || '';
+        });
+    } else {
+        // If it's "new" or not found, clear the fields
+        formFields.forEach(field => {
+            field.value = '';
+        });
+    }
+});
+
+// Save the current portfolio data
+formFields.forEach(field => {
+    field.addEventListener('input', () => {
+        const selectedPortfolio = portfolioSelector.value;
+        if (!portfolios[selectedPortfolio]) return; // No saving if portfolio doesn't exist
+
+        const fieldId = field.id;
+        portfolios[selectedPortfolio][fieldId] = field.value;
+        localStorage.setItem('portfolios', JSON.stringify(portfolios));
+    });
+});
+    </script>
+</body>
+</html>

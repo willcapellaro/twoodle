@@ -1,0 +1,54 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+</head>
+
+<!-- Dialog structure from MDC -->
+<div class="mdc-dialog"
+     role="alertdialog"
+     aria-modal="true"
+     aria-labelledby="my-dialog-title"
+     aria-describedby="my-dialog-content">
+  <div class="mdc-dialog__container">
+    <div class="mdc-dialog__surface">
+      <!-- Title of Dialog -->
+      <h2 class="mdc-dialog__title" id="my-dialog-title">Dialog Title</h2>
+      
+      <!-- Content inside Dialog -->
+      <div class="mdc-dialog__content" id="my-dialog-content">
+        Here is the content of your card.
+      </div>
+      
+      <!-- Action Buttons -->
+      <footer class="mdc-dialog__actions">
+        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
+          <span class="mdc-button__label">Close</span>
+        </button>
+        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="accept">
+          <span class="mdc-button__label">Accept</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+  <div class="mdc-dialog__scrim"></div>
+</div>
+
+<!-- Button to Open the Modal -->
+<button class="mdc-button" id="open-dialog-btn">Open Dialog</button>
+
+
+<script>
+  // Initialize MDC Dialog
+  const dialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'));
+
+  // Get the button that opens the dialog
+  const openDialogButton = document.getElementById('open-dialog-btn');
+
+  // When the user clicks the button, open the dialog
+  openDialogButton.onclick = function() {
+    dialog.open();
+  };
+</script>
+
+</html>

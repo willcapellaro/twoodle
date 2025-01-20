@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eisenhower Matrix for President Eisenhower</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script> 
+
+    <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Special+Elite&display=swap" rel="stylesheet"> 
+
+    <style>
+        body {
+            background-color: #46592b; /* Army green */
+            color: #fff;
+            font-family: 'Special Elite', monospace;
+            text-align: center;
+            margin: 0; /* Remove default body margins */
+            display: flex; /* Center the content vertically */
+            flex-direction: column;
+            min-height: 100vh; /* Make the body take up the full viewport height */
+            justify-content: center; 
+        }
+
+        h1 {
+            font-family: 'Allerta Stencil', sans-serif;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        #container {
+            width: 800px; /* Adjust width as needed */
+            margin: 0 auto; /* Center horizontally */
+        }
+    </style>
+</head>
+<body>
+
+    <h1><span id="typed"></span></h1> 
+
+    <div id="container"></div>
+
+    <script>
+        Highcharts.chart('container', {
+            chart: {
+                type: 'scatter',
+                backgroundColor: '#46592b', 
+                plotBorderWidth: 0, // Remove outer border
+                spacingBottom: 30,
+                events: {
+                    load: function () {
+                        var chart = this;
+                        var xAxis = this.xAxis[0];
+                        var yAxis = this.yAxis[0];
+                        var xCenter = xAxis.toPixels(0); // Center of the chart on the x-axis
+                        var yCenter = yAxis.toPixels(0); // Center of the chart on the y-axis
+
+                        // Define label positions and text
+                        var labels = [
+                            { x: xCenter - 250, y: yCenter - 50, text: 'QUICK WINS' }, // Top Left
+                            { x: xCenter + 50, y: yCenter - 50, text: 'BIG PROJECTS' }, // Top Right
+                            { x: xCenter - 250, y: yCenter + 50, text: 'TIME SINKS' }, // Bottom Left
+                            { x: xCenter + 50, y: yCenter + 50, text: 'FILL-INS' } // Bottom Right
+                        ];
+
+                        // Add labels to the chart
+                        labels.forEach(function (label) {
+                            chart.renderer.text(label.text, label.x, label.y)
+                                .attr({
+                                    'font-family': 'Allerta Stencil',
+                                    'font-size': '18px',
+                                    'fill': 'yellow',
+                                    'zIndex': 5 // Ensure labels are on top
+                                })
+                                .add();
+                        });
+                    }
+                }
+            },
+            xAxis: {
+                title: {
+                    text: 'Importance',
+                    style: {
+                        color: '#fff',
+                        fontFamily: 'Special Elite'
+                    }
+                },
+                gridLineColor: '#fff',
+                gridLineWidth: 1,
+                lineWidth: 0, // Disable end lines
+                tickInterval: 1,
+                tickColor: '#fff', // Set tick color to white
+                min: -1,
+                max: 1,
+                labels: {
+                    style: {
+                        color: '#fff',
+                        fontFamily: 'Special Elite'
+                    }
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Urgency',
+                    style: {
+                        color: '#fff',
+                        fontFamily: 'Special Elite'
+                    }
+                },
+                gridLineColor: '#fff',
+                gridLineWidth: 1, 
+                lineWidth: 0, // Disable end lines
+                tickInterval: 1,
+                tickColor: '#fff', // Set tick color to white
+
+                min: -1,
+                max: 1,
+                labels: {
+                    style: {
+                        color: '#fff',
+                        fontFamily: 'Special Elite'
+                    }
+                }
+            },
+            plotOptions: {
+                scatter: {
+                    marker: {
+                        symbol: 'star' 
+                    }
+                }
+            },
+            series: [{
+                name: 'Critical', 
+                color: 'red', 
+                data: [
+                    [1, 1, 'Address the Suez Crisis'], 
+                    [1, 0.5, 'Cuban Missile Crisis'] 
+                ]
+            }, {
+                name: 'Important', 
+                color: 'yellow', 
+                data: [
+                    [0.5, 1, 'Space Race'], 
+                    [0.5, 0, 'Interstate Highway System'] 
+                ]
+            }, {
+                name: 'Urgent', 
+                color: 'orange', 
+                data: [
+                    [0, 1, 'Civil Rights Movement'], 
+                    [-0.5, 1, 'Berlin Crisis'] 
+                ]
+            }, {
+                name: 'Routine', 
+                color: 'green', 
+                data: [
+                    [0, 0, 'Daily Briefings'], 
+                    [-0.5, 0, 'Social Events'], 
+                    [-1, 0, 'Personal Correspondence'] 
+                ]
+            }],
+            legend: {
+                itemStyle: {
+                    color: '#fff',
+                    fontFamily: 'Special Elite'
+                }
+            },
+            tooltip: {
+                formatter: function() {
+        return `<b>${this.point.options.name}</b><br>Importance: ${this.point.x.toFixed(2)}<br>Urgency: ${this.point.y.toFixed(2)}`;
+;
+        
+                }
+            }
+        });
+
+        var options = {
+            strings: ["Welcome to President Eisenhower's Eisenhower Matrix.", 
+                     "Prioritizing the Nation's Challenges."],
+            typeSpeed: 50,
+            backDelay: 500,
+            loop: false,
+            showCursor: false 
+        };
+
+        var typed = new Typed('#typed', options); 
+    </script>
+
+</body>
+</html>

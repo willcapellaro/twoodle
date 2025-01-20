@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refined Masked Footer</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: black; /* Black web page background */
+      color: white;
+    }
+
+    .header {
+      position: relative;
+      background-color: #333; /* Charcoal div for testing */
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .rainbodw {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300%;
+      height: 300px; /* Large enough to cover all text */
+      background: conic-gradient(
+        #f00,
+        #ff0,
+        #0f0,
+        #0ff,
+        #00f,
+        #f0f,
+        #f00
+      );
+/*      animation: spin 5s linear infinite;*/
+      pointer-events: none;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+      z-index: 1; /* Keep links above the rainbow graphic */
+    }
+
+    .footer-links a {
+      font-size: 18px;
+      text-decoration: none;
+      color: transparent; /* Fully transparent text */
+      -webkit-mask: text;
+      mask: text;
+      background: none; /* Remove any direct background fill */
+      -webkit-mask-composite: destination-in;
+      mask-composite: intersect;
+      background-image: conic-gradient(
+        #f00,
+        #ff0,
+        #0f0,
+        #0ff,
+        #00f,
+        #f0f,
+        #f00
+      ); /* Rainbow gradient applied to text */
+      background-clip: text;
+      transition: all 0.3s ease-in-out;
+            animation: spin 5s linear infinite;
+      pointer-events: none;
+    }
+
+    .footer-links a:hover {
+      color: black; /* Show black text on hover */
+      background-color: white; /* White rectangle on hover */
+      padding: 5px 10px; /* Add padding for rectangle effect */
+      border-radius: 5px; /* Rounded corners */
+    }
+
+    @keyframes spin {
+      from {
+        transform: translateX(-50%) rotate(0deg);
+      }
+      to {
+        transform: translateX(-50%) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="rainbow"></div>
+    <nav class="footer-links">
+      <a href="#about">About Us</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+      <a href="#privacy">Privacy Policy</a>
+      <a href="#terms">Terms of Use</a>
+    </nav>
+  </header>
+</body>
+</html>

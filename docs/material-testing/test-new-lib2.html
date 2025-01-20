@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Dual Lists</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            margin: 20px;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        h1 {
+            color: #e0e0e0;
+        }
+
+        .list-container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            width: 45%;
+            border-radius: 5px;
+            background: #2a2a2a;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 5px;
+            background: #007bff;
+            border-radius: 5px;
+            transition: background 0.3s, opacity 0.5s ease, transform 0.5s ease;
+            height: 40px;
+            position: relative;
+        }
+
+        li:hover, li.highlighted {
+            outline: 2px solid #fff;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { outline-color: rgba(255, 255, 255, 0.7); }
+            50% { outline-color: rgba(255, 255, 255, 1); }
+            100% { outline-color: rgba(255, 255, 255, 0.7); }
+        }
+
+        .drag-zone {
+            width: 10px;
+            background: #0056b3;
+            cursor: move;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+
+.editable {
+    position: relative;
+    cursor: text;
+    background: transparent;
+    color: #ffffff;
+    font-size: 16px;
+    padding-left: 5px;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    outline: none;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.2s ease;
+}
+
+.editable:hover::before {
+    width: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+}
+
+.editable[contenteditable="true"] {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5); /* Visible while editing */
+}
+
+.editable:focus {
+    outline: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.8); /* Stronger border when focused */
+}
+
+.drag-zone {
+    width: 10px;
+    background: #0056b3;
+    cursor: move;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+.drag-zone {
+    width: 10px;
+    background: #0056b3;
+    cursor: move;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+        /* Add/Delete Button Styling */
+        #add-btn {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s ease;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        #add-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Delete zone styling when dragging */
+        #add-btn.delete-zone {
+            background-color: #ff4d4d;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const list1 = document.getElementById('sortable-list1');
+            const list2 = document.getElementById('sortable-list2');
+            const addButton = document.getElementById('add-btn');
+
+            // Create Sortable instances for both lists
+            const sortable1 = Sortable.create(list1, {
+                animation: 150,
+                chosenClass: "dragging",
+            });
+
+            const sortable2 = Sortable.create(list2, {
+                animation: 150,
+                chosenClass: "dragging",
+            });
+
+            // Add button click event to add new items
+            addButton.addEventListener('click', function () {
+                const newItem = `Item ${document.querySelectorAll('li').length + 1}`;
+                addItemToBothLists(newItem);
+            });
+
+            // Function to add an item to both lists
+            function addItemToBothLists(itemName) {
+                const li1 = createListItem(itemName, 'list1');
+                const li2 = createListItem(itemName, 'list2');
+                list1.appendChild(li1);
+                list2.appendChild(li2);
+            }
+
+            // Function to create a list item
+            function createListItem(text, list) {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="drag-zone"></div>
+                    <span class="editable">${text}</span>
+                `;
+
+                // Hover event to highlight the same item in the other list
+                li.addEventListener('mouseenter', function () {
+                    highlightMatchingItem(text, list, true);
+                });
+                li.addEventListener('mouseleave', function () {
+                    highlightMatchingItem(text, list, false);
+                });
+
+                // Make text editable
+li.querySelector('.editable').addEventListener('click', function (event) {
+    makeTextEditable(event.target, list);
+});
+
+function makeTextEditable(spanElement, currentList) {
+    const originalText = spanElement.innerText;
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = originalText;
+    input.className = 'editable';
+    
+    // Replace the span with the input field
+    spanElement.replaceWith(input);
+    input.focus();
+
+    input.addEventListener('blur', function () {
+        // Update text in both lists
+        updateTextInBothLists(originalText, input.value, currentList);
+        const newSpan = document.createElement('span');
+        newSpan.className = 'editable';
+        newSpan.innerText = input.value;
+
+        newSpan.addEventListener('click', function (event) {
+            makeTextEditable(event.target, currentList);
+        });
+
+        input.replaceWith(newSpan);
+    });
+
+    input.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            input.blur();
+        }
+    });
+}
+
+                return li;
+            }
+
+            // Function to highlight matching item in the other list
+            function highlightMatchingItem(text, currentList, highlight) {
+                const listToSearch = currentList === 'list1' ? list2 : list1;
+                const items = listToSearch.querySelectorAll('li');
+                
+                items.forEach(item => {
+                    if (item.innerText.trim() === text) {
+                        if (highlight) {
+                            item.classList.add('highlighted');
+                        } else {
+                            item.classList.remove('highlighted');
+                        }
+                    }
+                });
+            }
+
+            // Function to make text editable
+            function makeTextEditable(spanElement, currentList) {
+                const originalText = spanElement.innerText;
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = originalText;
+                input.className = 'editable';
+                
+                // Replace the span with the input field
+                spanElement.replaceWith(input);
+                input.focus();
+
+                input.addEventListener('blur', function () {
+                    updateTextInBothLists(originalText, input.value, currentList);
+                    const newSpan = document.createElement('span');
+                    newSpan.className = 'editable';
+                    newSpan.innerText = input.value;
+
+                    newSpan.addEventListener('click', function (event) {
+                        makeTextEditable(event.target, currentList);
+                    });
+
+                    input.replaceWith(newSpan);
+                });
+
+                input.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        input.blur();
+                    }
+                });
+            }
+
+            // Function to update text in both lists or delete matching items
+            function updateTextInBothLists(oldText, newText, currentList) {
+                const listToUpdate = currentList === 'list1' ? list2 : list1;
+                const items = listToUpdate.querySelectorAll('li');
+
+                items.forEach(item => {
+                    if (item.innerText.trim() === oldText) {
+                        if (newText === '') {
+                            item.remove();  // Remove the item if newText is empty (i.e., for deletion)
+                        } else {
+                            item.querySelector('.editable').innerText = newText;  // Update the text
+                        }
+                    }
+                });
+            }
+
+            // Dragging an item into delete zone
+            document.addEventListener('dragstart', function (event) {
+                if (event.target.tagName === 'LI') {
+                    addButton.classList.add('delete-zone');
+                }
+            });
+
+            document.addEventListener('dragend', function () {
+                addButton.classList.remove('delete-zone');
+            });
+
+            addButton.addEventListener('dragover', function (event) {
+                event.preventDefault();  // Required to allow drop
+            });
+
+            // Handle dropping items in delete zone
+            addButton.addEventListener('drop', function (event) {
+                event.preventDefault();
+                
+                // Get the dragged item
+                const draggingItem = document.querySelector('.dragging');
+                const itemText = draggingItem.querySelector('.editable').innerText;
+                
+                // Remove the dragged item
+                draggingItem.remove();
+                
+                // Also remove the corresponding item from the opposite list
+                updateTextInBothLists(itemText, '', 'list1');
+            });
+
+            // Initialize the lists with some items
+            const initialItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+            initialItems.forEach(item => addItemToBothLists(item));
+        });
+    </script>
+</head>
+<body>
+
+        <h1>Dual Drag and Drop Lists</h1>
+
+    <div class="list-container">
+        <ul id="sortable-list1"></ul>
+        <ul id="sortable-list2"></ul>
+    </div>
+
+    <button id="add-btn"><span>Add New Item</span></button>
+
+</body>
+</html>

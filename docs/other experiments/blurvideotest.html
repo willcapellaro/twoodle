@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Constrain Video to Boxes</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #ffffff;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 150px);
+    grid-template-rows: repeat(2, 150px);
+    gap: 20px;
+    position: relative;
+  }
+
+  .box {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: black; /* Fallback color */
+  }
+
+  .box video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%; /* Cover the box fully */
+    height: 100%;
+    object-fit: cover; /* Ensures the video covers the area */
+    transform: translate(-50%, -50%) scaleX(-1); /* Mirror effect */
+    filter: blur(10px); /* Optional: Apply slight blur for clarity */
+  }
+
+  .controls {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+  }
+</style>
+</head>
+<body>
+<div class="controls">
+  <label for="cameraSelect">Select Camera: </label>
+  <select id="cameraSelect"></select>
+</div>
+
+<div class="grid">
+  <div class="box"><video autoplay muted playsinline></video></div>
+  <div class="box"><video autoplay muted playsinline></video></div>
+  <div class="box"><video autoplay muted playsinline></video></div>
+  <div class="box"><video autoplay muted playsinline></video></div>
+</div>
+
+<script>
+  const videoElements = document.querySelectorAll('.box video');
+  const cameraSelect = document.getElementById('cameraSelect');
+
+  async function setupWebcam() {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+      // Populate camera selector
+      cameraSelect.innerHTML = videoDevices.map((device, index) =>
+        `<option value="${device.deviceId}">${device.label || `Camera ${index + 1}`}</option>`
+      ).join('');
+
+      // Set initial camera
+      if (videoDevices.length > 0) {
+        startStream(videoDevices[0].deviceId);
+      }
+
+      cameraSelect.addEventListener('change', (e) => {
+        startStream(e.target.value);
+      });
+    } catch (error) {
+      console.error('Error accessing webcam:', error);
+    }
+  }
+
+  async function startStream(deviceId) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { deviceId: { exact: deviceId } }
+      });
+      // Assign the video stream to each video element
+      videoElements.forEach(video => video.srcObject = stream);
+    } catch (error) {
+      console.error('Error starting stream:', error);
+    }
+  }
+
+  setupWebcam();
+</script>
+</body>
+</html>

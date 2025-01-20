@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Shine Effect</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #ffffff;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 150px);
+    gap: 20px;
+  }
+
+  .box {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    background: var(--bg-color, #ccc);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .box[data-shine="none"]::after {
+    content: "No Shine";
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #333;
+    font-size: 14px;
+  }
+
+  .box[data-shine]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, var(--shine, 0)) 0%, transparent 70%);
+    transform: translate(var(--dx, -50%), var(--dy, -50%));
+    transform-origin: center;
+    transition: transform 0.1s linear;
+    pointer-events: none;
+  }
+
+  .box[data-shine="30"] {
+    --shine: 0.3;
+    --bg-color: #ff7373;
+  }
+
+  .box[data-shine="60"] {
+    --shine: 0.6;
+    --bg-color: #73ff8a;
+  }
+
+  .box[data-shine="100"] {
+    --shine: 1.0;
+    --bg-color: #738aff;
+  }
+
+  .box[data-shine="30"]::after {
+    content: "30% Shine";
+  }
+
+  .box[data-shine="60"]::after {
+    content: "60% Shine";
+  }
+
+  .box[data-shine="100"]::after {
+    content: "100% Shine";
+  }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="box" data-shine="none"></div>
+  <div class="box" data-shine="30"></div>
+  <div class="box" data-shine="60"></div>
+  <div class="box" data-shine="100"></div>
+  <div class="box" data-shine="none"></div>
+  <div class="box" data-shine="60"></div>
+  <div class="box" data-shine="none"></div>
+  <div class="box" data-shine="30"></div>
+  <div class="box" data-shine="60"></div>
+  <div class="box" data-shine="100"></div>
+  <div class="box" data-shine="none"></div>
+  <div class="box" data-shine="60"></div>
+</div>
+<script>
+  document.addEventListener('mousemove', (e) => {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    // Calculate normalized mouse position (-50% to 50%)
+    const dx = ((e.clientX / viewportWidth) - 0.5) * 100;
+    const dy = ((e.clientY / viewportHeight) - 0.5) * 100;
+
+    // Apply these values to all boxes
+    document.querySelectorAll('.box[data-shine]').forEach((box) => {
+      box.style.setProperty('--dx', `${dx}%`);
+      box.style.setProperty('--dy', `${dy}%`);
+    });
+  });
+</script>
+</body>
+</html>

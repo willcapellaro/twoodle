@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Data Table with Charts</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <style>
+        #charts-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #chart-container {
+            height: 400px;
+            width: 100%;
+        }
+        #clear-button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #clear-button:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Modal Style */
+        #confirmModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #confirmModal > div {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        #confirmModal button {
+            padding: 10px;
+            margin: 5px;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #confirmModal button#confirmClear {
+            background-color: #f44336;
+        }
+        #confirmModal button#cancelClear {
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive Data Table and Charts</h1>
+    
+    <!-- Clear Data Button -->
+    <button id="clear-button">Clear Data</button>
+    
+    <!-- Confirm Modal -->
+    <div id="confirmModal">
+        <div>
+            <p>Are you sure you want to clear all data?</p>
+            <button id="confirmClear">Clear</button>
+            <button id="cancelClear">Cancel</button>
+        </div>
+    </div>
+    
+    <!-- Sticky Chart -->
+    <div id="charts-container">
+        <div id="chart-container"></div>
+    </div>
+    
+    <!-- Data Table -->
+    <table id="dataTable" class="display">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Impact</th>
+                <th>Ease</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dynamically populated rows -->
+        </tbody>
+    </table>
+
+    <script>
+        const numItems = 30;
+        let tableData = [];
+
+        // Function to create and reset dummy data
+        function resetData() {
+            tableData = [];
+            for (let i = 0; i < numItems; i++) {
+                tableData.push({
+                    name: null,  // Default name is null
+                    impact: 0,   // Default impact is 0
+                    ease: 0      // Default ease is 0
+                });
+            }
+        }
+
+        // Initialize DataTable
+        $(document).ready(function() {
+            resetData();  // Reset data initially
+
+            const table = $('#dataTable').DataTable({
+                data: tableData,
+                columns: [
+                    {
+                        data: 'name', 
+                        render: function(data, type, row, meta) {
+                            return `<input type="text" value="${data || ''}" class="name-input" data-id="${meta.row}" />`;
+                        }
+                    },
+                    {
+                        data: 'impact', 
+                        render: function(data, type, row, meta) {
+                            return `<input type="range" value="${data}" min="0" max="100" class="impact-slider" data-id="${meta.row}" />`;
+                        }
+                    },
+                    {
+                        data: 'ease', 
+                        render: function(data, type, row, meta) {
+                            return `<input type="range" value="${data}" min="0" max="100" class="ease-slider" data-id="${meta.row}" />`;
+                        }
+                    }
+                ],
+                searching: false  // Disable the search functionality
+            });
+
+            // Attach event listeners for slider and input changes
+            $('body').on('input', '.impact-slider, .ease-slider', function() {
+                const index = $(this).data('id');
+                const column = $(this).hasClass('impact-slider') ? 'impact' : 'ease';
+                tableData[index][column] = $(this).val();
+                saveToLocalStorage();
+                updateChart();
+            });
+
+            $('body').on('input', '.name-input', function() {
+                const index = $(this).data('id');
+                tableData[index].name = $(this).val() || null; // Default to null if the input is empty
+                saveToLocalStorage();
+                updateChart();
+            });
+
+            // Initialize chart
+            initChart();
+
+            // Clear data button functionality with modal confirmation
+            $('#clear-button').on('click', function() {
+                $('#confirmModal').show(); // Show the confirmation modal
+            });
+
+            $('#confirmClear').on('click', function() {
+                resetData();  // Reset table data to default
+                saveToLocalStorage();  // Clear localStorage
+                updateChart();  // Update chart with default data
+                table.clear().rows.add(tableData).draw();  // Refresh DataTable
+                $('#confirmModal').hide(); // Close modal after confirming
+            });
+
+            $('#cancelClear').on('click', function() {
+                $('#confirmModal').hide(); // Close modal if canceled
+            });
+        });
+
+        // Initialize Highcharts with a single scatter plot (Impact vs Ease)
+        let chart;
+        function initChart() {
+            chart = Highcharts.chart('chart-container', {
+                chart: {
+                    type: 'scatter',
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: 'Impact vs Ease'
+                },
+                xAxis: {
+                    title: { text: 'Impact' },
+                    min: 0,
+                    max: 100,
+                    tickInterval: 20,
+                    plotLines: [{
+                        color: 'black',
+                        width: 1,
+                        value: 50,
+                        dashStyle: 'longdashdot',
+                        label: { text: 'Midline' }
+                    }]
+                },
+                yAxis: {
+                    title: { text: 'Ease' },
+                    min: 0,
+                    max: 100,
+                    tickInterval: 20,
+                    plotLines: [{
+                        color: 'black',
+                        width: 1,
+                        value: 50,
+                        dashStyle: 'longdashdot',
+                        label: { text: 'Midline' }
+                    }]
+                },
+                tooltip: {
+                    pointFormat: '{point.name}: Impact = {point.x}, Ease = {point.y}'
+                },
+                series: [{
+                    data: tableData.filter(item => item.name && !isNaN(item.impact) && !isNaN(item.ease))
+                                   .map(item => ({
+                                       x: item.impact,
+                                       y: item.ease,
+                                       name: item.name || 'Unnamed'
+                                   }))
+                }]
+            });
+        }
+
+        // Update chart with new data
+        function updateChart() {
+            chart.series[0].setData(
+                tableData.filter(item => item.name && !isNaN(item.impact) && !isNaN(item.ease))
+                         .map(item => ({
+                             x: item.impact,
+                             y: item.ease,
+                             name: item.name || 'Unnamed'
+                         }))
+            );
+        }
+
+        // Save data to local storage
+        function saveToLocalStorage() {
+            if (tableData && tableData.length > 0) {
+                localStorage.setItem('tableData', JSON.stringify(tableData));
+            }
+        }
+
+        // Load data from local storage
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('tableData');
+            if (savedData) {
+                try {
+                    tableData = JSON.parse(savedData);
+                    if (!Array.isArray(tableData) || tableData.some(item => !item.hasOwnProperty('name') || isNaN(item.impact) || isNaN(item.ease))) {
+                        resetData();  // Reset to default if invalid data found
+                    }
+                } catch (e) {
+                    resetData();  // Reset if parsing fails
+                }
+            } else {
+                resetData();  // Default data if nothing in localStorage
+            }
+        }
+
+        loadFromLocalStorage();
+    </script>
+</body>
+</html>

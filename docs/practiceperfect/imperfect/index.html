@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice & Compose</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="practice-column">
+
+    <input type="text" id="search" placeholder="Search cards...">
+    <select id="search-type">
+      <option value="all">Search All Text</option>
+      <option value="title-tags">Search Title & Tags</option>
+    </select>
+    <input type="checkbox" id="toggle-key-points" checked>
+    <label for="toggle-key-points">Show Key Points</label>
+    <input type="checkbox" id="toggle-script" checked>
+    <label for="toggle-script">Show Script</label>
+    <div id="tag-filters" class="tag-filters">
+
+      <!-- Tag buttons will be dynamically added here -->
+    </div>
+    <div id="cards">
+      <!-- Example card structure -->
+      <div class="card">
+        <h3>Title Goes Here</h3>
+        <div class="tags">Tags, Go, Here</div>
+        <div class="key-points">
+          <h4>Key Points</h4>
+          <ul>
+            <li>First key point</li>
+            <li>Second key point</li>
+          </ul>
+        </div>
+        <div class="script">
+          <h4>Script</h4>
+          <p>The full script content goes here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toggle-column">
+    <button id="toggle-compose-column">Collapse</button>
+  </div>
+  
+
+  <div id="compose-column">
+
+    <textarea id="compose-area" placeholder="Compose markdown here..."></textarea>
+    <button id="submit">Submit</button>
+  </div>
+
+  <div id="card-modal" class="modal">
+    <div class="modal-content">
+      <span id="modal-close">&times;</span>
+      <h3 id="modal-title"></h3>
+      <div id="modal-tags"></div>
+      <div id="modal-key-points"></div>
+      <div id="modal-script"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

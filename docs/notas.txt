@@ -1,0 +1,24 @@
+Thank you Marcelo, this is performing okay so far. I want to keep working on stability though before we tackle bigger projects.
+
+Here's what I'm thinking for the next project. See this sheet, which has my regression testing steps and notes, and improvements for the next project. 
+
+https://docs.google.com/spreadsheets/d/1FQ8Tt0CR9X8SwuaRGVNP6GRcoGke6RcAfPyE8B8TLZ0/edit?usp=sharing
+
+I think this could be a ~$150 project, which is more than I think the challenge, but I want you to also be looking for additional bugs too. 
+
+We don't need to solve it all in this project, I am okay with doing a few of these QA projects until we have a really solid build and can move on to more complexity.
+
+	Gracias Marcelo, de momento funciona bien. Sin embargo, quiero seguir trabajando en la estabilidad antes de abordar proyectos más grandes.
+
+	Esto es lo que estoy pensando para el próximo proyecto. Ver esta hoja, que tiene mis pasos de pruebas de regresión y notas, y las mejoras para el próximo proyecto. 
+
+	https://docs.google.com/spreadsheets/d/1FQ8Tt0CR9X8SwuaRGVNP6GRcoGke6RcAfPyE8B8TLZ0/edit?usp=sharing
+
+	Creo que esto podría ser un proyecto de ~ $ 150, que es más de lo que creo que el reto, pero quiero que también se busca errores adicionales también. 
+
+	No necesitamos resolverlo todo en este proyecto, estoy de acuerdo con hacer algunos de estos proyectos de control de calidad hasta que tengamos una construcción realmente sólida y podamos pasar a una mayor complejidad.
+
+-----
+
+Tengo una pregunta: ¿El textarea en el modal para editar un item debería aceptar saltos de línea con Intro?
+	I have a question: Should the textarea in the modal for editing an item accept line breaks with Enter?

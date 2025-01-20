@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Test - Variable Width and Weight</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto Flex', sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            transition: font-variation-settings 0.5s;
+        }
+
+        .controls {
+            margin-top: 30px;
+        }
+
+        input[type="range"] {
+            width: 300px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="text">Exotic Dancers</h1>
+
+    <div class="controls">
+        <div>
+            <label for="widthRange">Width: <span id="widthValue">100</span></label><br>
+            <input type="range" id="widthRange" min="25" max="125" value="100" step="1">
+        </div>
+
+        <div>
+            <label for="weightRange">Weight: <span id="weightValue">400</span></label><br>
+            <input type="range" id="weightRange" min="100" max="800" value="400" step="1">
+        </div>
+
+        <button id="randomWidth">Random Width</button>
+        <button id="randomWeight">Random Weight</button>
+    </div>
+
+    <script>
+        const text = document.getElementById('text');
+        const widthRange = document.getElementById('widthRange');
+        const weightRange = document.getElementById('weightRange');
+        const widthValue = document.getElementById('widthValue');
+        const weightValue = document.getElementById('weightValue');
+
+        // Update font variation settings
+        function updateFontSettings() {
+            const newWidth = widthRange.value;
+            const newWeight = weightRange.value;
+            text.style.fontVariationSettings = `'wdth' ${newWidth}, 'wght' ${newWeight}`;
+            widthValue.textContent = newWidth;
+            weightValue.textContent = newWeight;
+        }
+
+        // Attach input event listeners to update font settings in real-time
+        widthRange.addEventListener('input', updateFontSettings);
+        weightRange.addEventListener('input', updateFontSettings);
+
+        // Random width button
+        document.getElementById('randomWidth').addEventListener('click', function() {
+            const randomWidth = Math.floor(Math.random() * (125 - 25 + 1)) + 25;
+            widthRange.value = randomWidth;
+            updateFontSettings();
+        });
+
+        // Random weight button
+        document.getElementById('randomWeight').addEventListener('click', function() {
+            const randomWeight = Math.floor(Math.random() * (800 - 100 + 1)) + 100;
+            weightRange.value = randomWeight;
+            updateFontSettings();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDL Tabs and Permanent Drawer</title>
+  
+  <!-- Material Design Lite CSS and Icons -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <style>
+    .mdl-layout__drawer {
+      width: 240px;
+    }
+    .mdl-layout__content {
+      padding: 16px;
+      margin-left: 240px;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .sortable-ghost {
+      opacity: 0.5;
+      background-color: #cfd8dc;
+    }
+    .quad-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 16px;
+        height: 100%;
+    }
+    .quad {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 16px;
+        width: auto;
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <!-- MDL Layout with Permanent Drawer -->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <!-- Drawer (Navigation Sidebar) -->
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Twoodle</span>
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="#" onclick="showTab('content-items')"><i class="material-icons">checklist</i> Work List</a>
+        <a class="mdl-navigation__link" href="#" onclick="showTab('content-rateY')"><i class="material-icons">swap_vert</i> Urgency</a>
+        <a class="mdl-navigation__link" href="#" onclick="showTab('content-rateX')"><i class="material-icons">swap_horiz</i> Importance</a>
+        <a class="mdl-navigation__link" href="#" onclick="showTab('content-results')"><i class="material-icons">window</i> Twoodle</a>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="mdl-layout__content">
+      <header class="mdl-layout__header mdl-layout__header--transparent">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">My Application</span>
+        </div>
+      </header>
+
+      <!-- Tab Content Sections -->
+      <section id="content-items" class="tab-content active">
+        <h1>Work List</h1>
+        <p>Content for Work List</p>
+      </section>
+
+      <!-- Urgency Tab with Sortable Cards -->
+      <section id="content-rateY" class="tab-content">
+        <h1>Rate your items by Urgency</h1>
+        <p>These things can't wait</p>
+
+        <!-- Sortable Container with Cards -->
+        <div id="urgency-cards" class="mdl-grid">
+          <!-- Card 1 -->
+          <div class="mdl-cell mdl-cell--4-col">
+            <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Urgent Task 1</h2>
+              </div>
+              <div class="mdl-card__supporting-text">
+                Task details for urgent task 1.
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                  Action 1
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="mdl-cell mdl-cell--4-col">
+            <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Urgent Task 2</h2>
+              </div>
+              <div class="mdl-card__supporting-text">
+                Task details for urgent task 2.
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                  Action 2
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="mdl-cell mdl-cell--4-col">
+            <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Urgent Task 3</h2>
+              </div>
+              <div class="mdl-card__supporting-text">
+                Task details for urgent task 3.
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                  Action 3
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="mdl-cell mdl-cell--4-col">
+            <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Urgent Task 3</h2>
+              </div>
+              <div class="mdl-card__supporting-text">
+                Task details for urgent task 3.
+              </div>
+              <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                  Action 3
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Importance Tab -->
+      <section id="content-rateX" class="tab-content">
+        <h1>Rate your items by Importance</h1>
+        <p>These things are important</p>
+      </section>
+
+      <!-- Twoodle Matrix Tab -->
+      <section id="content-results" class="tab-content">
+        <h1>Twoodle Matrix</h1>
+        <p>2-dimensional prioritization of urgency and importance</p>
+
+    <!-- Quad Cards Container -->
+    <div class="quad-container">
+        <!-- Quad Card 1 -->
+        <div class="quad mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Special Card 1</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+                Content for the first special card.
+            </div>
+        </div>
+
+        <!-- Quad Card 2 -->
+        <div class="quad mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Special Card 2</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+                Content for the second special card.
+            </div>
+        </div>
+
+        <!-- Quad Card 3 -->
+        <div class="quad mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Special Card 3</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+                Content for the third special card.
+            </div>
+        </div>
+
+        <!-- Quad Card 4 -->
+        <div class="quad mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Special Card 4</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+                Content for the fourth special card.
+            </div>
+        </div>
+    </div>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- MDL JavaScript -->
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+  <!-- Sortable.js for Drag-and-Drop -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
+  <!-- Script to toggle active tab content -->
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    // Initialize Sortable on the Urgency Cards
+    document.addEventListener("DOMContentLoaded", function() {
+      const urgencyCardsContainer = document.getElementById("urgency-cards");
+      new Sortable(urgencyCardsContainer, {
+        animation: 150,
+        ghostClass: 'sortable-ghost'
+      });
+      componentHandler.upgradeDom();  // Re-initialize MDL components after DOM changes
+    });
+  </script>
+
+  <!-- Script to toggle active tab content, save tab state, and sync with URL query parameter -->
+<script>
+    function showTab(tabId) {
+        // Hide all tab contents
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        
+        // Show the selected tab content
+        document.getElementById(tabId).classList.add('active');
+
+        // Save the active tab to localStorage
+        localStorage.setItem('activeTab', tabId);
+
+        // Update the URL query parameter with the tab ID without reloading
+        const url = new URL(window.location);
+        url.searchParams.set('tab', tabId);
+        window.history.replaceState({}, '', url);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Load the active tab from the URL query parameter, localStorage, or default to 'content-items'
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryTab = urlParams.get('tab');
+        const savedTab = localStorage.getItem('activeTab') || 'content-items';
+        const initialTab = queryTab || savedTab;
+        
+        // Display the saved or query tab
+        showTab(initialTab);
+
+        // Initialize Sortable on the Urgency Cards (only for 'content-rateY' tab)
+        const urgencyCardsContainer = document.getElementById("urgency-cards");
+        if (urgencyCardsContainer) {
+            new Sortable(urgencyCardsContainer, {
+                animation: 150,
+                ghostClass: 'sortable-ghost'
+            });
+        }
+        
+        // MDL component handler
+        componentHandler.upgradeDom();
+    });
+</script>
+
+</body>
+</html>

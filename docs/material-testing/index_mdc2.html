@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDC Tabs Example</title>
+  
+  <!-- Material Components Web CSS -->
+   <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+  <link rel="stylesheet" href="css/styles_mdc2.css"> <!-- Optional if you have custom styles -->
+  
+  <!-- MDC CSS -->
+
+<!-- MDC JS -->
+
+  <!-- Material Components Web JavaScript -->
+  
+    <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- draggable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+
+
+
+
+	<!-- Google Fonts: Work Sans -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script> const textField = new mdc.textField.MDCTextField(document.querySelector('.mdc-text-field'));</script>
+  <script>mdc.autoInit();</script>
+<!-- 
+██████████████████████████████████████████████
+█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█
+█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█
+█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░░░░░█
+█░░▄▀░░█████████░░▄▀░░█████████░░▄▀░░█████████
+█░░▄▀░░█████████░░▄▀░░░░░░░░░░█░░▄▀░░░░░░░░░░█
+█░░▄▀░░█████████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█
+█░░▄▀░░█████████░░░░░░░░░░▄▀░░█░░░░░░░░░░▄▀░░█
+█░░▄▀░░█████████████████░░▄▀░░█████████░░▄▀░░█
+█░░▄▀░░░░░░░░░░█░░░░░░░░░░▄▀░░█░░░░░░░░░░▄▀░░█
+█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█
+█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█
+██████████████████████████████████████████████
+ -->
+<style>
+
+  #ItemsDiv { padding-top: 2em;      display: flex;
+    justify-content: center; /* Horizontal centering */ 
+    }
+/*  .tw_card { padding: 3em; width: 1200px; }*/
+/*  .tw_topSection { display: grid; grid-template-rows: auto auto; grid-template-columns: auto auto ; grid-column-gap: 1em;  }*/
+/*  .tw_topSectionEyebrowBtns { display: grid; grid-template-columns: 1fr auto }*/
+
+  .tw_custom-dialog-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .tw_left-actions {
+    display: flex;
+    justify-content: flex-start;
+    flex: 1;
+  }
+
+  .tw_right-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+  }
+
+
+  /* Position the FAB in the bottom right corner */
+  #open-add-dialog-btn {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 1000; /* Make sure it floats above other elements */
+  }
+
+  .tw-add-modal {
+    display: inline-grid;
+
+  }
+
+  /* Draggable list container */
+#draggable-list #draggable-list-horizontal {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+}
+
+/* Draggable item style */
+.draggable-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  position: relative;
+  cursor: grab;
+}
+
+/* Drag handle icon */
+.drag-icon {
+  cursor: move;
+  margin-right: 16px;
+  font-size: 24px;
+}
+
+/* Editable title with hover effect */
+.editable-title {
+  flex-grow: 1;
+  cursor: text;
+  padding: 4px;
+  border-bottom: 1px solid transparent;
+}
+
+.editable-title:hover {
+  border-bottom: 2px solid;
+  background: linear-gradient(90deg, #ff8a00, #e52e71);
+  background-size: 200% 200%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Right-aligned button cluster */
+.button-cluster {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Accordion content */
+.accordion-content {
+  display: none;
+  margin-top: 16px;
+}
+
+/* Expanded accordion */
+.accordion-expanded .accordion-content {
+  display: block;
+}
+
+.mdc-dialog {
+  z-index: 100000;
+}
+
+.mdc-card {
+    margin: 16px 0;
+    padding: 16px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 8px;
+    border: 2px solid #fff;
+box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+transition: .1s;
+}
+
+.axes_code_type {
+  font-family: monospace;
+  color: dodgerblue;
+  border: 2px solid dodgerblue;
+  border-radius: 5px;
+  padding: 2px;
+  text-transform: uppercase;
+}
+
+/*responsive twoodle*/
+
+
+@media only screen and (max-width: 599px) {
+  #twoodle-matrix-grid-version div {
+    height: 80vw;
+    width: 80vw;
+    margin:  1em auto;
+  }
+}
+
+
+@media only screen and (min-width: 600px) {
+
+  #twoodle-matrix-grid-version {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 1em;
+    grid-row-gap: 1em;
+    grid-template-rows: 350px 350px;
+    padding-top: 4em;
+  }
+
+
+} 
+
+
+#twoodle-matrix-grid-version div {
+  text-align: center;
+  border: 2px solid dodgerblue;
+  border-radius: 8px;
+  display: flex;
+    align-items: center;
+  justify-content: center;
+}
+
+#twoodle-matrix-grid-version div div {
+  border: none;
+}
+
+#twoodle-matrix-grid-version div:nth-child(1), #twoodle-matrix-grid-version div:nth-child(4) {
+/*  background-color: #EEE;*/
+}
+
+#twoodle-matrix-grid-version div:nth-child(1) {
+
+  grid-row: 1;
+  grid-column: 2;
+}
+
+#twoodle-matrix-grid-version div:nth-child(2) {
+
+  grid-row: 1;
+  grid-column: 1;
+}
+
+#twoodle-matrix-grid-version div:nth-child(3) {
+
+  grid-row: 2;
+  grid-column: 2;
+}
+
+#twoodle-matrix-grid-version div:nth-child(4) {
+
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.mdc-card:hover {
+border: 2px solid dodgerblue;
+transition: .1s;
+
+/* Optional: Make the cursor a "move" cursor when dragging */
+.mdc-card {
+    cursor: move;
+}
+
+        /* Styling for the dragged item */
+        .sortable-chosen {
+            transform: scale(1.05); /* Slightly enlarge the item */
+            opacity: 0.8;
+            background-color: red;
+        }
+
+        /* Styling for the placeholder item (ghost of original) */
+        .sortable-ghost {
+            background-color: rgba(200, 200, 200, 0.4); /* Ghost effect */
+            border: 2px dashed #ccc;
+            opacity: 0.5;
+            height: 50px; /* Adjust height to match original */
+            padding: 16px; /* Match padding of original card */
+            box-sizing: border-box;
+            background-color: red;
+        }
+
+        /* Additional class for drag state */
+        .sortable-drag {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background-color: red;
+        }
+</style>
+<!-- CSS for swipe animation -->
+<style>
+  .tab-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+      display: none;
+  }
+
+  .tab-content.active {
+      opacity: 1;
+      display: block;
+  }
+
+  .slide-in-left {
+      transform: translateX(-100%);
+  }
+
+  .slide-in-right {
+      transform: translateX(100%);
+  }
+
+  .slide-active {
+      transform: translateX(0);
+  }
+</style>
+
+
+
+
+
+<script type="text/javascript">
+  
+  import {MDCList} from "@material/list";
+const list = MDCList.attachTo(document.querySelector('.mdc-list'));
+list.wrapFocus = true;
+</script>
+
+</head>
+<body>
+
+
+
+
+<!-- 
+█████████████████████████████████████████████████████████████████████████████
+█░░░░░░██████████░░░░░░█░░░░░░░░░░░░░░█░░░░░░██████████░░░░░░█░░░░░░██░░░░░░█
+█░░▄▀░░░░░░░░░░░░░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░░░░░░░░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█
+█░░▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀▄▀▄▀▄▀▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█
+█░░▄▀░░░░░░▄▀░░░░░░▄▀░░█░░▄▀░░█████████░░▄▀░░░░░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█
+█░░▄▀░░██░░▄▀░░██░░▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░██░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█
+█░░▄▀░░██░░▄▀░░██░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█
+█░░▄▀░░██░░░░░░██░░▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░██░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█
+█░░▄▀░░██████████░░▄▀░░█░░▄▀░░█████████░░▄▀░░██░░▄▀░░░░░░▄▀░░█░░▄▀░░██░░▄▀░░█
+█░░▄▀░░██████████░░▄▀░░█░░▄▀░░░░░░░░░░█░░▄▀░░██░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░░░░░▄▀░░█
+█░░▄▀░░██████████░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░░░░░░░░░▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█
+█░░░░░░██████████░░░░░░█░░░░░░░░░░░░░░█░░░░░░██████████░░░░░░█░░░░░░░░░░░░░░█
+█████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████
+█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█
+█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█
+█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█
+████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████
+ -->
+
+<nav id="sidebar">
+  <div>a</div>
+  <div>b</div>
+  <div>c</div>
+</nav>
+
+
+<nav id="menu">
+    <div class="mdc-tab-bar" role="tablist">
+      <div class="mdc-tab-scroller">
+        <div class="mdc-tab-scroller__scroll-area">
+          <div class="mdc-tab-scroller__scroll-content">
+
+            <!-- Tab 1: Work List -->
+            <button class="mdc-tab" role="tab" aria-selected="true" id="tab-items" onclick="setActiveTab('tab-items')">
+              <span class="mdc-tab__content">
+                <span class="mdc-tab__icon material-icons" aria-hidden="true">checklist</span>
+                <span class="mdc-tab__text-label">Work List</span>
+              </span>
+              <span class="mdc-tab-indicator">
+                <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+              </span>
+              <span class="mdc-tab__ripple"></span>
+            </button>
+
+            <!-- Tab 2: Urgency -->
+            <button class="mdc-tab" role="tab" id="tab-rateY" onclick="setActiveTab('tab-rateY')">
+              <span class="mdc-tab__content">
+                <span class="mdc-tab__icon material-icons" aria-hidden="true">swap_vert</span>
+                <span class="mdc-tab__text-label">Urgency</span>
+              </span>
+              <span class="mdc-tab-indicator">
+                <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+              </span>
+              <span class="mdc-tab__ripple"></span>
+            </button>
+
+            <!-- Tab 3: Importance -->
+            <button class="mdc-tab" role="tab" id="tab-rateX" onclick="setActiveTab('tab-rateX')">
+              <span class="mdc-tab__content">
+                <span class="mdc-tab__icon material-icons" aria-hidden="true">swap_horiz</span>
+                <span class="mdc-tab__text-label">Importance</span>
+              </span>
+              <span class="mdc-tab-indicator">
+                <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+              </span>
+              <span class="mdc-tab__ripple"></span>
+            </button>
+
+            <!-- Tab 4: Twoodle -->
+            <button class="mdc-tab" role="tab" id="tab-results" onclick="setActiveTab('tab-results')">
+              <span class="mdc-tab__content">
+                <span class="mdc-tab__icon material-icons" aria-hidden="true">window</span>
+                <span class="mdc-tab__text-label">Twoodle</span>
+              </span>
+              <span class="mdc-tab-indicator">
+                <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+              </span>
+              <span class="mdc-tab__ripple"></span>
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+</nav>
+
+
+<!-- 
+██████████████████████████████████████████████
+█░░░░░░░░░░░░░░█░░░░░░░░░░░░███░░░░░░░░░░░░███
+█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀░░░░█░░▄▀▄▀▄▀▄▀░░░░█
+█░░▄▀░░░░░░▄▀░░█░░▄▀░░░░▄▀▄▀░░█░░▄▀░░░░▄▀▄▀░░█
+█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█
+█░░▄▀░░░░░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█
+█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█
+█░░▄▀░░░░░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█
+█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░██░░▄▀░░█
+█░░▄▀░░██░░▄▀░░█░░▄▀░░░░▄▀▄▀░░█░░▄▀░░░░▄▀▄▀░░█
+█░░▄▀░░██░░▄▀░░█░░▄▀▄▀▄▀▄▀░░░░█░░▄▀▄▀▄▀▄▀░░░░█
+█░░░░░░██░░░░░░█░░░░░░░░░░░░███░░░░░░░░░░░░███
+██████████████████████████████████████████████
+ -->
+
+
+<!-- Add Dialog -->
+<!-- Dialog structure from MDC -->
+<div class="mdc-dialog"
+     role="alertdialog"
+     aria-modal="true"
+     aria-labelledby="my-dialog-title"
+     aria-describedby="my-dialog-content"
+     id="addDialog">
+
+  <div class="mdc-dialog__container">
+    <div class="mdc-dialog__surface">
+      <!-- Title of Dialog -->
+      <h2 class="mdc-dialog__title" id="my-dialog-title">Add an item</h2>
+      
+      <!-- Content inside Dialog -->
+      <div class="mdc-dialog__content " id="my-dialog-content">
+
+
+      <!-- Material Design Eyebrow Text -->
+      <div class="tw_topSectionEyebrowBtns">
+      <div>
+        <span class="mdc-typography--overline">Urgency vs Importance</span>
+      </div>
+
+<!-- 
+name
+link url + remove
+notes
+save
+cancel -->
+
+
+    <div class="tw-add-modal">
+      <!-- Prefilled text field with floating label -->
+      <label class="mdc-text-field mdc-text-field--filled">
+        <span class="mdc-floating-label" id="vAxisField">Title</span>
+        <input type="text" class="mdc-text-field__input" aria-labelledby="label-id" value="">
+        <span class="mdc-line-ripple"></span>
+      </label>
+      <br>
+
+<!-- Unfilled text field (label will float when text entered) -->
+<!-- <label class="mdc-text-field mdc-text-field--filled">
+  <span class="mdc-floating-label" id="hAxisField">Link URL</span>
+  <input type="text" class="mdc-text-field__input" id="urlInput" aria-labelledby="label-id" placeholder="Enter URL">
+  <span class="mdc-line-ripple"></span>
+</label>
+ -->
+<br>
+
+<!-- Text field with a clear button -->
+<div class="mdc-text-field mdc-text-field--filled" style="position: relative;">
+  <span class="mdc-floating-label" id="hAxisField">Link URL</span>
+  <input type="text" class="mdc-text-field__input" id="urlInput" aria-labelledby="label-id" placeholder="Enter URL">
+  <span class="mdc-line-ripple"></span>
+
+  <!-- Clear button icon -->
+  <button id="clearButton" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
+    <i class="material-icons">close</i>
+  </button>
+</div>
+
+<br>
+
+<!-- Text area field (label will float when text is entered) -->
+<label class="mdc-text-field mdc-text-field--filled mdc-text-field--textarea ">
+  <span class="mdc-floating-label">Details</span>
+  <textarea class="mdc-text-field__input" rows="8" cols="40"></textarea>
+  <span class="mdc-line-ripple"></span>
+</label>
+    </div>
+
+    </div>
+
+      </div>
+      
+      <!-- Action Buttons -->
+      <footer class="mdc-dialog__actions tw_custom-dialog-footer">
+        <div class="tw_left-actions">          
+
+        </button>
+      </div>
+        <div class="tw_right-actions">
+          <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
+            <span class="mdc-button__label">Cancel</span>
+          </button>
+        <button class="mdc-button mdc-button--raised" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label">Save</span>
+        </button>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <div class="mdc-dialog__scrim"></div>
+</div>
+
+
+
+
+
+
+<!-- 
+
+█████████████████████████████████████████████████████████████████
+█░░░░░░░░░░░░░░█░░░░░░░░██░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█
+█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀░░██░░▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█
+█░░▄▀░░░░░░▄▀░░█░░░░▄▀░░██░░▄▀░░░░█░░▄▀░░░░░░░░░░█░░▄▀░░░░░░░░░░█
+█░░▄▀░░██░░▄▀░░███░░▄▀▄▀░░▄▀▄▀░░███░░▄▀░░█████████░░▄▀░░█████████
+█░░▄▀░░░░░░▄▀░░███░░░░▄▀▄▀▄▀░░░░███░░▄▀░░░░░░░░░░█░░▄▀░░░░░░░░░░█
+█░░▄▀▄▀▄▀▄▀▄▀░░█████░░▄▀▄▀▄▀░░█████░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█
+█░░▄▀░░░░░░▄▀░░███░░░░▄▀▄▀▄▀░░░░███░░▄▀░░░░░░░░░░█░░░░░░░░░░▄▀░░█
+█░░▄▀░░██░░▄▀░░███░░▄▀▄▀░░▄▀▄▀░░███░░▄▀░░█████████████████░░▄▀░░█
+█░░▄▀░░██░░▄▀░░█░░░░▄▀░░██░░▄▀░░░░█░░▄▀░░░░░░░░░░█░░░░░░░░░░▄▀░░█
+█░░▄▀░░██░░▄▀░░█░░▄▀▄▀░░██░░▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█
+█░░░░░░██░░░░░░█░░░░░░░░██░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█
+█████████████████████████████████████████████████████████████████
+ -->
+
+<!-- Axes Dialog -->
+<!-- Dialog structure from MDC -->
+<div class="mdc-dialog"
+     role="alertdialog"
+     aria-modal="true"
+     aria-labelledby="my-dialog-title"
+     aria-describedby="my-dialog-content"
+     id="axesDialog">
+  <div class="mdc-dialog__container">
+    <div class="mdc-dialog__surface">
+      <!-- Title of Dialog -->
+      <h2 class="mdc-dialog__title" id="my-dialog-title">Edit axes</h2>
+      
+      <!-- Content inside Dialog -->
+      <div class="mdc-dialog__content " id="my-dialog-content">
+
+
+        <!-- Material Design Eyebrow Text -->
+    <div class="tw_topSectionEyebrowBtns">
+      <div>
+        <span class="mdc-typography--overline">Urgency vs Importance</span>
+      </div>
+
+
+
+
+    <div class="tw_topSection">
+      <!-- Prefilled text field with floating label -->
+      <label class="mdc-text-field mdc-text-field--filled tw_field">
+        <span class="mdc-floating-label" id="vAxisField">Vertical Axis</span>
+        <input type="text" class="mdc-text-field__input" aria-labelledby="label-id" value="Urgency">
+        <span class="mdc-line-ripple"></span>
+      </label>
+      <br><br>
+
+        <!-- Prefilled text field with floating label -->
+      <label class="mdc-text-field mdc-text-field--filled tw_field">
+        <span class="mdc-floating-label" id="hAxisField">Horizontal Axis</span>
+        <input type="text" class="mdc-text-field__input" aria-labelledby="label-id" value="Importance">
+        <span class="mdc-line-ripple"></span>
+      </label>
+    </div>
+
+    </div>
+
+      </div>
+      
+      <!-- Action Buttons -->
+      <footer class="mdc-dialog__actions tw_custom-dialog-footer">
+        <div class="tw_left-actions">          
+          <button class="mdc-button mdc-button--text mdc-ripple custom-button">
+          <i class="material-icons mdc-button__icon" aria-hidden="true">menu_book</i>
+        Recipes
+        </button>
+      </div>
+        <div class="tw_right-actions">
+          <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
+            <span class="mdc-button__label">Cancel</span>
+          </button>
+          <button class="mdc-button mdc-button--raised" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">Save</span>
+          </button>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <div class="mdc-dialog__scrim"></div>
+</div>
+
+<!-- Content for each tab -->
+<div id="content-items">Content for Work List</div>
+<div id="content-rateY" style="display:none;">Content for Urgency</div>
+<div id="content-rateX" style="display:none;">Content for Importance</div>
+<div id="content-results" style="display:none;">Content for Twoodle</div>
+
+
+
+  <!-- Sections for each tab -->
+<div id="ItemsDiv" class="mdc-tab-content">
+
+
+
+
+
+<!-- Button to Open the Modal -->
+<button class="mdc-button" id="open-axes-dialog-btn">Edit axes</button>
+
+
+
+
+
+
+
+
+  </div>
+  
+<!-- 
+
+
+─────────────────────────────────────────────────────────────────────────────────────────────────
+─████████████████───██████████████─██████████████─██████████████───────────██████──██████────────
+─██░░░░░░░░░░░░██───██░░░░░░░░░░██─██░░░░░░░░░░██─██░░░░░░░░░░██───────────██░░██──██░░██────────
+─██░░████████░░██───██░░██████░░██─██████░░██████─██░░██████████───────────██░░██──██░░██────────
+─██░░██────██░░██───██░░██──██░░██─────██░░██─────██░░██───────────────────██░░██──██░░██────────
+─██░░████████░░██───██░░██████░░██─────██░░██─────██░░██████████───────────██░░██──██░░██────────
+─██░░░░░░░░░░░░██───██░░░░░░░░░░██─────██░░██─────██░░░░░░░░░░██───────────██░░██──██░░██────────
+─██░░██████░░████───██░░██████░░██─────██░░██─────██░░██████████───────────██░░██──██░░██────────
+─██░░██──██░░██─────██░░██──██░░██─────██░░██─────██░░██───────────────────██░░░░██░░░░██────────
+─██░░██──██░░██████─██░░██──██░░██─────██░░██─────██░░██████████────██████─████░░░░░░████─██████─
+─██░░██──██░░░░░░██─██░░██──██░░██─────██░░██─────██░░░░░░░░░░██────██░░██───████░░████───██░░██─
+─██████──██████████─██████──██████─────██████─────██████████████────██████─────██████─────██████─
+─────────────────────────────────────────────────────────────────────────────────────────────────
+ -->
+
+  <div id="rateYDiv" class="mdc-tab-content" style="display: none;">
+
+    <h1>Rate your items by Urgency</h1>
+<h2>These things can't wait</h2>
+    <div id="draggable-list">
+<div class="mdc-card priorityCard">
+    <!-- Drag zone icon -->
+    <div class="drag-icon">
+        <!-- You can replace with your drag icon -->
+        <span>🟰</span>
+    </div>
+    
+    <!-- Title -->
+    <h3 class="mdc-typography--headline6">Card Title</h3>
+
+    <!-- Description -->
+    <p class="mdc-typography--body2">This is a description for the card, detailing what it entails.</p>
+    
+    <!-- Material chip button with sub-items -->
+    <button class="mdc-chip-set">
+        <div class="mdc-chip" role="row">
+            <span role="gridcell">
+                <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">window</i>
+                <span class="mdc-chip__text">22 Sub-items</span>
+            </span>
+        </div>
+    </button>
+
+    <!-- More actions dropdown -->
+    <div class="mdc-menu-surface--anchor">
+        <button class="mdc-button mdc-button--outlined" id="more-actions">
+            <span class="mdc-button__label">More Actions</span>
+            <i class="material-icons">arrow_drop_down</i>
+        </button>
+        <div class="mdc-menu mdc-menu-surface" role="menu" aria-hidden="true">
+            <ul class="mdc-list" role="menu">
+                <li class="mdc-list-item" role="menuitem">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">edit</i>
+                    <span class="mdc-list-item__text">Edit</span>
+                </li>
+                <li class="mdc-list-item" role="menuitem">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">swap_vert</i>
+                    <span class="mdc-list-item__text">Move</span>
+                </li>
+                <li class="mdc-list-item" role="menuitem">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">delete</i>
+                    <span class="mdc-list-item__text">Trash</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="mdc-card">
+            <p>Card 2: More simple text</p>
+        </div>
+
+        <div class="mdc-card">
+            <p>Card 3: Another text card</p>
+        </div>
+
+        <div class="mdc-card">
+            <p>Card 4: Yet another text card</p>
+        </div>
+    </div>
+<h2>These things can wait</h2>
+<br><br><br><br>    
+
+  </div>
+
+
+
+  <!-- 
+
+█████████████████████████████████████████████████████████████████████████████████████████████████
+█░░░░░░░░░░░░░░░░███░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░███████████░░░░░░██░░░░░░████████
+█░░▄▀▄▀▄▀▄▀▄▀▄▀░░███░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░█░░▄▀▄▀▄▀▄▀▄▀░░███████████░░▄▀░░██░░▄▀░░████████
+█░░▄▀░░░░░░░░▄▀░░███░░▄▀░░░░░░▄▀░░█░░░░░░▄▀░░░░░░█░░▄▀░░░░░░░░░░███████████░░▄▀░░██░░▄▀░░████████
+█░░▄▀░░████░░▄▀░░███░░▄▀░░██░░▄▀░░█████░░▄▀░░█████░░▄▀░░███████████████████░░▄▀░░██░░▄▀░░████████
+█░░▄▀░░░░░░░░▄▀░░███░░▄▀░░░░░░▄▀░░█████░░▄▀░░█████░░▄▀░░░░░░░░░░███████████░░▄▀░░░░░░▄▀░░████████
+█░░▄▀▄▀▄▀▄▀▄▀▄▀░░███░░▄▀▄▀▄▀▄▀▄▀░░█████░░▄▀░░█████░░▄▀▄▀▄▀▄▀▄▀░░███████████░░▄▀▄▀▄▀▄▀▄▀░░████████
+█░░▄▀░░░░░░▄▀░░░░███░░▄▀░░░░░░▄▀░░█████░░▄▀░░█████░░▄▀░░░░░░░░░░███████████░░▄▀░░░░░░▄▀░░████████
+█░░▄▀░░██░░▄▀░░█████░░▄▀░░██░░▄▀░░█████░░▄▀░░█████░░▄▀░░███████████████████░░▄▀░░██░░▄▀░░████████
+█░░▄▀░░██░░▄▀░░░░░░█░░▄▀░░██░░▄▀░░█████░░▄▀░░█████░░▄▀░░░░░░░░░░████░░░░░░█░░▄▀░░██░░▄▀░░█░░░░░░█
+█░░▄▀░░██░░▄▀▄▀▄▀░░█░░▄▀░░██░░▄▀░░█████░░▄▀░░█████░░▄▀▄▀▄▀▄▀▄▀░░████░░▄▀░░█░░▄▀░░██░░▄▀░░█░░▄▀░░█
+█░░░░░░██░░░░░░░░░░█░░░░░░██░░░░░░█████░░░░░░█████░░░░░░░░░░░░░░████░░░░░░█░░░░░░██░░░░░░█░░░░░░█
+█████████████████████████████████████████████████████████████████████████████████████████████████
+   -->
+
+
+  <div id="rateXDiv" class="mdc-tab-content" style="display: none;">
+
+    <h1>Rate your items by Importance</h1>
+<h2>These things are important</h2>
+    <div id="draggable-list-horizontal">
+        <div class="mdc-card">
+            <p>Card 1: Simple text content</p>
+        </div>
+
+        <div class="mdc-card">
+            <p>Card 2: More simple text</p>
+        </div>
+
+        <div class="mdc-card">
+            <p>Card 3: Another text card</p>
+        </div>
+
+        <div class="mdc-card">
+            <p>Card 4: Yet another text card</p>
+        </div>
+    </div>
+<h2>These things are less important</h2>    
+<br><br><br><br>
+
+  </div>
+  
+<!-- 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+─██████████████─██████──────────██████─██████████████─██████████████─████████████───██████─────────██████████████─
+─██░░░░░░░░░░██─██░░██──────────██░░██─██░░░░░░░░░░██─██░░░░░░░░░░██─██░░░░░░░░████─██░░██─────────██░░░░░░░░░░██─
+─██████░░██████─██░░██──────────██░░██─██░░██████░░██─██░░██████░░██─██░░████░░░░██─██░░██─────────██░░██████████─
+─────██░░██─────██░░██──────────██░░██─██░░██──██░░██─██░░██──██░░██─██░░██──██░░██─██░░██─────────██░░██─────────
+─────██░░██─────██░░██──██████──██░░██─██░░██──██░░██─██░░██──██░░██─██░░██──██░░██─██░░██─────────██░░██████████─
+─────██░░██─────██░░██──██░░██──██░░██─██░░██──██░░██─██░░██──██░░██─██░░██──██░░██─██░░██─────────██░░░░░░░░░░██─
+─────██░░██─────██░░██──██░░██──██░░██─██░░██──██░░██─██░░██──██░░██─██░░██──██░░██─██░░██─────────██░░██████████─
+─────██░░██─────██░░██████░░██████░░██─██░░██──██░░██─██░░██──██░░██─██░░██──██░░██─██░░██─────────██░░██─────────
+─────██░░██─────██░░░░░░░░░░░░░░░░░░██─██░░██████░░██─██░░██████░░██─██░░████░░░░██─██░░██████████─██░░██████████─
+─────██░░██─────██░░██████░░██████░░██─██░░░░░░░░░░██─██░░░░░░░░░░██─██░░░░░░░░████─██░░░░░░░░░░██─██░░░░░░░░░░██─
+─────██████─────██████──██████──██████─██████████████─██████████████─████████████───██████████████─██████████████─
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ -->
+
+  <div id="resultsDiv" class="mdc-tab-content" style="display: none;">
+    <h1>Twoodle Matrix</h1>
+    <h2>2 dimensional prioritization of <span class="axes_code_type">urgency</span> and <span class="axes_code_type">importance</span></h2>
+    <div id="twoodle-matrix-grid-version">
+      <div class="twoodle-matrix-grid-div">
+        <div>
+          1111
+        </div>
+      </div> 
+      <div class="twoodle-matrix-grid-div">
+        <div>
+2222        </div>
+      </div>
+      <div class="twoodle-matrix-grid-div">
+        <div>
+         3333
+        </div>
+      </div>
+      <div class="twoodle-matrix-grid-div">
+        <div>
+          4444
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<!-- 
+
+─────────────────────────────────────────────────────────────────────
+─██████████████────────██████████████────────██████████████──────────
+─██░░░░░░░░░░██────────██░░░░░░░░░░██────────██░░░░░░░░░░██──────────
+─██░░██████████────────██░░██████░░██────────██░░██████░░██──────────
+─██░░██────────────────██░░██──██░░██────────██░░██──██░░██──────────
+─██░░██████████────────██░░██████░░██────────██░░██████░░████────────
+─██░░░░░░░░░░██────────██░░░░░░░░░░██────────██░░░░░░░░░░░░██────────
+─██░░██████████────────██░░██████░░██────────██░░████████░░██────────
+─██░░██────────────────██░░██──██░░██────────██░░██────██░░██────────
+─██░░██─────────██████─██░░██──██░░██─██████─██░░████████░░██─██████─
+─██░░██─────────██░░██─██░░██──██░░██─██░░██─██░░░░░░░░░░░░██─██░░██─
+─██████─────────██████─██████──██████─██████─████████████████─██████─
+─────────────────────────────────────────────────────────────────────
+ -->
+
+<!-- Floating Action Button -->
+<button class="mdc-fab mdc-fab--extended" aria-label="Add" id="open-add-dialog-btn">
+  <span class="mdc-fab__icon material-icons">add</span>
+  <span class="mdc-fab__label">Add</span>
+</button>
+<!--  -->
+
+
+
+
+  <!-- Your custom JavaScript file -->
+  <script src="js/scripts_mdc2.js"></script>
+  <script> mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button')); </script>
+
+
+
+  <script>
+    // Initialize MDC text fields for all elements
+    window.addEventListener('DOMContentLoaded', (event) => {
+      // Initialize all MDC text fields on the page
+      const textFields = document.querySelectorAll('.mdc-text-field');
+      textFields.forEach(function(textField) {
+        new mdc.textField.MDCTextField(textField);
+      });
+    });
+  </script>
+
+<script>
+  // Initialize MDC Dialog
+  const addModal = new mdc.dialog.MDCDialog(document.getElementById("addDialog"));
+  const axesModal = new mdc.dialog.MDCDialog(document.getElementById("axesDialog"));
+
+  // Get the button that opens the dialog
+  const addModalBtn = document.getElementById('open-add-dialog-btn');
+  const axesModalBtn = document.getElementById('open-axes-dialog-btn');
+
+  // When the user clicks the button, open the dialog
+  addModalBtn.onclick = function() {
+    addModal.open();
+  };
+
+  // When the user clicks the button, open the dialog
+  axesModalBtn.onclick = function() {
+    axesModal.open();
+  };
+
+
+</script>
+
+<script>
+  // Initialize the FAB
+  const fab = document.querySelector('.mdc-fab');
+  
+  // Optionally, you can add a click handler if you want it to trigger an action, like opening a modal
+  fab.addEventListener('click', function() {
+    // For example, open the dialog when the FAB is clicked
+    dialog.open();  // Assuming you have the MDC Dialog initialized as shown previously
+  });
+
+
+
+</script>
+
+<script>
+  const urlInput = document.getElementById('urlInput');
+
+  // Prevent spaces while typing
+  urlInput.addEventListener('keydown', function(e) {
+    if (e.key === ' ') {
+      e.preventDefault(); // Prevent space from being typed
+    }
+  });
+
+  // Optionally, ensure no spaces are entered by copy-paste
+  urlInput.addEventListener('input', function() {
+    this.value = this.value.replace(/\s/g, ''); // Remove any spaces from the input
+  });
+</script>
+
+<script>
+  const urlInput = document.getElementById('urlInput');
+
+  function middleTruncateUrl(url, maxLength = 40) {
+    if (url.length <= maxLength) {
+      return url;
+    }
+    const firstPart = url.slice(0, Math.floor(maxLength / 2) - 3);
+    const lastPart = url.slice(-Math.floor(maxLength / 2));
+    return `${firstPart}...${lastPart}`;
+  }
+
+  urlInput.addEventListener('input', function() {
+    const originalUrl = this.value;
+    const truncatedUrl = middleTruncateUrl(originalUrl);
+    
+    // Display the truncated version while keeping the full URL as the actual value
+    this.setAttribute('data-full-url', originalUrl); // Store the full URL
+    this.value = truncatedUrl;
+  });
+
+  // Optional: if you want to restore the full URL on focus
+  urlInput.addEventListener('focus', function() {
+    this.value = this.getAttribute('data-full-url'); // Show full URL on focus
+  });
+
+  urlInput.addEventListener('blur', function() {
+    const originalUrl = this.getAttribute('data-full-url');
+    const truncatedUrl = middleTruncateUrl(originalUrl);
+    this.value = truncatedUrl; // Reapply the truncation on blur
+  });
+</script>
+
+  <!-- JavaScript for Clear Button Functionality -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlInput = document.getElementById('urlInput');
+      const clearButton = document.getElementById('clearButton');
+
+      // Clear the input when the clear button is clicked
+      clearButton.addEventListener('click', function() {
+        urlInput.value = '';
+        clearButton.style.display = 'none'; // Hide the button after clearing
+        urlInput.blur(); // Remove focus from the input field after clearing
+      });
+
+      // Show the clear button when the input is not empty
+      urlInput.addEventListener('input', function() {
+        clearButton.style.display = this.value ? 'block' : 'none';
+      });
+
+      // Initially hide the clear button
+      clearButton.style.display = 'none';
+    });
+  </script>
+
+
+<!-- draggable new bit -->
+
+
+
+
+
+<!-- draggable -->
+
+<!-- Unified Draggable Script with Mobile Check -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to detect if the user is on a mobile device
+        function isMobileDevice() {
+            return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        }
+
+        // Common Sortable options for both vertical and horizontal lists
+        const sortableOptions = {
+            animation: 150, // Smooth animation while dragging
+            ghostClass: 'sortable-ghost', // Style for the placeholder of the dragged item
+            chosenClass: 'sortable-chosen', // Class for the chosen item
+            dragClass: 'sortable-drag', // Class for the item being dragged
+            preventOnFilter: true, // Prevent touch scrolling interference
+            forceFallback: isMobileDevice(), // Enable fallback for mobile devices only
+            onEnd: function (evt) {
+                evt.item.classList.remove('sortable-drag'); // Remove drag class after drop
+            }
+        };
+
+        // Initialize Sortable on vertical list
+        new Sortable(document.getElementById('draggable-list'), sortableOptions);
+
+        // Initialize Sortable on horizontal list
+        new Sortable(document.getElementById('draggable-list-horizontal'), sortableOptions);
+    });
+</script>
+
+<!-- Script to handle active tab state -->
+<!-- <script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const tabs = document.querySelectorAll('.mdc-tab');
+      const activeTab = localStorage.getItem('activeTab') || 'tab-items'; // Default to 'tab-items'
+
+      // Function to set the active tab and store in localStorage
+      window.setActiveTab = function (tabId) {
+          // Remove active state from all tabs
+          tabs.forEach(tab => tab.classList.remove('mdc-tab--active'));
+          tabs.forEach(tab => tab.setAttribute('aria-selected', 'false'));
+
+          // Add active state to the selected tab
+          const selectedTab = document.getElementById(tabId);
+          selectedTab.classList.add('mdc-tab--active');
+          selectedTab.setAttribute('aria-selected', 'true');
+
+          // Save active tab to localStorage
+          localStorage.setItem('activeTab', tabId);
+      };
+
+      // Activate the tab stored in localStorage
+      setActiveTab(activeTab);
+  });
+</script> -->
+
+<!-- Script to handle active tab state with MDC -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const tabBar = new mdc.tabBar.MDCTabBar(document.querySelector('.mdc-tab-bar')); // MDC initialization
+
+      // Retrieve active tab from localStorage, default to 'tab-items'
+      const activeTab = localStorage.getItem('activeTab') || 'tab-items';
+
+      // Find the corresponding index of the active tab
+      const tabs = document.querySelectorAll('.mdc-tab');
+      let activeIndex = 0;
+      tabs.forEach((tab, index) => {
+          if (tab.id === activeTab) {
+              activeIndex = index;
+          }
+      });
+
+      // Activate the correct tab on page load
+      tabBar.activateTab(activeIndex);
+
+      // Function to handle tab switching and store active tab in localStorage
+      window.setActiveTab = function (tabId) {
+          const index = Array.from(tabs).findIndex(tab => tab.id === tabId);
+          tabBar.activateTab(index);
+          localStorage.setItem('activeTab', tabId);
+      };
+  });
+</script>
+
+<!-- Script to handle active tab state -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const tabBar = new mdc.tabBar.MDCTabBar(document.querySelector('.mdc-tab-bar')); // MDC initialization
+
+      // Retrieve active tab from localStorage, default to 'tab-items'
+      const tabs = document.querySelectorAll('.mdc-tab');
+      const contents = {
+          'tab-items': document.getElementById('ItemsDiv'),
+          'tab-rateY': document.getElementById('rateYDiv'),
+          'tab-rateX': document.getElementById('rateXDiv'),
+          'tab-results': document.getElementById('resultsDiv')
+      };
+      let activeTab = localStorage.getItem('activeTab') || 'tab-items';
+
+      function showContent(tabId) {
+          Object.values(contents).forEach(content => content.style.display = 'none');
+          contents[tabId].style.display = 'block';
+      }
+
+      function setActiveTab(tabId) {
+          const index = Array.from(tabs).findIndex(tab => tab.id === tabId);
+          tabBar.activateTab(index);
+          localStorage.setItem('activeTab', tabId);
+          showContent(tabId);
+      }
+
+      // Initialize the active tab and content
+      setActiveTab(activeTab);
+
+      // Swipe detection for mobile
+      let startX = 0;
+      let currentIndex = Array.from(tabs).findIndex(tab => tab.id === activeTab);
+
+      function handleTouchStart(e) {
+          startX = e.touches[0].clientX;
+      }
+
+      function handleTouchMove(e) {
+          if (!startX) return;
+          const endX = e.touches[0].clientX;
+          const diffX = startX - endX;
+
+          // If swipe distance is significant enough (e.g., 50px), switch tabs
+          if (Math.abs(diffX) > 50) {
+              if (diffX > 0 && currentIndex < tabs.length - 1) {
+                  // Swipe left (next tab)
+                  currentIndex++;
+              } else if (diffX < 0 && currentIndex > 0) {
+                  // Swipe right (previous tab)
+                  currentIndex--;
+              }
+              setActiveTab(tabs[currentIndex].id);
+              startX = 0; // Reset swipe start position
+          }
+      }
+
+      // Add swipe event listeners to the tab content container
+      Object.values(contents).forEach(content => {
+          content.addEventListener('touchstart', handleTouchStart, { passive: true });
+          content.addEventListener('touchmove', handleTouchMove, { passive: true });
+      });
+  });
+</script>
+
+<script>
+    // Initialize the MDC menu component
+    const menuElement = document.querySelector('#more-actions-menu');
+    const menu = new mdc.menu.MDCMenu(menuElement);
+
+    // Find the button that triggers the dropdown
+    const buttonElement = document.querySelector('#more-actions-button');
+
+    // Add a click listener to toggle the menu open
+    buttonElement.addEventListener('click', () => {
+        menu.open = !menu.open;
+    });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+<!-- 
+
+FEATURE
+[] populate results fourpane
+[] Repopulate text based on axes
+
+[] # of items within
+[] Delete a twoodle
+[] timer/dates
+[] Rename Axes on its Tab
+
+[DONE] stay on current tab during refresh
+
+REWIRE
+[] Local storage
+[] add twoodle, switch twoodle, delete twoodle
+[] Results Tab Canvas Version / [] Results Tab Switcher
+[] Rename Tabs Dynamically
+
+FE
+[] Card Controls - Trash, Move, Edit
+[] Sidebar
+[] Swap XY control (temp) - put on matrix displays only
+[] add card buttons (delete, edit, web link / open twoodle)
+[] fix sortable pseudo classes styling
+
+
+[] cross-list highlighting
+[] optional # ranking display
+[] when switching between rankings, animate the cards into their new place ???
+[] need ghost drag item !
+[] add card title inline editing / [] make title a link when there is a url
+[] add description editing
+[] add card accordion with description
+[] Better Card Type
+[] baroqueness
+[] *swipable panes
+
+[done] "Rate Y" and X rename H V
+[done]Results Tab Four pane
+
+??
+[] research if tab content scrolling had MDC support, replace vanilla JS
+
+*unplanned extra
+
+ -->
+<!-- https://fsymbols.com/generators/carty/ -->

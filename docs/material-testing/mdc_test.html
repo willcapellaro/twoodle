@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material Design Ripple Button</title>
+
+  <!-- Material Design Icons (Optional) -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Material Design CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+
+  <!-- Custom styles to make ripple effect more noticeable -->
+  <style>
+    .mdc-button {
+      min-width: 200px;
+      min-height: 50px;
+      background-color: #6200ea; /* Button background color */
+      color: white; /* Button text color */
+    }
+    .mdc-button .mdc-button__ripple::before, 
+    .mdc-button .mdc-button__ripple::after {
+      background-color: rgba(255, 255, 255, 0.4); /* Adjust the ripple color */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Button with Ripple -->
+  <button class="mdc-button mdc-button--raised">
+    <span class="mdc-button__label">Material Button</span>
+  </button>
+
+  <!-- Material Design JS -->
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+  <!-- Initialize Ripple -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const button = document.querySelector('.mdc-button');
+      mdc.ripple.MDCRipple.attachTo(button); // Initialize ripple effect
+    });
+  </script>
+
+</body>
+</html>

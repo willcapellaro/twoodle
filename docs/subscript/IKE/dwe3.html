@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eisenhower Matrix for President Eisenhower</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script> 
+
+    <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Special+Elite&display=swap" rel="stylesheet"> 
+
+    <style>
+        body {
+            background-color: #46592b; /* Army green */
+            color: #fff;
+            font-family: 'Special Elite', monospace;
+            margin: 0; 
+            display: flex; 
+            flex-direction: column;
+            min-height: 100vh; 
+            justify-content: center; 
+        }
+
+        h1 {
+            font-family: 'Allerta Stencil', sans-serif;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        #container {
+            width: 800px; 
+            margin: 0 auto; 
+        }
+    </style>
+</head>
+<body>
+
+    <h1><span id="typed"></span></h1> 
+
+    <div id="container"></div>
+
+    <script>
+        Highcharts.chart('container', {
+            chart: {
+                type: 'scatter',
+                backgroundColor: '#46592b', 
+                plotBorderWidth: 0, // Remove outer border
+                spacingBottom: 30,
+                events: {
+                    load: function () {
+                        var chart = this;
+                        var xAxis = this.xAxis[0];
+                        var yAxis = this.yAxis[0];
+                        var xCenter = xAxis.toPixels(0); // Center of the chart on the x-axis
+                        var yCenter = yAxis.toPixels(0); // Center of the chart on the y-axis
+                        var labelWidth = Math.max(
+                            chart.renderer.fontMetrics('18px Allerta Stencil').width('QUICK WINS'),
+                            chart.renderer.fontMetrics('18px Allerta Stencil').width('BIG PROJECTS'),
+                            chart.renderer.fontMetrics('18px Allerta Stencil').width('TIME SINKS'),
+                            chart.renderer.fontMetrics('18px Allerta Stencil').width('FILL-INS')
+                        ); // Get width of the longest label
+
+                        // Define label positions and text
+                        var labels = [
+                            { x: xCenter - labelWidth / 2 - 10, y: yCenter - 50, text: 'QUICK WINS' }, // Top Left
+                            { x: xCenter + labelWidth / 2 + 10, y: yCenter - 50, text: 'BIG PROJECTS' }, // Top Right
+                            { x: xCenter - labelWidth / 2 - 10, y: yCenter + 50, text: 'TIME SINKS' }, // Bottom Left
+                            { x: xCenter + labelWidth / 2 + 10, y: yCenter + 50, text: 'FILL-INS' } // Bottom Right
+                        ];
+
+                        // Add labels to the chart
+                        labels.forEach(function (label) {
+                            chart.renderer.text(label.text, label.x, label.y)
+                                .attr({
+                                    'font-family': 'Allerta Stencil',
+                                    'font-size': '18px',
+                                    'fill': 'yellow',
+                                    'zIndex': 5 // Ensure labels are on top
+                                })
+                                .add();
+                        });
+                    }
+                }
+            },
+            xAxis: {
+                title: {
+                    text: 'Importance',
+                    style: {
+                        color: '#fff',
+                        fontFamily: 'Special Elite'
+                    }
+                },
+                gridLineColor: '#fff',
+                gridLineWidth: 1,
+                lineWidth: 0, // Disable end lines
+                tickInterval: 1,
+                min: -1,
+                max: 1,
+                labels: {
+                    style: {
+                        color: '#fff',
+                        fontFamily: 'Special Elite'
+                    }
+                },
+                tickColor: '#fff' // Set tick color to white
+            },
+            yAxis: {
+                title: {
+                    text: 'Urgency',
+                    style: {
+                        color: '#fff',
+                        fontFamily: 'Special Elite'
+                    }
+                },
+                gridLineColor: '#fff',
+                gridLineWidth: 1, 
+                lineWidth: 0, // Disable end lines
+                tickInterval: 1,
+                min: -1,
+                max: 1,
+                labels: {
+                    style: {
+                        color: '#fff',
+                        fontFamily: 'Special Elite'
+                    }
+                },
+                tickColor: '#fff' // Set tick color to white
+            },
+            plotOptions: {
+                scatter: {
+                    marker: {
+                        symbol: 'star',
+                        radius: 12
+                    }
+                }
+            },
+            series: [{
+                name: 'Mideast Peace', 
+                color: 'blue', 
+                data: [
+                    {x: -0.35, y: 0.6, name: 'Suez Crisis: Brainstorm', category: 'Foreign Policy'}
+                ]
+            }, {
+                name: 'Domestic Policy', 
+                color: 'green', 
+                data: [
+                    {x: 0.2, y: 0.8, name: 'Interstate Highway Planning', category: 'Domestic Policy'}
+                ]
+            }, {
+                name: 'Foreign Relations', 
+                color: 'red', 
+                data: [
+                    {x: -0.5, y: 0.7, name: 'Negotiate Arms Reduction Treaty', category: 'Foreign Policy'}
+                ]
+            }, {
+                name: 'Administration', 
+                color: 'orange', 
+                data: [
+                    {x: -0.1, y: 0.3, name: 'Review Daily Briefings', category: 'Administration'}
+                ]
+            }, {
+                name: 'Social Events', 
+                color: 'gray', 
+                data: [
+                    {x: -0.8, y: -0.2, name: 'Attend State Dinner', category: 'Social Events'}
+                ]
+            }],
+            legend: {
+                itemStyle: {
+                    color: '#fff',
+                    fontFamily: 'Special Elite',
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return `<b>${this.point.options.name}</b><br>Category: ${this.point.options.category}<br>Importance: ${this.point.x.toFixed(2)}<br>Urgency: ${this.point.y.toFixed(2)}`;
+                }
+            }
+        });
+
+        var options = {
+            strings: ["Welcome to President Eisenhower's Eisenhower Matrix.", 
+                     "Prioritizing the Nation's Challenges."],
+            typeSpeed: 50,
+            backDelay: 500,
+            loop: false,
+            showCursor: false 
+        };
+
+        var typed = new Typed('#typed', options); 
+    </script>
+
+</body>
+</html>

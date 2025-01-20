@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Footer with Mask</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 100vh;
+      background: #333;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    footer {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      height: 300px;
+      background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/234228/backdrop.jpg') no-repeat center/cover;
+      mask: url(#footer-mask);
+      -webkit-mask: url(#footer-mask);
+      mask-size: cover;
+      -webkit-mask-size: cover;
+    }
+
+    .interaction-layer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 20px;
+      pointer-events: none; /* Prevent overlay from blocking interactions */
+    }
+
+    .interaction-layer div {
+      pointer-events: auto; /* Allow interaction for these areas */
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 1em;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+      color: #fbcc0c; /* Highlight color */
+    }
+
+    .footer-logo {
+      text-align: right;
+    }
+
+    .footer-logo .logo-text {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #fbcc0c;
+    }
+
+    .footer-bottom {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.9em;
+      text-align: center;
+      color: #ccc;
+    }
+
+    .footer-bottom a {
+      color: #fbcc0c;
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Footer -->
+  <footer>
+    <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <mask id="footer-mask">
+          <!-- Black hides, white reveals -->
+          <rect width="100%" height="100%" fill="black" />
+          <text x="50" y="80" font-family="Arial, sans-serif" font-size="30" fill="white">Legal</text>
+          <text x="50" y="130" font-family="Arial, sans-serif" font-size="30" fill="white">Info</text>
+          <text x="50" y="180" font-family="Arial, sans-serif" font-size="30" fill="white">About</text>
+          <rect x="450" y="150" width="200" height="30" fill="white" />
+        </mask>
+      </defs>
+    </svg>
+
+    <!-- Invisible Interactive Layer -->
+    <div class="interaction-layer">
+      <!-- Links matching the SVG mask -->
+      <div class="footer-links">
+        <a href="#legal">Legal</a>
+        <a href="#info">Info</a>
+        <a href="#about">About</a>
+      </div>
+
+      <!-- Logo section matching the mask -->
+      <div class="footer-logo">
+        <div class="logo-text">Powered by Mercurial Media</div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      ©2025 Awesome Productions. Powered by <a href="#merc">Mercurial Media</a>.
+    </div>
+  </footer>
+</body>
+</html>

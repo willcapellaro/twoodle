@@ -1,0 +1,102 @@
+.mdc-tab__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Apply the modernist Work Sans font to the entire body */
+body {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+
+}
+
+/* Optionally, apply different weights to specific elements */
+.mdc-tab__text-label {
+  font-weight: 500; /* Medium weight for tab labels */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700; /* Bold for headings */
+  text-align: center;
+}
+
+h2 {font-size: 20px;
+font-weight: 300;}
+
+nav {
+
+}
+
+#sidebar { 
+display:grid; }
+
+/* Ensure the Inter font is applied to the tab labels */
+.mdc-tab__text-label {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+
+/* Default horizontal tab styling */
+.mdc-tab-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* Vertical tab layout for screens 500px and below */
+/*remove nothing line to make this work again*/
+.nothing { 
+/*@media (max-width: 500px) {*/
+  .mdc-tab-bar {
+    flex-direction: column;
+    justify-content: center; /* Center the tabs vertically */
+    align-items: center;     /* Center the tabs horizontally */
+  }
+
+  .mdc-tab-scroller__scroll-content {
+    display: block;
+  }
+
+  .mdc-tab {
+    width: auto; /* Allow tabs to size naturally */
+    justify-content: center; /* Center the text and icon within each tab */
+  }
+  
+  /* Center the tab label and icon */
+  .mdc-tab__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
+@media only screen and (max-width: 599px) {
+ body {
+  display: grid;
+  grid-template-rows: auto auto;
+ }
+
+}
+
+
+@media only screen and (min-width: 600px) {
+
+  body {
+    max-width: 700px;
+    margin-left: 2em;
+    margin-top: 2em;
+    margin-right: auto;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 4em;
+  }
+}
+
+
