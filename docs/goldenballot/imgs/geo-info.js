@@ -1,1 +1,0 @@
-var pmc_fastly_geo_data = {"city":"chicago","region":"IL","country":"US","continent":"NA","asn":"19165"}
