@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local OCR Web App</title>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Local OCR Web App</h1>
+        <p>Select an image file to extract text:</p>
+        <input type="file" id="image-file" accept="image/*">
+        <br><br>
+        <button id="process-btn">Extract Text</button>
+        <div class="output">
+            <strong>Extracted Text:</strong>
+            <pre id="text-result">No text extracted yet.</pre>
+        </div>
+        <div id="loading" style="display: none; color: blue;">Processing... Please wait.</div>
+    </div>
+
+    <script>
+        const processBtn = document.getElementById("process-btn");
+        const textResult = document.getElementById("text-result");
+        const loadingIndicator = document.getElementById("loading");
+
+        processBtn.addEventListener("click", () => {
+            const fileInput = document.getElementById("image-file");
+            if (!fileInput.files[0]) {
+                alert("Please select an image file first.");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function () {
+                const imageData = reader.result;
+                loadingIndicator.style.display = "block";
+
+                Tesseract.recognize(
+                    imageData,  // The image data
+                    'eng',      // Language code
+                    {
+                        logger: info => console.log(info) // Log progress (optional)
+                    }
+                ).then(({ data: { text } }) => {
+                    loadingIndicator.style.display = "none";
+                    textResult.textContent = text || "No text found.";
+                }).catch(error => {
+                    loadingIndicator.style.display = "none";
+                    console.error(error);
+                    alert("An error occurred while processing the image.");
+                });
+            };
+
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
