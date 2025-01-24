@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail-Level Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #editor {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            white-space: pre-wrap;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .toolbar button {
+            margin-right: 5px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Detail-Level Editor</h1>
+<div class="toolbar">
+    <button onclick="applyDetail(1)" style="background: #f0f0f0;">L1</button>
+    <button onclick="applyDetail(2)" style="background: #dcdcdc;">L2</button>
+    <button onclick="applyDetail(3)" style="background: #bfbfbf;">L3</button>
+    <button onclick="applyDetail(4)" style="background: #a3a3a3;">L4</button>
+    <button onclick="applyDetail(5)" style="background: #878787;">L5</button>
+    <button onclick="applyDetail(6)" style="background: #6b6b6b; color: white;">L6</button>
+</div>
+<div id="editor" contenteditable="true"></div>
+<button onclick="exportMarkdown()">Export Markdown</button>
+
+<script>
+    function applyDetail(level) {
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            const span = document.createElement('span');
+            span.style.color = `hsl(0, 0%, ${100 - level * 10}%)`;
+            span.dataset.detail = `L${level}`;
+            span.textContent = range.toString();
+            range.deleteContents();
+            range.insertNode(span);
+        }
+    }
+
+    function exportMarkdown() {
+        const editor = document.getElementById('editor');
+        const spans = editor.querySelectorAll('span');
+        const output = [];
+        spans.forEach(span => {
+            output.push(`[${span.dataset.detail}] ${span.textContent}`);
+        });
+        const blob = new Blob([output.join('\n')], { type: 'text/markdown' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'output.md';
+        link.click();
+    }
+</script>
+
+</body>
+</html>

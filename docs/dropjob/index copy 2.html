@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Links</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        #drop-zone {
+            width: 80%;
+            max-width: 500px;
+            height: 150px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        #drop-zone.dragover {
+            border-color: #666;
+            color: #333;
+        }
+        #link-list {
+            width: 80%;
+            max-width: 500px;
+            list-style: none;
+            padding: 0;
+        }
+        #link-list li {
+            margin: 10px 0;
+        }
+        #link-list a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        #link-list a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="drop-zone">Drop your links here</div>
+    <ul id="link-list"></ul>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const linkList = document.getElementById('link-list');
+
+        // Add event listeners for drag-and-drop functionality
+        dropZone.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropZone.classList.remove('dragover');
+
+            const items = event.dataTransfer.items;
+
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].kind === 'string' && items[i].type === 'text/uri-list') {
+                    items[i].getAsString((url) => {
+                        addLinkToList(url);
+                    });
+                }
+            }
+        });
+
+        // Function to add a link to the list
+        function addLinkToList(url) {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = url;
+            link.textContent = url;
+            link.target = '_blank';
+            listItem.appendChild(link);
+            linkList.appendChild(listItem);
+        }
+    </script>
+</body>
+</html>

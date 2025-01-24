@@ -1,0 +1,48 @@
+
+body {
+    font-family: "Aleo", serif;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+table.dataTable tbody td.hidden {
+    display: none;
+}
+table.dataTable tbody td.placeholder {
+    background-color: white;
+}
+.group-heading {
+    font-family: "Poppins", serif;
+    font-weight: 200;
+    font-size: 20px;
+    background-color: #A69764;
+    color: white;
+    /* font-weight: bold; */
+    text-align: left;
+    padding: 5px;
+}
+ /* Hide the default checkbox appearance */
+ input[type="checkbox"] {
+    appearance: none; /* Removes native styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23A69764" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>');\n        }
+
+/* Checked state */
+input[type="checkbox"]:checked {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23A69764" stroke="%23A69764" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>');\n        }
+
+/* Indeterminate state (optional) */
+input[type="checkbox"]:indeterminate {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23D2C9AB" stroke="%23A69764" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>');\n        }
+
+r

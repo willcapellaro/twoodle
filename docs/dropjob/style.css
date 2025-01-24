@@ -1,0 +1,42 @@
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+#drop-zone {
+    width: 80%;
+    max-width: 500px;
+    height: 150px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+#drop-zone.dragover {
+    border-color: #666;
+    color: #333;
+}
+
+#link-list {
+    width: 80%;
+    max-width: 500px;
+}
+
+.card {
+    margin-bottom: 15px;
+}

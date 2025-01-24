@@ -1,0 +1,128 @@
+body {
+    font-family: "Aleo", serif;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+table.dataTable tbody td.hidden {
+    display: none;
+}
+table.dataTable tbody td.placeholder {
+    background-color: white;
+}
+
+table.dataTable tbody tr td:nth-child(4) {
+    /* background-color: red; */
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+table.dataTable tbody tr td:nth-child(4) span:nth-child(2) {
+    /* background-color: grey; */
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+.group-heading {
+    font-family: "Poppins", serif;
+    font-weight: 200;
+    font-size: 20px;
+    background-color: #A69764;
+    color: white;
+    /* font-weight: bold; */
+    text-align: left;
+    padding: 5px;
+}
+
+
+.vote-label {
+    /* display: flex; */
+    align-items: center; /* Vertical alignment */
+    /* background-color: red; */
+}
+
+/* General Checkbox Styling */
+input[type="checkbox"] {
+    appearance: none; /* Removes native styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    width: 31px; /* Matches your SVG dimensions */
+    height: 31px;
+    cursor: pointer;
+    position: relative;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    transform: rotate(0);
+    transition: transform 0.4s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Star Layers (Before and After Pseudo-elements) */
+input[type="checkbox"]::before,
+input[type="checkbox"]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* OFF State */
+input[type="checkbox"]::before {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none"><path d="M15.1545 2.61572L19.5807 10.6782L28.6163 12.3963L22.3162 19.0972L23.4744 28.2215L15.1545 24.3005L6.83471 28.2215L7.99288 19.0972L1.69277 12.3963L10.7284 10.6782L15.1545 2.61572Z" fill=\'%23FFFFFF\'/><path d="M15.1545 2.61572L19.5807 10.6782L28.6163 12.3963L22.3162 19.0972L23.4744 28.2215L15.1545 24.3005L6.83471 28.2215L7.99288 19.0972L1.69277 12.3963L10.7284 10.6782L15.1545 2.61572Z" fill=\'%23FFFFFF\' stroke=\'%23C8BABA\' stroke-width=\'1.57273\'/></svg>');
+    z-index: 1;
+    transform: rotate(0);
+}
+
+input[type="checkbox"]::after {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none"><path d="M15.1545 2.61572L19.5807 10.6782L28.6163 12.3963L22.3162 19.0972L23.4744 28.2215L15.1545 24.3005L6.83471 28.2215L7.99288 19.0972L1.69277 12.3963L10.7284 10.6782L15.1545 2.61572Z" fill=\'%23A69764\'/></svg>');
+    z-index: 0;
+    transform: translate(0, 0);
+}
+
+/* ON State */
+input[type="checkbox"]:checked::before {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none"><path d="M15.1545 2.61572L19.5807 10.6782L28.6163 12.3963L22.3162 19.0972L23.4744 28.2215L15.1545 24.3005L6.83471 28.2215L7.99288 19.0972L1.69277 12.3963L10.7284 10.6782L15.1545 2.61572Z" fill=\'%23A69764\' stroke=\'%23A69764\' stroke-width=\'1.57273\'/></svg>');
+    transform: rotate(144deg) translate(2px, -2px) /* Rotate the top star */
+}
+
+input[type="checkbox"]:checked::after {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none"><path d="M15.1545 2.61572L19.5807 10.6782L28.6163 12.3963L22.3162 19.0972L23.4744 28.2215L15.1545 24.3005L6.83471 28.2215L7.99288 19.0972L1.69277 12.3963L10.7284 10.6782L15.1545 2.61572Z" fill=\'%23FFFFFF\'/></svg>');
+}
+
+/* BACKUP State */
+input[type="checkbox"]:indeterminate::before {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none"><path d="M15.1545 2.61572L19.5807 10.6782L28.6163 12.3963L22.3162 19.0972L23.4744 28.2215L15.1545 24.3005L6.83471 28.2215L7.99288 19.0972L1.69277 12.3963L10.7284 10.6782L15.1545 2.61572Z" fill=\'%23FFFFFF\' stroke=\'%23A69764\' stroke-width=\'1.57273\'/></svg>');
+    transform: translate(-2px, -2px);
+}
+
+input[type="checkbox"]:indeterminate::after {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31" fill="none"><path d="M15.1545 2.61572L19.5807 10.6782L28.6163 12.3963L22.3162 19.0972L23.4744 28.2215L15.1545 24.3005L6.83471 28.2215L7.99288 19.0972L1.69277 12.3963L10.7284 10.6782L15.1545 2.61572Z" fill=\'%23A69764\'/></svg>');
+    transform: translate(2px, 2px);
+}
+
+h6 {
+    color: #C8BABA; //- Light Gray (used for top star stroke in the OFF state).
+	color: #FFFFFF; // White (used for top star fill in OFF and BACKUP states).
+    color: 	#A69764; //- Yellow (used for bottom star fill in all states).
+    color: 	#A69764; //- Beige (used for top star fill in the ON state).
+    color: 	#A69764; //- Dark Brown (used for top star stroke in the ON state).
+    color: 	#A69764; //- Beige (used for top star stroke in the BACKUP state).
+
+}
+h1     { color: #C8BABA; }
+h2     { color: #FFFFFF;}
+h3     { color: #A69764; }
+h4     { color: #A69764; }
+h5     { color: #A69764; }
+h6     { color: #A69764; }
+strong { color: }

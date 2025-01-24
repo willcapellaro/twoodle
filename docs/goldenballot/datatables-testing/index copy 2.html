@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Ballot</title>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <style>
+        table.dataTable tbody td.hidden {
+            display: none;
+        }
+        table.dataTable tbody td.placeholder {
+            background-color: #f9f9f9;
+        }
+        .group-heading {
+            background-color: #d4af37;
+            color: white;
+            font-weight: bold;
+            text-align: left;
+            padding: 5px;
+        }
+         /* Hide the default checkbox appearance */
+         input[type="checkbox"] {
+            appearance: none; /* Removes native styling */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23A69764" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>');\n        }
+
+        /* Checked state */
+        input[type="checkbox"]:checked {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23A69764" stroke="%23A69764" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>');\n        }
+
+        /* Indeterminate state (optional) */
+        input[type="checkbox"]:indeterminate {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23D2C9AB" stroke="%23A69764" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>');\n        }
+  
+    </style>
+</head>
+<body>
+    <table id="ballotTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Award</th>
+                <th>Name(s)</th>
+                <th>Film</th>
+                <th>Your Vote</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <!-- jQuery and DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/rowgroup/1.3.1/js/dataTables.rowGroup.min.js"></script>
+
+    <script>
+   $(document).ready(function () {
+    // Load JSON data
+    $.getJSON('Golden_Ballot_Data.json')
+        .done(function (data) {
+            const tableData = data.map(item => {
+                const names = [item.name, item.name2, item.name3, item.name4, item.name5]
+                    .filter(Boolean)
+                    .join(', ');
+
+                return {
+                    award: item.category || '',
+                    names: names,
+                    film: item.film || '',
+                    vote: '<input type="checkbox" class="vote" data-vote="0" />' // Default to empty
+                };
+            });
+
+            // Initialize DataTable
+            const table = $('#ballotTable').DataTable({
+                data: tableData,
+                columns: [
+                    { data: 'award', title: 'Award' },
+                    { data: 'names', title: 'Name(s)' },
+                    { data: 'film', title: 'Film' },
+                    { 
+                        data: 'vote', 
+                        title: 'Your Vote', 
+                        orderable: true,
+                        orderDataType: 'vote-sort' 
+                    }
+                ],
+                order: [[0, 'asc']], // Default sorting by Award
+                pageLength: 100,
+                rowGroup: {
+                    dataSrc: 'award',
+                    startRender: function (rows, group) {
+                        return $('<tr/>')
+                            .append(`<td colspan="4" class="group-heading">${group}</td>`)
+                            .get(0);
+                    }
+                }
+            });
+        })
+        .fail(function (jqxhr, textStatus, error) {
+            console.error('Failed to load JSON:', textStatus, error);
+        });
+
+    // Handle checkbox interaction logic
+    $(document).on('click', 'input.vote', function () {
+        const stateMapping = {
+            0: { next: 1, label: 'Your Pick', checked: true, indeterminate: false },
+            1: { next: 2, label: 'Backup', checked: false, indeterminate: true },
+            2: { next: 0, label: '', checked: false, indeterminate: false }
+        };
+
+        const currentState = $(this).data('vote') || 0;
+        const nextState = stateMapping[currentState];
+
+        $(this)
+            .data('vote', nextState.next)
+            .prop('checked', nextState.checked)
+            .prop('indeterminate', nextState.indeterminate);
+
+        const label = $(this).next('.vote-label');
+        if (label.length === 0) {
+            $(this).after(`<span class="vote-label">${nextState.label}</span>`);
+        } else {
+            label.text(nextState.label);
+        }
+    });
+
+    // Custom sorting for Your Vote column
+    $.fn.dataTable.ext.order['vote-sort'] = function (settings, col) {
+        return this.api()
+            .column(col, { order: 'index' })
+            .nodes()
+            .map(td => {
+                const voteState = $(td).find('input.vote').data('vote');
+                // Sort by Winner (1), Backup (2), Empty (0)
+                return voteState === 1 ? 0 : voteState === 2 ? 1 : 2;
+            });
+    };
+});
+    </script>
+</body>
+</html>

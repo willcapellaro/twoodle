@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeightWatchers Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        .detail {
+            display: none;
+        }
+        .slider-container {
+            margin-bottom: 20px;
+        }
+        .slider-label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>WeightWatchers: Elevating Member Outcomes Through Experience Design</h1>
+    <h2>Consumer App Design & Strategy</h2>
+</header>
+
+<div class="slider-container">
+    <label class="slider-label" for="detailSlider">Story Length: </label>
+    <input type="range" id="detailSlider" min="0" max="1" step="1" value="0" onchange="toggleDetails()">
+</div>
+
+<section>
+    <h3>The Challenge</h3>
+    <p>
+        WeightWatchers faced a critical issue: members were abandoning the program due to outdated digital offerings. 
+        The rise of competitors like Fitbit and MyFitnessPal underscored the need for a modernized digital experience.
+        <span class="detail">Millions of members still engaged with in-person meetings and weight management programs, but a lack of integration with modern technology left them vulnerable to churn.</span>
+    </p>
+</section>
+
+<section>
+    <h3>My Role</h3>
+    <p>
+        As Lead Experience Designer, I worked alongside designers, product managers, engineers, and health experts from both Slalom and WeightWatchers to envision and execute a comprehensive cross-platform solution.
+        <span class="detail">This included defining user journeys, creating design systems, and ensuring cohesive execution across all teams.</span>
+    </p>
+</section>
+
+<section>
+    <h3>Development</h3>
+    <p>
+        <strong>Rebuilding the Digital Experience:</strong> 
+        We prioritized a user-centered approach to integrate fitness tracking, food logging, and community engagement seamlessly.
+        <span class="detail">The first milestone was fast-tracking fitness tracker integration, enabling members to connect devices like Fitbit and Withings to their WeightWatchers account.</span>
+    </p>
+    <p>
+        <strong>Enhancing Food Tracking:</strong> 
+        Food tracking was redesigned for ease and engagement. We introduced new features such as favorites, recipes, and a health dashboard to give members actionable insights.
+        <span class="detail">Design principles like clarity and positive reinforcement ensured high usability, mitigating the risk of user drop-off due to the high-touch nature of the app.</span>
+    </p>
+    <p>
+        <strong>Empathy-Driven Design:</strong> 
+        I immersed myself in the WeightWatchers ecosystem, joining as a member and testing both existing and competitive solutions. This hands-on approach informed design decisions with authentic user perspectives.
+        <span class="detail">Participating in user research and testing helped validate our designs, ensuring they met real-world needs.</span>
+    </p>
+</section>
+
+<section>
+    <h3>Outcomes</h3>
+    <p>
+        The Beyond the Scale platform launched successfully ahead of the crucial holiday season. It transformed WeightWatchers' digital offerings into a competitive asset.
+        <span class="detail">Key outcomes included increased membership engagement, a revitalized digital ecosystem, and a stronger market position. Additionally, the company attracted notable investments, including Oprah's high-profile involvement.</span>
+    </p>
+</section>
+
+<script>
+    function toggleDetails() {
+        const slider = document.getElementById('detailSlider');
+        const details = document.querySelectorAll('.detail');
+
+        details.forEach(detail => {
+            detail.style.display = slider.value === '1' ? 'inline' : 'none';
+        });
+    }
+</script>
+
+</body>
+</html>

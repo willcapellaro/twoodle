@@ -1,0 +1,16 @@
+[
+    {
+      "category": "Category 1",
+      "candidates": [
+        { "name": "Candidate 1", "party": "Party A" },
+        { "name": "Candidate 2", "party": "Party B" }
+      ]
+    },
+    {
+      "category": "Category 2",
+      "candidates": [
+        { "name": "Candidate 3", "party": "Party C" },
+        { "name": "Candidate 4", "party": "Party D" }
+      ]
+    }
+  ]

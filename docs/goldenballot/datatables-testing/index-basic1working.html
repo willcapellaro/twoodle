@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Ballot</title>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <style>
+        table.dataTable tbody td.hidden {
+            display: none;
+        }
+        table.dataTable tbody td.placeholder {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <table id="ballotTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Award</th>
+                <th>Name(s)</th>
+                <th>Film</th>
+                <th>Vote</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <!-- jQuery and DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Load JSON data
+            $.getJSON('Golden_Ballot_Data.json')
+                .done(function (data) {
+                    console.log('Data loaded successfully:', data);
+                    const tableData = data.map(item => {
+                        const names = [item.name, item.name2, item.name3, item.name4, item.name5]
+                            .filter(Boolean)
+                            .join(', ');
+    
+                        return [
+                            `<span class="award">${item.category || ''}</span>`,
+                            `<span class="name">${names}</span>`,
+                            `<span class="film">${item.film || ''}</span>`,
+                            `<input type="checkbox" class="vote" />`
+                        ];
+                    });
+    
+                    // Initialize DataTable
+                    const table = $('#ballotTable').DataTable({
+                        data: tableData,
+                        columns: [
+                            { title: 'Award' },
+                            { title: 'Name(s)' },
+                            { title: 'Film' },
+                            { title: 'Vote' }
+                        ]
+                    });
+    
+                    // Add custom rowCallback logic
+                    $('#ballotTable').on('draw.dt', function () {
+                        const rows = table.rows({ order: 'current' }).data();
+                        rows.each(function (row, idx) {
+                            if (idx > 0) {
+                                const prevRow = rows[idx - 1];
+                                if (prevRow[0] === row[0]) {
+                                    $(`.award:eq(${idx})`).addClass('hidden placeholder');
+                                }
+                                if (prevRow[1] === row[1]) {
+                                    $(`.name:eq(${idx})`).addClass('hidden placeholder');
+                                }
+                                if (prevRow[2] === row[2]) {
+                                    $(`.film:eq(${idx})`).addClass('hidden placeholder');
+                                }
+                            }
+                        });
+                    });
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    console.error('Failed to load JSON:', textStatus, error);
+                });
+        });
+    </script>
+</body>
+</html>

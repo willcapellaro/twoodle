@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeightWatchers Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        .detail {
+            display: none;
+        }
+        .slider-container {
+            margin-bottom: 20px;
+        }
+        .slider-label {
+            font-weight: bold;
+        }
+        .image-container {
+            margin: 20px 0;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .image-caption {
+            font-size: 0.9em;
+            color: gray;
+            text-align: center;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>WeightWatchers: Elevating Member Outcomes Through Experience Design</h1>
+    <h2>Consumer App Design & Strategy</h2>
+</header>
+
+<div class="slider-container">
+    <label class="slider-label" for="detailSlider">Story Length: </label>
+    <input type="range" id="detailSlider" min="0" max="1" step="1" value="0" onchange="toggleDetails()">
+</div>
+
+<div class="image-container">
+    <img src="placeit-5.jpg" alt="Woman in a weight room looking at an iPhone with a WW screen mockup">
+</div>
+
+<section>
+    <h3>The Challenge</h3>
+    <p>
+        WeightWatchers faced a critical issue: members were abandoning the program due to outdated digital offerings. 
+        The rise of competitors like Fitbit and MyFitnessPal underscored the need for a modernized digital experience.
+        <span class="detail">Millions of members still engaged with in-person meetings and weight management programs, but a lack of integration with modern technology left them vulnerable to churn.</span>
+    </p>
+</section>
+
+<section>
+    <h3>My Role</h3>
+    <p>
+        As Lead Experience Designer, I worked alongside designers, product managers, engineers, and health experts from both Slalom and WeightWatchers to envision and execute a comprehensive cross-platform solution.
+        <span class="detail">This included defining user journeys, creating design systems, and ensuring cohesive execution across all teams. I also contributed detailed screen architecture diagrams to ensure clarity and alignment across the project.</span>
+    </p>
+</section>
+
+<section>
+    <h3>Development</h3>
+    <div class="image-container">
+        <img src="activity-sync.gif" alt="Wearable activation prototype">
+        <div class="image-caption">Phase 0: Wearable activation prototype</div>
+    </div>
+    <p>
+        <strong>Phase 0: Fitness Integration:</strong> 
+        We fast-tracked an app enabling fitness tracker integration, addressing the most urgent need. Members could connect devices like Fitbit and Withings to their WeightWatchers account, eliminating the need to switch between apps.
+        <span class="detail">The backend portal supported syncing and offered a dashboard showing fitness activity, rewarding users with tangible benefits such as dietary allowances based on activity.</span>
+    </p>
+    <div class="image-container">
+        <img src="iPhone-6-Isometric-view-Mockup-copy.png" alt="Three iPhone montage of food, activity, and weight tracking">
+        <div class="image-caption">Introduction to core project phases: food, activity, and weight tracking</div>
+    </div>
+    <p>
+        <strong>Phase 1: Fitness Tracking Features:</strong> 
+        Detailed designs and prototypes ensured seamless usability for members syncing their fitness devices.
+    </p>
+    <div class="image-container">
+        <img src="activity.png" alt="Fitness tracking screen architecture">
+        <div class="image-caption">Phase 1: Fitness Tracking Features</div>
+    </div>
+    <p>
+        <strong>Phase 2: Dietary Tracking Redesign:</strong> 
+        Food tracking was redesigned for clarity and engagement, introducing features like favorites, recipes, and a health dashboard.
+    </p>
+    <div class="image-container">
+        <img src="food.png" alt="Dietary tracking redesign">
+        <div class="image-caption">Phase 2: Dietary Tracking Redesign</div>
+    </div>
+    <p>
+        <strong>Phase 3: Social & Coaching Support:</strong> 
+        New features, such as integrated coaching and social interaction tools, fostered stronger community ties among members.
+    </p>
+    <div class="image-container">
+        <img src="chat-coaching.png" alt="Social and coaching support features">
+        <div class="image-caption">Phase 3: Social & Coaching Support Features</div>
+    </div>
+</section>
+
+<section>
+    <h3>Research & Empathy</h3>
+    <div class="image-container">
+        <img src="ww-testing-hq.jpg" alt="In-person research session in WeightWatchers user lab">
+        <div class="image-caption">User Research: In-person session at WeightWatchers lab</div>
+    </div>
+    <p>
+        I immersed myself in the WeightWatchers ecosystem, joining as a member and testing both existing and competitive solutions. This hands-on approach informed design decisions with authentic user perspectives.
+        <span class="detail">In addition to joining as a member, I conducted in-person and digital research sessions, gathering feedback to refine designs and prioritize features effectively.</span>
+    </p>
+</section>
+
+<section>
+    <h3>Outcomes</h3>
+    <p>
+        The Beyond the Scale platform launched successfully ahead of the crucial holiday season. It transformed WeightWatchers' digital offerings into a competitive asset.
+        <span class="detail">Key outcomes included increased membership engagement, a revitalized digital ecosystem, and a stronger market position. Additionally, the company attracted notable investments, including Oprah's high-profile involvement.</span>
+    </p>
+</section>
+
+<script>
+    function toggleDetails() {
+        const slider = document.getElementById('detailSlider');
+        const details = document.querySelectorAll('.detail');
+
+        details.forEach(detail => {
+            detail.style.display = slider.value === '1' ? 'inline' : 'none';
+        });
+    }
+</script>
+
+</body>
+</html>
