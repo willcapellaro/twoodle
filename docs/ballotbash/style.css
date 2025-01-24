@@ -45,6 +45,21 @@ header {
     margin: 0 0 20px 0;
 }
 
+#howToPlayBtn {
+    color: #007664;
+    border-color: #007664;
+    height: 36px;
+    padding: 0 10px;
+}
+
+#howToPlayBtn:hover {
+    color: #007664;
+    background-color: #F3DBD2;
+    background-color: ;
+    height: 36px;
+    padding: 0 10px;
+}
+
 .centerInDiv {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
