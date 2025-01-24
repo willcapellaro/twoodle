@@ -92,7 +92,7 @@
                     .nodes()
                     .map(td => {
                         const voteState = $(td).find('input.vote').data('vote');
-                        // Sort by Winner (1), Backup (2), Empty (0)
+                        // Sort by Winner (1), Safety (2), Empty (0)
                         return voteState === 1 ? 0 : voteState === 2 ? 1 : 2;
                     });
             };
