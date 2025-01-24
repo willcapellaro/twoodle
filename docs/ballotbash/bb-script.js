@@ -65,7 +65,7 @@
         $(document).on('click', 'input.vote', function () {
                 const stateMapping = {
                     0: { next: 1, label: 'Your Pick', checked: true, indeterminate: false },
-                    1: { next: 2, label: 'Backup', checked: false, indeterminate: true },
+                    1: { next: 2, label: 'Safety', checked: false, indeterminate: true },
                     2: { next: 0, label: '', checked: false, indeterminate: false }
                 };
 
