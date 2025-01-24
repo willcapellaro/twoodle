@@ -5,6 +5,8 @@ body {
     font-style: normal;
     font-size: 16px;
     font-weight: 400;
+    margin: 0;
+    padding: 0;
 }
 
 table.dataTable tbody td.hidden {
@@ -24,6 +26,66 @@ table.dataTable tbody tr td:nth-child(4) span:nth-child(2) {
     /* background-color: grey; */
     display: grid;
     grid-template-columns: auto 1fr;
+}
+
+header {
+    font-family: "Josefin Slab";
+    font-weight: 100;
+    display: grid;
+    color: #1c0000;
+    grid-template-columns: auto 1fr auto; /* Distribute space better */
+    align-items: center; /* Align all items vertically to the center */
+    padding: 0 10px; /* Add some padding to the header for spacing */
+    background-color: #FFF8E6;
+    padding: 10px 20px;
+    margin: 0 0 20px 0;
+}
+
+.centerInDiv {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+}
+
+.headerul {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    align-items: center; /* Center align text vertically */
+    gap: 20px; /* Add some space between the items */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+}
+
+.headerul button {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px 8px; /* Adjust padding for less horizontal space */
+    background: none;
+    font: inherit;
+    cursor: pointer;
+    display: flex; /* Ensure contents align properly */
+    align-items: center; /* Vertically center the button text */
+    justify-content: center; /* Center text horizontally */
+}
+
+.headerul li {
+    display: flex; /* Use flexbox for consistent alignment */
+    align-items: center; /* Vertically center text */
+}
+
+.headerul a {
+    text-decoration: none;
+    color: inherit;
+    padding: 5px; /* Optional: Add slight padding to clickable text */
+}
+
+#tableContainer {
+    margin: 0 20px;
+}
+
+.dataTables_length {
+    margin-bottom: 20px;
 }
 
 .group-heading {
@@ -119,7 +181,7 @@ h6 {
     color: 	#A69764; //- Beige (used for top star stroke in the BACKUP state).
 
 }
-h1     { color: #C8BABA; }
+h1     { font-weight: 100; }
 h2     { color: #FFFFFF;}
 h3     { color: #A69764; }
 h4     { color: #A69764; }
