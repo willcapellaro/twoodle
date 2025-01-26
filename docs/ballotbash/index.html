@@ -12,7 +12,7 @@
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="🎥 Ballot Bash - voting online for your Oscars watch party!" />
-    <meta property="og:description" content="🌟 Thank you for testing Ballot Bash! 🎉 The 97th Academy Awards are awarded on March 2! 🏆 Cast your votes now and see if you can predict the winners like a pro. 🍿" />
+    <meta property="og:description" content="🌟 Thank you for testing Ballot Bash! 🎉 The 97th Academy Awards are awarded on March 2! 🏆 Use this free, private web form to track and score your Oscars predictions. 🍿" />
     <meta property="og:image" content="https://www.twoodle.xyz/ballotbash/share-image.jpg" />
     <meta property="og:url" content="https://www.twoodle.xyz/ballotbash" />
     <meta property="og:type" content="website" />
@@ -20,7 +20,7 @@
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="🎥 Ballot Bash - voting online for your Oscars watch party!" />
-    <meta name="twitter:description" content="🌟 Thank you for testing Ballot Bash! 🎉 The 97th Academy Awards are awarded on March 2! 🏆 Cast your votes now and see if you can predict the winners like a pro. 🍿" />
+    <meta name="twitter:description" content="🌟 Thank you for testing Ballot Bash! 🎉 The 97th Academy Awards are awarded on March 2! 🏆 Use this free, private web form to track and score your Oscars predictions. 🍿" />
     <meta name="twitter:image" content="https://www.twoodle.xyz/ballotbash/share-image.jpg" />
 
     <!-- Fallback for Slack -->
@@ -213,13 +213,13 @@
                             { data: 'film', title: 'Film' },
                             { 
                                 data: 'vote', 
-                                title: 'Your Vote', 
+                                title: 'Vote', 
                                 orderable: true,
                                 orderDataType: 'vote-sort' 
                             }
                         ],
                         order: [[0, 'asc']],
-                        pageLength: 100,
+                        pageLength: 200,
                         rowGroup: {
                             dataSrc: 'award',
                             startRender: function (rows, group) {

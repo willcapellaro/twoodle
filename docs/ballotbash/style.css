@@ -116,6 +116,12 @@ header {
     /* font-weight: bold; */
     text-align: left;
     padding: 5px;
+    position: fixed;
+    top: 0;
+    width: 100%;  position: sticky; /* Make the element sticky */
+  top: 0; /* Position the sticky element at the top of the container */
+  z-index: 10; /* Ensure it stays above other content */
+  padding: 10px;
 }
 
 
@@ -207,3 +213,70 @@ h4     { color: #A69764; }
 h5     { color: #A69764; }
 h6     { color: #A69764; }
 strong { color: }
+
+
+#ballotTable_length {
+    display: none;
+ }
+
+#ballotTable_paginate {
+    display: none;
+}
+
+#ballotTable_info {
+    display: none;
+}
+
+#ballotTable_filter {
+    /* background-color: red; */
+margin-bottom: 2em;
+ }
+
+
+/* Mobile: Small screens */
+@media (max-width: 767px) {
+
+ body {
+    font-size: .75em;
+ }
+
+ #tableContainer {
+    margin: 0 0;
+ }
+
+ header {
+    font-size: 1em;
+ }
+
+.vote-label {
+    display: none; !important;
+    /* background-color: red; */
+    font-size: 0.1px;
+}
+
+ h1 {
+    font-size: 1em;
+ }
+
+
+.group-heading {
+    font-size: 1.2em;
+}
+
+ .headerul button {
+    font-size: .5em;
+    /* display: none; */
+ }
+
+ #ballotTable_filter {
+    /* background-color: red; */
+    width: auto;
+    margin-bottom: 2em;
+    font-size: 1.2em;
+ }
+
+ #ballotTable_filter input {
+    width: 60%;
+ }
+
+}
