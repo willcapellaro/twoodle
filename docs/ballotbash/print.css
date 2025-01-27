@@ -1,0 +1,30 @@
+body {
+    font-size: 50%;
+}
+
+
+.group-heading tr {
+    height: 1em;
+}
+
+.group-heading tr td {
+    height: 1em;
+}
+
+tr td {
+    height: 2em;
+}
+
+tbody tr {
+    height: 1em; !important
+}
+
+table.dataTable.display>tbody {
+    height: 5.35em;
+    background-color: red;
+}
+
+tr {
+    padding: 0;
+    margin: 0;
+}
