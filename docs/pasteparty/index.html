@@ -3,193 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paste Party!</title>
+  <title>Paste Party 2!</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f9f9f9;
-      text-align: center;
-      display: grid;
-      grid-template-rows: auto 1fr;
-    }
-    h1 {
-      font-size: 2rem;
-      color: #ff6f61;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
-    button {
-      display: block;
-      width: 30%;
-      height: 100%;
-    }
-    h1 span:first-child {
-      transform: scaleX(-1);
-      display: inline-block;
-    }
-    .toggle-container {
-      margin: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .toggle-container span {
-      font-size: 1.2rem;
-    }
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-      margin: 0 10px;
-    }
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: 0.4s;
-      border-radius: 24px;
-    }
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: 0.4s;
-      border-radius: 50%;
-    }
-    input:checked + .slider {
-      background-color: #ff6f61;
-    }
-    input:checked + .slider:before {
-      transform: translateX(26px);
-    }
-    .fields-container {
-      margin-top: 30px;
-      /* max-width: 700px; */
-      margin-left: auto;
-      margin-right: auto;
-      text-align: left;
-      display: grid;
-      grid-template-rows: 6vh 12vh 6vh 6vh auto;
-    }
-    .field-group {
-      margin-bottom: 20px;
-      display: grid;
-      /* border: black solid 2px; */
-    }
-    .field-group:nth-child(1) {
-      grid-column: -1;
-      /* display: none; */
-    }
-    .locked-domain {
-      display: inline-block;
-      background: #f1f1f1;
-      color: #777;
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-right: none;
-      border-radius: 5px 0 0 5px;
-    }
-    input[type="text"] {
-      flex: 1;
-      padding: 10px;
-      font-size: 1rem;
-      margin: 0;
-      border: 1px solid #ccc;
-      border-radius: 0 5px 5px 0;
-    }
-    input[type="text"]:disabled {
-      background-color: #f1f1f1;
-      color: #777;
-    }
-    .copy-btn {
-      margin-left: 10px;
-      padding: 5px 10px;
-      font-size: 0.9rem;
-      background-color: #ff6f61;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      height: 100%;
-    }
-    .copy-btn:hover {
-      background-color: #ff483a;
-    }
-    .highlight {
-      background-color: #ffff00;
-      animation: fadeOut 2s forwards;
-    }
-    @keyframes fadeOut {
-      100% {
-        background-color: transparent;
-      }
-    }
-    select {
-  margin: 0px;
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-left: 0;
-  border-radius: 0 5px 5px 0;
-/*  margin-left: 10px;*/
-}
-#portfolio {
-    border-radius: 0;
-}
-#portfolioDropdown {
-  padding: .6em;
-  margin: 0;
-}
+  
+  <link rel="stylesheet" href="pastestyle.css">  
 
-textarea {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  resize: vertical;
-  margin-top: 10px;
-/*  width: 100% !important;*/
-}
-
-#textAreaDiv {
-  width: auto;
-  padding: 10px 10px 20x 0;
-  margin-right: 22px;
-}
-
-.copy-btn i {
-  font-size: 4vh;
-}
-
-</style>
 </head>
 <body>
   <div>
   <h1>
-    <span>🎉</span> Paste Party! <span>🎉</span>
+    <span>🎉</span> Paste Party 2! <span>🎉</span>
   </h1>
 
   <div class="toggle-container">
@@ -201,11 +26,12 @@ textarea {
     <span>Party</span>
   </div>
   </div>
-
+  
  <div>
   <div class="fields-container">
     <div class="field-group">
-      <label for="linkedin">LinkedIn</label>
+      <!-- <label for="linkedin">LinkedIn</label> -->
+      <div></div>
       <div style="display: flex; align-items: center;">
         <span class="locked-domain">https://linkedin.com/in/</span>
         <input type="text" id="linkedin" placeholder="your-profile">
@@ -213,14 +39,14 @@ textarea {
       </div>
     </div>
     <div class="field-group">
-      <label for="portfolio">Portfolio</label>
+      <!-- <label for="portfolio">Portfolio</label> -->
       <div style="display: flex; align-items: center;">
         <span class="locked-domain">https://</span>
         <input type="text" id="portfolio" placeholder="portfolio.url.com" disabled>
         <select id="portfolioDropdown">
           <option value="">base</option>
         </select>
-                <button class="copy-btn" onclick="updatePortfolioDropdown()">Load Projects</button>
+                <button class="copy-btn" id="loadButton" onclick="updatePortfolioDropdown()">Load Projects</button>
         <button class="copy-btn" onclick="copyPortfolio()"><i class="fa-solid fa-briefcase"></i>  </button>
       </div>
       <div id="textAreaDiv">
@@ -228,7 +54,7 @@ textarea {
     </div>
     </div>
     <div class="field-group">
-      <label for="github">GitHub</label>
+      <!-- <label for="github">GitHub</label> -->
       <div style="display: flex; align-items: center;">
         <span class="locked-domain">https://github.com/</span>
         <input type="text" id="github" placeholder="your-username">
@@ -236,17 +62,17 @@ textarea {
       </div>
     </div>
     <div class="field-group">
-      <label for="other">Other</label>
-      <div style="display: flex; align-items: center;"><input type="text" id="other" placeholder="Any other link">
+      <!-- <div><label for="other">Other</label></div> -->
+      <div><input type="text" id="other" placeholder="Any other link"></div>
       <button class="copy-btn" onclick="copyToClipboard('other')"><i class="fa-solid fa-link"></i>  </button>
     </div>
     <div style="margin-top: 20px; text-align: center;">
-  <h3>Copies Made: <span id="copyCount">0</span></h3>
+  <!-- <h3>Copies Made: <span id="copyCount">0</span></h3> -->
 </div>
     </div>
   </div>
 </div>
-Main <a href="/backup.html"> back to backup </a>
+<!-- Main <a href="/backup.html"> back to backup </a> -->
   <script>
 
 const modeToggle = document.getElementById("modeToggle");
@@ -343,14 +169,25 @@ function updatePortfolioDropdown() {
 }
 
 // Copy the full portfolio URL
+// Copy the full portfolio URL
 function copyPortfolio() {
+  console.log("copyPortfolio function called");
+
   const baseInput = document.getElementById("portfolio");
   const dropdown = document.getElementById("portfolioDropdown");
   const subLink = dropdown.value;
 
+  console.log("baseInput:", baseInput);
+  console.log("dropdown:", dropdown);
+  console.log("subLink:", subLink);
+
   if (baseInput && baseInput.value) {
     const fullUrl = `https://${baseInput.value}${subLink ? '/' + subLink : ''}`;
+    console.log("fullUrl:", fullUrl);
+
     navigator.clipboard.writeText(fullUrl).then(() => {
+      console.log("URL copied to clipboard");
+
       dropdown.classList.add("highlight");
       setTimeout(() => dropdown.classList.remove("highlight"), 2000);
 
@@ -363,6 +200,8 @@ function copyPortfolio() {
     }).catch(err => {
       console.error("Failed to copy portfolio URL: ", err);
     });
+  } else {
+    console.log("baseInput is missing or empty");
   }
 }
 
