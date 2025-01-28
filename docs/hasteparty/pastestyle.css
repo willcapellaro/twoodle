@@ -1,0 +1,251 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    color: #ff6f61;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  button {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  
+  h1 span:first-child {
+    transform: scaleX(-1);
+    display: inline-block;
+  }
+  
+  .toggle-container {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .toggle-container span {
+    font-size: 1.2rem;
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    margin: 0 10px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 24px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #ff6f61;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+  
+  .fields-container {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    display: grid;
+    grid-template-rows: 6vh 12vh 6vh 6vh auto;
+  }
+  
+  .field-group {
+    margin-bottom: 20px;
+    display: grid;
+  }
+  
+  .field-group:nth-child(1) {
+    grid-column: -1;
+  }
+  
+  .locked-domain {
+    display: inline-block;
+    background: #f1f1f1;
+    color: #777;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+  }
+  
+  input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    font-size: 1rem;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-radius: 0 5px 5px 0;
+  }
+  
+  input[type="text"]:disabled {
+    background-color: #f1f1f1;
+    color: #777;
+  }
+  
+  .copy-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 100%;
+  }
+  
+  .copy-btn:hover {
+    background-color: #ff483a;
+  }
+  
+  .highlight {
+    background-color: #ffff00;
+    animation: fadeOut 2s forwards;
+  }
+  
+  @keyframes fadeOut {
+    100% {
+      background-color: transparent;
+    }
+  }
+  
+  select {
+    margin: 0px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-left: 0;
+    border-radius: 0 5px 5px 0;
+  }
+  
+  #portfolio {
+    border-radius: 0;
+  }
+  
+  #portfolioDropdown {
+    padding: .6em;
+    margin: 0;
+  }
+  
+.a {}
+
+
+  textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+    margin-top: 10px;
+  }
+  
+  #textAreaDiv {
+    width: auto;
+    padding: 10px 10px 20px 0;
+    margin-right: 22px;
+  }
+  
+  .copy-btn i {
+    font-size: 4vh;
+  }
+
+  label {
+    display: none;
+  }
+  
+
+  .fields-container {
+    grid-template-rows: auto auto auto auto auto;
+}
+
+  /* Media queries for mobile responsiveness */
+  @media (max-width: 768px) {
+
+    .field-group {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-template-rows: auto auto;
+      /* flex-direction: column; */
+      /* align-items: stretch; */
+    }
+  
+    .locked-domain, input[type="text"], select, .copy-btn {
+      width: 100%;
+      margin: 5px 0;
+    }
+  
+    .copy-btn {
+      margin-left: 0;
+    }
+  
+    button {
+      width: 100%;
+    }
+
+    .locked-domain {
+        display: none;
+    }
+
+    input {
+        display: none;
+    }
+
+    #portfolioTextarea {
+        display: none;
+    }
+
+    #loadButton {
+        display: none;
+    }
+
+    #portfolioDropdown {
+        display: block;
+    }
+  }
