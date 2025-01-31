@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Outline Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @media print {
+            body {
+                font-size: 12pt;
+                line-height: 1.5;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl" x-data="speechForm()">
+        <h1 class="text-2xl font-bold mb-4">Speech Outline Form</h1>
+        <form @submit.prevent="saveToLocalStorage">
+            <label class="block mb-2 font-semibold">Main Point / Intention</label>
+            <textarea x-model="form.mainPoint" class="w-full p-2 border rounded mb-4" placeholder="Write your main point..." rows="3"></textarea>
+
+            <label class="block mb-2 font-semibold">Proposition</label>
+            <textarea x-model="form.proposition" class="w-full p-2 border rounded mb-4" placeholder="Describe your proposition..." rows="3"></textarea>
+
+            <label class="block mb-2 font-semibold">Development Points</label>
+            <template x-for="(point, index) in form.development" :key="index">
+                <div class="mb-4">
+                    <textarea x-model="form.development[index]" class="w-full p-2 border rounded" placeholder="Development point..." rows="2"></textarea>
+                    <button type="button" @click="removePoint(index)" class="text-red-500 mt-1 text-sm no-print">Remove Point</button>
+                </div>
+            </template>
+            <button type="button" @click="addPoint" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 no-print">Add Development Point</button>
+
+            <label class="block mb-2 font-semibold">Arrival / Ask</label>
+            <textarea x-model="form.arrival" class="w-full p-2 border rounded mb-4" placeholder="Summarize your arrival or ask..." rows="3"></textarea>
+
+            <label class="block mb-2 font-semibold">Document Management</label>
+            <select x-model="selectedDocument" class="w-full p-2 border rounded mb-4">
+                <option disabled>Select a document...</option>
+                <template x-for="(doc, index) in documents" :key="index">
+                    <option :value="doc">Document {{ index + 1 }}</option>
+                </template>
+            </select>
+
+            <p class="mb-4">Selected Document: <span class="font-bold" x-text="selectedDocument"></span></p>
+
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded no-print">Save to Local Storage</button>
+            <button type="button" @click="printPage" class="bg-gray-500 text-white px-4 py-2 rounded no-print">Print</button>
+        </form>
+    </div>
+
+    <script>
+        function speechForm() {
+            return {
+                form: {
+                    mainPoint: '',
+                    proposition: '',
+                    development: [''],
+                    arrival: ''
+                },
+                documents: Array.from({ length: 10 }, (_, i) => `Example Document ${i + 1}`),
+                selectedDocument: '',
+                addPoint() {
+                    this.form.development.push('');
+                },
+                removePoint(index) {
+                    this.form.development.splice(index, 1);
+                },
+                saveToLocalStorage() {
+                    localStorage.setItem('speechForm', JSON.stringify(this.form));
+                    alert('Form saved to local storage!');
+                },
+                printPage() {
+                    window.print();
+                }
+            };
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes odometer {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10%);
+  }
+}
+
+.odometer-digit {
+  @apply inline-block transition-transform duration-300;
+  font-feature-settings: "tnum" 1;
+}
+
+.font-compressed {
+  font-stretch: 75%;
+  font-variation-settings: 'wdth' 75;
+}
+
+.font-normal {
+  font-stretch: 100%;
+  font-variation-settings: 'wdth' 100;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+  font-display: swap;
+}

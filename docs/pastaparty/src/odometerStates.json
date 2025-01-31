@@ -1,0 +1,40 @@
+{
+  "odometer_states": [
+    {
+      "id": "copies",
+      "display": "{copies:04d}",
+      "units": "Copies",
+      "calculation": "copies"
+    },
+    {
+      "id": "energy_saved",
+      "display": "{energy:.6f}",
+      "units": "kWh",
+      "calculation": "copies * 0.0005 / 1000"
+    },
+    {
+      "id": "toast_offset",
+      "display": "{toast_percent:.1f}",
+      "units": "% Toasts",
+      "calculation": "(copies * 0.0005) / 0.027 * 100"
+    },
+    {
+      "id": "phone_charges",
+      "display": "{phone_charges:.2f}",
+      "units": "Phone Charges",
+      "calculation": "(copies * 0.0005) / 0.012"
+    },
+    {
+      "id": "led_hours",
+      "display": "{led_hours:.1f}",
+      "units": "LED Hours",
+      "calculation": "(copies * 0.0005) / 0.01"
+    }
+  ],
+  "logic": {
+    "energy_per_copy": 0.0005,
+    "toast_energy": 0.027,
+    "phone_charge_energy": 0.012,
+    "led_energy_per_hour": 0.01
+  }
+}
