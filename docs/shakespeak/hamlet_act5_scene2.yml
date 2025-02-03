@@ -1,0 +1,133 @@
+act: 5
+lines:
+- alternate:
+  - That’s enough of that. Now let’s talk about something else.
+  - So that's settled. Now, onto the next thing.
+  original: 'So much for this, sir: now shall you see the other;'
+  speaker: Hamlet
+- alternate:
+  - You remember all the details, right?
+  - You recall everything that happened?
+  original: You do remember all the circumstance?
+  speaker: Hamlet
+- alternate:
+  - Of course I remember!
+  - Yes, my lord, I do.
+  original: Remember it, my lord!
+  speaker: Horatio
+- alternate:
+  - Sir, I had a war raging inside me,
+  - I felt like there was a battle in my heart,
+  original: Sir, in my heart there was a kind of fighting,
+  speaker: Hamlet
+- alternate:
+  - That kept me from sleeping. It felt like I was
+  - That wouldn’t let me rest. I felt like I was
+  original: 'That would not let me sleep: methought I lay'
+  speaker: Hamlet
+- alternate:
+  - Worse off than prisoners in shackles.
+  - More trapped than a prisoner in chains.
+  original: Worse than the mutines in the bilboes.
+  speaker: Hamlet
+- alternate:
+  - My good lord, if you have a moment, I have a message from the king.
+  - My lord, if you have time, I bring news from His Majesty.
+  original: Sweet lord, if your lordship were at leisure, I should impart a thing
+    to you from his majesty.
+  speaker: Osric
+- alternate:
+  - I’ll listen carefully.
+  - I’ll hear it with my full attention.
+  original: I will receive it with all diligence of spirit.
+  speaker: Hamlet
+- alternate:
+  - 'The King has placed a bet on you against Laertes: in twelve hits, he won’t beat
+    you by more than three.'
+  - The King has wagered that Laertes won’t score more than three extra hits against
+    you in a match of twelve.
+  original: 'The King, sir, hath wager’d with Laertes that in a dozen passes between
+    yourself and him, he shall not exceed you three hits:'
+  speaker: Osric
+- alternate:
+  - And what if I say no?
+  - What if I refuse?
+  original: How if I answer no?
+  speaker: Hamlet
+- alternate:
+  - I mean, my lord, if you refuse to fight.
+  - I mean if you decline the challenge, my lord.
+  original: I mean, my lord, the opposition of your person in trial.
+  speaker: Osric
+- alternate:
+  - You’re going to lose, my lord.
+  - You’re at a disadvantage, my lord.
+  original: You will lose, my lord.
+  speaker: Horatio
+- alternate:
+  - Not at all. I don’t believe in omens. Everything happens for a reason.
+  - No, I reject fate. Even something as small as a bird falling is part of a greater
+    plan.
+  original: 'Not a whit, we defy augury: there’s a special providence in the fall
+    of a sparrow.'
+  speaker: Hamlet
+- alternate:
+  - If it happens now, then it's meant to happen. If not now, then later. But it will
+    come eventually. Being ready is what matters.
+  - If my time is now, then so be it. If not, it will come. All that matters is being
+    prepared.
+  original: 'If it be now, ’tis not to come; if it be not to come, it will be now;
+    if it be not now, yet it will come: the readiness is all.'
+  speaker: Hamlet
+- alternate:
+  - Bring me the goblets! Let the drums call the trumpets, the trumpets call the cannons,
+    and the cannons roar to the sky! ‘The King drinks to Hamlet!’
+  - Bring forth the wine! Let the drums sound the trumpets, the trumpets signal the
+    cannons, and the cannons shake the heavens! ‘The King toasts Hamlet!’
+  original: Give me the cups; and let the kettle to the trumpet speak, The trumpet
+    to the cannoneer without, The cannons to the heavens, the heaven to earth, ‘Now
+    the king drinks to Hamlet.’
+  speaker: King Claudius
+- alternate:
+  - Let’s do this, my lord.
+  - Come, let’s begin.
+  original: Come, my lord.
+  speaker: Laertes
+- alternate:
+  - Bring it on, sir.
+  - Let’s go, sir.
+  original: Come on, sir.
+  speaker: Hamlet
+- alternate:
+  - Here I come!
+  - Take this!
+  original: Have at you now!
+  speaker: Laertes
+- alternate:
+  - They’re both wounded!
+  - They’re both bleeding!
+  original: They bleed on both sides.
+  speaker: Horatio
+- alternate:
+  - Then let this poison do its job.
+  - Then, poison, finish what you started.
+  original: Then, venom, to thy work.
+  speaker: Hamlet
+- alternate:
+  - Here, you incestuous, murderous, cursed Dane! Drink this poison! Is your treachery
+    here? Go join my mother!
+  - Here, you evil, incestuous murderer! Drink this! Do you see your ‘loyalty’ now?
+    Go where my mother went!
+  original: Here, thou incestuous, murderous, damned Dane, Drink off this potion!
+    Is thy union here? Follow my mother!
+  speaker: Hamlet
+- alternate:
+  - A great man’s heart has broken. Good night, sweet prince. May angels carry you
+    to your rest.
+  - A noble soul departs. Sleep well, dear prince, and let the angels guide you to
+    peace.
+  original: Now cracks a noble heart. Good night, sweet prince, And flights of angels
+    sing thee to thy rest!
+  speaker: Horatio
+scene: 2
+title: Hamlet

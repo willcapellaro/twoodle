@@ -1,0 +1,49 @@
+act: 3
+lines:
+- alternate:
+  - Should I live or should I die? That’s what I’m wondering.
+  - Is existence worth it? That’s the real question.
+  original: 'To be, or not to be, that is the question:'
+  speaker: Hamlet
+- alternate:
+  - Is it better to endure life's hardships...
+  - Would it be braver to put up with all this suffering...
+  original: Whether 'tis nobler in the mind to suffer
+  speaker: Hamlet
+- alternate:
+  - '...all the unfair misfortunes thrown my way?'
+  - '...all the bad luck that life hurls at me?'
+  original: The slings and arrows of outrageous fortune,
+  speaker: Hamlet
+- alternate:
+  - Or should I fight back against my problems?
+  - Or is it time to take a stand against this chaos?
+  original: Or to take arms against a sea of troubles,
+  speaker: Hamlet
+- alternate:
+  - And end them by fighting back? To die, to sleep—
+  - And by fighting, put an end to it all? Just sleep—
+  original: 'And by opposing end them? To die: to sleep;'
+  speaker: Hamlet
+- alternate:
+  - That’s all. And in that sleep, put an end to
+  - Nothing more. And by sleeping, stop
+  original: No more; and by a sleep to say we end
+  speaker: Hamlet
+- alternate:
+  - The pain and all the suffering that flesh endures—
+  - The heartbreak and endless miseries
+  original: The heart-ache and the thousand natural shocks
+  speaker: Hamlet
+- alternate:
+  - It’s something we all inherit, and ending it
+  - That comes with being alive. If that’s the case,
+  original: That flesh is heir to, 'tis a consummation
+  speaker: Hamlet
+- alternate:
+  - Would be something to wish for. To die, to sleep—
+  - Is what we all might long for. To die, to sleep—
+  original: Devoutly to be wish'd. To die, to sleep;
+  speaker: Hamlet
+scene: 1
+title: Hamlet

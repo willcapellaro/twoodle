@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Ballot Bash Print</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .carousel {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .carousel img {
+            width: 100%;
+            border-radius: 8px;
+            display: none;
+        }
+        .carousel img.active {
+            display: block;
+        }
+        .download-btn {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #ff4500;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+        .download-btn:hover {
+            background-color: #e03e00;
+        }
+        .promo-box {
+            background: #222;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .promo-box a {
+            color: #ffdd57;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Download Your Ballot Bash Print PDF</h1>
+
+    <!-- Image Carousel -->
+    <div class="carousel">
+        <img src="preview1.png" alt="Preview of Ballot Bash Print ballot" class="active">
+        <img src="preview2.png" alt="Alternative view of Ballot Bash ballot">
+        <img src="preview3.png" alt="Example of ballot marking and voting">
+    </div>
+
+    <!-- Download Button -->
+    <a href="Ballot Bash Print.pdf" class="download-btn" download>📥 Download Ballot Bash Print</a>
+
+    <!-- Online Version Promo -->
+    <div class="promo-box">
+        <h2>✨ Want a paperless experience? ✨</h2>
+        <p>Try <strong>Ballot Bash</strong> online with live updates, film info, and multiplayer fun!</p>
+        <p><a href="https://twoodle.xyz/ballotbash" target="_blank">🎬 Go to Ballot Bash</a></p>
+    </div>
+
+    <script>
+        // Simple carousel functionality
+        let currentIndex = 0;
+        const images = document.querySelectorAll(".carousel img");
+
+        function showNextImage() {
+            images[currentIndex].classList.remove("active");
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add("active");
+        }
+
+        setInterval(showNextImage, 3000); // Rotate images every 3 seconds
+    </script>
+
+</body>
+</html>

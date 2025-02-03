@@ -1,0 +1,21 @@
+{
+  "lines": [
+    {
+      "speaker": "Hamlet",
+      "original": "So much for this, sir: now shall you see the other;",
+      "alternate": [
+        "That's enough of that. Now let's talk about something else.",
+        "So that's settled. Now, onto the next thing."
+      ]
+    },
+    {
+      "speaker": "Hamlet",
+      "original": "You do remember all the circumstance?",
+      "alternate": [
+        "You remember all the details, right?",
+        "You recall everything that happened?"
+      ]
+    }
+    // ... (rest of the lines from your script data)
+  ]
+}

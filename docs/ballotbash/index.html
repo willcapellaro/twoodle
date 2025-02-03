@@ -3,176 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ballot Bash</title>
+    <title>1 Sort!</title>
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Mate:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap&family=Josefin Slab:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="modal.css">
-    <link href="print.css" media="print" rel="stylesheet" />
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="🎥 Ballot Bash - voting online for your Oscars watch party!" />
-    <meta property="og:description" content="🌟 Thank you for testing Ballot Bash! 🎉 The 97th Academy Awards are awarded on March 2! 🏆 Use this free, private web form to track and score your Oscars predictions. 🍿" />
-    <meta property="og:image" content="https://www.twoodle.xyz/ballotbash/share-image.jpg" />
-    <meta property="og:url" content="https://www.twoodle.xyz/ballotbash" />
-    <meta property="og:type" content="website" />
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="🎥 Ballot Bash - voting online for your Oscars watch party!" />
-    <meta name="twitter:description" content="🌟 Thank you for testing Ballot Bash! 🎉 The 97th Academy Awards are awarded on March 2! 🏆 Use this free, private web form to track and score your Oscars predictions. 🍿" />
-    <meta name="twitter:image" content="https://www.twoodle.xyz/ballotbash/share-image.jpg" />
-
-    <!-- Fallback for Slack -->
-    <meta name="description" content="🌟 Thank you for testing Ballot Bash! 🎉 The Oscars are on March 2! 🏆 Cast your votes now and see if you can predict the winners like a pro. 🍿" />
-    
-    <!-- temp styles -->
-    <style>
-        </style>
-
-
-
-    <!-- plausible analytics -->
-	  <script defer data-domain="twoodle.xyz" src="https://plausible.io/js/plausible.js"></script>
-		
-
+    <link href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&family=Mate:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
 </head>
 <body>
-    <header>
-        <img class="logo" src="imgs/bb-logo.svg" alt="B&B Logo">
-        <div class="centerInDiv"><div></div><h1>The 97th Academy Awards | 2025</h1><div></div></div>
-        <nav aria-label="Main Navigation">
-            <ul class="headerul">
-                <!-- <li><span>Mode</span></li> -->
-                <li>
-                  <button aria-haspopup="true" aria-expanded="false">
-                    Vote Mode ▼
-                  </button>
-                </li>
-                <li><button id="howToPlayBtn">How to Play</button></li>
-            </ul>
-        </nav>
-    </header>
-
-    <div id="tableContainer">
-        <table id="ballotTable" class="display" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Award</th>
-                    <th>Name(s)</th>
-                    <th>Film</th>
-                    <th style="width: 200px;">Vote</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Modal -->
-    <div id="howToPlayModal" class="modal">
-        <div class="modal-content" style="width: 400px;">
-            <span class="close">&times;</span>
-            <div class="content">
-                <!-- page 0: beta testers -->
-                <div class="page" id="page-0">
-                    <h2>🙏 Thanks 4 testing!</h2>
-                    <p>Your voting data will be stored on this computer only. Multiplayer and scoring will be ready by the event (March 2, 2025).</p>
-                    <p>Stay tuned for additional improvements. Next, let's learn how to play!</p>
-                    <button class="action-btn">Next →</button>
-                </div>
-                <!-- Page 1: Voting -->
-                <div class="page" id="page-1">
-                    <h2>Winners pick winners</h2>
-                    <p>Click a star to pick a winner. For each correct winner, you'll earn 1 point.</p>
-                    <table class="mini-table">
-                        <tbody>
-                            <tr>
-                                <td>Gladiator (won in 2001)</td>
-                                <td class="star-cell">
-                                    <input type="checkbox" class="vote" data-vote="0">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>The King’s Speech (won in 2011)</td>
-                                <td class="star-cell">
-                                    <input type="checkbox" class="vote" data-vote="0">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="prompt">Try picking a winner</div>
-                    <button id="nextBtn" class="action-btn">I'm a Winner →</button>
-                </div>
-
-                <!-- Page 2: Backup Votes -->
-                <div class="page hidden" id="page-2">
-                    <h2>One for safety...</h2>
-                    <p>Click a solid star to select a backup nominee. A correct safeties is worth ¼ which could help you win a tie.</p>
-                    <table class="mini-table">
-                        <tbody>
-                            <tr>
-                                <td>Shakespeare in Love (Beat Brokeback Mountain in 1998)</td>
-                                <td class="star-cell">
-                                    <input type="checkbox" class="vote" data-vote="2">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Rocky (Beat Taxi Driver in 1976)</td>
-                                <td class="star-cell">
-                                    <input type="checkbox" class="vote" data-vote="0">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="prompt">Try picking a safety</div>
-                    <button id="nextBtnPage2" class="action-btn">We're good here →</button>
-                </div>
-
-                <!-- Page 3: Resolve the Conflict -->
-                <div class="page hidden" id="page-3">
-                    <h2>It's a process!</h2>
-                    <p>Keep it messy. Until the event, you can vote for as many as you want. Come showtime, you can only have one for each.</p>
-                    <table class="mini-table">
-                        <tbody>
-                            <tr>
-                                <td>Everything Everywhere All at Once (won in 2023)</td>
-                                <td class="star-cell">
-                                    <input type="checkbox" class="vote" data-vote="0">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Crash (won in 2006)</td>
-                                <td class="star-cell">
-                                    <input type="checkbox" class="vote" data-vote="0">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="prompt">Resolve conflicts before you're done.</div>
-                    <button id="finishBtn" class="action-btn">That’s a Wrap!</button>
-                </div>
-            </div>
-            <div class="pagination">
-                <span class="dot active" data-target="0"></span>
-                <span class="dot active" data-target="1"></span>
-                <span class="dot" data-target="2"></span>
-                <span class="dot" data-target="3"></span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="modal.js"></script>
+    <h1>1 Sort!</h1>
+    <p>1 Sorting works (except for Vote column)!</p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <table id="ballotTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Award</th>
+                <th>Name(s)</th>
+                <th>Film</th>
+                <th style="width: 200px; ">Vote</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
     <!-- jQuery and DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/rowgroup/1.3.1/js/dataTables.rowGroup.min.js"></script>
-    <script src="script.js"></script>    
 
+    <script>
+        
+        $(document).ready(function () {
+            // Load JSON data
+            $.getJSON('Golden_Ballot_Data.json')
+                .done(function (data) {
+                    console.log('Data loaded successfully:', data);
+                    const tableData = data.map(item => {
+                        const names = [item.name, item.name2, item.name3, item.name4, item.name5]
+                            .filter(Boolean)
+                            .join(', ');
 
+                        return {
+                            award: item.category || '',
+                            names: names,
+                            film: item.film || '',
+                            vote: '<input type="checkbox" class="vote" data-vote="0" />' // Default to empty
+                        };
+                    });
+
+                    // Initialize DataTable
+                    const table = $('#ballotTable').DataTable({
+                        data: tableData,
+                        columns: [
+                            { data: 'award', title: 'Award' },
+                            { data: 'names', title: 'Name(s)' },
+                            { data: 'film', title: 'Film' },
+                            { 
+                                data: 'vote', 
+                                title: 'Your Vote', 
+                                orderable: true,
+                                orderDataType: 'vote-sort' 
+                            }
+                        ],
+                        order: [[0, 'asc']], // Default sorting by Award
+                        pageLength: 100, // Set default number of entries to display
+                        rowGroup: {
+                            dataSrc: 'award', // Group rows by Award
+                            startRender: function (rows, group) {
+                                // Add heading rows dynamically
+                                return $('<tr/>')
+                                    .append(`<td colspan="4" class="group-heading">${group}</td>`)
+                                    .get(0);
+                            }
+                        }
+                    });
+
+                    // Update group based on sorting
+                    $('#ballotTable').on('order.dt', function () {
+                        const order = table.order();
+                        const dataSrc =
+                            order[0][0] === 0
+                                ? 'award'
+                                : order[0][0] === 1
+                                ? 'names'
+                                : 'film';
+                        table.rowGroup().dataSrc(dataSrc);
+                    });
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    console.error('Failed to load JSON:', textStatus, error);
+                });
+            
+
+        // Handle checkbox interaction logic
+        $(document).on('click', 'input.vote', function () {
+                const stateMapping = {
+                    0: { next: 1, label: 'Your Pick', checked: true, indeterminate: false },
+                    1: { next: 2, label: 'Backup', checked: false, indeterminate: true },
+                    2: { next: 0, label: '', checked: false, indeterminate: false }
+                };
+
+                const currentState = $(this).data('vote') || 0;
+                const nextState = stateMapping[currentState];
+
+                $(this)
+                    .data('vote', nextState.next)
+                    .prop('checked', nextState.checked)
+                    .prop('indeterminate', nextState.indeterminate);
+
+                const label = $(this).next('.vote-label');
+                if (label.length === 0) {
+                    $(this).after(`<span class="vote-label">${nextState.label}</span>`);
+                } else {
+                    label.text(nextState.label);
+                }
+            });
+        
+            // Custom sorting for Your Vote column
+            $.fn.dataTable.ext.order['vote-sort'] = function (settings, col) {
+                return this.api()
+                    .column(col, { order: 'index' })
+                    .nodes()
+                    .map(td => {
+                        const voteState = $(td).find('input.vote').data('vote');
+                        // Sort by Winner (1), Backup (2), Empty (0)
+                        return voteState === 1 ? 0 : voteState === 2 ? 1 : 2;
+                    });
+            };
+        });
+    </script>
 </body>
 </html>
