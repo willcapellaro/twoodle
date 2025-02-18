@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .jersey-25-regular {
+    font-family: "Jersey 25", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+}

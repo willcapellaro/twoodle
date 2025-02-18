@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BallotBash</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        const table = $('#ballotTable').DataTable({
+          columns: [
+            { data: 'award', title: 'Award' },
+            { data: 'names', title: 'Name(s)' },
+            { data: 'film', title: 'Film' },
+            { 
+              data: 'vote',
+              title: 'Your Vote',
+              orderable: true,
+              orderDataType: 'dom-checkbox'
+            }
+          ],
+          order: [[0, 'asc']],
+          pageLength: -1,
+          dom: 'ft',
+          orderCellsTop: true,
+          fixedHeader: true
+        });
+
+        // Custom sorting for checkboxes
+        $.fn.dataTable.ext.order['dom-checkbox'] = function(settings, col) {
+          return this.api().column(col, {order:'index'}).nodes().map(function(td) {
+            const checkbox = $(td).find('input[type="checkbox"]');
+            if (checkbox.prop('checked')) return 1;
+            if (checkbox.prop('indeterminate')) return 2;
+            return 3;
+          });
+        };
+
+        // Enable sorting for all columns
+        $('#ballotTable thead th').each(function() {
+          $(this).addClass('sorting');
+        });
+
+        // Handle click events on headers
+        $('#ballotTable thead th').on('click', function() {
+          const index = $(this).index();
+          const currentOrder = table.order()[0];
+          
+          if (currentOrder[0] === index) {
+            // Toggle between asc and desc
+            table.order([index, currentOrder[1] === 'asc' ? 'desc' : 'asc']).draw();
+          } else {
+            // New column, default to asc
+            table.order([index, 'asc']).draw();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

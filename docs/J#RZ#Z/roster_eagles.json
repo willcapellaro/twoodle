@@ -1,0 +1,532 @@
+[
+  {
+    "Player": "Bryce Huff",
+    "#": 0,
+    "Pos": "DE",
+    "HT": "6-3",
+    "WT": 255,
+    "Age": 26,
+    "Exp": 5,
+    "College": "Memphis"
+  },
+  {
+    "Player": "Jalen Hurts",
+    "#": 1,
+    "Pos": "QB",
+    "HT": "6-1",
+    "WT": 223,
+    "Age": 26,
+    "Exp": 5,
+    "College": "Oklahoma"
+  },
+  {
+    "Player": "Darius Slay Jr.",
+    "#": 2,
+    "Pos": "CB",
+    "HT": "6-0",
+    "WT": 190,
+    "Age": 34,
+    "Exp": 12,
+    "College": "Mississippi State"
+  },
+  {
+    "Player": "Nolan Smith Jr.",
+    "#": 3,
+    "Pos": "OLB",
+    "HT": "6-2",
+    "WT": 238,
+    "Age": 24,
+    "Exp": 2,
+    "College": "Georgia"
+  },
+  {
+    "Player": "Jake Elliott",
+    "#": 4,
+    "Pos": "K",
+    "HT": "5-9",
+    "WT": 167,
+    "Age": 30,
+    "Exp": 8,
+    "College": "Memphis"
+  },
+  {
+    "Player": "DeVonta Smith",
+    "#": 6,
+    "Pos": "WR",
+    "HT": "6-0",
+    "WT": 170,
+    "Age": 26,
+    "Exp": 4,
+    "College": "Alabama"
+  },
+  {
+    "Player": "Kenny Pickett",
+    "#": 7,
+    "Pos": "QB",
+    "HT": "6-3",
+    "WT": 220,
+    "Age": 26,
+    "Exp": 3,
+    "College": "Pittsburgh"
+  },
+  {
+    "Player": "C.J. Gardner-Johnson",
+    "#": 8,
+    "Pos": "S",
+    "HT": "5-11",
+    "WT": 210,
+    "Age": 27,
+    "Exp": 5,
+    "College": "Florida"
+  },
+  {
+    "Player": "Braden Mann",
+    "#": 10,
+    "Pos": "P",
+    "HT": "5-11",
+    "WT": 198,
+    "Age": 27,
+    "Exp": 5,
+    "College": "Texas A&M"
+  },
+  {
+    "Player": "A.J. Brown",
+    "#": 11,
+    "Pos": "WR",
+    "HT": "6-1",
+    "WT": 226,
+    "Age": 27,
+    "Exp": 6,
+    "College": "Mississippi"
+  },
+  {
+    "Player": "Kenneth Gainwell",
+    "#": 14,
+    "Pos": "RB",
+    "HT": "5-9",
+    "WT": 200,
+    "Age": 25,
+    "Exp": 4,
+    "College": "Memphis"
+  },
+  {
+    "Player": "Tanner McKee",
+    "#": 16,
+    "Pos": "QB",
+    "HT": "6-6",
+    "WT": 231,
+    "Age": 24,
+    "Exp": 2,
+    "College": "Stanford"
+  },
+  {
+    "Player": "Josh Sweat",
+    "#": 19,
+    "Pos": "OLB",
+    "HT": "6-5",
+    "WT": 265,
+    "Age": 27,
+    "Exp": 7,
+    "College": "Florida State"
+  },
+  {
+    "Player": "Sydney Brown",
+    "#": 21,
+    "Pos": "S",
+    "HT": "5-10",
+    "WT": 211,
+    "Age": 24,
+    "Exp": 2,
+    "College": "Illinois"
+  },
+  {
+    "Player": "Kelee Ringo",
+    "#": 22,
+    "Pos": "CB",
+    "HT": "6-2",
+    "WT": 207,
+    "Age": 22,
+    "Exp": 2,
+    "College": "Georgia"
+  },
+  {
+    "Player": "Eli Ricks",
+    "#": 23,
+    "Pos": "CB",
+    "HT": "6-2",
+    "WT": 188,
+    "Age": 23,
+    "Exp": 2,
+    "College": "Alabama"
+  },
+  {
+    "Player": "Saquon Barkley",
+    "#": 26,
+    "Pos": "RB",
+    "HT": "6-0",
+    "WT": 233,
+    "Age": 28,
+    "Exp": 7,
+    "College": "Penn State"
+  },
+  {
+    "Player": "Quinyon Mitchell",
+    "#": 27,
+    "Pos": "CB",
+    "HT": "6-0",
+    "WT": 193,
+    "Age": 23,
+    "Exp": "R",
+    "College": "Toledo"
+  },
+  {
+    "Player": "Will Shipley",
+    "#": 28,
+    "Pos": "RB",
+    "HT": "5-11",
+    "WT": 209,
+    "Age": 22,
+    "Exp": "R",
+    "College": "Clemson"
+  },
+  {
+    "Player": "Avonte Maddox",
+    "#": 29,
+    "Pos": "CB",
+    "HT": "5-9",
+    "WT": 184,
+    "Age": 28,
+    "Exp": 7,
+    "College": "Pittsburgh"
+  },
+  {
+    "Player": "Reed Blankenship",
+    "#": 32,
+    "Pos": "S",
+    "HT": "6-1",
+    "WT": 203,
+    "Age": 25,
+    "Exp": 3,
+    "College": "Middle Tennessee State"
+  },
+  {
+    "Player": "Cooper DeJean",
+    "#": 33,
+    "Pos": "DB",
+    "HT": "6-0",
+    "WT": 198,
+    "Age": 22,
+    "Exp": "R",
+    "College": "Iowa"
+  },
+  {
+    "Player": "Isaiah Rodgers",
+    "#": 34,
+    "Pos": "CB",
+    "HT": "5-10",
+    "WT": 170,
+    "Age": 27,
+    "Exp": 4,
+    "College": "Massachusetts"
+  },
+  {
+    "Player": "Tristin McCollum",
+    "#": 36,
+    "Pos": "S",
+    "HT": "6-3",
+    "WT": 195,
+    "Age": 25,
+    "Exp": 1,
+    "College": "Sam Houston State"
+  },
+  {
+    "Player": "Lewis Cine",
+    "#": 38,
+    "Pos": "DB",
+    "HT": "6-2",
+    "WT": 199,
+    "Age": 25,
+    "Exp": 3,
+    "College": "Georgia"
+  },
+  {
+    "Player": "Oren Burks",
+    "#": 42,
+    "Pos": "LB",
+    "HT": "6-3",
+    "WT": 233,
+    "Age": 29,
+    "Exp": 7,
+    "College": "Vanderbilt"
+  },
+  {
+    "Player": "Rick Lovato",
+    "#": 49,
+    "Pos": "LS",
+    "HT": "6-2",
+    "WT": 249,
+    "Age": 32,
+    "Exp": 8,
+    "College": "Old Dominion"
+  },
+  {
+    "Player": "Cam Jurgens",
+    "#": 51,
+    "Pos": "C/G",
+    "HT": "6-3",
+    "WT": 303,
+    "Age": 25,
+    "Exp": 3,
+    "College": "Nebraska"
+  },
+  {
+    "Player": "Zack Baun",
+    "#": 53,
+    "Pos": "LB",
+    "HT": "6-3",
+    "WT": 225,
+    "Age": 28,
+    "Exp": 5,
+    "College": "Wisconsin"
+  },
+  {
+    "Player": "Jeremiah Trotter Jr.",
+    "#": 54,
+    "Pos": "LB",
+    "HT": "6-0",
+    "WT": 225,
+    "Age": 22,
+    "Exp": "R",
+    "College": "Clemson"
+  },
+  {
+    "Player": "Brandon Graham",
+    "#": 55,
+    "Pos": "DE",
+    "HT": "6-2",
+    "WT": 265,
+    "Age": 36,
+    "Exp": 15,
+    "College": "Michigan"
+  },
+  {
+    "Player": "Tyler Steen",
+    "#": 56,
+    "Pos": "OL",
+    "HT": "6-6",
+    "WT": 321,
+    "Age": 24,
+    "Exp": 2,
+    "College": "Alabama"
+  },
+  {
+    "Player": "Jalyx Hunt",
+    "#": 58,
+    "Pos": "OLB",
+    "HT": "6-3",
+    "WT": 252,
+    "Age": 23,
+    "Exp": "R",
+    "College": "Houston Christian"
+  },
+  {
+    "Player": "Thomas Booker IV",
+    "#": 59,
+    "Pos": "DT",
+    "HT": "6-3",
+    "WT": 301,
+    "Age": 25,
+    "Exp": 2,
+    "College": "Stanford"
+  },
+  {
+    "Player": "Brett Toth",
+    "#": 64,
+    "Pos": "T/G",
+    "HT": "6-6",
+    "WT": 304,
+    "Age": 28,
+    "Exp": 6,
+    "College": "Army"
+  },
+  {
+    "Player": "Lane Johnson",
+    "#": 65,
+    "Pos": "T",
+    "HT": "6-6",
+    "WT": 325,
+    "Age": 34,
+    "Exp": 12,
+    "College": "Oklahoma"
+  },
+  {
+    "Player": "Jordan Mailata",
+    "#": 68,
+    "Pos": "T",
+    "HT": "6-8",
+    "WT": 365,
+    "Age": 27,
+    "Exp": 7,
+    "College": null
+  },
+  {
+    "Player": "Landon Dickerson",
+    "#": 69,
+    "Pos": "G",
+    "HT": "6-6",
+    "WT": 332,
+    "Age": 26,
+    "Exp": 4,
+    "College": "Alabama"
+  },
+  {
+    "Player": "Darian Kinnard",
+    "#": 72,
+    "Pos": "T/G",
+    "HT": "6-5",
+    "WT": 322,
+    "Age": 25,
+    "Exp": 2,
+    "College": "Kentucky"
+  },
+  {
+    "Player": "Fred Johnson",
+    "#": 74,
+    "Pos": "T",
+    "HT": "6-7",
+    "WT": 326,
+    "Age": 27,
+    "Exp": 6,
+    "College": "Florida"
+  },
+  {
+    "Player": "Mekhi Becton",
+    "#": 77,
+    "Pos": "G/T",
+    "HT": "6-7",
+    "WT": 363,
+    "Age": 25,
+    "Exp": 5,
+    "College": "Louisville"
+  },
+  {
+    "Player": "Trevor Keegan",
+    "#": 79,
+    "Pos": "G",
+    "HT": "6-5",
+    "WT": 306,
+    "Age": 24,
+    "Exp": "R",
+    "College": "Michigan"
+  },
+  {
+    "Player": "Parris Campbell",
+    "#": 80,
+    "Pos": "WR",
+    "HT": "6-0",
+    "WT": 208,
+    "Age": 27,
+    "Exp": 6,
+    "College": "Ohio State"
+  },
+  {
+    "Player": "Grant Calcaterra",
+    "#": 81,
+    "Pos": "TE",
+    "HT": "6-4",
+    "WT": 240,
+    "Age": 26,
+    "Exp": 3,
+    "College": "SMU"
+  },
+  {
+    "Player": "Ainias Smith",
+    "#": 82,
+    "Pos": "WR",
+    "HT": "5-9",
+    "WT": 176,
+    "Age": 23,
+    "Exp": "R",
+    "College": "Texas A&M"
+  },
+  {
+    "Player": "Jahan Dotson",
+    "#": 83,
+    "Pos": "WR",
+    "HT": "5-11",
+    "WT": 184,
+    "Age": 24,
+    "Exp": 3,
+    "College": "Penn State"
+  },
+  {
+    "Player": "E.J. Jenkins",
+    "#": 84,
+    "Pos": "TE",
+    "HT": "6-6",
+    "WT": 245,
+    "Age": 26,
+    "Exp": 1,
+    "College": "Georgia Tech"
+  },
+  {
+    "Player": "Dallas Goedert",
+    "#": 88,
+    "Pos": "TE",
+    "HT": "6-5",
+    "WT": 256,
+    "Age": 30,
+    "Exp": 7,
+    "College": "South Dakota State"
+  },
+  {
+    "Player": "Johnny Wilson",
+    "#": 89,
+    "Pos": "WR",
+    "HT": "6-6",
+    "WT": 228,
+    "Age": 23,
+    "Exp": "R",
+    "College": "Florida State"
+  },
+  {
+    "Player": "Jordan Davis",
+    "#": 90,
+    "Pos": "DT",
+    "HT": "6-6",
+    "WT": 336,
+    "Age": 25,
+    "Exp": 3,
+    "College": "Georgia"
+  },
+  {
+    "Player": "Milton Williams",
+    "#": 93,
+    "Pos": "DT",
+    "HT": "6-3",
+    "WT": 290,
+    "Age": 25,
+    "Exp": 4,
+    "College": "Louisiana Tech"
+  },
+  {
+    "Player": "Moro Ojomo",
+    "#": 97,
+    "Pos": "DT",
+    "HT": "6-3",
+    "WT": 292,
+    "Age": 23,
+    "Exp": 2,
+    "College": "Texas"
+  },
+  {
+    "Player": "Jalen Carter",
+    "#": 98,
+    "Pos": "DT",
+    "HT": "6-3",
+    "WT": 314,
+    "Age": 23,
+    "Exp": 2,
+    "College": "Georgia"
+  }
+]

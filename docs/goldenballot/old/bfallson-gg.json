@@ -1,0 +1,146 @@
+[
+    {
+        "category": "Best Motion Picture - Drama",
+        "work_code": "aCompleteUnknown",
+        "work_title": "A Complete Unknown",
+        "nominee_code": "null",
+        "nominee_name": "null",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Drama",
+        "work_code": "conclave",
+        "work_title": "Conclave",
+        "nominee_code": "null",
+        "nominee_name": "null",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Drama",
+        "work_code": "dunePartTwo",
+        "work_title": "Dune: Part Two",
+        "nominee_code": "null",
+        "nominee_name": "null",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Drama",
+        "work_code": "nickelBoys",
+        "work_title": "Nickel Boys",
+        "nominee_code": "null",
+        "nominee_name": "null",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Drama",
+        "work_code": "september",
+        "work_title": "September 5",
+        "nominee_code": "null",
+        "nominee_name": "null",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Drama",
+        "work_code": "brutalist",
+        "work_title": "The Brutalist",
+        "nominee_code": "null",
+        "nominee_name": "null",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Musical or Comedy",
+        "work_code": "aRealPain",
+        "work_title": "A Real Pain",
+        "nominee_code": "null",
+        "nominee_name": "null",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Musical or Comedy",
+        "work_code": "anora",
+        "work_title": "Anora",
+        "nominee_code": "null",
+        "nominee_name": "null",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Musical or Comedy",
+        "work_code": "challengers",
+        "work_title": "Challengers",
+        "nominee_code": "null",
+        "nominee_name": "null",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Musical or Comedy",
+        "work_code": "emiliaPérez",
+        "work_title": "Emilia Pérez",
+        "nominee_code": "null",
+        "nominee_name": "null",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Musical or Comedy",
+        "work_code": "substance",
+        "work_title": "The Substance",
+        "nominee_code": "null",
+        "nominee_name": "null",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Motion Picture - Musical or Comedy",
+        "work_code": "wicked",
+        "work_title": "Wicked",
+        "nominee_code": "null",
+        "nominee_name": "null",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Performance in Stand-Up Comedy on Television",
+        "work_code": "loveYou",
+        "work_title": "Love You",
+        "nominee_code": "adamSander",
+        "nominee_name": "Adam Sandler",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Performance in Stand-Up Comedy on Television",
+        "work_code": "singleLady",
+        "work_title": "Single Lady",
+        "nominee_code": "aliWong",
+        "nominee_name": "Ali Wong",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Performance in Stand-Up Comedy on Television",
+        "work_code": "whatHadHappened",
+        "work_title": "What Had Happened Was",
+        "nominee_code": "jamieFoxx",
+        "nominee_name": "Jamie Foxx",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Performance in Stand-Up Comedy on Television",
+        "work_code": "somedayYoullDie",
+        "work_title": "Someday You'll Die",
+        "nominee_code": "nikkiGlaser",
+        "nominee_name": "Nikki Glaser",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Performance in Stand-Up Comedy on Television",
+        "work_code": "moreFeelings",
+        "work_title": "More Feelings",
+        "nominee_code": "ramyYoussel",
+        "nominee_name": "Ramy Youssef",
+        "trailer-link": "https://trailer-link.com"
+    },
+    {
+        "category": "Best Performance in Stand-Up Comedy on Television",
+        "work_code": "dadManWalking",
+        "work_title": "Dad Man Walking",
+        "nominee_code": "sethMeyers",
+        "nominee_name": "Seath Meyers",
+        "trailer-link": "https://trailer-link.com"
+    }
+]

@@ -1,0 +1,532 @@
+[
+  {
+    "Player": "Xavier Worthy",
+    "#": 1,
+    "Pos": "WR",
+    "HT": "5-11",
+    "WT": 165,
+    "Age": 21,
+    "Exp": "R",
+    "College": "Texas"
+  },
+  {
+    "Player": "Joshua Williams",
+    "#": 2,
+    "Pos": "CB",
+    "HT": "6-3",
+    "WT": 193,
+    "Age": 25,
+    "Exp": 3,
+    "College": "Fayetteville State University"
+  },
+  {
+    "Player": "Hollywood Brown",
+    "#": 5,
+    "Pos": "WR",
+    "HT": "5-9",
+    "WT": 180,
+    "Age": 27,
+    "Exp": 6,
+    "College": "Oklahoma"
+  },
+  {
+    "Player": "Bryan Cook",
+    "#": 6,
+    "Pos": "S",
+    "HT": "6-1",
+    "WT": 206,
+    "Age": 25,
+    "Exp": 3,
+    "College": "Cincinnati"
+  },
+  {
+    "Player": "Harrison Butker",
+    "#": 7,
+    "Pos": "K",
+    "HT": "6-4",
+    "WT": 205,
+    "Age": 29,
+    "Exp": 8,
+    "College": "Georgia Tech"
+  },
+  {
+    "Player": "DeAndre Hopkins",
+    "#": 8,
+    "Pos": "WR",
+    "HT": "6-1",
+    "WT": 212,
+    "Age": 32,
+    "Exp": 12,
+    "College": "Clemson"
+  },
+  {
+    "Player": "JuJu Smith-Schuster",
+    "#": 9,
+    "Pos": "WR",
+    "HT": "6-1",
+    "WT": 215,
+    "Age": 28,
+    "Exp": 8,
+    "College": "USC"
+  },
+  {
+    "Player": "Isiah Pacheco",
+    "#": 10,
+    "Pos": "RB",
+    "HT": "5-10",
+    "WT": 216,
+    "Age": 25,
+    "Exp": 3,
+    "College": "Rutgers"
+  },
+  {
+    "Player": "Carson Wentz",
+    "#": 11,
+    "Pos": "QB",
+    "HT": "6-5",
+    "WT": 237,
+    "Age": 32,
+    "Exp": 9,
+    "College": "North Dakota State"
+  },
+  {
+    "Player": "Nazeeh Johnson",
+    "#": 13,
+    "Pos": "S",
+    "HT": "5-10",
+    "WT": 199,
+    "Age": 26,
+    "Exp": 3,
+    "College": "Marshall"
+  },
+  {
+    "Player": "Matt Araiza",
+    "#": 14,
+    "Pos": "P",
+    "HT": "6-1",
+    "WT": 200,
+    "Age": 24,
+    "Exp": 1,
+    "College": "San Diego State"
+  },
+  {
+    "Player": "Patrick Mahomes",
+    "#": 15,
+    "Pos": "QB",
+    "HT": "6-2",
+    "WT": 225,
+    "Age": 29,
+    "Exp": 8,
+    "College": "Texas Tech"
+  },
+  {
+    "Player": "Justin Reid",
+    "#": 20,
+    "Pos": "S",
+    "HT": "6-1",
+    "WT": 207,
+    "Age": 27,
+    "Exp": 7,
+    "College": "Stanford"
+  },
+  {
+    "Player": "Jaden Hicks",
+    "#": 21,
+    "Pos": "DB",
+    "HT": "6-1",
+    "WT": 215,
+    "Age": 22,
+    "Exp": "R",
+    "College": "Washington State"
+  },
+  {
+    "Player": "Trent McDuffie",
+    "#": 22,
+    "Pos": "CB",
+    "HT": "5-11",
+    "WT": 193,
+    "Age": 24,
+    "Exp": 3,
+    "College": "Washington"
+  },
+  {
+    "Player": "Drue Tranquill",
+    "#": 23,
+    "Pos": "LB",
+    "HT": "6-2",
+    "WT": 234,
+    "Age": 29,
+    "Exp": 6,
+    "College": "Notre Dame"
+  },
+  {
+    "Player": "Chamarri Conner",
+    "#": 27,
+    "Pos": "DB",
+    "HT": "6-0",
+    "WT": 202,
+    "Age": 24,
+    "Exp": 2,
+    "College": "Virginia Tech"
+  },
+  {
+    "Player": "Kareem Hunt",
+    "#": 29,
+    "Pos": "RB",
+    "HT": "5-11",
+    "WT": 216,
+    "Age": 29,
+    "Exp": 8,
+    "College": "Toledo"
+  },
+  {
+    "Player": "Chris Roland-Wallace",
+    "#": 30,
+    "Pos": "CB",
+    "HT": "5-11",
+    "WT": 202,
+    "Age": 23,
+    "Exp": "R",
+    "College": "USC"
+  },
+  {
+    "Player": "Nick Bolton",
+    "#": 32,
+    "Pos": "LB",
+    "HT": "5-11",
+    "WT": 237,
+    "Age": 24,
+    "Exp": 4,
+    "College": "Missouri"
+  },
+  {
+    "Player": "Samaje Perine",
+    "#": 34,
+    "Pos": "RB",
+    "HT": "5-11",
+    "WT": 235,
+    "Age": 29,
+    "Exp": 8,
+    "College": "Oklahoma"
+  },
+  {
+    "Player": "Jaylen Watson",
+    "#": 35,
+    "Pos": "CB",
+    "HT": "6-2",
+    "WT": 197,
+    "Age": 26,
+    "Exp": 3,
+    "College": "Washington State"
+  },
+  {
+    "Player": "Keith Taylor",
+    "#": 39,
+    "Pos": "CB",
+    "HT": "6-3",
+    "WT": 195,
+    "Age": 25,
+    "Exp": 3,
+    "College": "Washington"
+  },
+  {
+    "Player": "James Winchester",
+    "#": 41,
+    "Pos": "LS",
+    "HT": "6-3",
+    "WT": 209,
+    "Age": 35,
+    "Exp": 10,
+    "College": "Oklahoma"
+  },
+  {
+    "Player": "Carson Steele",
+    "#": 42,
+    "Pos": "FB",
+    "HT": "6-0",
+    "WT": 228,
+    "Age": 22,
+    "Exp": "R",
+    "College": "UCLA"
+  },
+  {
+    "Player": "Cam Jones",
+    "#": 44,
+    "Pos": "LB",
+    "HT": "6-2",
+    "WT": 227,
+    "Age": 25,
+    "Exp": 2,
+    "College": "Indiana"
+  },
+  {
+    "Player": "Mike Danna",
+    "#": 51,
+    "Pos": "DE",
+    "HT": "6-2",
+    "WT": 257,
+    "Age": 27,
+    "Exp": 5,
+    "College": "Michigan"
+  },
+  {
+    "Player": "Creed Humphrey",
+    "#": 52,
+    "Pos": "C",
+    "HT": "6-4",
+    "WT": 302,
+    "Age": 25,
+    "Exp": 4,
+    "College": "Oklahoma"
+  },
+  {
+    "Player": "Leo Chenal",
+    "#": 54,
+    "Pos": "LB",
+    "HT": "6-3",
+    "WT": 250,
+    "Age": 24,
+    "Exp": 3,
+    "College": "Wisconsin"
+  },
+  {
+    "Player": "Joshua Uche",
+    "#": 55,
+    "Pos": "DE",
+    "HT": "6-3",
+    "WT": 240,
+    "Age": 26,
+    "Exp": 5,
+    "College": "Michigan"
+  },
+  {
+    "Player": "George Karlaftis",
+    "#": 56,
+    "Pos": "DE",
+    "HT": "6-4",
+    "WT": 263,
+    "Age": 23,
+    "Exp": 3,
+    "College": "Purdue"
+  },
+  {
+    "Player": "Hunter Nourzad",
+    "#": 60,
+    "Pos": "OL",
+    "HT": "6-3",
+    "WT": 317,
+    "Age": 24,
+    "Exp": "R",
+    "College": "Penn State"
+  },
+  {
+    "Player": "C.J. Hanson",
+    "#": 61,
+    "Pos": "OL",
+    "HT": "6-5",
+    "WT": 300,
+    "Age": 23,
+    "Exp": "R",
+    "College": "Holy Cross"
+  },
+  {
+    "Player": "Joe Thuney",
+    "#": 62,
+    "Pos": "G",
+    "HT": "6-5",
+    "WT": 304,
+    "Age": 32,
+    "Exp": 9,
+    "College": "N.C. State"
+  },
+  {
+    "Player": "Wanya Morris",
+    "#": 64,
+    "Pos": "OL",
+    "HT": "6-6",
+    "WT": 307,
+    "Age": 24,
+    "Exp": 2,
+    "College": "Oklahoma"
+  },
+  {
+    "Player": "Trey Smith",
+    "#": 65,
+    "Pos": "G",
+    "HT": "6-6",
+    "WT": 321,
+    "Age": 25,
+    "Exp": 4,
+    "College": "Tennessee"
+  },
+  {
+    "Player": "Mike Caliendo",
+    "#": 66,
+    "Pos": "OL",
+    "HT": "6-4",
+    "WT": 301,
+    "Age": 27,
+    "Exp": 2,
+    "College": "Western Michigan"
+  },
+  {
+    "Player": "Mike Pennel",
+    "#": 69,
+    "Pos": "NT",
+    "HT": "6-4",
+    "WT": 330,
+    "Age": 33,
+    "Exp": 10,
+    "College": "Colorado State (Pueblo)"
+  },
+  {
+    "Player": "D.J. Humphries",
+    "#": 70,
+    "Pos": "OL",
+    "HT": "6-5",
+    "WT": 307,
+    "Age": 31,
+    "Exp": 10,
+    "College": "Florida"
+  },
+  {
+    "Player": "Jawaan Taylor",
+    "#": 74,
+    "Pos": "T",
+    "HT": "6-5",
+    "WT": 330,
+    "Age": 27,
+    "Exp": 6,
+    "College": "Florida"
+  },
+  {
+    "Player": "Ethan Driskell",
+    "#": 75,
+    "Pos": "OT",
+    "HT": "6-8",
+    "WT": 313,
+    "Age": 24,
+    "Exp": "R",
+    "College": "Marshall"
+  },
+  {
+    "Player": "Kingsley Suamataia",
+    "#": 76,
+    "Pos": "T",
+    "HT": "6-4",
+    "WT": 326,
+    "Age": 22,
+    "Exp": "R",
+    "College": "BYU"
+  },
+  {
+    "Player": "Nikko Remigio",
+    "#": 81,
+    "Pos": "WR",
+    "HT": "5-9",
+    "WT": 187,
+    "Age": 25,
+    "Exp": 1,
+    "College": "Fresno State"
+  },
+  {
+    "Player": "Noah Gray",
+    "#": 83,
+    "Pos": "TE",
+    "HT": "6-3",
+    "WT": 240,
+    "Age": 25,
+    "Exp": 4,
+    "College": "Duke"
+  },
+  {
+    "Player": "Justin Watson",
+    "#": 84,
+    "Pos": "WR",
+    "HT": "6-2",
+    "WT": 215,
+    "Age": 28,
+    "Exp": 7,
+    "College": "Pennsylvania"
+  },
+  {
+    "Player": "Travis Kelce",
+    "#": 87,
+    "Pos": "TE",
+    "HT": "6-5",
+    "WT": 250,
+    "Age": 35,
+    "Exp": 12,
+    "College": "Cincinnati"
+  },
+  {
+    "Player": "Peyton Hendershot",
+    "#": 88,
+    "Pos": "TE",
+    "HT": "6-4",
+    "WT": 250,
+    "Age": 25,
+    "Exp": 3,
+    "College": "Indiana"
+  },
+  {
+    "Player": "Charles Omenihu",
+    "#": 90,
+    "Pos": "DE",
+    "HT": "6-5",
+    "WT": 280,
+    "Age": 27,
+    "Exp": 6,
+    "College": "Texas"
+  },
+  {
+    "Player": "Derrick Nnadi",
+    "#": 91,
+    "Pos": "DT",
+    "HT": "6-1",
+    "WT": 317,
+    "Age": 28,
+    "Exp": 7,
+    "College": "Florida State"
+  },
+  {
+    "Player": "Malik Herring",
+    "#": 94,
+    "Pos": "DE",
+    "HT": "6-3",
+    "WT": 275,
+    "Age": 27,
+    "Exp": 4,
+    "College": "Georgia"
+  },
+  {
+    "Player": "Chris Jones",
+    "#": 95,
+    "Pos": "DT",
+    "HT": "6-6",
+    "WT": 310,
+    "Age": 30,
+    "Exp": 9,
+    "College": "Mississippi State"
+  },
+  {
+    "Player": "Felix Anudike-Uzomah",
+    "#": 97,
+    "Pos": "DE",
+    "HT": "6-4",
+    "WT": 255,
+    "Age": 23,
+    "Exp": 2,
+    "College": "Kansas State"
+  },
+  {
+    "Player": "Tershawn Wharton",
+    "#": 98,
+    "Pos": "DT",
+    "HT": "6-1",
+    "WT": 280,
+    "Age": 26,
+    "Exp": 5,
+    "College": "Missouri S&T"
+  }
+]

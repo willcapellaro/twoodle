@@ -1,0 +1,50 @@
+{
+    "Philadelphia Eagles": [
+        {
+            "name": "Saquon Barkley",
+            "jersey_number": 26,
+            "position_abbr": "RB",
+            "position_full": "Running Back",
+            "height": "6-0",
+            "weight": 233,
+            "age": 28,
+            "experience": 7,
+            "college": "Penn State"
+        },
+        {
+            "name": "Jalen Hurts",
+            "jersey_number": 1,
+            "position_abbr": "QB",
+            "position_full": "Quarterback",
+            "height": "6-1",
+            "weight": 223,
+            "age": 26,
+            "experience": 5,
+            "college": "Oklahoma"
+        }
+    ],
+    "Kansas City Chiefs": [
+        {
+            "name": "Patrick Mahomes",
+            "jersey_number": 15,
+            "position_abbr": "QB",
+            "position_full": "Quarterback",
+            "height": "6-2",
+            "weight": 225,
+            "age": 29,
+            "experience": 8,
+            "college": "Texas Tech"
+        },
+        {
+            "name": "Travis Kelce",
+            "jersey_number": 87,
+            "position_abbr": "TE",
+            "position_full": "Tight End",
+            "height": "6-5",
+            "weight": 250,
+            "age": 35,
+            "experience": 12,
+            "college": "Cincinnati"
+        }
+    ]
+}

@@ -1,0 +1,116 @@
+{
+    "Philadelphia Eagles": [
+        {
+            "name": "Saquon Barkley",
+            "jersey_number": 26,
+            "position_abbr": "RB",
+            "position_full": "Running Back",
+            "height": "6-0",
+            "weight": 233,
+            "age": 28,
+            "experience": 7,
+            "college": "Penn State"
+        },
+        {
+            "name": "Zack Baun",
+            "jersey_number": 53,
+            "position_abbr": "LB",
+            "position_full": "Linebacker",
+            "height": "6-3",
+            "weight": 225,
+            "age": 28,
+            "experience": 5,
+            "college": "Wisconsin"
+        },
+        {
+            "name": "Mekhi Becton",
+            "jersey_number": 77,
+            "position_abbr": "G/T",
+            "position_full": "Guard/Tackle",
+            "height": "6-7",
+            "weight": 363,
+            "age": 25,
+            "experience": 5,
+            "college": "Louisville"
+        },
+        {
+            "name": "Reed Blankenship",
+            "jersey_number": 32,
+            "position_abbr": "S",
+            "position_full": "Safety",
+            "height": "6-1",
+            "weight": 203,
+            "age": 25,
+            "experience": 3,
+            "college": "Middle Tennessee State"
+        },
+        {
+            "name": "Jalen Hurts",
+            "jersey_number": 1,
+            "position_abbr": "QB",
+            "position_full": "Quarterback",
+            "height": "6-1",
+            "weight": 223,
+            "age": 26,
+            "experience": 5,
+            "college": "Oklahoma"
+        }
+    ],
+    "Kansas City Chiefs": [
+        {
+            "name": "Felix Anudike-Uzomah",
+            "jersey_number": 97,
+            "position_abbr": "DE",
+            "position_full": "Defensive End",
+            "height": "6-4",
+            "weight": 255,
+            "age": 23,
+            "experience": 2,
+            "college": "Kansas State"
+        },
+        {
+            "name": "Matt Araiza",
+            "jersey_number": 14,
+            "position_abbr": "P",
+            "position_full": "Punter",
+            "height": "6-1",
+            "weight": 200,
+            "age": 24,
+            "experience": 1,
+            "college": "San Diego State"
+        },
+        {
+            "name": "Nick Bolton",
+            "jersey_number": 32,
+            "position_abbr": "LB",
+            "position_full": "Linebacker",
+            "height": "5-11",
+            "weight": 237,
+            "age": 24,
+            "experience": 4,
+            "college": "Missouri"
+        },
+        {
+            "name": "Patrick Mahomes",
+            "jersey_number": 15,
+            "position_abbr": "QB",
+            "position_full": "Quarterback",
+            "height": "6-2",
+            "weight": 225,
+            "age": 29,
+            "experience": 8,
+            "college": "Texas Tech"
+        },
+        {
+            "name": "Travis Kelce",
+            "jersey_number": 87,
+            "position_abbr": "TE",
+            "position_full": "Tight End",
+            "height": "6-5",
+            "weight": 250,
+            "age": 35,
+            "experience": 12,
+            "college": "Cincinnati"
+        }
+    ]
+}

@@ -1,0 +1,349 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+html {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+}
+
+/*
+  Theme Configuration
+  ------------------
+  Define theme tokens that can be used throughout the application.
+  To modify colors:
+  1. Update the base color values in :root
+  2. Override specific values in .dark and .high-contrast as needed
+*/
+:root {
+  /* Core theme tokens */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f9fa;
+  --color-text-primary: #374151;
+  --color-text-secondary: #6b7280;
+  --color-border: #e5e7eb;
+  --color-input-bg: #ffffff;
+  --color-modal-text: #374151;
+  --color-modal-bg: #FFFFFF;
+  --color-modal-overlay: rgba(0, 0, 0, 0.5);
+  
+  /* Brand colors */
+  --color-brand: #A69764;
+  --color-brand-hover: #95875A;
+  --color-brand-light: #F3DBD2;
+  --color-icon-inactive: rgba(107, 114, 128, 0.3);
+/* use tailwind text-[color:--color-brand] */
+  
+  /* Accent colors */
+  --color-accent: #007664;
+  --color-accent-hover: #006654;
+  
+  /* Interactive states */
+  --color-hover: rgba(0, 0, 0, 0.05);
+  --color-focus-ring: rgba(166, 151, 100, 0.2);
+  
+  /* Accessibility */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 600;
+  --icon-opacity: 0.5;
+  
+  /* Animation */
+  --transition-base: 200ms ease-in-out;
+}
+
+/* Driver.js customization */
+.driver-popover {
+  background: var(--color-bg-primary) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.driver-popover-title {
+  color: var(--color-text-primary) !important;
+}
+
+.driver-popover-description {
+  color: var(--color-text-secondary) !important;
+}
+
+.driver-popover-footer {
+  background: var(--color-bg-secondary) !important;
+}
+
+.driver-popover-btn {
+  background: var(--color-brand) !important;
+  color: white !important;
+}
+
+.driver-popover-btn:hover {
+  background: var(--color-brand-hover) !important;
+}
+
+/* Dark mode overrides */
+.dark {
+  --color-bg-primary: #1a1a1a;
+  --color-bg-secondary: #262626;
+  --color-text-primary: #e5e7eb;
+  --color-text-secondary: #9ca3af;
+  --color-border: #404040;
+  --color-input-bg: #2d2d2d;
+  --color-modal-bg: #000000; 
+  --color-modal-overlay: rgba(0, 0, 0, 0.5);
+  --color-modal-text: #e5e7eb;
+  
+  --color-brand: #D4C9A6;
+  --color-brand-hover: #E5DCC2;
+  --color-brand-light: #3D3424;
+  --color-icon-inactive: rgba(229, 231, 235, 0.2);
+  
+  --color-hover: rgba(255, 255, 255, 0.05);
+  --color-focus-ring: rgba(196, 182, 140, 0.15);
+
+  /* Input colors */
+  --ag-input-focus-border-color: var(--color-brand);
+  --ag-input-focus-box-shadow: 0 0 0 2px var(--color-focus-ring);
+
+  /* Component overrides for dark mode */
+  --header-bg: var(--color-bg-primary);
+  --card-bg: var(--color-bg-secondary);
+  /* --modal-bg: var(--color-bg-primary);  not working */ 
+  --filter-bg: var(--color-bg-secondary);
+  --debug-bg: var(--color-bg-primary);
+  --game-control-bg: var(--color-bg-primary);
+  --player-stats-bg: var(--color-bg-primary);
+  --score-debug-bg: var(--color-bg-primary);
+}
+
+/* High contrast overrides */
+.high-contrast {
+  --font-weight-normal: 500;
+  --font-weight-medium: 600;
+  --font-weight-bold: 700;
+  --icon-opacity: 1;
+  
+  --color-brand: #8A7B4E;
+  --color-brand-hover: #6A5D3B;
+  --color-text-secondary: #4b5563;
+}
+
+/* Dark + High contrast */
+.dark.high-contrast {
+  --color-brand: #D4C9A6;
+  --color-brand-hover: #E5DCC2;
+  --color-text-secondary: #d1d5db;
+}
+
+/*
+  Component Styles
+  ---------------
+  Use CSS custom properties for consistent theming across components.
+  To add new components:
+  1. Create a new section with component name
+  2. Use theme tokens for colors and properties
+  3. Add dark/high-contrast overrides if needed
+*/
+
+/* AG Grid Theme Customization */
+.ag-theme-alpine {
+  --ag-font-family: inherit;
+  --ag-font-size: 1.125rem;
+  --ag-header-background-color: var(--color-bg-secondary);
+  --ag-odd-row-background-color: var(--color-bg-primary);
+  --ag-row-hover-color: var(--color-hover);
+  --ag-selected-row-background-color: var(--color-focus-ring);
+  --ag-row-border-color: var(--color-border);
+  --ag-header-column-separator-display: none;
+  --ag-grid-size: 6px;
+  --ag-cell-horizontal-padding: 1.25rem;
+}
+
+.dark .ag-theme-alpine {
+  --ag-background-color: var(--color-bg-primary);
+  --ag-foreground-color: var(--color-text-primary);
+  --ag-header-foreground-color: var(--color-text-primary);
+  --ag-data-color: var(--color-text-primary);
+  --ag-border-color: var(--color-border);
+  --ag-row-border-color: var(--color-border);
+  --ag-header-background-color: var(--color-bg-secondary);
+  --ag-odd-row-background-color: var(--color-bg-primary);
+  --ag-row-hover-color: var(--color-hover);
+  --ag-selected-row-background-color: var(--color-focus-ring);
+  --ag-input-border-color: var(--color-border);
+  --ag-input-focus-border-color: var(--color-brand);
+}
+
+/* Header and Labels */
+.ag-header-cell-label {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+/* Rows and Cells */
+.ag-row {
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color var(--transition-base);
+}
+
+.ag-row-hover {
+  background-color: var(--color-hover) !important;
+}
+
+.ag-row-group {
+  font-weight: var(--font-weight-bold);
+  background-color: var(--color-brand) !important;
+  color: white !important;
+}
+
+.ag-row-group .ag-cell {
+  background-color: transparent !important;
+}
+
+.ag-row-group .ag-group-value {
+  color: white !important;
+  font-weight: 500;
+  font-size: 1.125rem;
+}
+
+.ag-row {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ag-cell-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  gap: 8px;
+}
+
+/* Layout */
+.container {
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-weight: var(--font-weight-normal);
+}
+
+/* Nominee Styling */
+.nominee-emoji {
+  font-size: 175%;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+.film-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Interactive Elements */
+.button-base {
+  transition: all var(--transition-base);
+  font-weight: var(--font-weight-medium);
+}
+
+.button-primary {
+  background-color: var(--color-brand);
+  color: white;
+}
+
+.button-primary:hover {
+  background-color: var(--color-brand-hover);
+}
+
+/* Back to Top Button */
+.back-to-top {
+  transition: all var(--transition-base);
+  opacity: 0;
+  transform: translateY(1rem);
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animated Title Styles */
+.title-text,
+.scoring-title {
+  position: relative !important;
+  display: inline-block !important;
+  font-size: 2.25rem !important;
+  font-weight: 300 !important;
+  color: var(--color-brand) !important;
+  cursor: pointer !important;
+  overflow: hidden !important;
+  min-height: 3em !important;
+  transform-style: preserve-3d !important;
+  perspective: 1000px !important;
+  will-change: transform !important;
+  backface-visibility: hidden !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+.dark .title-text,
+.dark .scoring-title {
+  color: var(--color-brand) !important;
+}
+
+.letter {
+  display: inline-block !important;
+  transform-origin: 50% 50% !important;
+  transform-style: preserve-3d !important;
+  backface-visibility: hidden !important;
+  will-change: transform !important;
+  margin: 0 -0.02em !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Prevent text flash during animation */
+.title-text.animating,
+.scoring-title.animating {
+  opacity: 0 !important;
+}
+
+/* Ensure letters are visible during animation */
+.title-text.animating .letter,
+.scoring-title.animating .letter {
+  opacity: 1 !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  .nominee-emoji {
+    font-size: 1.5em;
+    line-height: 1;
+  }
+
+  .text-base {
+    font-size: 0.9375rem;
+  }
+
+  .text-lg {
+    font-size: 1.125rem;
+  }
+
+  .text-xl {
+    font-size: 1.25rem;
+  }
+
+  .text-2xl {
+    font-size: 1.5rem;
+  }
+
+  .text-3xl {
+    font-size: 1.875rem;
+  }
+}

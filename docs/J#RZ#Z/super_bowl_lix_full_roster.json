@@ -1,0 +1,54 @@
+{
+    "Kansas City Chiefs": [
+        {
+            "jersey_number": 15,
+            "name": "Patrick Mahomes",
+            "position_abbr": "QB",
+            "position_full": "Quarterback",
+            "seasons_with_team": 6,
+            "fun_fact": "Patrick Mahomes was a college baseball pitcher before focusing on football."
+        },
+        {
+            "jersey_number": 87,
+            "name": "Travis Kelce",
+            "position_abbr": "TE",
+            "position_full": "Tight End",
+            "seasons_with_team": 11,
+            "fun_fact": "Travis Kelce hosts a podcast with his brother, who plays for the Eagles."
+        },
+        {
+            "jersey_number": 95,
+            "name": "Chris Jones",
+            "position_abbr": "DT",
+            "position_full": "Defensive Tackle",
+            "seasons_with_team": 8,
+            "fun_fact": "Chris Jones once had a wardrobe malfunction during the NFL Combine 40-yard dash."
+        }
+    ],
+    "Philadelphia Eagles": [
+        {
+            "jersey_number": 1,
+            "name": "Jalen Hurts",
+            "position_abbr": "QB",
+            "position_full": "Quarterback",
+            "seasons_with_team": 4,
+            "fun_fact": "Jalen Hurts can squat over 600 pounds, an impressive feat for any athlete."
+        },
+        {
+            "jersey_number": 62,
+            "name": "Jason Kelce",
+            "position_abbr": "C",
+            "position_full": "Center",
+            "seasons_with_team": 13,
+            "fun_fact": "Jason Kelce gave an iconic speech at the Eagles' Super Bowl victory parade in 2018."
+        },
+        {
+            "jersey_number": 7,
+            "name": "Haason Reddick",
+            "position_abbr": "LB",
+            "position_full": "Linebacker",
+            "seasons_with_team": 2,
+            "fun_fact": "Haason Reddick was a walk-on at Temple University before becoming a first-round NFL draft pick."
+        }
+    ]
+}
