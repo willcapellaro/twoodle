@@ -8,12 +8,14 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="bg-black text-white flex flex-col items-center justify-center h-screen text-center">
+    <div class="text-2xl italic mb-2">Thank you, friends!</div>
     <div class="text-4xl font-bold mb-4 flex items-center gap-2">
         <i data-lucide="clapperboard" class="w-12 h-12"></i>
         Ballot Bash!
     </div>
     
     <div class="text-xl mb-6">The Oscars are coming... but not yet! 🎭✨</div>
+    <div class="text-lg mb-4">Ballot Bash is the ultimate Oscars ballot voting app, perfect for parties of all sizes! Gather your friends, vote for your favorites, and see who gets it right! 🏆</div>
     <div class="text-lg mb-4">Wait until Thursday evening for the big reveal!</div>
     
     <div id="countdown" class="text-2xl font-mono mb-6"></div>
@@ -22,23 +24,26 @@
         Go to Ballot Bash
     </button>
     
-    <div class="w-full overflow-hidden whitespace-nowrap mt-8 py-2 bg-gray-800 text-lg font-bold animate-marquee">
-        🎬 Best Picture Nominees: 
-        🎸 A Complete Unknown | ⛪️ Conclave | 🐛 Dune: Part Two | 💃 Emilia Pérez | 👤 I'm Still Here | 
-        🪙 Nickel Boys | 🏗️ The Brutalist | 🧪 The Substance | 🧹 Wicked
+    <div class="w-full overflow-hidden bg-gray-800 text-lg font-bold">
+        <div class="marquee">
+            🎬 Best Picture Nominees: 
+            🎸 A Complete Unknown | ⛪️ Conclave | 🐛 Dune: Part Two | 💃 Emilia Pérez | 👤 I'm Still Here | 
+            🪙 Nickel Boys | 🏗️ The Brutalist | 🧪 The Substance | 🧹 Wicked
+        </div>
     </div>
     
     <script>
         // Countdown Timer
         function updateCountdown() {
-            const targetDate = new Date("Feb 16, 2025 14:00:00 CST").getTime();
+            const targetDate = new Date("Mar 2, 2025 14:00:00 CST").getTime();
             const now = new Date().getTime();
             const difference = targetDate - now;
             
             const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
             
-            document.getElementById("countdown").textContent = `${hours} Hours, ${minutes} Minutes until showtime!`;
+            document.getElementById("countdown").textContent = `${hours} Hours, ${minutes} Minutes, ${seconds} Seconds until showtime!`;
         }
         
         setInterval(updateCountdown, 1000);
@@ -53,8 +58,11 @@
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
-        .animate-marquee {
+        .marquee {
             display: inline-block;
+            white-space: nowrap;
+            padding: 10px 0;
+            width: 100%;
             animation: marquee 15s linear infinite;
         }
     </style>
