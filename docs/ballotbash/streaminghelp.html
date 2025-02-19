@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oscar Nominated Films on Streaming</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+</head>
+<body class="bg-black text-white flex flex-col items-center p-6">
+    <button onclick="window.location.href='index.html'" class="mb-4 bg-gray-700 px-4 py-2 rounded">⬅ Back to Ballot Bash</button>
+    
+    <h1 class="text-3xl font-bold mb-6">Oscar Nominated Films Available on Streaming</h1>
+    
+    <div class="w-full max-w-2xl">
+        <div class="mb-2 text-sm text-gray-400">Last updated: February 2025</div>
+        
+        <div class="bg-red-700 text-white p-4 rounded" x-data="{ open: true }">
+            <button @click="open = !open" class="w-full text-left text-xl font-bold flex justify-between items-center">
+                Netflix <span :class="{'rotate-180': open}" class="transition-transform">▼</span>
+            </button>
+            <div x-show="open" class="mt-2">
+                <ul class="list-disc pl-6">
+                    <li>Dune: Part Two (2024)</li>
+                    <li>Emilia Pérez (2024)</li>
+                    <li>Wallace & Gromit: Vengeance Most Fowl (2024)</li>
+                    <li>Maria (2024)</li>
+                    <li>Anuja (2024)</li>
+                    <li>The Only Girl in the Orchestra (2023)</li>
+                    <li>The Six Triple Eight (2024)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bg-blue-900 text-white p-4 rounded mt-4" x-data="{ open: false }">
+            <button @click="open = !open" class="w-full text-left text-xl font-bold flex justify-between items-center">
+                Max <span :class="{'rotate-180': open}" class="transition-transform">▼</span>
+            </button>
+            <div x-show="open" class="mt-2">
+                <ul class="list-disc pl-6">
+                    <li>Dune: Part Two (2024)</li>
+                    <li>A Different Man (2024)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bg-green-600 text-white p-4 rounded mt-4" x-data="{ open: false }">
+            <button @click="open = !open" class="w-full text-left text-xl font-bold flex justify-between items-center">
+                Hulu <span :class="{'rotate-180': open}" class="transition-transform">▼</span>
+            </button>
+            <div x-show="open" class="mt-2">
+                <ul class="list-disc pl-6">
+                    <li>A Real Pain (2024)</li>
+                    <li>Sugarcane (2024)</li>
+                    <li>Alien: Romulus (2024)</li>
+                    <li>Kingdom of the Planet of the Apes (2024)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bg-yellow-600 text-black p-4 rounded mt-4" x-data="{ open: false }">
+            <button @click="open = !open" class="w-full text-left text-xl font-bold flex justify-between items-center">
+                Amazon Prime Video <span :class="{'rotate-180': open}" class="transition-transform">▼</span>
+            </button>
+            <div x-show="open" class="mt-2">
+                <ul class="list-disc pl-6">
+                    <li>Flow (1995)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bg-blue-500 text-white p-4 rounded mt-4" x-data="{ open: false }">
+            <button @click="open = !open" class="w-full text-left text-xl font-bold flex justify-between items-center">
+                Peacock Premium <span :class="{'rotate-180': open}" class="transition-transform">▼</span>
+            </button>
+            <div x-show="open" class="mt-2">
+                <ul class="list-disc pl-6">
+                    <li>Conclave (2024)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bg-blue-800 text-white p-4 rounded mt-4" x-data="{ open: false }">
+            <button @click="open = !open" class="w-full text-left text-xl font-bold flex justify-between items-center">
+                Paramount Plus <span :class="{'rotate-180': open}" class="transition-transform">▼</span>
+            </button>
+            <div x-show="open" class="mt-2">
+                <ul class="list-disc pl-6">
+                    <li>Gladiator II (2024)</li>
+                    <li>I Am Ready, Warden (2024)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
