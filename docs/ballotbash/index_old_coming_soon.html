@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ballot Bash - Redirecting...</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-black text-white flex flex-col items-center justify-center h-screen text-center">
+    <div class="text-2xl italic mb-2">Thank you, friends!</div>
+    <div class="text-4xl font-bold mb-4 flex items-center gap-2">
+        <i data-lucide="clapperboard" class="w-12 h-12"></i>
+        Ballot Bash!
+    </div>
+    
+    <div class="text-xl mb-6">The Oscars are coming... but not yet! 🎭✨</div>
+    <div class="text-lg mb-4">Ballot Bash is the ultimate Oscars ballot voting app, perfect for parties of all sizes! Gather your friends, vote for your favorites, and see who gets it right! 🏆</div>
+    <div class="text-lg mb-4">Wait until Thursday evening for the big reveal!</div>
+    
+    <div id="countdown" class="text-2xl font-mono mb-6"></div>
+    
+    <button class="bg-gray-700 text-white py-2 px-6 rounded opacity-50 cursor-not-allowed" disabled>
+        Go to Ballot Bash
+    </button>
+    
+    <a href="streaminghelp.html" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow-lg transition duration-300">
+        🎬 Find Where to Watch Nominees!
+    </a>
+    
+    <div class="w-full overflow-hidden bg-gray-800 text-lg font-bold mt-6">
+        <div class="marquee">
+            🎬 Best Picture Nominees: 
+            🎸 A Complete Unknown | ⛪️ Conclave | 🐛 Dune: Part Two | 💃 Emilia Pérez | 👤 I'm Still Here | 
+            🪙 Nickel Boys | 🏗️ The Brutalist | 🧪 The Substance | 🧹 Wicked
+        </div>
+    </div>
+    
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const targetDate = new Date("Mar 2, 2025 14:00:00 CST").getTime();
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+            
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            
+            document.getElementById("countdown").textContent = `${days} Days, ${hours} Hours, ${minutes} Minutes, ${seconds} Seconds until showtime!`;
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Load Lucide Icons
+        lucide.createIcons();
+    </script>
+    
+    <style>
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .marquee {
+            display: inline-block;
+            white-space: nowrap;
+            padding: 10px 0;
+            width: 100%;
+            animation: marquee 15s linear infinite;
+        }
+    </style>
+</body>
+</html>

@@ -3,69 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ballot Bash - Redirecting...</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body class="bg-black text-white flex flex-col items-center justify-center h-screen text-center">
-    <div class="text-2xl italic mb-2">Thank you, friends!</div>
-    <div class="text-4xl font-bold mb-4 flex items-center gap-2">
-        <i data-lucide="clapperboard" class="w-12 h-12"></i>
-        Ballot Bash!
-    </div>
-    
-    <div class="text-xl mb-6">The Oscars are coming... but not yet! 🎭✨</div>
-    <div class="text-lg mb-4">Ballot Bash is the ultimate Oscars ballot voting app, perfect for parties of all sizes! Gather your friends, vote for your favorites, and see who gets it right! 🏆</div>
-    <div class="text-lg mb-4">Wait until Thursday evening for the big reveal!</div>
-    
-    <div id="countdown" class="text-2xl font-mono mb-6"></div>
-    
-    <button class="bg-gray-700 text-white py-2 px-6 rounded opacity-50 cursor-not-allowed" disabled>
-        Go to Ballot Bash
-    </button>
-    
-    <div class="w-full overflow-hidden bg-gray-800 text-lg font-bold">
-        <div class="marquee">
-            🎬 Best Picture Nominees: 
-            🎸 A Complete Unknown | ⛪️ Conclave | 🐛 Dune: Part Two | 💃 Emilia Pérez | 👤 I'm Still Here | 
-            🪙 Nickel Boys | 🏗️ The Brutalist | 🧪 The Substance | 🧹 Wicked
-        </div>
-    </div>
-    
-    <script>
-        // Countdown Timer
-        function updateCountdown() {
-            const targetDate = new Date("Mar 2, 2025 14:00:00 CST").getTime();
-            const now = new Date().getTime();
-            const difference = targetDate - now;
-            
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-            
-            document.getElementById("countdown").textContent = `${days} Days, ${hours} Hours, ${minutes} Minutes, ${seconds} Seconds until showtime!`;
-        }
-        
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-        
-        // Load Lucide Icons
-        lucide.createIcons();
-    </script>
-    
+    <title>Ballot Bash Has Moved</title>
+    <link rel="stylesheet" href="/index.css">
     <style>
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            font-family: 'Courier New', Courier, monospace;
         }
-        .marquee {
-            display: inline-block;
-            white-space: nowrap;
-            padding: 10px 0;
-            width: 100%;
-            animation: marquee 15s linear infinite;
+        .container {
+            max-width: 600px;
+            padding: 2rem;
+            border-radius: 12px;
+            background-color: var(--color-bg-secondary);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .headline {
+            font-size: 2rem;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: 1rem;
+        }
+        .countdown {
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-medium);
+            color: var(--color-brand);
+        }
+        .button {
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: var(--font-weight-medium);
+            background-color: var(--color-brand);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color var(--transition-base);
+        }
+        .button:hover {
+            background-color: var(--color-brand-hover);
         }
     </style>
+    <script>
+        let countdown = 5;
+        function updateCountdown() {
+            document.getElementById('countdown').innerText = countdown;
+            if (countdown === 0) {
+                window.location.href = "http://ballotbash.vote/";
+            } else {
+                countdown--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        window.onload = updateCountdown;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="headline">Ballot Bash Has Moved!</h1>
+        <p>You'll be redirected to our new home in <span id="countdown" class="countdown">5</span> seconds.</p>
+        <button class="button" onclick="window.location.href='http://ballotbash.vote/'">Go Now</button>
+    </div>
 </body>
 </html>
