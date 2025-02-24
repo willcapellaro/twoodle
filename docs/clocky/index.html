@@ -3,207 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>12-Hour Clock with Schedule</title>
+  <title>Twoodle - Priority Matrix</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-  <style>
-    :root {
-     --color-apply-jobs: salmon; /* Red for Apply for Jobs */
-      --color-network: cornflowerblue;    /* Green for Networking */
-      --color-creative: palegreen;   /* Blue for Creative Work */
-      --color-dark: #123;   /* Blue for Creative Work */
-      --color-medium: #888;   /* Blue for Creative Work */
-      --color-white: #eef4ee;   /* Blue for Creative Work */
-
-
-
-    }
-    body {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      font-family: "Jost", serif;
-      font-optical-sizing: auto;
-      background-color: var(--color-white);
-    }
-    #container {
-      margin-top: auto;
-      margin-bottom: auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-column-gap: 10em;
-    }
-    .clock {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      border: 5px solid var(--color-medium);
-      border-radius: 50%;
-      background: var(--color-white);
-    }
-    .clock .center {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: var(--color-medium);
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-    }
-    .hand {
-      position: absolute;
-      width: 50%;
-      height: 6px;
-      background: var(--color-medium);
-      top: 50%;
-      left: 50%;
-      transform-origin: 100%;
-      transform: translate(-100%, -50%) rotate(90deg);
-      border-radius: 5px;
-    }
-    .hour {
-      height: 8px;
-      background: var(--color-dark);
-      width: 30%;
-    }
-    .minute {
-      height: 6px;
-      background: var(--color-medium);
-      width: 50%;
-    }
-    .second {
-      height: 2px;
-      background: var(--color-medium);
-    }
-    .digital-readout {
-      position: absolute;
-      top: 60%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: var(--color-medium);
-      opacity: .4;
-      font-weight: bold;
-      font-size: 16px;
-      font-family: "Jost", serif;
-      font-optical-sizing: auto;
-      pointer-events: none;
-      mix-blend-mode: difference;
-    }
-    .legend {
-      margin-top: 20px;
-      text-align: center;
-    }
-    .legend div {
-      margin-bottom: 5px;
-      font-size: 14px;
-    }
-    .legend span {
-      display: inline-block;
-      width: 15px;
-      height: 15px;
-      margin-right: 5px;
-      border-radius: 50%;
-    }
-    .notepad {
-  margin-left: 20px; /* Space between clock and notepad */
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  font-family: "Jost", serif;
-  font-optical-sizing: auto;
-}
-
-textarea#notepad {
-  width: 100%;
-  font-family: "Jost", serif;
-  font-optical-sizing: auto;
-  height: 100%;
-  padding: calc((100% - 1.5em) / 2) 10px; /* Vertically center text */
-  box-sizing: border-box; /* Ensures padding doesn't affect dimensions */
-  font-size: 18px;
-  line-height: 1.5; /* Ensure consistent line spacing */
-  resize: none; /* Disable resizing */
-  background: none;
-  border: none;
-  outline: none; /* Remove focus outline */
-  overflow: hidden; /* Prevent scrollbars */
-}
-  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 <body>
-  <div id="container">
-    <div>
-      <div class="clock">
-        <svg width="300" height="300" viewBox="0 0 300 300" style="position: absolute;">
-          <!-- Schedule segments -->
-          <path d="M150,150 L150,10 A140,140 0 0,1 290,150 Z" style="fill: var(--color-apply-jobs);"></path>
-          <path d="M150,150 L290,150 A140,140 0 0,1 150,290 Z" style="fill: var(--color-network);"></path> <!-- 12 PM - 3 PM -->
-          <path d="M150,150 L150,290 A140,140 0 0,1 10,150 Z" style="fill: var(--color-creative);"></path> <!-- 3 PM - 5 PM -->
-            <!-- Central white circle to mask inner part of arcs -->
-          <circle cx="150" cy="150" r="100" fill="white"></circle>
+  <div class="container">
+    <header class="site-header">
+      <div class="beta-notice">
+        <p>🚧 Welcome to Twoodle (Beta) - We're still building this! This is a rough approximation of where we're headed. Thanks for being an early explorer! 🚧</p>
+      </div>
+      <h1>Twoodle <button class="reroll-btn" onclick="rerollTagline()"><i class="bi bi-arrow-clockwise"></i></button></h1>
+      <div class="tagline">
+        <span id="typed"></span>
+      </div>
+      <nav class="main-nav">
+        <button class="nav-tab active" data-tab="matrix">Matrix</button>
+        <button class="nav-tab" data-tab="prioritize">Prioritize</button>
+      </nav>
+    </header>
 
-        </svg>
-        <div class="center"></div>
-        <div class="hand hour" id="hour-hand"></div>
-        <div class="hand minute" id="minute-hand"></div>
-        <div class="hand second" id="second-hand"></div>
-        <div class="digital-readout" id="digital-readout">12:00:00</div>
-      </div>
-      <div class="legend">
-        <div><span style="background: var(--color-apply-jobs);"></span> Apply for Jobs (9 AM - 12 PM)</div>
-        <div><span style="background: var(--color-network);"></span> Network (12 PM - 3 PM)</div>
-        <div><span style="background: var(--color-creative);"></span> Creative & Portfolio (3 PM - 6 PM)</div>
+    <div class="tab-content active" id="matrix-tab">
+      <div class="matrix">
+        <div class="quadrant" id="q1" data-quadrant="urgent-important">
+          <h2>Delegate</h2>
+          <div class="items"></div>
+        </div>
+        <div class="quadrant" id="q2" data-quadrant="not-urgent-important">
+          <h2>Do Now</h2>
+          <div class="items"></div>
+        </div>
+        <div class="quadrant" id="q3" data-quadrant="urgent-not-important">
+          <h2>Rethink</h2>
+          <div class="items"></div>
+        </div>
+        <div class="quadrant" id="q4" data-quadrant="not-urgent-not-important">
+          <h2>Schedule</h2>
+          <div class="items"></div>
+        </div>
       </div>
     </div>
-    <div class="notepad">
-      <textarea id="notepad" placeholder="Write your notes here..."></textarea>
+
+    <div class="tab-content" id="prioritize-tab">
+      <div class="criteria-tabs">
+        <button class="criteria-tab active" data-criteria="urgency">Urgency</button>
+        <button class="criteria-tab" data-criteria="impact">Impact</button>
+        <button class="criteria-tab" data-criteria="ease">Ease</button>
+        <button class="criteria-tab" data-criteria="advantage">Advantage</button>
+        <button class="criteria-tab" data-criteria="engagement">Engagement</button>
+      </div>
+      
+      <div class="criteria-content active" id="urgency-list">
+        <h3>Sort by Urgency</h3>
+        <div class="sortable-list"></div>
+      </div>
+      <div class="criteria-content" id="impact-list">
+        <h3>Sort by Impact</h3>
+        <div class="sortable-list"></div>
+      </div>
+      <div class="criteria-content" id="ease-list">
+        <h3>Sort by Ease</h3>
+        <div class="sortable-list"></div>
+      </div>
+      <div class="criteria-content" id="advantage-list">
+        <h3>Sort by Advantage</h3>
+        <div class="sortable-list"></div>
+      </div>
+      <div class="criteria-content" id="engagement-list">
+        <h3>Sort by Engagement</h3>
+        <div class="sortable-list"></div>
+      </div>
     </div>
+
+    <div class="floating-add">
+      <input type="text" id="newItem" placeholder="Add new item...">
+      <button onclick="addItem()">Add</button>
+    </div>
+
+    <footer class="site-footer">
+      <p>Built with 💙 by the Twoodle team</p>
+      <p>© 2025 Twoodle - A better way to prioritize</p>
+      <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
+      </div>
+    </footer>
   </div>
-  <script>
-    function updateClock() {
-      const now = new Date();
-      // Get CST time by adjusting UTC offset
-      const cstOffset = -6; // CST is UTC-6
-      const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-      const cstDate = new Date(utc + 3600000 * cstOffset);
 
-      const hours = cstDate.getHours() % 12 || 12;
-      const minutes = cstDate.getMinutes();
-      const seconds = cstDate.getSeconds();
-
-      const hourDegree = (hours * 30) + (minutes * 0.5); // 360° / 12 = 30°
-      const minuteDegree = (minutes * 6) + (seconds * 0.1); // 360° / 60 = 6°
-      const secondDegree = seconds * 6; // 360° / 60 = 6°
-
-      // Rotate hands with corrected geometry
-      document.getElementById('hour-hand').style.transform = `translate(-100%, -50%) rotate(${hourDegree + 90}deg)`;
-      document.getElementById('minute-hand').style.transform = `translate(-100%, -50%) rotate(${minuteDegree + 90}deg)`;
-      document.getElementById('second-hand').style.transform = `translate(-100%, -50%) rotate(${secondDegree + 90}deg)`;
-
-      // Update digital readout
-      const digitalTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-      document.getElementById('digital-readout').textContent = digitalTime;
-    }
-
-    setInterval(updateClock, 1000);
-    updateClock(); // Initial call to set the clock immediately
-
-    // Get a reference to the notepad textarea
-const notepad = document.getElementById('notepad');
-
-    // Load saved notes from localStorage
-    notepad.value = localStorage.getItem('notepadContent') || '';
-
-    // Save notes to localStorage on input
-    notepad.addEventListener('input', () => {
-      localStorage.setItem('notepadContent', notepad.value);
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
