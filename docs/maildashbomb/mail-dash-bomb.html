@@ -1,0 +1,132 @@
+Random Mailto Form
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Composer</title>
+    <script>
+        function loadEmails() {
+            const savedEmails = localStorage.getItem("savedEmails");
+            if (savedEmails) {
+                document.getElementById("emails").value = savedEmails;
+            }
+        }
+        function generateDashes() {
+            const dashChars = ['-', '–', '—'];
+            return Array.from({length: Math.floor(Math.random() * 20) + 10}, () => 
+                dashChars[Math.floor(Math.random() * dashChars.length)]).join('');
+        }
+
+        function generateMailtoLinks() {
+            const emailField = document.getElementById("emails").value;
+            localStorage.setItem("savedEmails", emailField);
+            const emails = emailField.split(',').map(e => e.trim()).filter(e => e);
+            const buttonsContainer = document.getElementById("buttons");
+            buttonsContainer.innerHTML = "";
+            
+            let mailtoLinks = [];
+
+            for (let i = 0; i < 10; i++) {
+                let subject = generateDashes();
+                let body = generateDashes();
+                let mailto = `mailto:${emails.join(',')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                
+                let button = document.createElement("button");
+                button.textContent = `Compose Email ${i + 1}`;
+                button.onclick = () => window.open(mailto, '_blank');
+                
+                buttonsContainer.appendChild(button);
+                buttonsContainer.appendChild(document.createElement("br"));
+                mailtoLinks.push(mailto);
+            }
+
+            document.getElementById("composeAll").onclick = function() {
+                function openMailtoLinks(index) {
+                    if (index < mailtoLinks.length) {
+                        window.open(mailtoLinks[index], '_blank');
+                        setTimeout(() => openMailtoLinks(index + 1), 500);
+                    }
+                }
+                openMailtoLinks(0);
+            };
+        }
+    </script>
+</head>
+<body>
+    <h2>Email Composer</h2>
+    <label for="emails">Enter email addresses (comma-separated):</label><br>
+    <input type="text" id="emails" onload="loadEmails()" placeholder="email1@example.com, email2@example.com"><br><br>
+    <button onclick="generateMailtoLinks()">Generate Mailto Links</button>
+    <button id="composeAll">Compose All</button>
+    <br><br>
+    <div id="buttons"></div>
+</body>
+</html>
+
+

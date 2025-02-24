@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mailto Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .button-container { margin-top: 20px; }
+        button { margin: 5px; padding: 10px; cursor: pointer; }
+        .clicked { background-color: brown; color: white; }
+    </style>
+</head>
+<body>
+    <h2>Addresses</h2>
+    <textarea id="emailAddresses" rows="4" cols="50" placeholder="Enter multiple emails, separated by commas"></textarea>
+    <br>
+    <button onclick="saveEmails()">Save Emails</button>
+    
+    <h2>Message</h2>
+    <button onclick="generateButtons()">Generate Buttons</button>
+    <div class="button-container" id="buttonContainer"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadEmails();
+        });
+
+        function saveEmails() {
+            const emails = document.getElementById("emailAddresses").value;
+            localStorage.setItem("savedEmails", emails);
+        }
+
+        function loadEmails() {
+            const savedEmails = localStorage.getItem("savedEmails");
+            if (savedEmails) {
+                document.getElementById("emailAddresses").value = savedEmails;
+            }
+        }
+
+        function generateRandomDashes() {
+            const dashTypes = ['-', '–', '—'];
+            return Array.from({ length: 20 }, () => dashTypes[Math.floor(Math.random() * dashTypes.length)]).join('');
+        }
+
+        function generateButtons() {
+            const emails = document.getElementById("emailAddresses").value.split(',').map(e => e.trim()).filter(e => e);
+            const buttonContainer = document.getElementById("buttonContainer");
+            buttonContainer.innerHTML = "";
+
+            for (let i = 0; i < 10; i++) {
+                const randomText = generateRandomDashes();
+                const emailStr = emails.length ? `mailto:${emails.join(',')}?subject=${encodeURIComponent(randomText)}&body=${encodeURIComponent(randomText)}` : "#";
+                
+                const button = document.createElement("button");
+                button.textContent = `Email ${i + 1}`;
+                button.onclick = function () {
+                    const newPage = window.open("", "_blank");
+                    newPage.document.write(`
+                        <html>
+                        <head>
+                            <title>Email Link</title>
+                            <style>
+                                body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+                                .email-button { font-size: 30vh; padding: 20px; background-color: blue; color: white; border: none; cursor: pointer; }
+                            </style>
+                        </head>
+                        <body>
+                            <h1>Email Link</h1>
+                            <button class="email-button" onclick="window.location.href='${emailStr}'">Open Email</button>
+                        </body>
+                        </html>
+                    `);
+                };
+                buttonContainer.appendChild(button);
+            }
+        }
+    </script>
+</body>
+</html>
