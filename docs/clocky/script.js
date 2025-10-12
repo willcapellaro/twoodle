@@ -172,7 +172,16 @@ function setupDragAndDrop() {
       group: 'matrix',
       animation: 150,
       ghostClass: 'dragging',
-      onEnd: saveAll
+      onEnd: (evt) => {
+        // Update items object from current DOM state
+        Object.keys(items).forEach(quadrant => {
+          const quadrantEl = document.querySelector(`[data-quadrant="${quadrant}"] .items`);
+          items[quadrant] = Array.from(quadrantEl.children).map(item => 
+            item.textContent.replace(' ×', '')
+          );
+        });
+        saveAll();
+      }
     });
   });
 
@@ -186,7 +195,14 @@ function setupDragAndDrop() {
       },
       animation: 150,
       ghostClass: 'dragging',
-      onEnd: updateRankings
+      onEnd: (evt) => {
+        const criteria = evt.target.closest('.criteria-content').id.replace('-list', '');
+        rankings[criteria] = Array.from(evt.target.children).map(item => 
+          item.textContent.replace(' ×', '')
+        );
+        saveAll();
+        autoAssignQuadrants();
+      }
     });
   });
 }

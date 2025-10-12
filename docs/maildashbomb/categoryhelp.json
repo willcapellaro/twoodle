@@ -1,0 +1,100 @@
+{
+  "categories": [
+    {
+      "title": "Best Picture",
+      "official_definition": "Awarded to the producers of the best motion picture of the year.",
+      "detailed_meaning": "This is the top award of the night, recognizing the film that excels in storytelling, artistic vision, and overall impact. It accounts for direction, acting, screenplay, editing, cinematography, and all other elements that contribute to a film's success.",
+      "how_to_judge": "Consider the overall storytelling, emotional impact, direction, performances, and technical excellence. A Best Picture winner should feel complete and meaningful.",
+      "past_winners": [
+        {"year": 2023, "winner": "Everything Everywhere All at Once"},
+        {"year": 2022, "winner": "CODA"},
+        {"year": 2021, "winner": "Nomadland"}
+      ],
+      "notable_upsets": [
+        {"year": 1999, "description": "‘Shakespeare in Love’ beat ‘Saving Private Ryan’, a controversial win."},
+        {"year": 2005, "description": "‘Crash’ won over ‘Brokeback Mountain’, sparking debate about the Academy's conservatism."}
+      ],
+      "tldr_voting_guide": "Pick the movie that feels like the most complete and meaningful film of the year."
+    },
+    {
+      "title": "Best Director",
+      "official_definition": "Awarded to the director of the best motion picture of the year.",
+      "detailed_meaning": "This award recognizes the vision and execution of a director in bringing a film to life. It rewards storytelling, technical innovation, and artistic direction.",
+      "how_to_judge": "Look at how well the director guided the story, performances, and technical aspects to create a cohesive and impactful film.",
+      "past_winners": [
+        {"year": 2023, "winner": "Daniel Kwan & Daniel Scheinert (Everything Everywhere All at Once)"},
+        {"year": 2022, "winner": "Jane Campion (The Power of the Dog)"},
+        {"year": 2021, "winner": "Chloé Zhao (Nomadland)"}
+      ],
+      "notable_upsets": [
+        {"year": 1999, "description": "Steven Spielberg (‘Saving Private Ryan’) lost Best Picture but won Best Director."},
+        {"year": 2019, "description": "Alfonso Cuarón (‘Roma’) won, but ‘Green Book’ took Best Picture."}
+      ],
+      "tldr_voting_guide": "Pick the director who shaped the movie with the strongest vision and execution."
+    },
+    {
+      "title": "Best Actor",
+      "official_definition": "Awarded for the best performance by an actor in a leading role.",
+      "detailed_meaning": "This award recognizes an actor who delivered an outstanding leading performance, carrying the weight of the film’s emotional and narrative journey.",
+      "how_to_judge": "Evaluate the depth, transformation, emotional weight, and authenticity of the performance.",
+      "past_winners": [
+        {"year": 2023, "winner": "Brendan Fraser (The Whale)"},
+        {"year": 2022, "winner": "Will Smith (King Richard)"},
+        {"year": 2021, "winner": "Anthony Hopkins (The Father)"}
+      ],
+      "notable_upsets": [
+        {"year": 1999, "description": "Roberto Benigni (‘Life is Beautiful’) winning over Tom Hanks and Edward Norton."},
+        {"year": 2021, "description": "Anthony Hopkins won over expected winner Chadwick Boseman (‘Ma Rainey’s Black Bottom’)."}
+      ],
+      "tldr_voting_guide": "Vote for the actor who gave the most transformative, memorable performance."
+    },
+    {
+      "title": "Best Actress",
+      "official_definition": "Awarded for the best performance by an actress in a leading role.",
+      "detailed_meaning": "This award recognizes the most compelling lead performance by an actress, one that defines and carries the film.",
+      "how_to_judge": "Consider how deeply the performance resonates, the range shown, and the impact on the story.",
+      "past_winners": [
+        {"year": 2023, "winner": "Michelle Yeoh (Everything Everywhere All at Once)"},
+        {"year": 2022, "winner": "Jessica Chastain (The Eyes of Tammy Faye)"},
+        {"year": 2021, "winner": "Frances McDormand (Nomadland)"}
+      ],
+      "notable_upsets": [
+        {"year": 2002, "description": "Halle Berry became the first Black woman to win, beating heavy competition."},
+        {"year": 2012, "description": "Meryl Streep (‘The Iron Lady’) won over Viola Davis (‘The Help’)."}
+      ],
+      "tldr_voting_guide": "Choose the actress who delivered the most powerful, transformative performance."
+    },
+    {
+      "title": "Best Supporting Actor",
+      "official_definition": "Awarded for the best performance by an actor in a supporting role.",
+      "detailed_meaning": "This award highlights a performance that enhances the film, often stealing scenes or elevating the main characters.",
+      "how_to_judge": "Look for performances that add depth and elevate the overall film without overshadowing the leads.",
+      "past_winners": [
+        {"year": 2023, "winner": "Ke Huy Quan (Everything Everywhere All at Once)"},
+        {"year": 2022, "winner": "Troy Kotsur (CODA)"},
+        {"year": 2021, "winner": "Daniel Kaluuya (Judas and the Black Messiah)"}
+      ],
+      "notable_upsets": [
+        {"year": 1974, "description": "Robert De Niro (‘The Godfather Part II’) won despite limited screen time."},
+        {"year": 2008, "description": "Heath Ledger’s posthumous win for ‘The Dark Knight’ was a cultural moment."}
+      ],
+      "tldr_voting_guide": "Pick the actor who left the biggest impact in a supporting role."
+    },
+    {
+      "title": "Best Supporting Actress",
+      "official_definition": "Awarded for the best performance by an actress in a supporting role.",
+      "detailed_meaning": "This award honors a supporting performance that enhances the film, often bringing nuance and depth.",
+      "how_to_judge": "Consider the impact, depth, and memorability of the supporting performance.",
+      "past_winners": [
+        {"year": 2023, "winner": "Jamie Lee Curtis (Everything Everywhere All at Once)"},
+        {"year": 2022, "winner": "Ariana DeBose (West Side Story)"},
+        {"year": 2021, "winner": "Youn Yuh-jung (Minari)"}
+      ],
+      "notable_upsets": [
+        {"year": 1995, "description": "Mira Sorvino (‘Mighty Aphrodite’) won unexpectedly."},
+        {"year": 2019, "description": "Regina King (‘If Beale Street Could Talk’) won without a SAG nomination."}
+      ],
+      "tldr_voting_guide": "Vote for the actress who gave the most memorable supporting performance."
+    }
+  ]
+}

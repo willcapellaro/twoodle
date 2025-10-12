@@ -230,6 +230,33 @@ h1 {
   color: var(--primary-color);
 }
 
+.item-actions {
+  float: right;
+  display: flex;
+  gap: 8px;
+}
+
+.item-actions span {
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.item-actions .check {
+  color: #4caf50;
+  font-size: 1.2rem;
+}
+
+.item.checked {
+  background: #e8f5e9;
+  border-color: #4caf50;
+}
+
+.revisit-list {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .matrix {

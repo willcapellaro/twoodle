@@ -51,6 +51,8 @@ let items = JSON.parse(localStorage.getItem('matrixItems')) || {
   'not-urgent-not-important': []
 };
 
+let checkedItems = JSON.parse(localStorage.getItem('checkedItems')) || [];
+
 let rankings = JSON.parse(localStorage.getItem('rankings')) || {
   urgency: [],
   impact: [],
@@ -135,20 +137,51 @@ function addItemToQuadrant(text, quadrant) {
   item.draggable = true;
   item.textContent = text;
   
+  // Create actions container
+  const actions = document.createElement('div');
+  actions.className = 'item-actions';
+  
+  // Add check button
+  const checkBtn = document.createElement('span');
+  checkBtn.innerHTML = '<i class="bi bi-check2"></i>';
+  checkBtn.className = 'check';
+  checkBtn.onclick = (e) => {
+    e.stopPropagation();
+    const isChecked = checkedItems.includes(text);
+    if (isChecked) {
+      checkedItems = checkedItems.filter(item => item !== text);
+      item.classList.remove('checked');
+    } else {
+      checkedItems.push(text);
+      item.classList.add('checked');
+    }
+    saveAll();
+    updateRevisitList();
+  };
+  
   // Add delete button
   const deleteBtn = document.createElement('span');
-  deleteBtn.innerHTML = ' ×';
-  deleteBtn.style.float = 'right';
-  deleteBtn.style.cursor = 'pointer';
+  deleteBtn.innerHTML = '×';
   deleteBtn.onclick = (e) => {
     e.stopPropagation();
+    checkedItems = checkedItems.filter(item => item !== text);
     item.remove();
     removeItemFromAll(text);
     saveAll();
     updateAllLists();
+    updateRevisitList();
   };
   
-  item.appendChild(deleteBtn);
+  // Add buttons to actions container
+  actions.appendChild(checkBtn);
+  actions.appendChild(deleteBtn);
+  item.appendChild(actions);
+  
+  // Check if item is in checkedItems
+  if (checkedItems.includes(text)) {
+    item.classList.add('checked');
+  }
+  
   quadrant.appendChild(item);
 }
 
@@ -172,7 +205,16 @@ function setupDragAndDrop() {
       group: 'matrix',
       animation: 150,
       ghostClass: 'dragging',
-      onEnd: saveAll
+      onEnd: (evt) => {
+        // Update items object from current DOM state
+        Object.keys(items).forEach(quadrant => {
+          const quadrantEl = document.querySelector(`[data-quadrant="${quadrant}"] .items`);
+          items[quadrant] = Array.from(quadrantEl.children).map(item => 
+            item.textContent.replace(' ×', '')
+          );
+        });
+        saveAll();
+      }
     });
   });
 
@@ -186,7 +228,14 @@ function setupDragAndDrop() {
       },
       animation: 150,
       ghostClass: 'dragging',
-      onEnd: updateRankings
+      onEnd: (evt) => {
+        const criteria = evt.target.closest('.criteria-content').id.replace('-list', '');
+        rankings[criteria] = Array.from(evt.target.children).map(item => 
+          item.textContent.replace(' ×', '')
+        );
+        saveAll();
+        autoAssignQuadrants();
+      }
     });
   });
 }
@@ -288,11 +337,69 @@ function updateAllLists() {
 function saveAll() {
   localStorage.setItem('matrixItems', JSON.stringify(items));
   localStorage.setItem('rankings', JSON.stringify(rankings));
+  localStorage.setItem('checkedItems', JSON.stringify(checkedItems));
+}
+
+// Update the revisit list
+function updateRevisitList() {
+  const revisitList = document.querySelector('.revisit-list');
+  revisitList.innerHTML = '';
+  
+  checkedItems.forEach(item => {
+    const itemEl = document.createElement('div');
+    itemEl.className = 'item checked';
+    itemEl.textContent = item;
+    
+    const actions = document.createElement('div');
+    actions.className = 'item-actions';
+    
+    const uncheckBtn = document.createElement('span');
+    uncheckBtn.innerHTML = '<i class="bi bi-check2"></i>';
+    uncheckBtn.className = 'check';
+    uncheckBtn.onclick = (e) => {
+      e.stopPropagation();
+      checkedItems = checkedItems.filter(i => i !== item);
+      saveAll();
+      updateRevisitList();
+      updateMatrix();
+    };
+    
+    const deleteBtn = document.createElement('span');
+    deleteBtn.innerHTML = '×';
+    deleteBtn.onclick = (e) => {
+      e.stopPropagation();
+      checkedItems = checkedItems.filter(i => i !== item);
+      removeItemFromAll(item);
+      saveAll();
+      updateAllLists();
+      updateRevisitList();
+    };
+    
+    actions.appendChild(uncheckBtn);
+    actions.appendChild(deleteBtn);
+    itemEl.appendChild(actions);
+    revisitList.appendChild(itemEl);
+  });
 }
 
 // Add keyboard support
 document.getElementById('newItem').addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
+    addItem();
+  }
+});
+
+// Add keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  // Command/Ctrl + A to focus add field
+  if ((e.metaKey || e.ctrlKey) && e.key === 'a') {
+    e.preventDefault(); // Prevent default select all behavior
+    document.getElementById('newItem').focus();
+  }
+  
+  // Command/Ctrl + Enter to submit
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    e.preventDefault();
     addItem();
   }
 });
