@@ -188,12 +188,10 @@ class GridRacer {
       }
     };
     
-    // Test HTTP access first
-    const roadAccessible = await testHttpAccess('public/road.png');
-    const grassAccessible = await testHttpAccess('public/grass.png');
-    const stripeAccessible = await testHttpAccess('public/roadstripe.png');
-    
-    if (!roadAccessible || !grassAccessible || !stripeAccessible) {
+// Test HTTP access first
+const roadAccessible = await testHttpAccess('./road.png');
+const grassAccessible = await testHttpAccess('./grass.png');
+const stripeAccessible = await testHttpAccess('./roadstripe.png');    if (!roadAccessible || !grassAccessible || !stripeAccessible) {
       console.error('💥 FILES NOT ACCESSIBLE VIA HTTP - Creating fallback textures');
       this.createFallbackTextures();
       return;
@@ -236,23 +234,21 @@ class GridRacer {
       };
       
       try {
-        this.roadTexture = await loadPNG('public/road.png', 'road');
-        this.grassTexture = await loadPNG('public/grass.png', 'grass');
-        this.roadStripeTexture = await loadPNG('public/roadstripe.png', 'roadstripe');
-        this.grassCornerTexture = await loadPNG('public/grasscorner.png', 'grasscorner');
-        this.roadCornerTexture = await loadPNG('public/roadcorner.png', 'roadcorner');
-        this.carTexture = await loadPNG('public/car.png', 'car');
-        this.signNTexture = await loadPNG('public/sign-n.png', 'sign-n');
-        this.signETexture = await loadPNG('public/sign-e.png', 'sign-e');
-        this.signSTexture = await loadPNG('public/sign-s.png', 'sign-s');
-        this.signWTexture = await loadPNG('public/sign-w.png', 'sign-w');
-        this.skidNTexture = await loadPNG('public/skid-n.png', 'skid-n');
-        this.skidETexture = await loadPNG('public/skid-e.png', 'skid-e');
-        this.skidSTexture = await loadPNG('public/skid-s.png', 'skid-s');
-        this.skidWTexture = await loadPNG('public/skid-w.png', 'skid-w');
-        this.startflagTexture = await loadPNG('public/startflag.png', 'startflag');
-        
-        this.texturesLoaded = true;
+        this.roadTexture = await loadPNG('./road.png', 'road');
+  this.grassTexture = await loadPNG('./grass.png', 'grass');
+  this.roadStripeTexture = await loadPNG('./roadstripe.png', 'roadstripe');
+  this.grassCornerTexture = await loadPNG('./grasscorner.png', 'grasscorner');
+  this.roadCornerTexture = await loadPNG('./roadcorner.png', 'roadcorner');
+  this.carTexture = await loadPNG('./car.png', 'car');
+  this.signNTexture = await loadPNG('./sign-n.png', 'sign-n');
+  this.signETexture = await loadPNG('./sign-e.png', 'sign-e');
+  this.signSTexture = await loadPNG('./sign-s.png', 'sign-s');
+  this.signWTexture = await loadPNG('./sign-w.png', 'sign-w');
+  this.skidNTexture = await loadPNG('./skid-n.png', 'skid-n');
+  this.skidETexture = await loadPNG('./skid-e.png', 'skid-e');
+  this.skidSTexture = await loadPNG('./skid-s.png', 'skid-s');
+  this.skidWTexture = await loadPNG('./skid-w.png', 'skid-w');
+  this.startflagTexture = await loadPNG('./startflag.png', 'startflag');        this.texturesLoaded = true;
         console.log('🎉 PNG TEXTURES LOADED SUCCESSFULLY!');
         return;
       } catch (error) {
