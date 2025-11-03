@@ -249,6 +249,7 @@ export class ChordInputSystem {
   private lastChordKeys: string[] = [];
   private releaseTimer: number | null = null;
   private onChordCallback: ((event: ChordInputEvent) => void) | null = null;
+  private onInvalidInputCallback: ((keys: string[]) => void) | null = null;
   private isEnabled: boolean = true;
   private getDebounceAmount: (() => number) | null = null;
 
@@ -263,6 +264,10 @@ export class ChordInputSystem {
 
   onChord(callback: (event: ChordInputEvent) => void): void {
     this.onChordCallback = callback;
+  }
+  
+  onInvalidInput(callback: (keys: string[]) => void): void {
+    this.onInvalidInputCallback = callback;
   }
 
   setEnabled(enabled: boolean): void {
@@ -365,6 +370,9 @@ export class ChordInputSystem {
       };
       
       this.onChordCallback(event);
+    } else if (!direction && this.onInvalidInputCallback && this.lastChordKeys.length > 0) {
+      // Trigger invalid input callback when no direction match is found
+      this.onInvalidInputCallback([...this.lastChordKeys]);
     }
 
     this.lastChordKeys = [];
@@ -395,5 +403,6 @@ export class ChordInputSystem {
     this.clearReleaseTimer();
     this.reset();
     this.onChordCallback = null;
+    this.onInvalidInputCallback = null;
   }
 }

@@ -1,3 +1,5 @@
+console.log('🚨🚨🚨 COPILOT KEYSTROKE GRID FEATURE LOADED v2 - ' + Date.now() + ' 🚨🚨🚨');
+
 import * as PIXI from 'pixi.js';
 import { ChordInputSystem, ChordDirection, ChordInputEvent } from './ChordInput';
 
@@ -97,9 +99,20 @@ class GridRacer {
   skidETexture!: PIXI.Texture;
   skidSTexture!: PIXI.Texture;
   skidWTexture!: PIXI.Texture;
+  ouchTexture!: PIXI.Texture;
   startflagTexture!: PIXI.Texture;
   startflagSprite?: PIXI.Sprite;
   skidMarks: Array<{ x: number, y: number, direction: string, sprite: PIXI.Sprite, opacity: number }> = [];
+  ouchDots: Array<{ x: number, y: number, sprite: PIXI.Sprite }> = [];
+  
+  // Keystroke recording system
+  keystrokeLogContainer!: PIXI.Container;
+  currentKeystrokePosition = 0;
+  currentRaceRow = 0;
+  
+  // Debug positioning controls
+  debugGridX = 10;
+  debugGridY = 200;
   
   // Central lap display
   centralDisplayContainer?: PIXI.Container;
@@ -159,18 +172,33 @@ class GridRacer {
   }
 
   async initializeGame() {
+    console.log('🔧 COPILOT: initializeGame starting - adding keystroke grid');
     // Load textures first, then set up the track
     await this.loadTextures();
+    console.log('🔧 COPILOT: textures loaded');
     this.setupTrack();
+    console.log('🔧 COPILOT: track setup complete');
     // Start UI removed - game starts by touching flag
     this.setupKeyboard();
+    console.log('🔧 COPILOT: keyboard setup complete');
     this.setupChordInput();
+    console.log('🔧 COPILOT: chord input setup complete');
+    try {
+      console.log('🔧 COPILOT: CALLING createKeystrokeLoggingGrid()');
+      this.createKeystrokeLoggingGrid();
+      console.log('🔧 COPILOT: createKeystrokeLoggingGrid() completed successfully');
+    } catch (error) {
+      console.error('🚨 ERROR in createKeystrokeLoggingGrid():', error);
+    }
+    console.log('🔧 COPILOT: keystroke grid created');
+    console.log('🔧 COPILOT: new race started');
     this.setupAnimationLoop();
     this.startHeartbeat();
     // Right panel already created with all sections
     
     // Ensure UI is properly positioned after everything is set up
     setTimeout(() => this.positionCenteredUI(), 100);
+    console.log('🔧 COPILOT: initializeGame COMPLETE');
   }
 
   async loadTextures() {
@@ -248,6 +276,7 @@ const stripeAccessible = await testHttpAccess('./roadstripe.png');    if (!roadA
   this.skidETexture = await loadPNG('./skid-e.png', 'skid-e');
   this.skidSTexture = await loadPNG('./skid-s.png', 'skid-s');
   this.skidWTexture = await loadPNG('./skid-w.png', 'skid-w');
+  this.ouchTexture = await loadPNG('./ouch.png', 'ouch');
   this.startflagTexture = await loadPNG('./startflag.png', 'startflag');        this.texturesLoaded = true;
         console.log('🎉 PNG TEXTURES LOADED SUCCESSFULLY!');
         return;
@@ -269,6 +298,7 @@ const stripeAccessible = await testHttpAccess('./roadstripe.png');    if (!roadA
       this.skidETexture = createCanvasTexture('#4b5563', 'skid-e (gray)');
       this.skidSTexture = createCanvasTexture('#4b5563', 'skid-s (gray)');
       this.skidWTexture = createCanvasTexture('#4b5563', 'skid-w (gray)');
+      this.ouchTexture = createCanvasTexture('#ff0000', 'ouch (red)');
       this.startflagTexture = createCanvasTexture('#10b981', 'startflag (green)');
       
       this.texturesLoaded = true;
@@ -308,6 +338,7 @@ const stripeAccessible = await testHttpAccess('./roadstripe.png');    if (!roadA
     this.skidETexture = createSimpleTexture('#4b5563');
     this.skidSTexture = createSimpleTexture('#4b5563');
     this.skidWTexture = createSimpleTexture('#4b5563');
+    this.ouchTexture = createSimpleTexture('#ff0000');
     this.startflagTexture = createSimpleTexture('#10b981');
     this.texturesLoaded = true;
     
@@ -575,6 +606,28 @@ const stripeAccessible = await testHttpAccess('./roadstripe.png');    if (!roadA
       5,
       'Milliseconds to wait after key release before processing chord. Higher = more forgiving but slower. Found in ChordInput.ts as RELEASE_DEBOUNCE_MS'
     ));
+
+    // Keystroke Grid X Position
+    content.appendChild(this.createDebugControl(
+      'Grid X Position',
+      'debugGridX',
+      this.debugGridX,
+      -500,
+      1500,
+      10,
+      'X position of the keystroke recording grid'
+    ));
+
+    // Keystroke Grid Y Position
+    content.appendChild(this.createDebugControl(
+      'Grid Y Position',
+      'debugGridY',
+      this.debugGridY,
+      -200,
+      1000,
+      10,
+      'Y position of the keystroke recording grid'
+    ));
     
     // Create the right panel container
     this.rightPanel = document.createElement('div');
@@ -742,6 +795,29 @@ const stripeAccessible = await testHttpAccess('./roadstripe.png');    if (!roadA
       'Upcoming Turn Sounds', 'upcomingTurnSoundsEnabled', this.upcomingTurnSoundsEnabled,
       'Enable/disable upcoming turn audio cues'
     ));
+
+    // Grid XY positioning controls
+    debugContent.appendChild(this.createDebugControl(
+      'Grid X Position', 'debugGridX', this.debugGridX, -200, 1200, 10,
+      'X position of the keystroke recording grid'
+    ));
+
+    debugContent.appendChild(this.createDebugControl(
+      'Grid Y Position', 'debugGridY', this.debugGridY, -200, 800, 10,
+      'Y position of the keystroke recording grid'
+    ));
+
+    // Test element
+    const testDiv = document.createElement('div');
+    testDiv.textContent = "I'M A FUCKO";
+    testDiv.style.cssText = `
+      color: red;
+      font-weight: bold;
+      padding: 10px;
+      border: 2px solid red;
+      margin: 5px 0;
+    `;
+    debugContent.appendChild(testDiv);
     
     debugContent.appendChild(this.createDebugToggle(
       'Completing Turn Sounds', 'completingTurnSoundsEnabled', this.completingTurnSoundsEnabled,
@@ -853,10 +929,15 @@ const stripeAccessible = await testHttpAccess('./roadstripe.png');    if (!roadA
       const newValue = parseInt((e.target as HTMLInputElement).value);
       valueDisplay.textContent = newValue.toString();
       (this as any)[property] = newValue;
-      this.rebuildTrack();
       
-      // Reset game state to start when debug values change
-      this.resetGame();
+      // Special handling for grid position controls
+      if (property === 'debugGridX' || property === 'debugGridY') {
+        this.updateKeystrokeGridPosition();
+      } else {
+        this.rebuildTrack();
+        // Reset game state to start when debug values change
+        this.resetGame();
+      }
     });
     
     inputContainer.appendChild(slider);
@@ -1424,6 +1505,59 @@ const stripeAccessible = await testHttpAccess('./roadstripe.png');    if (!roadA
     }
   }
   
+  addOuchDot(x: number, y: number) {
+    if (!this.texturesLoaded || !this.ouchTexture) return;
+    
+    // Check if there's already an ouch dot at this position
+    const existingDot = this.ouchDots.find(dot => dot.x === x && dot.y === y);
+    if (existingDot) {
+      console.log('🔴 Ouch dot already exists at', x, y);
+      return;
+    }
+    
+    // Create ouch sprite
+    const ouchSprite = new PIXI.Sprite(this.ouchTexture);
+    ouchSprite.x = x * this.squareSize;
+    ouchSprite.y = y * this.squareSize;
+    ouchSprite.width = this.squareSize;
+    ouchSprite.height = this.squareSize;
+    ouchSprite.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    
+    // Add to track container (above ground tiles but below player)
+    this.trackContainer.addChild(ouchSprite);
+    
+    // Track the ouch dot
+    this.ouchDots.push({
+      x, y,
+      sprite: ouchSprite
+    });
+    
+    console.log('🔴 Added ouch dot at', x, y);
+    
+    // Ensure player sprite stays on top
+    this.ensurePlayerOnTop();
+  }
+  
+  removeOuchDot(x: number, y: number) {
+    const dotIndex = this.ouchDots.findIndex(dot => dot.x === x && dot.y === y);
+    if (dotIndex !== -1) {
+      const dot = this.ouchDots[dotIndex];
+      this.trackContainer.removeChild(dot.sprite);
+      dot.sprite.destroy();
+      this.ouchDots.splice(dotIndex, 1);
+      console.log('✅ Removed ouch dot at', x, y);
+    }
+  }
+  
+  clearAllOuchDots() {
+    for (const dot of this.ouchDots) {
+      this.trackContainer.removeChild(dot.sprite);
+      dot.sprite.destroy();
+    }
+    this.ouchDots = [];
+    console.log('🧹 Cleared all ouch dots');
+  }
+  
   resetPlayerToStart() {
     // Position player 2 spaces before the starting line (west of it)
     this.playerPos.x = this.startFinishPos.x - 2;
@@ -1443,6 +1577,13 @@ const stripeAccessible = await testHttpAccess('./roadstripe.png');    if (!roadA
       skid.sprite.destroy();
     }
     this.skidMarks = [];
+    
+    // Clear all ouch dots
+    this.clearAllOuchDots();
+    
+    // Reset keystroke recording position
+    this.currentKeystrokePosition = 0;
+    this.currentRaceRow = 0;
     
     // Recreate start flag for new game
     this.createStartFlag();
@@ -1484,7 +1625,157 @@ const stripeAccessible = await testHttpAccess('./roadstripe.png');    if (!roadA
     
     // Position UI elements
     this.positionCenteredUI();
+    
+    // Create keystroke logging grid
+    this.createKeystrokeLoggingGrid();
   }
+  
+  createKeystrokeLoggingGrid() {
+    console.log('🎹 Creating keystroke logging grid');
+    
+    // Position grid directly below the main game grid
+    const gridY = this.gridVNumber * this.squareSize + 20; // 20px spacing
+    const gridX = 0; // Align with game grid
+    console.log('🔧 Grid position Y:', gridY, 'X:', gridX);
+    
+    // Create container positioned at debug location
+    const logContainer = new PIXI.Container();
+    logContainer.y = gridY;
+    logContainer.x = gridX;
+    logContainer.zIndex = 9999; // Max z-index to render on top
+    
+    // Use the game's tile size for consistency
+    const tileSize = this.squareSize;
+    
+    // Create keystroke tiles positioned below the game grid
+    for (let row = 0; row < 8; row++) {
+      for (let col = 0; col < 20; col++) {
+        const tile = new PIXI.Graphics();
+        tile.beginFill(0x000000); // black background
+        tile.lineStyle(1, 0x444444); // subtle gray border
+        tile.drawRect(0, 0, tileSize, tileSize);
+        tile.endFill();
+        tile.x = col * tileSize;
+        tile.y = row * tileSize;
+        logContainer.addChild(tile);
+      }
+    }
+    console.log('🔧 Created', 8 * 20, 'keystroke tiles at', tileSize + 'px each');
+    
+    // Add a bright test tile at top-left corner to verify rendering
+    const testTile = new PIXI.Graphics();
+    testTile.beginFill(0xFF0000); // bright red
+    testTile.drawRect(0, 0, 100, 100);
+    testTile.endFill();
+    testTile.x = 0;
+    testTile.y = 0;
+    app.stage.addChild(testTile);
+    console.log('🔧 Added bright red test tile at 0,0');
+    
+    // Enable z-index sorting and add container
+    app.stage.sortableChildren = true;
+    app.stage.addChild(logContainer);
+    console.log('✅ Keystroke logging grid created with', logContainer.children.length, 'tiles');
+    console.log('🔧 Grid container Y position:', logContainer.y, 'X position:', logContainer.x);
+    console.log('🔧 App stage children count:', app.stage.children.length);
+    
+    // Store reference for adding dots later
+    this.keystrokeLogContainer = logContainer;
+  }
+  
+  updateKeystrokeGridPosition() {
+    if (this.keystrokeLogContainer) {
+      this.keystrokeLogContainer.x = this.debugGridX;
+      this.keystrokeLogContainer.y = this.debugGridY;
+    }
+  }
+
+  recordKeystroke(keys: string[]) {
+    console.log(`📝 Recording keystroke: ${keys.join('+')}`);
+    
+    if (!this.keystrokeLogContainer) return;
+    
+    // Convert keys to braille dots
+    const dots = this.keysToBrailleDots(keys);
+    
+    // Calculate position in grid (row and column)
+    const row = this.currentRaceRow;
+    const col = this.currentKeystrokePosition;
+    
+    if (row >= 8 || col >= 20) {
+      console.log("⚠️ Keystroke grid full");
+      return;
+    }
+    
+    // Create braille pattern at position
+    this.drawBraillePattern(row, col, dots);
+    
+    // Move to next position
+    this.currentKeystrokePosition++;
+    if (this.currentKeystrokePosition >= 20) {
+      this.currentKeystrokePosition = 0;
+      this.currentRaceRow++;
+    }
+  }
+
+  keysToBrailleDots(keys: string[]): number[] {
+    const dots: number[] = [];
+    keys.forEach(key => {
+      switch(key.toLowerCase()) {
+        case 'f': dots.push(1); break;
+        case 'd': dots.push(2); break;
+        case 's': dots.push(3); break;
+        case 'j': dots.push(4); break;
+        case 'k': dots.push(5); break;
+        case 'l': dots.push(6); break;
+      }
+    });
+    return dots;
+  }
+
+  drawBraillePattern(row: number, col: number, dots: number[]) {
+    if (!this.keystrokeLogContainer) return;
+    
+    const tileSize = this.squareSize; // Match game tile size
+    const dotSize = 4;
+    const baseX = col * tileSize;
+    const baseY = row * tileSize;
+    
+    // Find existing tile at this position
+    const tileIndex = row * 20 + col;
+    const existingTile = this.keystrokeLogContainer.children[tileIndex] as PIXI.Graphics;
+    
+    if (existingTile) {
+      // Clear and redraw tile
+      existingTile.clear();
+      existingTile.beginFill(0x000000); // Black background
+      existingTile.lineStyle(1, 0x333333); // Gray border
+      existingTile.drawRect(0, 0, tileSize, tileSize);
+      existingTile.endFill();
+      
+      // Draw white dots for braille pattern
+      dots.forEach(dotNum => {
+        const dotPos = this.getBrailleDotPosition(dotNum, tileSize);
+        existingTile.beginFill(0xFFFFFF); // White dots
+        existingTile.drawCircle(dotPos.x, dotPos.y, dotSize);
+        existingTile.endFill();
+      });
+    }
+  }
+
+  getBrailleDotPosition(dotNum: number, tileSize: number) {
+    const spacing = tileSize / 4;
+    switch(dotNum) {
+      case 1: return { x: spacing, y: spacing };
+      case 2: return { x: spacing, y: spacing * 2 };
+      case 3: return { x: spacing, y: spacing * 3 };
+      case 4: return { x: spacing * 3, y: spacing };
+      case 5: return { x: spacing * 3, y: spacing * 2 };
+      case 6: return { x: spacing * 3, y: spacing * 3 };
+      default: return { x: 0, y: 0 };
+    }
+  }
+  
   isTrackCell(x: number, y: number) {
     const cellType = this.getCellType(x, y);
     return cellType === 'track' || cellType === 'start';
@@ -1826,7 +2117,24 @@ const stripeAccessible = await testHttpAccess('./roadstripe.png');    if (!roadA
           break;
       }
       
+      // Record the valid keystroke
+      this.recordKeystroke(event.keys);
+      
       this.processMovement(newX, newY, event.direction);
+    });
+    
+    // Handle invalid chord inputs
+    this.chordInput.onInvalidInput((keys: string[]) => {
+      console.log('🔴 Invalid chord input detected:', keys);
+      
+      // Record the invalid keystroke
+      this.recordKeystroke(keys);
+      
+      // Only add ouch dot if we're in the playing state and player has moved
+      if (this.gameState === 'playing' && this.hasMoved) {
+        // Add ouch dot at the square the player just left (lastPos)
+        this.addOuchDot(this.lastPos.x, this.lastPos.y);
+      }
     });
   }
 
@@ -1865,6 +2173,14 @@ const stripeAccessible = await testHttpAccess('./roadstripe.png');    if (!roadA
       if (this.cancelFlagSprite && newX === Math.floor(this.cancelFlagSprite.x / this.squareSize) && newY === Math.floor(this.cancelFlagSprite.y / this.squareSize) && this.gameState === 'playing') {
         this.cancelRace();
         return;
+      }
+      
+      // Clear ouch dot from the square we're entering (if any)
+      this.removeOuchDot(newX, newY);
+      
+      // Clear ouch dot from the square we're leaving with a correct direction (if any)
+      if (this.hasMoved) {
+        this.removeOuchDot(this.playerPos.x, this.playerPos.y);
       }
       
       this.movePlayer(newX, newY);
@@ -2984,10 +3300,10 @@ async function init() {
   try {
     console.log('Starting initialization...');
     
-    // Start with default dimensions, will be resized by game
+    // Start with expanded dimensions to accommodate keystroke grid
     await app.init({
-      width: 600,
-      height: 600,
+      width: 1400,  // Width for 28 tiles * 50px
+      height: 1000, // Height for 16 tiles + keystroke grid
       backgroundColor: 0x111827,
       antialias: true,
       resolution: 1
