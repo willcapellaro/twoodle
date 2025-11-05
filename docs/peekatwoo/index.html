@@ -34,6 +34,39 @@
             transform: scale(0.9);
         }
         
+        .control-section {
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 5px;
+        }
+        
+        .section-header {
+            background: rgba(255,255,255,0.05);
+            padding: 10px 15px;
+            cursor: pointer;
+            user-select: none;
+            border-radius: 5px 5px 0 0;
+            transition: background 0.2s ease;
+        }
+        
+        .section-header:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .section-header span {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .section-content {
+            padding: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .section-content.collapsed {
+            display: none;
+        }
+        
         .container {
             position: relative;
             width: 100vw;
@@ -253,23 +286,7 @@
             transform: scale(0.95);
         }
         
-        .panel-backdrop {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 99;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        
-        .panel-backdrop.active {
-            opacity: 1;
-            pointer-events: all;
-        }
+
         
         /* Mobile-specific improvements */
         @media (max-width: 768px) {
@@ -307,10 +324,6 @@
             
             .controls-grid {
                 padding-bottom: 20px; /* Ensure content doesn't get cut off */
-            }
-            
-            .panel-backdrop.active {
-                display: block;
             }
         }
         
@@ -470,210 +483,224 @@
         <!-- Controls Panel -->
         <div class="controls-panel" id="controlsPanel">
             <div class="controls-header">
-                <h3>Debug Controls</h3>
-                <button class="close-panel-btn" id="closePanelBtn">✕</button>
+                <h3>Controls</h3>
+                <button class="close-panel-btn" id="closePanelBtn" title="Close panel">✕</button>
             </div>
 
             <div class="controls-grid">
-                <div class="control-group">
-                    <div class="inline-slider">
-                        <label>Depth Scale</label>
-                        <input type="range" class="control-range" id="depthScale" min="0" max="3" step="0.1" value="1">
-                        <span id="depthScaleValue">1.0</span>
+                
+                <!-- Main Controls Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="main-section">
+                        <span>▼ Main</span>
                     </div>
-                    <div class="control-buttons">
-                        <button data-preset="calm">Calm</button>
-                        <button data-preset="normal" class="active">Normal</button>
-                        <button data-preset="dramatic">Dramatic</button>
+                    <div class="section-content" id="main-section">
+                        <div class="control-group">
+                            <div class="inline-slider">
+                                <label>Depth Scale</label>
+                                <input type="range" class="control-range" id="depthScale" min="0" max="3" step="0.1" value="1">
+                                <span id="depthScaleValue">1.0</span>
+                            </div>
+                            <div class="control-buttons">
+                                <button data-preset="calm">Calm</button>
+                                <button data-preset="normal" class="active">Normal</button>
+                                <button data-preset="dramatic">Dramatic</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="displayDepthmap" style="margin-right: 8px;">
+                                Display Depthmap
+                            </label>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="swipeSlideAdvance" style="margin-right: 8px;">
+                                Swipe Slide Advance
+                            </label>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="inline-slider">
+                                <label>Toast Opacity</label>
+                                <input type="range" class="control-range" id="toastOpacity" min="0" max="1" step="0.1" value="0.9">
+                                <span id="toastOpacityValue">0.9</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="control-group">
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-                        <label>Focus Plane</label>
-                        <label style="font-size: 12px; font-weight: normal;">
-                            <input type="checkbox" id="invertDepthLogic" style="margin-right: 5px;">
-                            Invert
-                        </label>
+                <!-- Interactions Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="interactions-section">
+                        <span>▼ Interactions</span>
                     </div>
-                    <div class="control-buttons">
-                        <button data-focus="auto">Auto</button>
-                        <button data-focus="0.2">Near</button>
-                        <button data-focus="0.5" class="active">Middle</button>
-                        <button data-focus="0.8">Far</button>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <div class="inline-slider">
-                        <label>Drag Sensitivity</label>
-                        <input type="range" class="control-range" id="sensitivity" min="0.1" max="2" step="0.1" value="1">
-                        <span id="sensitivityValue">1.0</span>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <label>Drag Controls</label>
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin: 5px 0;">
-                        <span style="font-size: 12px; min-width: 20px;">H:</span>
-                        <label style="font-size: 12px; margin: 0 10px;">
-                            <input type="checkbox" id="invertX" style="margin-right: 5px;">
-                            Invert
-                        </label>
-                        <label style="font-size: 12px;">
-                            <input type="checkbox" id="lockX" style="margin-right: 5px;">
-                            Lock
-                        </label>
-                    </div>
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin: 5px 0;">
-                        <span style="font-size: 12px; min-width: 20px;">V:</span>
-                        <label style="font-size: 12px; margin: 0 10px;">
-                            <input type="checkbox" id="invertY" style="margin-right: 5px;">
-                            Invert
-                        </label>
-                        <label style="font-size: 12px;">
-                            <input type="checkbox" id="lockY" style="margin-right: 5px;">
-                            Lock
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <label>
-                        <input type="checkbox" id="displayDepthmap" style="margin-right: 8px;">
-                        Display Depthmap (D key)
-                    </label>
-                </div>
-                
-                <div class="control-group">
-                    <label>
-                        <input type="checkbox" id="swipeSlideAdvance" style="margin-right: 8px;">
-                        Swipe Slide Advance
-                    </label>
-                </div>
-                
-                <div class="control-group">
-                    <div class="inline-slider">
-                        <label>Toast Opacity</label>
-                        <input type="range" class="control-range" id="toastOpacity" min="0" max="1" step="0.1" value="0.9">
-                        <span id="toastOpacityValue">0.9</span>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <label>
-                        <input type="checkbox" id="gyroscopeEnabled" style="margin-right: 8px;">
-                        Enable Gyroscope (Mobile)
-                    </label>
-                    
-                    <div class="inline-slider">
-                        <label>Horizontal Sensitivity</label>
-                        <input type="range" class="control-range" id="gyroHorizontal" min="0.1" max="3" step="0.1" value="1">
-                        <span id="gyroHorizontalValue">1.0</span>
-                    </div>
-                    
-                    <div class="inline-slider">
-                        <label>Vertical Sensitivity</label>
-                        <input type="range" class="control-range" id="gyroVertical" min="0.1" max="3" step="0.1" value="1">
-                        <span id="gyroVerticalValue">1.0</span>
-                    </div>
-                    
-                    <div style="display: flex; gap: 10px; margin: 10px 0;">
-                        <label style="font-size: 14px;">
-                            <input type="checkbox" id="gyroInvertX" style="margin-right: 5px;">
-                            Invert X
-                        </label>
-                        <label style="font-size: 14px;">
-                            <input type="checkbox" id="gyroLockX" style="margin-right: 5px;">
-                            Lock X
-                        </label>
-                    </div>
-                    
-                    <div style="display: flex; gap: 10px; margin: 10px 0;">
-                        <label style="font-size: 14px;">
-                            <input type="checkbox" id="gyroInvertY" style="margin-right: 5px;">
-                            Invert Y
-                        </label>
-                        <label style="font-size: 14px;">
-                            <input type="checkbox" id="gyroLockY" style="margin-right: 5px;">
-                            Lock Y
-                        </label>
-                    </div>
-                    
-                    <button id="gyroCenterBtn" class="control-button" style="margin-top: 10px;">
-                        📍 Center Gyroscope
-                    </button>
-                    
-                                        <div id="gyroDebugInfo" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px; margin-top: 10px; display: none;">
-                        <div style="color: #00ff00; margin-bottom: 5px;">🎯 Gyroscope Data:</div>
-                        <div>Alpha (Z): <span id="gyroAlphaValue">--</span>°</div>
-                        <div>Beta (X): <span id="gyroBetaValue">--</span>°</div>
-                        <div>Gamma (Y): <span id="gyroGammaValue">--</span>°</div>
-                        <div style="margin-top: 5px; color: #ffff00;">Processed:</div>
-                        <div>X Movement: <span id="gyroProcessedX">--</span></div>
-                        <div>Y Movement: <span id="gyroProcessedY">--</span></div>
+                    <div class="section-content" id="interactions-section">
+                        <div class="control-group">
+                            <label>Focus Plane</label>
+                            <div class="control-buttons">
+                                <button data-focus="0.2">Near</button>
+                                <button data-focus="0.5" class="active">Mid</button>
+                                <button data-focus="0.8">Far</button>
+                                <button data-focus="auto">Auto</button>
+                            </div>
+                            <label style="margin-top: 10px;">
+                                <input type="checkbox" id="invertDepthLogic" style="margin-right: 8px;">
+                                Invert Auto Focus Logic
+                            </label>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Drag Controls</label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+                                <label>
+                                    <input type="checkbox" id="invertX" style="margin-right: 5px;">
+                                    Invert X
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="lockX" style="margin-right: 5px;">
+                                    Lock X
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="invertY" style="margin-right: 5px;">
+                                    Invert Y
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="lockY" style="margin-right: 5px;">
+                                    Lock Y
+                                </label>
+                            </div>
+                            
+                            <div class="inline-slider">
+                                <label>Drag Sensitivity</label>
+                                <input type="range" class="control-range" id="sensitivity" min="0.1" max="3" step="0.1" value="1">
+                                <span id="sensitivityValue">1.0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Interaction Mode</label>
+                            <div class="control-buttons">
+                                <button data-drag-mode="sticky" class="active">Sticky</button>
+                                <button data-drag-mode="rubber-band">Rubber Band</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="localizedParallax" style="margin-right: 8px;">
+                                Localized Parallax
+                            </label>
+                            <div class="inline-slider">
+                                <label>Localize Distance</label>
+                                <input type="range" class="control-range" id="localizeDistance" min="50" max="500" step="10" value="150">
+                                <span id="localizeDistanceValue">150px</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="inline-slider">
+                                <label>Background Dampening</label>
+                                <input type="range" class="control-range" id="backgroundDampening" min="0" max="1" step="0.1" value="0.3">
+                                <span id="backgroundDampeningValue">0.3</span>
+                            </div>
+                            
+                            <div class="inline-slider">
+                                <label>Midground Dampening</label>
+                                <input type="range" class="control-range" id="midgroundDampening" min="0" max="1" step="0.1" value="0.6">
+                                <span id="midgroundDampeningValue">0.6</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="control-group">
-                    <label>Interaction Mode</label>
-                    <div class="control-buttons">
-                        <button data-drag-mode="sticky" class="active">Sticky</button>
-                        <button data-drag-mode="rubber-band">Rubber Band</button>
+                <!-- Gyroscope Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="gyroscope-section">
+                        <span>▼ Gyroscope</span>
+                    </div>
+                    <div class="section-content" id="gyroscope-section">
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="gyroscopeEnabled" style="margin-right: 8px;">
+                                Enable Gyroscope (Mobile)
+                            </label>
+                            
+                            <div class="inline-slider">
+                                <label>Horizontal Sensitivity</label>
+                                <input type="range" class="control-range" id="gyroHorizontal" min="0.1" max="3" step="0.1" value="1">
+                                <span id="gyroHorizontalValue">1.0</span>
+                            </div>
+                            
+                            <div class="inline-slider">
+                                <label>Vertical Sensitivity</label>
+                                <input type="range" class="control-range" id="gyroVertical" min="0.1" max="3" step="0.1" value="1">
+                                <span id="gyroVerticalValue">1.0</span>
+                            </div>
+                            
+                            <div style="display: flex; gap: 10px; margin: 10px 0;">
+                                <label style="font-size: 14px;">
+                                    <input type="checkbox" id="gyroInvertX" style="margin-right: 5px;">
+                                    Invert X
+                                </label>
+                                <label style="font-size: 14px;">
+                                    <input type="checkbox" id="gyroLockX" style="margin-right: 5px;">
+                                    Lock X
+                                </label>
+                            </div>
+                            
+                            <div style="display: flex; gap: 10px; margin: 10px 0;">
+                                <label style="font-size: 14px;">
+                                    <input type="checkbox" id="gyroInvertY" style="margin-right: 5px;">
+                                    Invert Y
+                                </label>
+                                <label style="font-size: 14px;">
+                                    <input type="checkbox" id="gyroLockY" style="margin-right: 5px;">
+                                    Lock Y
+                                </label>
+                            </div>
+                            
+                            <button id="gyroCenterBtn" class="control-button" style="margin-top: 10px;">
+                                📍 Center Gyroscope
+                            </button>
+                            
+                            <div id="gyroDebugInfo" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px; margin-top: 10px; display: none;">
+                                <div style="color: #00ff00; margin-bottom: 5px;">🎯 Gyroscope Data:</div>
+                                <div>Alpha (Z): <span id="gyroAlphaValue">--</span>°</div>
+                                <div>Beta (X): <span id="gyroBetaValue">--</span>°</div>
+                                <div>Gamma (Y): <span id="gyroGammaValue">--</span>°</div>
+                                <div style="margin-top: 5px; color: #ffff00;">Processed:</div>
+                                <div>X Movement: <span id="gyroProcessedX">--</span></div>
+                                <div>Y Movement: <span id="gyroProcessedY">--</span></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="control-group">
-                    <label>Cheat Codes</label>
-                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px;">
-                        <button id="cheatBtn1" class="cheat-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 15px; border-radius: 5px; font-size: 18px;">⬜</button>
-                        <button id="cheatBtn2" class="cheat-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 15px; border-radius: 5px; font-size: 18px;">▲</button>
-                        <button id="cheatBtn3" class="cheat-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 15px; border-radius: 5px; font-size: 18px;">✕</button>
-                        <button id="cheatBtn4" class="cheat-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 15px; border-radius: 5px; font-size: 18px;">●</button>
+                <!-- Cheat Codes Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="cheat-section">
+                        <span>▼ Cheat Codes</span>
                     </div>
-                    <div id="cheatSequence" style="background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 3px; margin-top: 10px; font-family: monospace; font-size: 14px; min-height: 20px; display: flex; align-items: center; justify-content: center; color: #666; cursor: pointer; border: 1px solid rgba(255,255,255,0.2);" title="Click to submit sequence">
-                        <span id="cheatDisplay">- - - - - - - -</span>
-                    </div>
-                </div>
-                </div>
-                </div>
-                
-                <div class="control-group">
-                    <label>Interaction Mode</label>
-                    <div class="control-buttons">
-                        <button data-drag-mode="sticky" class="active">Sticky</button>
-                        <button data-drag-mode="rubber-band">Rubber Band</button>
+                    <div class="section-content" id="cheat-section">
+                        <div class="control-group">
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px;">
+                                <button id="cheatBtn1" class="cheat-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 15px; border-radius: 5px; font-size: 18px;">⬜</button>
+                                <button id="cheatBtn2" class="cheat-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 15px; border-radius: 5px; font-size: 18px;">▲</button>
+                                <button id="cheatBtn3" class="cheat-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 15px; border-radius: 5px; font-size: 18px;">✕</button>
+                                <button id="cheatBtn4" class="cheat-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 15px; border-radius: 5px; font-size: 18px;">●</button>
+                            </div>
+                            <div id="cheatSequence" style="background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 3px; margin-top: 10px; font-family: monospace; font-size: 14px; min-height: 20px; display: flex; align-items: center; justify-content: center; color: #666; cursor: pointer; border: 1px solid rgba(255,255,255,0.2);" title="Click to submit sequence">
+                                <span id="cheatDisplay">- - - - - - - -</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="control-group" id="localizedParallaxGroup">
-                    <label>
-                        <input type="checkbox" id="localizedParallax" disabled>
-                        Localized Parallax
-                    </label>
-                    <div class="inline-slider">
-                        <label>Distance Effect</label>
-                        <input type="range" class="control-range" id="localizeDistance" min="50" max="500" step="10" value="150" disabled>
-                        <span id="localizeDistanceValue">150px</span>
-                    </div>
-                    <div class="inline-slider">
-                        <label>Background Damp</label>
-                        <input type="range" class="control-range" id="backgroundDampening" min="0" max="1" step="0.1" value="0.3" disabled>
-                        <span id="backgroundDampeningValue">0.3</span>
-                    </div>
-                    <div class="inline-slider">
-                        <label>Midground Damp</label>
-                        <input type="range" class="control-range" id="midgroundDampening" min="0" max="1" step="0.1" value="0.7" disabled>
-                        <span id="midgroundDampeningValue">0.7</span>
-                    </div>
-                </div>
-                
-
             </div>
         </div>
-        
-        <!-- Panel Backdrop -->
-        <div class="panel-backdrop" id="panelBackdrop"></div>
         
         <!-- Toast Notification Container -->
         <div class="toast-container" id="toastContainer"></div>

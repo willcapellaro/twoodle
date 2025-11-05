@@ -21,7 +21,6 @@ class DepthViewerApp {
         this.controlsToggle = document.getElementById('controlsToggle');
         this.controlsPanel = document.getElementById('controlsPanel');
         this.closePanelBtn = document.getElementById('closePanelBtn');
-        this.panelBackdrop = document.getElementById('panelBackdrop');
         this.dragOverlay = document.getElementById('dragOverlay');
         
         // Control inputs
@@ -150,7 +149,7 @@ class DepthViewerApp {
         console.log('DepthViewerApp initialized with dynamic image loading');
         console.log(' Mobile improvements: Better scrolling, close button, tap-to-dismiss');
         console.log('🌐 Server URL: http://127.0.0.1:5501/index.html should work!');
-        console.log('Cache-busting: v4.1 - Added cheat code debugging and submit button'); // Cache buster
+        console.log('Cache-busting: v4.3 - Removed darkening scrim/backdrop completely'); // Cache buster
     }
     
     setupEventListeners() {
@@ -178,10 +177,10 @@ class DepthViewerApp {
             this.toggleControlsPanel();
         });
         
-        // Panel backdrop click to close
-        this.panelBackdrop.addEventListener('click', () => {
-            this.toggleControlsPanel();
-        });
+        // Collapsible section handlers
+        this.setupCollapsibleSections();
+        
+        // Panel backdrop - no auto-dismiss, just visual overlay
         
         // Depth controls
         this.depthScaleSlider.addEventListener('input', (e) => {
@@ -416,6 +415,69 @@ class DepthViewerApp {
         setTimeout(() => {
             this.loadCurrentImageSet();
         }, 500);
+    }
+    
+    setupCollapsibleSections() {
+        // Handle section toggles
+        document.querySelectorAll('.section-header[data-toggle]').forEach(header => {
+            header.addEventListener('click', () => {
+                const targetId = header.getAttribute('data-toggle');
+                const content = document.getElementById(targetId);
+                const arrow = header.querySelector('span');
+                
+                if (content) {
+                    const isExpanded = content.style.display !== 'none';
+                    content.style.display = isExpanded ? 'none' : 'block';
+                    arrow.textContent = isExpanded ? '▶ ' + arrow.textContent.substring(2) : '▼ ' + arrow.textContent.substring(2);
+                    
+                    // Save state to localStorage
+                    this.saveSectionStates();
+                }
+            });
+        });
+        
+        // Load section states from localStorage
+        this.loadSectionStates();
+    }
+    
+    loadSectionStates() {
+        const sectionStates = JSON.parse(localStorage.getItem('sectionStates')) || {};
+        
+        // Default all sections to expanded on first load
+        const defaultSections = {
+            'main-section': true,
+            'interactions-section': true,
+            'gyroscope-section': true,
+            'cheat-section': true
+        };
+        
+        // Merge with saved states
+        const finalStates = { ...defaultSections, ...sectionStates };
+        
+        // Apply states to sections
+        Object.entries(finalStates).forEach(([sectionId, isExpanded]) => {
+            const content = document.getElementById(sectionId);
+            const header = document.querySelector(`[data-toggle="${sectionId}"]`);
+            
+            if (content && header) {
+                const arrow = header.querySelector('span');
+                content.style.display = isExpanded ? 'block' : 'none';
+                if (arrow) {
+                    const sectionName = arrow.textContent.substring(2);
+                    arrow.textContent = (isExpanded ? '▼ ' : '▶ ') + sectionName;
+                }
+            }
+        });
+    }
+    
+    saveSectionStates() {
+        const sectionStates = {};
+        
+        document.querySelectorAll('.section-content').forEach(content => {
+            sectionStates[content.id] = content.style.display !== 'none';
+        });
+        
+        localStorage.setItem('sectionStates', JSON.stringify(sectionStates));
     }
     
     // Dynamic image loading methods
@@ -759,8 +821,7 @@ class DepthViewerApp {
         const isOpen = this.controlsPanel.classList.toggle('open');
         this.controlsToggle.textContent = isOpen ? '× Debug' : '⚙️ Debug';
         
-        // Handle backdrop for mobile
-        this.panelBackdrop.classList.toggle('active', isOpen);
+        // Backdrop disabled - no darkening scrim
         
         // Add/remove class from body to adjust toast positioning
         document.body.classList.toggle('controls-open', isOpen);
