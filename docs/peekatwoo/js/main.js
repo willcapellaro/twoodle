@@ -73,6 +73,14 @@ class DepthViewerApp {
         this.gyroLockYCheckbox = document.getElementById('gyroLockY');
         this.gyroCenterBtn = document.getElementById('gyroCenterBtn');
         
+        // Gyroscope debug display elements
+        this.gyroDebugInfo = document.getElementById('gyroDebugInfo');
+        this.gyroAlphaValue = document.getElementById('gyroAlphaValue');
+        this.gyroBetaValue = document.getElementById('gyroBetaValue');
+        this.gyroGammaValue = document.getElementById('gyroGammaValue');
+        this.gyroProcessedX = document.getElementById('gyroProcessedX');
+        this.gyroProcessedY = document.getElementById('gyroProcessedY');
+        
         // Toast opacity control
         this.toastOpacitySlider = document.getElementById('toastOpacity');
         this.toastOpacityValue = document.getElementById('toastOpacityValue');
@@ -125,14 +133,18 @@ class DepthViewerApp {
             }
         };
         
+        this.viewer.onGyroscopeData = (alpha, beta, gamma, processedX, processedY) => {
+            this.updateGyroscopeDebugDisplay(alpha, beta, gamma, processedX, processedY);
+        };
+        
         // Initialize image loading
         this.loadImageSets();
         
         console.log('DepthViewerApp initialized with dynamic image loading');
-        console.log('💡 Debug tip: Type "JUMPER-CABLE" anywhere to toggle hidden images');
+        console.log('💡 SECRET: Type "JUMPER-CABLE" anywhere to access hidden images!');
         console.log('📱 Mobile improvements: Better scrolling, close button, tap-to-dismiss');
         console.log('🌐 Server URL: http://127.0.0.1:5501/index.html should work!');
-        console.log('Cache-busting: v3.4 - Fixed gyroscope HTML elements and IDs'); // Cache buster
+        console.log('Cache-busting: v3.6 - Fixed debug panel scrolling and JUMPER-CABLE info'); // Cache buster
     }
     
     setupEventListeners() {
@@ -313,9 +325,14 @@ class DepthViewerApp {
                 if (!result) {
                     // Revert checkbox if gyroscope failed to enable
                     this.gyroscopeEnabledCheckbox.checked = false;
+                    this.gyroDebugInfo.style.display = 'none';
+                } else {
+                    // Show debug info when gyroscope is successfully enabled
+                    this.gyroDebugInfo.style.display = 'block';
                 }
             } else {
                 this.viewer.disableGyroscope();
+                this.gyroDebugInfo.style.display = 'none';
             }
             this.saveSettings();
         });
@@ -566,6 +583,16 @@ class DepthViewerApp {
         } catch (error) {
             console.error('❌ Failed to load hardcoded landing-pig:', error);
             this.showStatus(`Failed to load images: ${error.message}`, 'error');
+        }
+    }
+    
+    updateGyroscopeDebugDisplay(alpha, beta, gamma, processedX, processedY) {
+        if (this.gyroDebugInfo.style.display === 'block') {
+            this.gyroAlphaValue.textContent = alpha ? alpha.toFixed(1) : '--';
+            this.gyroBetaValue.textContent = beta ? beta.toFixed(1) : '--';
+            this.gyroGammaValue.textContent = gamma ? gamma.toFixed(1) : '--';
+            this.gyroProcessedX.textContent = processedX ? processedX.toFixed(3) : '--';
+            this.gyroProcessedY.textContent = processedY ? processedY.toFixed(3) : '--';
         }
     }
     

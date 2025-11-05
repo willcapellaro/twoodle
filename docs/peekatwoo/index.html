@@ -261,10 +261,14 @@
             .controls-panel {
                 width: 100vw;
                 right: -100vw;
-                max-height: 100vh;
-                overflow-y: auto;
+                height: 100vh;
+                height: 100dvh; /* Use dynamic viewport height for better mobile support */
+                max-height: none;
+                overflow-y: scroll;
                 -webkit-overflow-scrolling: touch;
                 padding: 15px;
+                padding-bottom: 50px; /* Extra padding at bottom to ensure all content is accessible */
+                box-sizing: border-box;
             }
             
             .controls-panel.open {
@@ -277,12 +281,17 @@
                 background: rgba(30, 30, 30, 0.95);
                 z-index: 1;
                 margin-bottom: 15px;
+                padding: 10px 0;
             }
             
             .close-panel-btn {
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
+            }
+            
+            .controls-grid {
+                padding-bottom: 20px; /* Ensure content doesn't get cut off */
             }
             
             .panel-backdrop.active {
@@ -449,6 +458,9 @@
                 <h3>Debug Controls</h3>
                 <button class="close-panel-btn" id="closePanelBtn">✕</button>
             </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 3px; margin-bottom: 15px; font-size: 12px; color: #888;">
+                💡 Tip: Type "JUMPER-CABLE" anywhere to access hidden images
+            </div>
             <div class="controls-grid">
                 <div class="control-group">
                     <div class="inline-slider">
@@ -578,6 +590,16 @@
                     <button id="gyroCenterBtn" class="control-button" style="margin-top: 10px;">
                         📍 Center Gyroscope
                     </button>
+                    
+                    <div id="gyroDebugInfo" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px; margin-top: 10px; display: none;">
+                        <div style="color: #00ff00; margin-bottom: 5px;">🎯 Gyroscope Data:</div>
+                        <div>Alpha (Z): <span id="gyroAlphaValue">--</span>°</div>
+                        <div>Beta (X): <span id="gyroBetaValue">--</span>°</div>
+                        <div>Gamma (Y): <span id="gyroGammaValue">--</span>°</div>
+                        <div style="margin-top: 5px; color: #ffff00;">Processed:</div>
+                        <div>X Movement: <span id="gyroProcessedX">--</span></div>
+                        <div>Y Movement: <span id="gyroProcessedY">--</span></div>
+                    </div>
                 </div>
                 </div>
                 

@@ -1005,6 +1005,11 @@ class DepthyWebGLViewer {
         this.mouseX = Math.max(-1, Math.min(1, deltaX));
         this.mouseY = Math.max(-1, Math.min(1, deltaY));
         
+        // Send debug data to callback if available
+        if (this.onGyroscopeData) {
+            this.onGyroscopeData(alpha, beta, gamma, this.mouseX, this.mouseY);
+        }
+        
         this.render();
     }
     
