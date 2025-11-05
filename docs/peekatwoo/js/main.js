@@ -28,6 +28,46 @@ class DepthViewerApp {
         this.sensitivitySlider = document.getElementById('sensitivity');
         this.sensitivityValue = document.getElementById('sensitivityValue');
         
+        // Localized parallax controls
+        this.localizedParallaxCheckbox = document.getElementById('localizedParallax');
+        this.localizeDistanceSlider = document.getElementById('localizeDistance');
+        this.localizeDistanceValue = document.getElementById('localizeDistanceValue');
+        this.distanceCircle = document.getElementById('distanceCircle');
+        
+        // Slideshow controls
+        this.prevImageBtn = document.getElementById('prevImageBtn');
+        this.nextImageBtn = document.getElementById('nextImageBtn');
+        
+        // Sample image sets
+        this.sampleImages = [
+            {
+                name: 'Landing Pig',
+                colorImage: './sample-images/landing-pig.jpeg',
+                depthMap: './sample-images/landing-pig-∂map.png'
+            },
+            {
+                name: 'Glass Butt 2',
+                colorImage: './sample-images/glassbutt2.jpeg',
+                depthMap: './sample-images/glassbutt2-∂map.png'
+            },
+            {
+                name: 'Astro Butt',
+                colorImage: './sample-images/astrobutt-color.jpeg',
+                depthMap: './sample-images/astrobutt-color-∂map.jpg'
+            },
+            {
+                name: 'Basketball Card',
+                colorImage: './sample-images/basketballcard.jpeg',
+                depthMap: './sample-images/basketballcard-∂map.jpg'
+            },
+            {
+                name: 'Green Garbage',
+                colorImage: './sample-images/green-garbage.jpeg',
+                depthMap: './sample-images/green-garbage-∂map.png'
+            }
+        ];
+        this.currentImageIndex = 0;
+        
         // Mode buttons
         this.stickyBtn = document.querySelector('[data-drag-mode="sticky"]');
         this.rubberBandBtn = document.querySelector('[data-drag-mode="rubber-band"]');
@@ -42,6 +82,12 @@ class DepthViewerApp {
         this.sensitivity = 1.0;
         this.currentViewMode = 'fit';
         this.currentDragMode = 'sticky';
+        
+        // Load saved settings
+        this.loadSettings();
+        
+        // Initialize localized parallax state
+        this.updateLocalizedParallaxState();
     }
     
     setupEventListeners() {
@@ -68,12 +114,14 @@ class DepthViewerApp {
         this.depthScaleSlider.addEventListener('input', (e) => {
             this.viewer.setOptions({ depthScale: parseFloat(e.target.value) });
             this.depthScaleValue.textContent = parseFloat(e.target.value).toFixed(1);
+            this.saveSettings();
         });
         
         this.sensitivitySlider.addEventListener('input', (e) => {
             this.sensitivity = parseFloat(e.target.value);
             this.sensitivityValue.textContent = this.sensitivity.toFixed(1);
             this.viewer.setOptions({ sensitivity: this.sensitivity });
+            this.saveSettings();
         });
         
         // Focus buttons
@@ -82,6 +130,7 @@ class DepthViewerApp {
                 document.querySelectorAll('[data-focus]').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
                 this.viewer.setOptions({ focus: parseFloat(e.target.dataset.focus) });
+                this.saveSettings();
             });
         });
         
@@ -90,8 +139,47 @@ class DepthViewerApp {
             btn.addEventListener('click', (e) => {
                 document.querySelectorAll('[data-drag-mode]').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
+                this.currentDragMode = e.target.dataset.dragMode;
                 this.viewer.setInteractionMode('drag', e.target.dataset.dragMode);
+                this.updateLocalizedParallaxState();
+                this.saveSettings();
             });
+        });
+        
+        // Localized parallax controls
+        this.localizedParallaxCheckbox.addEventListener('change', (e) => {
+            this.viewer.setOptions({ localizedParallax: e.target.checked });
+            this.updateLocalizedParallaxState();
+            this.saveSettings();
+        });
+        
+        this.localizeDistanceSlider.addEventListener('input', (e) => {
+            const distance = parseInt(e.target.value);
+            this.localizeDistanceValue.textContent = distance + 'px';
+            this.viewer.setOptions({ localizeDistance: distance });
+            this.showDistanceCircle(distance);
+            this.saveSettings();
+        });
+        
+        this.localizeDistanceSlider.addEventListener('mousedown', () => {
+            this.showDistanceCircle(parseInt(this.localizeDistanceSlider.value));
+        });
+        
+        this.localizeDistanceSlider.addEventListener('mouseup', () => {
+            this.hideDistanceCircle();
+        });
+        
+        this.localizeDistanceSlider.addEventListener('mouseleave', () => {
+            this.hideDistanceCircle();
+        });
+        
+        // Slideshow controls
+        this.prevImageBtn.addEventListener('click', () => {
+            this.previousImage();
+        });
+        
+        this.nextImageBtn.addEventListener('click', () => {
+            this.nextImage();
         });
         
         // Preset buttons
@@ -100,6 +188,7 @@ class DepthViewerApp {
                 document.querySelectorAll('[data-preset]').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
                 this.applyPreset(e.target.dataset.preset);
+                this.saveSettings();
             });
         });
         
@@ -161,18 +250,8 @@ class DepthViewerApp {
 
     
     async loadTestImages() {
-        this.showStatus('Loading test images...', 'info');
-        
-        try {
-            // Load the test images from URLs
-            await this.viewer.loadColorImage('./glassbutt.jpeg');
-            await this.viewer.loadDepthMap('./glassbutt-∂map.png');
-            
-            this.showStatus('Sample images loaded! Move your mouse over the image to see the parallax depth effect.', 'success');
-        } catch (error) {
-            this.showStatus(`Failed to load test images: ${error.message}`, 'error');
-            console.error('Test image load error:', error);
-        }
+        // Load the default landing image set
+        await this.loadCurrentSampleImage();
     }
     
     toggleViewMode() {
@@ -195,7 +274,7 @@ class DepthViewerApp {
     
     toggleControlsPanel() {
         const isOpen = this.controlsPanel.classList.toggle('open');
-        this.controlsToggle.textContent = isOpen ? '× Close' : '⚙️ Controls';
+        this.controlsToggle.textContent = isOpen ? '× Debug' : '⚙️ Debug';
         
         // Add/remove class from body to adjust toast positioning
         document.body.classList.toggle('controls-open', isOpen);
@@ -348,6 +427,139 @@ class DepthViewerApp {
     clearAllToasts() {
         const toasts = this.toastContainer.querySelectorAll('.toast');
         toasts.forEach(toast => this.dismissToast(toast));
+    }
+    
+    updateLocalizedParallaxState() {
+        // Enable localized parallax controls only in rubber-band mode
+        const isRubberBand = this.currentDragMode === 'rubber-band';
+        const isLocalizedEnabled = this.localizedParallaxCheckbox.checked;
+        
+        this.localizedParallaxCheckbox.disabled = !isRubberBand;
+        this.localizeDistanceSlider.disabled = !isRubberBand || !isLocalizedEnabled;
+        
+        // Update the slider value display disabled state
+        this.localizeDistanceValue.style.opacity = (!isRubberBand || !isLocalizedEnabled) ? '0.6' : '1';
+        
+        // If switching away from rubber-band mode, disable localized parallax
+        if (!isRubberBand && isLocalizedEnabled) {
+            this.localizedParallaxCheckbox.checked = false;
+            this.viewer.setOptions({ localizedParallax: false });
+        }
+    }
+    
+    showDistanceCircle(distance) {
+        const viewerRect = this.viewerElement.getBoundingClientRect();
+        const centerX = viewerRect.width / 2;
+        const centerY = viewerRect.height / 2;
+        
+        this.distanceCircle.style.left = centerX + 'px';
+        this.distanceCircle.style.top = centerY + 'px';
+        this.distanceCircle.style.width = (distance * 2) + 'px';
+        this.distanceCircle.style.height = (distance * 2) + 'px';
+        this.distanceCircle.style.display = 'block';
+    }
+    
+    hideDistanceCircle() {
+        this.distanceCircle.style.display = 'none';
+    }
+    
+    saveSettings() {
+        const settings = {
+            depthScale: parseFloat(this.depthScaleSlider.value),
+            sensitivity: parseFloat(this.sensitivitySlider.value),
+            dragMode: this.currentDragMode,
+            focus: this.getCurrentFocus(),
+            localizedParallax: this.localizedParallaxCheckbox.checked,
+            localizeDistance: parseInt(this.localizeDistanceSlider.value)
+        };
+        localStorage.setItem('depthViewerSettings', JSON.stringify(settings));
+    }
+    
+    loadSettings() {
+        try {
+            const saved = localStorage.getItem('depthViewerSettings');
+            if (saved) {
+                const settings = JSON.parse(saved);
+                
+                // Apply depth scale
+                if (settings.depthScale !== undefined) {
+                    this.depthScaleSlider.value = settings.depthScale;
+                    this.depthScaleValue.textContent = settings.depthScale.toFixed(1);
+                    this.viewer.setOptions({ depthScale: settings.depthScale });
+                }
+                
+                // Apply sensitivity
+                if (settings.sensitivity !== undefined) {
+                    this.sensitivitySlider.value = settings.sensitivity;
+                    this.sensitivityValue.textContent = settings.sensitivity.toFixed(1);
+                    this.sensitivity = settings.sensitivity;
+                    this.viewer.setOptions({ sensitivity: settings.sensitivity });
+                }
+                
+                // Apply drag mode
+                if (settings.dragMode) {
+                    this.currentDragMode = settings.dragMode;
+                    document.querySelectorAll('[data-drag-mode]').forEach(b => b.classList.remove('active'));
+                    document.querySelector(`[data-drag-mode="${settings.dragMode}"]`)?.classList.add('active');
+                    this.viewer.setInteractionMode('drag', settings.dragMode);
+                }
+                
+                // Apply focus
+                if (settings.focus !== undefined) {
+                    document.querySelectorAll('[data-focus]').forEach(b => b.classList.remove('active'));
+                    document.querySelector(`[data-focus="${settings.focus}"]`)?.classList.add('active');
+                    this.viewer.setOptions({ focus: settings.focus });
+                }
+                
+                // Apply localized parallax settings
+                if (settings.localizedParallax !== undefined) {
+                    this.localizedParallaxCheckbox.checked = settings.localizedParallax;
+                    this.viewer.setOptions({ localizedParallax: settings.localizedParallax });
+                }
+                
+                if (settings.localizeDistance !== undefined) {
+                    this.localizeDistanceSlider.value = settings.localizeDistance;
+                    this.localizeDistanceValue.textContent = settings.localizeDistance + 'px';
+                    this.viewer.setOptions({ localizeDistance: settings.localizeDistance });
+                }
+            }
+        } catch (error) {
+            console.warn('Failed to load saved settings:', error);
+        }
+    }
+    
+    getCurrentFocus() {
+        const activeBtn = document.querySelector('[data-focus].active');
+        return activeBtn ? parseFloat(activeBtn.dataset.focus) : 0.5;
+    }
+    
+    previousImage() {
+        if (this.sampleImages.length === 0) return;
+        this.currentImageIndex = (this.currentImageIndex - 1 + this.sampleImages.length) % this.sampleImages.length;
+        this.loadCurrentSampleImage();
+    }
+    
+    nextImage() {
+        if (this.sampleImages.length === 0) return;
+        this.currentImageIndex = (this.currentImageIndex + 1) % this.sampleImages.length;
+        this.loadCurrentSampleImage();
+    }
+    
+    async loadCurrentSampleImage() {
+        const imageSet = this.sampleImages[this.currentImageIndex];
+        if (!imageSet) return;
+        
+        this.showStatus(`Loading ${imageSet.name}...`, 'info');
+        
+        try {
+            await this.viewer.loadColorImage(imageSet.colorImage);
+            await this.viewer.loadDepthMap(imageSet.depthMap);
+            
+            this.showStatus(`${imageSet.name} loaded! Move your mouse over the image to see the parallax depth effect.`, 'success');
+        } catch (error) {
+            this.showStatus(`Failed to load ${imageSet.name}: ${error.message}`, 'error');
+            console.error('Sample image load error:', error);
+        }
     }
 }
 

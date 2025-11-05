@@ -77,7 +77,7 @@
         /* Toast notification system */
         .toast-container {
             position: fixed;
-            bottom: 80px; /* Above the controls toggle button */
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 200;
@@ -87,12 +87,12 @@
             max-width: 90vw;
             width: auto;
             pointer-events: none; /* Allow clicks to pass through container */
-            transition: bottom 0.3s ease;
+            transition: left 0.3s ease;
         }
         
         /* Adjust toast position when controls panel is open */
         .controls-open .toast-container {
-            bottom: 380px; /* Above the open controls panel */
+            left: calc(50% - 165px); /* Shift left to account for right panel */
         }
         
         .toast {
@@ -172,42 +172,26 @@
         
         .controls-panel {
             position: absolute;
-            bottom: -320px;
-            left: 0;
-            right: 0;
-            height: 300px;
+            top: 0;
+            right: -350px;
+            width: 330px;
+            height: 100vh;
             background: rgba(30, 30, 30, 0.95);
             color: white;
             padding: 20px;
-            transition: bottom 0.3s ease;
+            transition: right 0.3s ease;
             z-index: 100;
+            overflow-y: auto;
         }
-        
-        /* Removed toast-area styles - now using separate toast system */
         
         .controls-panel.open {
-            bottom: 0;
-        }
-        
-        .controls-toggle {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            z-index: 101;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
+            right: 0;
         }
         
         .controls-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 20px;
-            height: 100%;
-            align-items: start;
         }
         
         .control-group {
@@ -269,6 +253,31 @@
         .hidden-input {
             display: none;
         }
+        
+        /* Checkbox styling for localized parallax */
+        .control-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        .control-group input[type="checkbox"]:disabled + * {
+            opacity: 0.6;
+        }
+        
+        .control-group input[type="range"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        /* Circle overlay for distance visualization */
+        .distance-circle {
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 50;
+            display: none;
+            transform: translate(-50%, -50%);
+        }
     </style>
 </head>
 <body>
@@ -277,6 +286,9 @@
         <div class="top-controls">
             <button class="control-btn upload-btn" id="uploadBtn">📁 Upload</button>
             <button class="control-btn active" id="viewModeBtn" title="Toggle Fit/Fill">🔳</button>
+            <button class="control-btn" id="controlsToggle">⚙️ Debug</button>
+            <button class="control-btn" id="prevImageBtn" title="Previous Image">◀</button>
+            <button class="control-btn" id="nextImageBtn" title="Next Image">▶</button>
         </div>
         
 
@@ -284,6 +296,7 @@
         <!-- Main Viewer -->
         <div class="viewer-container">
             <div id="viewerElement" class="viewer"></div>
+            <div id="distanceCircle" class="distance-circle"></div>
         </div>
         
         <!-- Controls Panel -->
@@ -318,6 +331,16 @@
                     </div>
                 </div>
                 
+                <div class="control-group" id="localizedParallaxGroup">
+                    <label>
+                        <input type="checkbox" id="localizedParallax" disabled>
+                        Localized Parallax
+                    </label>
+                    <label>Distance Effect</label>
+                    <input type="range" class="control-range" id="localizeDistance" min="50" max="500" step="10" value="150" disabled>
+                    <span id="localizeDistanceValue">150px</span>
+                </div>
+                
                 <div class="control-group">
                     <label>Presets</label>
                     <div class="control-buttons">
@@ -329,8 +352,7 @@
             </div>
         </div>
         
-        <!-- Controls Toggle -->
-        <button class="controls-toggle" id="controlsToggle">⚙️ Controls</button>
+
         
         <!-- Toast Notification Container -->
         <div class="toast-container" id="toastContainer"></div>
