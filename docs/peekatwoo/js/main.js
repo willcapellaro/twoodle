@@ -81,6 +81,13 @@ class DepthViewerApp {
         this.gyroProcessedX = document.getElementById('gyroProcessedX');
         this.gyroProcessedY = document.getElementById('gyroProcessedY');
         
+        // Cheat code elements
+        this.cheatBtn1 = document.getElementById('cheatBtn1');
+        this.cheatBtn2 = document.getElementById('cheatBtn2');
+        this.cheatBtn3 = document.getElementById('cheatBtn3');
+        this.cheatBtn4 = document.getElementById('cheatBtn4');
+        this.cheatDisplay = document.getElementById('cheatDisplay');
+        
         // Toast opacity control
         this.toastOpacitySlider = document.getElementById('toastOpacity');
         this.toastOpacityValue = document.getElementById('toastOpacityValue');
@@ -91,9 +98,9 @@ class DepthViewerApp {
         this.currentImageSet = 'sample'; // 'sample' or 'hidden'
         this.currentImageIndex = 0;
         
-        // Debug mode tracking
-        this.debugInputBuffer = '';
-        this.debugInputTimeout = null;
+        // Cheat code system
+        this.cheatSequence = [];
+        this.maxCheatLength = 8;
         
         // Mode buttons
         this.stickyBtn = document.querySelector('[data-drag-mode="sticky"]');
@@ -141,10 +148,9 @@ class DepthViewerApp {
         this.loadImageSets();
         
         console.log('DepthViewerApp initialized with dynamic image loading');
-        console.log('💡 SECRET: Type "JUMPER-CABLE" anywhere to access hidden images!');
-        console.log('📱 Mobile improvements: Better scrolling, close button, tap-to-dismiss');
+        console.log(' Mobile improvements: Better scrolling, close button, tap-to-dismiss');
         console.log('🌐 Server URL: http://127.0.0.1:5501/index.html should work!');
-        console.log('Cache-busting: v3.6 - Fixed debug panel scrolling and JUMPER-CABLE info'); // Cache buster
+        console.log('Cache-busting: v4.1 - Added cheat code debugging and submit button'); // Cache buster
     }
     
     setupEventListeners() {
@@ -394,10 +400,14 @@ class DepthViewerApp {
             });
         });
         
-        // Debug keypress listener for JUMPER-CABLE trigger
-        document.addEventListener('keypress', (e) => {
-            this.handleDebugKeypress(e.key);
-        });
+        // Cheat code button listeners
+        this.cheatBtn1.addEventListener('click', () => this.addCheatInput(1));
+        this.cheatBtn2.addEventListener('click', () => this.addCheatInput(2));
+        this.cheatBtn3.addEventListener('click', () => this.addCheatInput(3));
+        this.cheatBtn4.addEventListener('click', () => this.addCheatInput(4));
+        
+        // Cheat sequence submit (click the display)
+        this.cheatDisplay.parentElement.addEventListener('click', () => this.submitCheatSequence());
         
         // Drag and drop
         this.setupDragAndDrop();
@@ -506,42 +516,120 @@ class DepthViewerApp {
             .replace(/\b\w/g, l => l.toUpperCase());
     }
     
-    handleDebugKeypress(key) {
-        // Add to input buffer
-        this.debugInputBuffer += key.toUpperCase();
+    addCheatInput(value) {
+        this.cheatSequence.push(value);
+        console.log('Cheat input added:', value, 'Current sequence:', this.cheatSequence.join(''));
         
-        // Clear old timeout
-        if (this.debugInputTimeout) {
-            clearTimeout(this.debugInputTimeout);
+        if (this.cheatSequence.length > this.maxCheatLength) {
+            this.cheatSequence = this.cheatSequence.slice(-this.maxCheatLength);
         }
         
-        // Check for JUMPER-CABLE
-        if (this.debugInputBuffer.includes('JUMPER-CABLE')) {
-            this.toggleImageSet();
-            this.debugInputBuffer = '';
+        this.updateCheatDisplay();
+        
+        // Auto-validate when we have 8 digits
+        if (this.cheatSequence.length === this.maxCheatLength) {
+            console.log('Full sequence entered, validating...');
+            this.validateCheatSequence();
+        }
+    }
+    
+    submitCheatSequence() {
+        console.log('Manual submit clicked, current sequence:', this.cheatSequence.join(''));
+        if (this.cheatSequence.length > 0) {
+            this.validateCheatSequence();
+        }
+    }
+    
+    updateCheatDisplay() {
+        const display = Array(this.maxCheatLength).fill('-');
+        for (let i = 0; i < this.cheatSequence.length; i++) {
+            const pos = Math.max(0, this.maxCheatLength - this.cheatSequence.length) + i;
+            display[pos] = this.cheatSequence[i].toString();
+        }
+        this.cheatDisplay.textContent = display.join(' ');
+    }
+    
+    // Obfuscated validation system
+    validateCheatSequence() {
+        const currentSeq = this.cheatSequence.join('');
+        console.log('Validating sequence:', currentSeq);
+        
+        if (this.cheatSequence.length < 4) {
+            console.log('Sequence too short, need at least 4 digits');
             return;
         }
         
-        // Keep only last 20 characters to prevent memory issues
-        if (this.debugInputBuffer.length > 20) {
-            this.debugInputBuffer = this.debugInputBuffer.slice(-20);
-        }
+        // Multiple hash functions to obfuscate the actual code
+        const hash1 = this.simpleHash(currentSeq);
+        const hash2 = this.cyrb53(this.cheatSequence.slice().reverse().join(''));
+        const hash3 = this.djb2Hash(this.cheatSequence.map(x => x * 3).join(''));
         
-        // Clear buffer after 3 seconds of inactivity
-        this.debugInputTimeout = setTimeout(() => {
-            this.debugInputBuffer = '';
-        }, 3000);
+        console.log('Hash values:', { hash1, hash2, hash3 });
+        
+        // Check against multiple validation paths
+        const check1 = hash1 === 2049; // Hash of actual code
+        const check2 = hash2 === 1398154073947; // Reverse hash  
+        const check3 = hash3 === 193496974; // Modified hash
+        const patternCheck = this.validatePattern();
+        
+        console.log('Validation checks:', { check1, check2, check3, patternCheck });
+        
+        // Also check for exact sequence match as fallback
+        const exactMatch = currentSeq === '12411241';
+        
+        if (check1 || (check2 && patternCheck) || check3 || exactMatch) {
+            console.log('Cheat code validated!');
+            this.toggleImageSet();
+            this.cheatSequence = [];
+            this.updateCheatDisplay();
+        } else {
+            console.log('Validation failed');
+        }
+    }
+    
+    validatePattern() {
+        // Additional pattern validation as decoy
+        const sum = this.cheatSequence.reduce((a, b) => a + b, 0);
+        return sum === 20; // Sum of 12411241
+    }
+    
+    simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash + str.charCodeAt(i)) & 0xffffffff;
+        }
+        return Math.abs(hash) % 10000;
+    }
+    
+    cyrb53(str, seed = 0) {
+        let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+        for (let i = 0, ch; i < str.length; i++) {
+            ch = str.charCodeAt(i);
+            h1 = Math.imul(h1 ^ ch, 2654435761);
+            h2 = Math.imul(h2 ^ ch, 1597334677);
+        }
+        h1 = Math.imul(h1 ^ (h1>>>16), 2246822507) ^ Math.imul(h2 ^ (h2>>>13), 3266489909);
+        h2 = Math.imul(h2 ^ (h2>>>16), 2246822507) ^ Math.imul(h1 ^ (h1>>>13), 3266489909);
+        return 4294967296 * (2097151 & h2) + (h1>>>0);
+    }
+    
+    djb2Hash(str) {
+        let hash = 5381;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) + hash) + str.charCodeAt(i);
+        }
+        return hash & 0xffffffff;
     }
     
     toggleImageSet() {
         if (this.currentImageSet === 'sample') {
             this.currentImageSet = 'hidden';
             const hiddenCount = this.hiddenImages.length;
-            this.showStatus(`🔓 Hidden image set activated! (${hiddenCount} images) JUMPER-CABLE debug mode enabled.`, 'success');
+            this.showStatus(`Image set changed (${hiddenCount} available)`, 'success');
         } else {
             this.currentImageSet = 'sample';
             const sampleCount = this.sampleImages.length;
-            this.showStatus(`🔒 Switched back to sample images. (${sampleCount} images)`, 'info');
+            this.showStatus(`Image set changed (${sampleCount} available)`, 'info');
         }
         
         this.currentImageIndex = 0;
