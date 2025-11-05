@@ -186,6 +186,8 @@
             transition: right 0.3s ease;
             z-index: 100;
             overflow-y: auto;
+            user-select: none;
+            -webkit-user-select: none;
         }
         
         .controls-panel.open {
@@ -207,6 +209,28 @@
         .control-group label {
             font-size: 14px;
             font-weight: bold;
+        }
+        
+        .inline-slider {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+        
+        .inline-slider label {
+            margin-right: 10px;
+            min-width: 100px;
+        }
+        
+        .inline-slider input[type="range"] {
+            flex: 1;
+            margin: 0 10px;
+        }
+        
+        .inline-slider span {
+            min-width: 40px;
+            text-align: right;
         }
         
         .control-range {
@@ -290,6 +314,18 @@
             -webkit-user-select: none;
             -webkit-touch-callout: none;
         }
+        
+        /* Auto-focus highlight animation */
+        .auto-focus-highlight {
+            background: #ff6b35 !important;
+            animation: focusHighlight 2s ease-in-out;
+        }
+        
+        @keyframes focusHighlight {
+            0% { background: #ff6b35 !important; }
+            50% { background: #ff8c5a !important; }
+            100% { background: #ff6b35 !important; }
+        }
     </style>
 </head>
 <body>
@@ -315,14 +351,28 @@
         <div class="controls-panel" id="controlsPanel">
             <div class="controls-grid">
                 <div class="control-group">
-                    <label>Depth Scale</label>
-                    <input type="range" class="control-range" id="depthScale" min="0" max="3" step="0.1" value="1">
-                    <span id="depthScaleValue">1.0</span>
+                    <div class="inline-slider">
+                        <label>Depth Scale</label>
+                        <input type="range" class="control-range" id="depthScale" min="0" max="3" step="0.1" value="1">
+                        <span id="depthScaleValue">1.0</span>
+                    </div>
+                    <div class="control-buttons">
+                        <button data-preset="calm">Calm</button>
+                        <button data-preset="normal" class="active">Normal</button>
+                        <button data-preset="dramatic">Dramatic</button>
+                    </div>
                 </div>
                 
                 <div class="control-group">
-                    <label>Focus Plane</label>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                        <label>Focus Plane</label>
+                        <label style="font-size: 12px; font-weight: normal;">
+                            <input type="checkbox" id="invertDepthLogic" style="margin-right: 5px;">
+                            Invert
+                        </label>
+                    </div>
                     <div class="control-buttons">
+                        <button data-focus="auto">Auto</button>
                         <button data-focus="0.2">Near</button>
                         <button data-focus="0.5" class="active">Middle</button>
                         <button data-focus="0.8">Far</button>
@@ -330,9 +380,38 @@
                 </div>
                 
                 <div class="control-group">
-                    <label>Drag Sensitivity</label>
-                    <input type="range" class="control-range" id="sensitivity" min="0.1" max="2" step="0.1" value="1">
-                    <span id="sensitivityValue">1.0</span>
+                    <div class="inline-slider">
+                        <label>Drag Sensitivity</label>
+                        <input type="range" class="control-range" id="sensitivity" min="0.1" max="2" step="0.1" value="1">
+                        <span id="sensitivityValue">1.0</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>Drag Controls</label>
+                    <label style="margin: 5px 0;">
+                        <input type="checkbox" id="invertX" style="margin-right: 8px;">
+                        Invert X Dragging
+                    </label>
+                    <label style="margin: 5px 0;">
+                        <input type="checkbox" id="lockX" style="margin-right: 8px;">
+                        Lock X Distortion
+                    </label>
+                    <label style="margin: 5px 0;">
+                        <input type="checkbox" id="invertY" style="margin-right: 8px;">
+                        Invert Y Dragging
+                    </label>
+                    <label style="margin: 5px 0;">
+                        <input type="checkbox" id="lockY" style="margin-right: 8px;">
+                        Lock Y Distortion
+                    </label>
+                </div>
+                
+                <div class="control-group">
+                    <label>
+                        <input type="checkbox" id="displayDepthmap" style="margin-right: 8px;">
+                        Display Depthmap (D key)
+                    </label>
                 </div>
                 
                 <div class="control-group">
@@ -348,19 +427,24 @@
                         <input type="checkbox" id="localizedParallax" disabled>
                         Localized Parallax
                     </label>
-                    <label>Distance Effect</label>
-                    <input type="range" class="control-range" id="localizeDistance" min="50" max="500" step="10" value="150" disabled>
-                    <span id="localizeDistanceValue">150px</span>
-                </div>
-                
-                <div class="control-group">
-                    <label>Presets</label>
-                    <div class="control-buttons">
-                        <button data-preset="calm">Calm</button>
-                        <button data-preset="normal" class="active">Normal</button>
-                        <button data-preset="dramatic">Dramatic</button>
+                    <div class="inline-slider">
+                        <label>Distance Effect</label>
+                        <input type="range" class="control-range" id="localizeDistance" min="50" max="500" step="10" value="150" disabled>
+                        <span id="localizeDistanceValue">150px</span>
+                    </div>
+                    <div class="inline-slider">
+                        <label>Background Damp</label>
+                        <input type="range" class="control-range" id="backgroundDampening" min="0" max="1" step="0.1" value="0.3" disabled>
+                        <span id="backgroundDampeningValue">0.3</span>
+                    </div>
+                    <div class="inline-slider">
+                        <label>Midground Damp</label>
+                        <input type="range" class="control-range" id="midgroundDampening" min="0" max="1" step="0.1" value="0.7" disabled>
+                        <span id="midgroundDampeningValue">0.7</span>
                     </div>
                 </div>
+                
+
             </div>
         </div>
         

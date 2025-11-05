@@ -38,6 +38,24 @@ class DepthViewerApp {
         this.prevImageBtn = document.getElementById('prevImageBtn');
         this.nextImageBtn = document.getElementById('nextImageBtn');
         
+        // Auto focus controls
+        this.invertDepthLogicCheckbox = document.getElementById('invertDepthLogic');
+        
+        // Drag controls
+        this.invertXCheckbox = document.getElementById('invertX');
+        this.lockXCheckbox = document.getElementById('lockX');
+        this.invertYCheckbox = document.getElementById('invertY');
+        this.lockYCheckbox = document.getElementById('lockY');
+        
+        // Display controls
+        this.displayDepthmapCheckbox = document.getElementById('displayDepthmap');
+        
+        // Dampening controls
+        this.backgroundDampeningSlider = document.getElementById('backgroundDampening');
+        this.backgroundDampeningValue = document.getElementById('backgroundDampeningValue');
+        this.midgroundDampeningSlider = document.getElementById('midgroundDampening');
+        this.midgroundDampeningValue = document.getElementById('midgroundDampeningValue');
+        
         // Sample image sets
         this.sampleImages = [
             {
@@ -88,6 +106,15 @@ class DepthViewerApp {
         
         // Initialize localized parallax state
         this.updateLocalizedParallaxState();
+        
+        // Set up viewer callbacks
+        this.viewer.onAutoFocusChange = (focusType) => {
+            this.highlightAutoFocus(focusType);
+        };
+        
+        this.viewer.onDepthmapToggle = (enabled) => {
+            this.displayDepthmapCheckbox.checked = enabled;
+        };
     }
     
     setupEventListeners() {
@@ -114,6 +141,10 @@ class DepthViewerApp {
         this.depthScaleSlider.addEventListener('input', (e) => {
             this.viewer.setOptions({ depthScale: parseFloat(e.target.value) });
             this.depthScaleValue.textContent = parseFloat(e.target.value).toFixed(1);
+            
+            // Deactivate preset buttons when manually changing depth scale
+            document.querySelectorAll('[data-preset]').forEach(b => b.classList.remove('active'));
+            
             this.saveSettings();
         });
         
@@ -129,7 +160,17 @@ class DepthViewerApp {
             btn.addEventListener('click', (e) => {
                 document.querySelectorAll('[data-focus]').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
-                this.viewer.setOptions({ focus: parseFloat(e.target.dataset.focus) });
+                
+                const focusValue = e.target.dataset.focus;
+                if (focusValue === 'auto') {
+                    this.viewer.setOptions({ autoFocus: true });
+                } else {
+                    this.viewer.setOptions({ 
+                        autoFocus: false,
+                        focus: parseFloat(focusValue) 
+                    });
+                }
+                this.updateLocalizedParallaxState();
                 this.saveSettings();
             });
         });
@@ -180,6 +221,54 @@ class DepthViewerApp {
         
         this.nextImageBtn.addEventListener('click', () => {
             this.nextImage();
+        });
+        
+        // Auto focus controls
+        this.invertDepthLogicCheckbox.addEventListener('change', (e) => {
+            this.viewer.setOptions({ invertDepthLogic: e.target.checked });
+            this.saveSettings();
+        });
+        
+        // Drag controls
+        this.invertXCheckbox.addEventListener('change', (e) => {
+            this.viewer.setOptions({ invertX: e.target.checked });
+            this.saveSettings();
+        });
+        
+        this.lockXCheckbox.addEventListener('change', (e) => {
+            this.viewer.setOptions({ lockX: e.target.checked });
+            this.saveSettings();
+        });
+        
+        this.invertYCheckbox.addEventListener('change', (e) => {
+            this.viewer.setOptions({ invertY: e.target.checked });
+            this.saveSettings();
+        });
+        
+        this.lockYCheckbox.addEventListener('change', (e) => {
+            this.viewer.setOptions({ lockY: e.target.checked });
+            this.saveSettings();
+        });
+        
+        // Display controls
+        this.displayDepthmapCheckbox.addEventListener('change', (e) => {
+            this.viewer.setOptions({ displayDepthmap: e.target.checked });
+            this.saveSettings();
+        });
+        
+        // Dampening controls
+        this.backgroundDampeningSlider.addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value);
+            this.backgroundDampeningValue.textContent = value.toFixed(1);
+            this.viewer.setOptions({ backgroundDampening: value });
+            this.saveSettings();
+        });
+        
+        this.midgroundDampeningSlider.addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value);
+            this.midgroundDampeningValue.textContent = value.toFixed(1);
+            this.viewer.setOptions({ midgroundDampening: value });
+            this.saveSettings();
         });
         
         // Preset buttons
@@ -433,12 +522,20 @@ class DepthViewerApp {
         // Enable localized parallax controls only in rubber-band mode
         const isRubberBand = this.currentDragMode === 'rubber-band';
         const isLocalizedEnabled = this.localizedParallaxCheckbox.checked;
+        const isAutoFocus = this.getCurrentAutoFocus();
+        const isDampeningEnabled = isRubberBand && isLocalizedEnabled && isAutoFocus;
         
         this.localizedParallaxCheckbox.disabled = !isRubberBand;
         this.localizeDistanceSlider.disabled = !isRubberBand || !isLocalizedEnabled;
         
-        // Update the slider value display disabled state
+        // Enable dampening controls only when localized parallax + auto focus are both enabled
+        this.backgroundDampeningSlider.disabled = !isDampeningEnabled;
+        this.midgroundDampeningSlider.disabled = !isDampeningEnabled;
+        
+        // Update opacity for disabled state
         this.localizeDistanceValue.style.opacity = (!isRubberBand || !isLocalizedEnabled) ? '0.6' : '1';
+        this.backgroundDampeningValue.style.opacity = !isDampeningEnabled ? '0.6' : '1';
+        this.midgroundDampeningValue.style.opacity = !isDampeningEnabled ? '0.6' : '1';
         
         // If switching away from rubber-band mode, disable localized parallax
         if (!isRubberBand && isLocalizedEnabled) {
@@ -469,8 +566,17 @@ class DepthViewerApp {
             sensitivity: parseFloat(this.sensitivitySlider.value),
             dragMode: this.currentDragMode,
             focus: this.getCurrentFocus(),
+            autoFocus: this.getCurrentAutoFocus(),
+            invertDepthLogic: this.invertDepthLogicCheckbox.checked,
+            invertX: this.invertXCheckbox.checked,
+            lockX: this.lockXCheckbox.checked,
+            invertY: this.invertYCheckbox.checked,
+            lockY: this.lockYCheckbox.checked,
+            displayDepthmap: this.displayDepthmapCheckbox.checked,
             localizedParallax: this.localizedParallaxCheckbox.checked,
-            localizeDistance: parseInt(this.localizeDistanceSlider.value)
+            localizeDistance: parseInt(this.localizeDistanceSlider.value),
+            backgroundDampening: parseFloat(this.backgroundDampeningSlider.value),
+            midgroundDampening: parseFloat(this.midgroundDampeningSlider.value)
         };
         localStorage.setItem('depthViewerSettings', JSON.stringify(settings));
     }
@@ -505,10 +611,47 @@ class DepthViewerApp {
                 }
                 
                 // Apply focus
-                if (settings.focus !== undefined) {
+                if (settings.autoFocus !== undefined && settings.autoFocus) {
+                    document.querySelectorAll('[data-focus]').forEach(b => b.classList.remove('active'));
+                    document.querySelector('[data-focus="auto"]')?.classList.add('active');
+                    this.viewer.setOptions({ autoFocus: true });
+                } else if (settings.focus !== undefined) {
                     document.querySelectorAll('[data-focus]').forEach(b => b.classList.remove('active'));
                     document.querySelector(`[data-focus="${settings.focus}"]`)?.classList.add('active');
-                    this.viewer.setOptions({ focus: settings.focus });
+                    this.viewer.setOptions({ autoFocus: false, focus: settings.focus });
+                }
+                
+                // Apply invert depth logic
+                if (settings.invertDepthLogic !== undefined) {
+                    this.invertDepthLogicCheckbox.checked = settings.invertDepthLogic;
+                    this.viewer.setOptions({ invertDepthLogic: settings.invertDepthLogic });
+                }
+                
+                // Apply drag controls
+                if (settings.invertX !== undefined) {
+                    this.invertXCheckbox.checked = settings.invertX;
+                    this.viewer.setOptions({ invertX: settings.invertX });
+                }
+                
+                if (settings.lockX !== undefined) {
+                    this.lockXCheckbox.checked = settings.lockX;
+                    this.viewer.setOptions({ lockX: settings.lockX });
+                }
+                
+                if (settings.invertY !== undefined) {
+                    this.invertYCheckbox.checked = settings.invertY;
+                    this.viewer.setOptions({ invertY: settings.invertY });
+                }
+                
+                if (settings.lockY !== undefined) {
+                    this.lockYCheckbox.checked = settings.lockY;
+                    this.viewer.setOptions({ lockY: settings.lockY });
+                }
+                
+                // Apply display controls
+                if (settings.displayDepthmap !== undefined) {
+                    this.displayDepthmapCheckbox.checked = settings.displayDepthmap;
+                    this.viewer.setOptions({ displayDepthmap: settings.displayDepthmap });
                 }
                 
                 // Apply localized parallax settings
@@ -522,6 +665,19 @@ class DepthViewerApp {
                     this.localizeDistanceValue.textContent = settings.localizeDistance + 'px';
                     this.viewer.setOptions({ localizeDistance: settings.localizeDistance });
                 }
+                
+                // Apply dampening settings
+                if (settings.backgroundDampening !== undefined) {
+                    this.backgroundDampeningSlider.value = settings.backgroundDampening;
+                    this.backgroundDampeningValue.textContent = settings.backgroundDampening.toFixed(1);
+                    this.viewer.setOptions({ backgroundDampening: settings.backgroundDampening });
+                }
+                
+                if (settings.midgroundDampening !== undefined) {
+                    this.midgroundDampeningSlider.value = settings.midgroundDampening;
+                    this.midgroundDampeningValue.textContent = settings.midgroundDampening.toFixed(1);
+                    this.viewer.setOptions({ midgroundDampening: settings.midgroundDampening });
+                }
             }
         } catch (error) {
             console.warn('Failed to load saved settings:', error);
@@ -530,7 +686,36 @@ class DepthViewerApp {
     
     getCurrentFocus() {
         const activeBtn = document.querySelector('[data-focus].active');
-        return activeBtn ? parseFloat(activeBtn.dataset.focus) : 0.5;
+        if (!activeBtn || activeBtn.dataset.focus === 'auto') return 0.5;
+        return parseFloat(activeBtn.dataset.focus);
+    }
+    
+    getCurrentAutoFocus() {
+        const activeBtn = document.querySelector('[data-focus].active');
+        return activeBtn ? activeBtn.dataset.focus === 'auto' : false;
+    }
+    
+    highlightAutoFocus(focusType) {
+        // Remove any existing auto-focus highlighting
+        document.querySelectorAll('[data-focus]').forEach(btn => {
+            btn.classList.remove('auto-focus-highlight');
+        });
+        
+        // Add highlighting to the detected focus type
+        if (focusType === 'near') {
+            document.querySelector('[data-focus="0.2"]')?.classList.add('auto-focus-highlight');
+        } else if (focusType === 'middle') {
+            document.querySelector('[data-focus="0.5"]')?.classList.add('auto-focus-highlight');
+        } else if (focusType === 'far') {
+            document.querySelector('[data-focus="0.8"]')?.classList.add('auto-focus-highlight');
+        }
+        
+        // Remove highlight after a short delay
+        setTimeout(() => {
+            document.querySelectorAll('[data-focus]').forEach(btn => {
+                btn.classList.remove('auto-focus-highlight');
+            });
+        }, 2000);
     }
     
     previousImage() {

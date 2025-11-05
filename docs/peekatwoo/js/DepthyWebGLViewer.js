@@ -10,8 +10,17 @@ class DepthyWebGLViewer {
             height: options.height || 600,
             depthScale: options.depthScale || 1.0,
             focus: options.focus || 0.5,
+            autoFocus: options.autoFocus || false,
+            invertDepthLogic: options.invertDepthLogic || false,
+            invertX: options.invertX || false,
+            invertY: options.invertY || false,
+            lockX: options.lockX || false,
+            lockY: options.lockY || false,
+            displayDepthmap: options.displayDepthmap || false,
             localizedParallax: options.localizedParallax || false,
             localizeDistance: options.localizeDistance || 150,
+            backgroundDampening: options.backgroundDampening || 0.3,
+            midgroundDampening: options.midgroundDampening || 0.7,
             ...options
         };
         
@@ -38,6 +47,7 @@ class DepthyWebGLViewer {
         
         // Localized parallax properties
         this.clickOrigin = { x: 0.5, y: 0.5 }; // Normalized coordinates of initial click
+        this.currentFocusType = 1; // 0=near, 1=middle, 2=far
         
         // Fill mode panning
         this.panOffset = { x: 0, y: 0 };
@@ -131,6 +141,9 @@ class DepthyWebGLViewer {
             uniform bool u_localizedParallax;
             uniform vec2 u_clickOrigin;
             uniform float u_localizeDistance;
+            uniform float u_backgroundDampening;
+            uniform float u_midgroundDampening;
+            uniform int u_currentFocusType; // 0=near, 1=middle, 2=far
             
             varying vec2 v_texCoord;
             
@@ -160,6 +173,19 @@ class DepthyWebGLViewer {
                 // Calculate displacement based on depth, focus, and mouse offset
                 // This is the core Depthy algorithm
                 float depthFactor = (depth - u_focus) * u_depthScale;
+                
+                // Apply dampening when localized parallax and auto focus are both enabled
+                if (u_localizedParallax) {
+                    if (u_currentFocusType == 2) {
+                        // Far plane (background) - apply background dampening
+                        depthFactor *= u_backgroundDampening;
+                    } else if (u_currentFocusType == 1) {
+                        // Middle plane (midground) - apply midground dampening  
+                        depthFactor *= u_midgroundDampening;
+                    }
+                    // Near plane (u_currentFocusType == 0) - no dampening
+                }
+                
                 vec2 displacement = u_offset * depthFactor * 0.02; // Scale factor
                 
                 // Apply localized parallax if enabled
@@ -279,6 +305,9 @@ class DepthyWebGLViewer {
         this.localizedParallaxLocation = gl.getUniformLocation(this.program, 'u_localizedParallax');
         this.clickOriginLocation = gl.getUniformLocation(this.program, 'u_clickOrigin');
         this.localizeDistanceLocation = gl.getUniformLocation(this.program, 'u_localizeDistance');
+        this.backgroundDampeningLocation = gl.getUniformLocation(this.program, 'u_backgroundDampening');
+        this.midgroundDampeningLocation = gl.getUniformLocation(this.program, 'u_midgroundDampening');
+        this.currentFocusTypeLocation = gl.getUniformLocation(this.program, 'u_currentFocusType');
     }
     
     setupEventListeners() {
@@ -320,6 +349,23 @@ class DepthyWebGLViewer {
             
             console.log('Drag start coords:', coords);
             
+            // Auto focus detection for rubber band mode
+            if (this.dragMode === 'rubber-band' && this.options.autoFocus) {
+                const depthValue = this.sampleDepthAtLocation(coords.x, coords.y);
+                const focusResult = this.depthToFocusPlane(depthValue, this.options.invertDepthLogic);
+                this.options.focus = focusResult.value;
+                
+                // Store focus type for dampening
+                this.currentFocusType = focusResult.type === 'near' ? 0 : focusResult.type === 'middle' ? 1 : 2;
+                
+                console.log('Auto focus set to:', focusResult.value, focusResult.type, 'type index:', this.currentFocusType);
+                
+                // Notify about focus type change if callback exists
+                if (this.onAutoFocusChange) {
+                    this.onAutoFocusChange(focusResult.type);
+                }
+            }
+            
             // Store click origin for localized parallax in rubber-band mode
             if (this.dragMode === 'rubber-band' && this.options.localizedParallax) {
                 this.clickOrigin.x = this.dragStart.x;
@@ -341,10 +387,18 @@ class DepthyWebGLViewer {
             
             // Calculate drag offset for depth effect
             const sensitivity = this.options.sensitivity || 1.0;
-            const deltaX = (coords.x - this.dragStart.x) * sensitivity;
-            const deltaY = (coords.y - this.dragStart.y) * sensitivity;
+            let deltaX = (coords.x - this.dragStart.x) * sensitivity;
+            let deltaY = (coords.y - this.dragStart.y) * sensitivity;
             
-            this.targetOffset.x = deltaX * -2; // Invert X for natural movement
+            // Apply invert options
+            if (this.options.invertX) deltaX *= -1;
+            if (this.options.invertY) deltaY *= -1;
+            
+            // Apply lock options
+            if (this.options.lockX) deltaX = 0;
+            if (this.options.lockY) deltaY = 0;
+            
+            this.targetOffset.x = deltaX * -2; // Default invert X for natural movement
             this.targetOffset.y = deltaY * 2;
             
             console.log('Target offset:', this.targetOffset);
@@ -417,6 +471,18 @@ class DepthyWebGLViewer {
         
         // Set cursor
         this.canvas.style.cursor = 'grab';
+        
+        // Keyboard event for 'D' key (depth map display)
+        document.addEventListener('keydown', (event) => {
+            if (event.key.toLowerCase() === 'd' && !event.repeat) {
+                this.options.displayDepthmap = !this.options.displayDepthmap;
+                console.log('Display depthmap:', this.options.displayDepthmap);
+                if (this.onDepthmapToggle) {
+                    this.onDepthmapToggle(this.options.displayDepthmap);
+                }
+                this.render();
+            }
+        });
     }
     
     async loadColorImage(source) {
@@ -619,7 +685,9 @@ class DepthyWebGLViewer {
         
         // Bind textures
         gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, this.colorTexture);
+        // Use depth map as color texture if display mode is enabled
+        const textureToDisplay = this.options.displayDepthmap ? this.depthTexture : this.colorTexture;
+        gl.bindTexture(gl.TEXTURE_2D, textureToDisplay);
         gl.uniform1i(this.colorTextureLocation, 0);
         
         gl.activeTexture(gl.TEXTURE1);
@@ -640,6 +708,9 @@ class DepthyWebGLViewer {
         gl.uniform1i(this.localizedParallaxLocation, this.options.localizedParallax && this.dragMode === 'rubber-band' ? 1 : 0);
         gl.uniform2f(this.clickOriginLocation, this.clickOrigin.x, this.clickOrigin.y);
         gl.uniform1f(this.localizeDistanceLocation, this.options.localizeDistance);
+        gl.uniform1f(this.backgroundDampeningLocation, this.options.backgroundDampening);
+        gl.uniform1f(this.midgroundDampeningLocation, this.options.midgroundDampening);
+        gl.uniform1i(this.currentFocusTypeLocation, this.currentFocusType);
         
         // Setup attributes
         gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
@@ -662,6 +733,70 @@ class DepthyWebGLViewer {
     
     hasDepthMap() {
         return !!this.depthImage;
+    }
+    
+    sampleDepthAtLocation(normalizedX, normalizedY) {
+        if (!this.depthImage) return 0.5; // Default to middle if no depth map
+        
+        // Create a canvas to sample the depth map
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size to match depth image
+        canvas.width = this.depthImage.width;
+        canvas.height = this.depthImage.height;
+        
+        // Draw the depth image to canvas
+        ctx.drawImage(this.depthImage, 0, 0);
+        
+        // Calculate sample area (10px radius around click point)
+        const centerX = Math.floor(normalizedX * canvas.width);
+        const centerY = Math.floor(normalizedY * canvas.height);
+        const sampleRadius = 10;
+        
+        // Sample pixels in the area
+        let totalValue = 0;
+        let sampleCount = 0;
+        
+        for (let x = centerX - sampleRadius; x <= centerX + sampleRadius; x++) {
+            for (let y = centerY - sampleRadius; y <= centerY + sampleRadius; y++) {
+                if (x >= 0 && x < canvas.width && y >= 0 && y < canvas.height) {
+                    const distance = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
+                    if (distance <= sampleRadius) {
+                        const imageData = ctx.getImageData(x, y, 1, 1);
+                        // Use red channel for grayscale depth value (0-255)
+                        const depthValue = imageData.data[0] / 255; // Normalize to 0-1
+                        totalValue += depthValue;
+                        sampleCount++;
+                    }
+                }
+            }
+        }
+        
+        const averageDepth = sampleCount > 0 ? totalValue / sampleCount : 0.5;
+        console.log(`Sampled depth at (${normalizedX.toFixed(2)}, ${normalizedY.toFixed(2)}): ${averageDepth.toFixed(3)}`);
+        return averageDepth;
+    }
+    
+    depthToFocusPlane(depthValue, invert = false) {
+        // Convert depth value to focus plane setting
+        // Dark (low values) = Far, Light (high values) = Near
+        let focusValue;
+        let focusType;
+        
+        if (depthValue < 0.33) {
+            focusValue = invert ? 0.2 : 0.8; // Dark = Far (unless inverted)
+            focusType = invert ? 'near' : 'far';
+        } else if (depthValue < 0.66) {
+            focusValue = 0.5; // Medium = Middle
+            focusType = 'middle';
+        } else {
+            focusValue = invert ? 0.8 : 0.2; // Light = Near (unless inverted)
+            focusType = invert ? 'far' : 'near';
+        }
+        
+        console.log(`Depth ${depthValue.toFixed(3)} mapped to focus ${focusValue} (${focusType}) (invert: ${invert})`);
+        return { value: focusValue, type: focusType };
     }
     
     setOptions(options) {
