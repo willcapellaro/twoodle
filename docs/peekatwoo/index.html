@@ -15,6 +15,10 @@
             height: 100vh;
         }
         
+        body.controls-open {
+            overflow: hidden; /* Ensure no body scroll when panel is open */
+        }
+        
         .container {
             position: relative;
             width: 100vw;
@@ -188,10 +192,102 @@
             overflow-y: auto;
             user-select: none;
             -webkit-user-select: none;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
         }
         
         .controls-panel.open {
             right: 0;
+        }
+        
+        .controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 10px;
+        }
+        
+        .controls-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #fff;
+        }
+        
+        .close-panel-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+        
+        .close-panel-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .close-panel-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .panel-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .panel-backdrop.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        /* Mobile-specific improvements */
+        @media (max-width: 768px) {
+            .controls-panel {
+                width: 100vw;
+                right: -100vw;
+                max-height: 100vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                padding: 15px;
+            }
+            
+            .controls-panel.open {
+                right: 0;
+            }
+            
+            .controls-header {
+                position: sticky;
+                top: 0;
+                background: rgba(30, 30, 30, 0.95);
+                z-index: 1;
+                margin-bottom: 15px;
+            }
+            
+            .close-panel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .panel-backdrop.active {
+                display: block;
+            }
         }
         
         .controls-grid {
@@ -349,6 +445,10 @@
         
         <!-- Controls Panel -->
         <div class="controls-panel" id="controlsPanel">
+            <div class="controls-header">
+                <h3>Debug Controls</h3>
+                <button class="close-panel-btn" id="closePanelBtn">✕</button>
+            </div>
             <div class="controls-grid">
                 <div class="control-group">
                     <div class="inline-slider">
@@ -435,39 +535,50 @@
                     </div>
                 </div>
                 
-                <div class="control-group" id="gyroControlsGroup">
+                <div class="control-group">
                     <label>
-                        <input type="checkbox" id="gyroEnabled" disabled style="margin-right: 8px;">
-                        Gyroscope Control (Mobile)
+                        <input type="checkbox" id="gyroscopeEnabled" style="margin-right: 8px;">
+                        Enable Gyroscope (Mobile)
                     </label>
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin: 5px 0;">
-                        <span style="font-size: 12px; min-width: 20px;">H:</span>
-                        <label style="font-size: 12px; margin: 0 5px;">
-                            <input type="checkbox" id="gyroInvertX" disabled style="margin-right: 3px;">
-                            Invert
-                        </label>
-                        <label style="font-size: 12px; margin: 0 5px;">
-                            <input type="checkbox" id="gyroLockX" disabled style="margin-right: 3px;">
-                            Lock
-                        </label>
-                        <button id="gyroCenter" disabled style="font-size: 10px; padding: 2px 6px;">Center</button>
+                    
+                    <div class="inline-slider">
+                        <label>Horizontal Sensitivity</label>
+                        <input type="range" class="control-range" id="gyroHorizontal" min="0.1" max="3" step="0.1" value="1">
+                        <span id="gyroHorizontalValue">1.0</span>
                     </div>
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin: 5px 0;">
-                        <span style="font-size: 12px; min-width: 20px;">V:</span>
-                        <label style="font-size: 12px; margin: 0 5px;">
-                            <input type="checkbox" id="gyroInvertY" disabled style="margin-right: 3px;">
-                            Invert
-                        </label>
-                        <label style="font-size: 12px; margin: 0 5px;">
-                            <input type="checkbox" id="gyroLockY" disabled style="margin-right: 3px;">
-                            Lock
-                        </label>
-                        <div class="inline-slider" style="flex: 1; margin-left: 10px;">
-                            <label style="font-size: 10px;">Sens</label>
-                            <input type="range" id="gyroSensitivity" min="0.1" max="3" step="0.1" value="1" disabled style="margin: 0 5px;">
-                            <span id="gyroSensitivityValue" style="font-size: 10px;">1.0</span>
-                        </div>
+                    
+                    <div class="inline-slider">
+                        <label>Vertical Sensitivity</label>
+                        <input type="range" class="control-range" id="gyroVertical" min="0.1" max="3" step="0.1" value="1">
+                        <span id="gyroVerticalValue">1.0</span>
                     </div>
+                    
+                    <div style="display: flex; gap: 10px; margin: 10px 0;">
+                        <label style="font-size: 14px;">
+                            <input type="checkbox" id="gyroInvertX" style="margin-right: 5px;">
+                            Invert X
+                        </label>
+                        <label style="font-size: 14px;">
+                            <input type="checkbox" id="gyroLockX" style="margin-right: 5px;">
+                            Lock X
+                        </label>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; margin: 10px 0;">
+                        <label style="font-size: 14px;">
+                            <input type="checkbox" id="gyroInvertY" style="margin-right: 5px;">
+                            Invert Y
+                        </label>
+                        <label style="font-size: 14px;">
+                            <input type="checkbox" id="gyroLockY" style="margin-right: 5px;">
+                            Lock Y
+                        </label>
+                    </div>
+                    
+                    <button id="gyroCenterBtn" class="control-button" style="margin-top: 10px;">
+                        📍 Center Gyroscope
+                    </button>
+                </div>
                 </div>
                 
                 <div class="control-group">
@@ -504,7 +615,8 @@
             </div>
         </div>
         
-
+        <!-- Panel Backdrop -->
+        <div class="panel-backdrop" id="panelBackdrop"></div>
         
         <!-- Toast Notification Container -->
         <div class="toast-container" id="toastContainer"></div>

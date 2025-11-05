@@ -20,6 +20,8 @@ class DepthViewerApp {
         this.viewModeBtn = document.getElementById('viewModeBtn');
         this.controlsToggle = document.getElementById('controlsToggle');
         this.controlsPanel = document.getElementById('controlsPanel');
+        this.closePanelBtn = document.getElementById('closePanelBtn');
+        this.panelBackdrop = document.getElementById('panelBackdrop');
         this.dragOverlay = document.getElementById('dragOverlay');
         
         // Control inputs
@@ -128,7 +130,9 @@ class DepthViewerApp {
         
         console.log('DepthViewerApp initialized with dynamic image loading');
         console.log('💡 Debug tip: Type "JUMPER-CABLE" anywhere to toggle hidden images');
-        console.log('Cache-busting: v2.9 - Dynamic image loading with JUMPER-CABLE debug'); // Cache buster
+        console.log('📱 Mobile improvements: Better scrolling, close button, tap-to-dismiss');
+        console.log('🌐 Server URL: http://127.0.0.1:5501/index.html should work!');
+        console.log('Cache-busting: v3.4 - Fixed gyroscope HTML elements and IDs'); // Cache buster
     }
     
     setupEventListeners() {
@@ -148,6 +152,16 @@ class DepthViewerApp {
         
         // Controls panel toggle
         this.controlsToggle.addEventListener('click', () => {
+            this.toggleControlsPanel();
+        });
+        
+        // Close panel button
+        this.closePanelBtn.addEventListener('click', () => {
+            this.toggleControlsPanel();
+        });
+        
+        // Panel backdrop click to close
+        this.panelBackdrop.addEventListener('click', () => {
             this.toggleControlsPanel();
         });
         
@@ -380,18 +394,27 @@ class DepthViewerApp {
     // Dynamic image loading methods
     async loadImageSets() {
         try {
+            console.log('🔄 Starting image set loading...');
+            
             // Load sample images
             this.sampleImages = await this.scanImageFolder('./sample-images/');
-            console.log(`Loaded ${this.sampleImages.length} sample image pairs`);
+            console.log(`✅ Loaded ${this.sampleImages.length} sample image pairs:`, this.sampleImages);
             
             // Load hidden images
             this.hiddenImages = await this.scanImageFolder('./sample-images/hidden-images/');
-            console.log(`Loaded ${this.hiddenImages.length} hidden image pairs`);
+            console.log(`✅ Loaded ${this.hiddenImages.length} hidden image pairs:`, this.hiddenImages);
             
         } catch (error) {
             console.error('Error loading image sets:', error);
-            // Fallback to empty arrays
-            this.sampleImages = [];
+            // Fallback to hardcoded landing-pig
+            console.log('🔄 Using fallback hardcoded images...');
+            this.sampleImages = [
+                {
+                    name: 'Landing Pig',
+                    colorImage: './sample-images/landing-pig.jpeg',
+                    depthMap: './sample-images/landing-pig-∂map.png'
+                }
+            ];
             this.hiddenImages = [];
         }
     }
@@ -423,10 +446,9 @@ class DepthViewerApp {
                     }
                 }
             } else {
-                // Sample images set
+                // Sample images set (landing-pig is the landing/default image)
                 const sampleImagePairs = [
                     { base: 'landing-pig', colorExt: '.jpeg', depthExt: '.png' },
-                    { base: 'boar2', colorExt: '.jpeg', depthExt: '.png' },
                     { base: 'boar4', colorExt: '.jpeg', depthExt: '.png' }
                 ];
                 
@@ -514,11 +536,36 @@ class DepthViewerApp {
     }
     
     loadCurrentImageSet() {
+        console.log(`🎯 Loading current image set: ${this.currentImageSet}`);
         const images = this.getCurrentImages();
+        console.log(`📂 Available images in ${this.currentImageSet} set:`, images);
+        
         if (images.length > 0) {
+            console.log(`🚀 Loading first image: ${images[0].name}`);
             this.loadTestImages();
         } else {
-            console.warn(`No images found in ${this.currentImageSet} set`);
+            console.warn(`⚠️ No images found in ${this.currentImageSet} set`);
+            console.log('� Loading hardcoded landing-pig as emergency fallback...');
+            
+            // Emergency fallback - load landing-pig directly
+            this.loadHardcodedLandingPig();
+        }
+    }
+    
+    async loadHardcodedLandingPig() {
+        try {
+            console.log('🐷 Loading hardcoded landing-pig...');
+            this.showStatus('Loading Landing Pig...', 'info');
+            
+            await this.viewer.loadColorImage('./sample-images/landing-pig.jpeg');
+            await this.viewer.loadDepthMap('./sample-images/landing-pig-∂map.png');
+            
+            this.showStatus('Landing Pig loaded! Touch or drag to see the parallax depth effect.', 'success');
+            console.log('✅ Hardcoded landing-pig loaded successfully');
+            
+        } catch (error) {
+            console.error('❌ Failed to load hardcoded landing-pig:', error);
+            this.showStatus(`Failed to load images: ${error.message}`, 'error');
         }
     }
     
@@ -596,6 +643,9 @@ class DepthViewerApp {
     toggleControlsPanel() {
         const isOpen = this.controlsPanel.classList.toggle('open');
         this.controlsToggle.textContent = isOpen ? '× Debug' : '⚙️ Debug';
+        
+        // Handle backdrop for mobile
+        this.panelBackdrop.classList.toggle('active', isOpen);
         
         // Add/remove class from body to adjust toast positioning
         document.body.classList.toggle('controls-open', isOpen);
