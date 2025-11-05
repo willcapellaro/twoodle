@@ -51,6 +51,8 @@ class DepthyWebGLViewer {
         this.canvas.style.width = '100%';
         this.canvas.style.height = '100%';
         this.canvas.style.backgroundColor = '#000';
+        this.canvas.style.touchAction = 'none';
+        this.canvas.style.userSelect = 'none';
         
         // Set actual canvas size to match display size
         this.updateCanvasSize();
@@ -65,7 +67,9 @@ class DepthyWebGLViewer {
             throw new Error('WebGL not supported');
         }
         
+        console.log('🌟 HI THERE! NEW CODE IS LOADED! 🌟');
         console.log('WebGL context created');
+        console.log('🚀 TOUCH UPDATE LOADED - Version 1.1');
         this.setupWebGL();
         this.setupEventListeners();
         this.setupResizeHandler();
@@ -278,14 +282,43 @@ class DepthyWebGLViewer {
     }
     
     setupEventListeners() {
-        // Mouse/touch drag for depth effect
-        this.canvas.addEventListener('mousedown', (event) => {
+        // Helper function to get coordinates from mouse or touch event
+        const getEventCoords = (event) => {
+            const rect = this.canvas.getBoundingClientRect();
+            let clientX, clientY;
+            
+            if (event.touches && event.touches.length > 0) {
+                // Touch event
+                clientX = event.touches[0].clientX;
+                clientY = event.touches[0].clientY;
+            } else if (event.changedTouches && event.changedTouches.length > 0) {
+                // Touch end event
+                clientX = event.changedTouches[0].clientX;
+                clientY = event.changedTouches[0].clientY;
+            } else {
+                // Mouse event
+                clientX = event.clientX;
+                clientY = event.clientY;
+            }
+            
+            return {
+                x: (clientX - rect.left) / rect.width,
+                y: (clientY - rect.top) / rect.height
+            };
+        };
+        
+        // Start drag (mouse or touch)
+        const handleDragStart = (event) => {
+            console.log('Drag start:', event.type, event);
             if (!this.colorTexture || !this.depthTexture) return;
             
+            event.preventDefault(); // Prevent default touch behaviors
             this.isDragging = true;
-            const rect = this.canvas.getBoundingClientRect();
-            this.dragStart.x = (event.clientX - rect.left) / rect.width;
-            this.dragStart.y = (event.clientY - rect.top) / rect.height;
+            const coords = getEventCoords(event);
+            this.dragStart.x = coords.x;
+            this.dragStart.y = coords.y;
+            
+            console.log('Drag start coords:', coords);
             
             // Store click origin for localized parallax in rubber-band mode
             if (this.dragMode === 'rubber-band' && this.options.localizedParallax) {
@@ -294,32 +327,37 @@ class DepthyWebGLViewer {
             }
             
             this.canvas.style.cursor = 'grabbing';
-        });
+        };
         
-        this.canvas.addEventListener('mousemove', (event) => {
+        // Drag move (mouse or touch)
+        const handleDragMove = (event) => {
             if (!this.colorTexture || !this.depthTexture) return;
-            
-            const rect = this.canvas.getBoundingClientRect();
-            const x = (event.clientX - rect.left) / rect.width;
-            const y = (event.clientY - rect.top) / rect.height;
-            
-            if (this.isDragging) {
-                // Calculate drag offset for depth effect
-                const sensitivity = this.options.sensitivity || 1.0;
-                const deltaX = (x - this.dragStart.x) * sensitivity;
-                const deltaY = (y - this.dragStart.y) * sensitivity;
-                
-                this.targetOffset.x = deltaX * -2; // Invert X for natural movement
-                this.targetOffset.y = deltaY * 2;
-                
-                this.updateMouseOffset();
-                this.render();
-            }
-        });
-        
-        this.canvas.addEventListener('mouseup', () => {
             if (!this.isDragging) return;
             
+            event.preventDefault(); // Prevent scrolling on touch devices
+            const coords = getEventCoords(event);
+            
+            console.log('Drag move coords:', coords);
+            
+            // Calculate drag offset for depth effect
+            const sensitivity = this.options.sensitivity || 1.0;
+            const deltaX = (coords.x - this.dragStart.x) * sensitivity;
+            const deltaY = (coords.y - this.dragStart.y) * sensitivity;
+            
+            this.targetOffset.x = deltaX * -2; // Invert X for natural movement
+            this.targetOffset.y = deltaY * 2;
+            
+            console.log('Target offset:', this.targetOffset);
+            
+            this.updateMouseOffset();
+            this.render();
+        };
+        
+        // End drag (mouse or touch)
+        const handleDragEnd = (event) => {
+            if (!this.isDragging) return;
+            
+            event.preventDefault();
             this.isDragging = false;
             this.canvas.style.cursor = 'grab';
             
@@ -331,8 +369,12 @@ class DepthyWebGLViewer {
                 this.targetOffset = { x: 0, y: 0 };
                 this.animateToTarget();
             }
-        });
+        };
         
+        // Mouse events
+        this.canvas.addEventListener('mousedown', handleDragStart);
+        this.canvas.addEventListener('mousemove', handleDragMove);
+        this.canvas.addEventListener('mouseup', handleDragEnd);
         this.canvas.addEventListener('mouseleave', () => {
             if (this.isDragging && this.dragMode === 'rubber-band') {
                 this.isDragging = false;
@@ -341,6 +383,22 @@ class DepthyWebGLViewer {
                 this.animateToTarget();
             }
         });
+        
+        // Touch events
+        this.canvas.addEventListener('touchstart', (e) => {
+            console.log('🔥 TOUCH START detected!', e.touches.length, 'touches');
+            handleDragStart(e);
+        }, { passive: false });
+        
+        this.canvas.addEventListener('touchmove', (e) => {
+            console.log('🔥 TOUCH MOVE detected!');
+            handleDragMove(e);
+        }, { passive: false });
+        
+        this.canvas.addEventListener('touchend', (e) => {
+            console.log('🔥 TOUCH END detected!');
+            handleDragEnd(e);
+        }, { passive: false });
         
         // Scroll/pan for fill mode
         this.canvas.addEventListener('wheel', (event) => {

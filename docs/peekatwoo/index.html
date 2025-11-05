@@ -34,6 +34,10 @@
         .viewer {
             width: 100%;
             height: 100%;
+            touch-action: none; /* Prevent default touch behaviors like scrolling */
+            user-select: none; /* Prevent text selection on touch devices */
+            -webkit-user-select: none;
+            -webkit-touch-callout: none; /* Prevent callout on iOS */
         }
         
         .top-controls {
@@ -277,6 +281,14 @@
             z-index: 50;
             display: none;
             transform: translate(-50%, -50%);
+        }
+        
+        /* Touch-friendly canvas styling */
+        canvas {
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
         }
     </style>
 </head>

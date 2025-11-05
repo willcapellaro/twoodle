@@ -547,15 +547,21 @@ class DepthViewerApp {
     
     async loadCurrentSampleImage() {
         const imageSet = this.sampleImages[this.currentImageIndex];
-        if (!imageSet) return;
+        if (!imageSet) {
+            console.log('No image set found at index:', this.currentImageIndex);
+            return;
+        }
         
+        console.log('Loading image set:', imageSet);
         this.showStatus(`Loading ${imageSet.name}...`, 'info');
         
         try {
+            console.log('Loading color image:', imageSet.colorImage);
             await this.viewer.loadColorImage(imageSet.colorImage);
+            console.log('Loading depth map:', imageSet.depthMap);
             await this.viewer.loadDepthMap(imageSet.depthMap);
             
-            this.showStatus(`${imageSet.name} loaded! Move your mouse over the image to see the parallax depth effect.`, 'success');
+            this.showStatus(`${imageSet.name} loaded! Touch or drag to see the parallax depth effect.`, 'success');
         } catch (error) {
             this.showStatus(`Failed to load ${imageSet.name}: ${error.message}`, 'error');
             console.error('Sample image load error:', error);
@@ -565,5 +571,6 @@ class DepthViewerApp {
 
 // Initialize the application when the page loads
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🎯 APP STARTING - Touch Version 1.1');
     new DepthViewerApp();
 });
