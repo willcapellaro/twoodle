@@ -50,41 +50,40 @@ class DepthViewerApp {
         // Display controls
         this.displayDepthmapCheckbox = document.getElementById('displayDepthmap');
         
+        // Swipe controls
+        this.swipeSlideAdvanceCheckbox = document.getElementById('swipeSlideAdvance');
+        
         // Dampening controls
         this.backgroundDampeningSlider = document.getElementById('backgroundDampening');
         this.backgroundDampeningValue = document.getElementById('backgroundDampeningValue');
         this.midgroundDampeningSlider = document.getElementById('midgroundDampening');
         this.midgroundDampeningValue = document.getElementById('midgroundDampeningValue');
         
-        // Sample image sets
-        this.sampleImages = [
-            {
-                name: 'Landing Pig',
-                colorImage: './sample-images/landing-pig.jpeg',
-                depthMap: './sample-images/landing-pig-∂map.png'
-            },
-            {
-                name: 'Glass Butt 2',
-                colorImage: './sample-images/glassbutt2.jpeg',
-                depthMap: './sample-images/glassbutt2-∂map.png'
-            },
-            {
-                name: 'Astro Butt',
-                colorImage: './sample-images/astrobutt-color.jpeg',
-                depthMap: './sample-images/astrobutt-color-∂map.jpg'
-            },
-            {
-                name: 'Basketball Card',
-                colorImage: './sample-images/basketballcard.jpeg',
-                depthMap: './sample-images/basketballcard-∂map.jpg'
-            },
-            {
-                name: 'Green Garbage',
-                colorImage: './sample-images/green-garbage.jpeg',
-                depthMap: './sample-images/green-garbage-∂map.png'
-            }
-        ];
+        // Gyroscope controls
+        this.gyroscopeEnabledCheckbox = document.getElementById('gyroscopeEnabled');
+        this.gyroHorizontalSlider = document.getElementById('gyroHorizontal');
+        this.gyroHorizontalValue = document.getElementById('gyroHorizontalValue');
+        this.gyroVerticalSlider = document.getElementById('gyroVertical');
+        this.gyroVerticalValue = document.getElementById('gyroVerticalValue');
+        this.gyroInvertXCheckbox = document.getElementById('gyroInvertX');
+        this.gyroLockXCheckbox = document.getElementById('gyroLockX');
+        this.gyroInvertYCheckbox = document.getElementById('gyroInvertY');
+        this.gyroLockYCheckbox = document.getElementById('gyroLockY');
+        this.gyroCenterBtn = document.getElementById('gyroCenterBtn');
+        
+        // Toast opacity control
+        this.toastOpacitySlider = document.getElementById('toastOpacity');
+        this.toastOpacityValue = document.getElementById('toastOpacityValue');
+        
+        // Dynamic image loading
+        this.sampleImages = [];
+        this.hiddenImages = [];
+        this.currentImageSet = 'sample'; // 'sample' or 'hidden'
         this.currentImageIndex = 0;
+        
+        // Debug mode tracking
+        this.debugInputBuffer = '';
+        this.debugInputTimeout = null;
         
         // Mode buttons
         this.stickyBtn = document.querySelector('[data-drag-mode="sticky"]');
@@ -115,6 +114,21 @@ class DepthViewerApp {
         this.viewer.onDepthmapToggle = (enabled) => {
             this.displayDepthmapCheckbox.checked = enabled;
         };
+        
+        this.viewer.onSlideChange = (direction) => {
+            if (direction === 'next') {
+                this.nextImage();
+            } else if (direction === 'previous') {
+                this.previousImage();
+            }
+        };
+        
+        // Initialize image loading
+        this.loadImageSets();
+        
+        console.log('DepthViewerApp initialized with dynamic image loading');
+        console.log('💡 Debug tip: Type "JUMPER-CABLE" anywhere to toggle hidden images');
+        console.log('Cache-busting: v2.9 - Dynamic image loading with JUMPER-CABLE debug'); // Cache buster
     }
     
     setupEventListeners() {
@@ -256,6 +270,12 @@ class DepthViewerApp {
             this.saveSettings();
         });
         
+        // Swipe controls
+        this.swipeSlideAdvanceCheckbox.addEventListener('change', (e) => {
+            this.viewer.setOptions({ swipeSlideAdvance: e.target.checked });
+            this.saveSettings();
+        });
+        
         // Dampening controls
         this.backgroundDampeningSlider.addEventListener('input', (e) => {
             const value = parseFloat(e.target.value);
@@ -271,6 +291,68 @@ class DepthViewerApp {
             this.saveSettings();
         });
         
+        // Gyroscope controls
+        this.gyroscopeEnabledCheckbox.addEventListener('change', async (e) => {
+            const enabled = e.target.checked;
+            if (enabled) {
+                const result = await this.viewer.enableGyroscope();
+                if (!result) {
+                    // Revert checkbox if gyroscope failed to enable
+                    this.gyroscopeEnabledCheckbox.checked = false;
+                }
+            } else {
+                this.viewer.disableGyroscope();
+            }
+            this.saveSettings();
+        });
+        
+        this.gyroHorizontalSlider.addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value);
+            this.gyroHorizontalValue.textContent = value.toFixed(1);
+            this.viewer.setOptions({ gyroHorizontal: value });
+            this.saveSettings();
+        });
+        
+        this.gyroVerticalSlider.addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value);
+            this.gyroVerticalValue.textContent = value.toFixed(1);
+            this.viewer.setOptions({ gyroVertical: value });
+            this.saveSettings();
+        });
+        
+        this.gyroInvertXCheckbox.addEventListener('change', (e) => {
+            this.viewer.setOptions({ gyroInvertX: e.target.checked });
+            this.saveSettings();
+        });
+        
+        this.gyroLockXCheckbox.addEventListener('change', (e) => {
+            this.viewer.setOptions({ gyroLockX: e.target.checked });
+            this.saveSettings();
+        });
+        
+        this.gyroInvertYCheckbox.addEventListener('change', (e) => {
+            this.viewer.setOptions({ gyroInvertY: e.target.checked });
+            this.saveSettings();
+        });
+        
+        this.gyroLockYCheckbox.addEventListener('change', (e) => {
+            this.viewer.setOptions({ gyroLockY: e.target.checked });
+            this.saveSettings();
+        });
+        
+        this.gyroCenterBtn.addEventListener('click', () => {
+            this.viewer.centerGyroscope();
+        });
+        
+        // Toast opacity control
+        this.toastOpacitySlider.addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value);
+            this.toastOpacityValue.textContent = value.toFixed(1);
+            // Update toast container opacity
+            this.toastContainer.style.opacity = value;
+            this.saveSettings();
+        });
+        
         // Preset buttons
         document.querySelectorAll('[data-preset]').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -281,13 +363,163 @@ class DepthViewerApp {
             });
         });
         
+        // Debug keypress listener for JUMPER-CABLE trigger
+        document.addEventListener('keypress', (e) => {
+            this.handleDebugKeypress(e.key);
+        });
+        
         // Drag and drop
         this.setupDragAndDrop();
         
-        // Auto-load test images on page load
+        // Auto-load test images on page load (now dynamic)
         setTimeout(() => {
-            this.loadTestImages();
+            this.loadCurrentImageSet();
         }, 500);
+    }
+    
+    // Dynamic image loading methods
+    async loadImageSets() {
+        try {
+            // Load sample images
+            this.sampleImages = await this.scanImageFolder('./sample-images/');
+            console.log(`Loaded ${this.sampleImages.length} sample image pairs`);
+            
+            // Load hidden images
+            this.hiddenImages = await this.scanImageFolder('./sample-images/hidden-images/');
+            console.log(`Loaded ${this.hiddenImages.length} hidden image pairs`);
+            
+        } catch (error) {
+            console.error('Error loading image sets:', error);
+            // Fallback to empty arrays
+            this.sampleImages = [];
+            this.hiddenImages = [];
+        }
+    }
+    
+    async scanImageFolder(folderPath) {
+        const images = [];
+        
+        try {
+            // Define image sets based on actual file structure
+            if (folderPath.includes('hidden-images')) {
+                // Hidden images set
+                const hiddenImagePairs = [
+                    { base: 'astrobutt-color', colorExt: '.jpeg', depthExt: '.jpg' },
+                    { base: 'basketballcard', colorExt: '.jpeg', depthExt: '.jpg' },
+                    { base: 'glassbutt2', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'green-garbage', colorExt: '.jpeg', depthExt: '.png' }
+                ];
+                
+                for (const pair of hiddenImagePairs) {
+                    const colorImage = `${folderPath}${pair.base}${pair.colorExt}`;
+                    const depthMap = `${folderPath}${pair.base}-∂map${pair.depthExt}`;
+                    
+                    if (await this.imageExists(colorImage) && await this.imageExists(depthMap)) {
+                        images.push({
+                            name: this.formatImageName(pair.base),
+                            colorImage: colorImage,
+                            depthMap: depthMap
+                        });
+                    }
+                }
+            } else {
+                // Sample images set
+                const sampleImagePairs = [
+                    { base: 'landing-pig', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'boar2', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'boar4', colorExt: '.jpeg', depthExt: '.png' }
+                ];
+                
+                for (const pair of sampleImagePairs) {
+                    const colorImage = `${folderPath}${pair.base}${pair.colorExt}`;
+                    const depthMap = `${folderPath}${pair.base}-∂map${pair.depthExt}`;
+                    
+                    if (await this.imageExists(colorImage) && await this.imageExists(depthMap)) {
+                        images.push({
+                            name: this.formatImageName(pair.base),
+                            colorImage: colorImage,
+                            depthMap: depthMap
+                        });
+                    }
+                }
+            }
+            
+            return images;
+            
+        } catch (error) {
+            console.error(`Error scanning folder ${folderPath}:`, error);
+            return [];
+        }
+    }
+    
+    async imageExists(url) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(true);
+            img.onerror = () => resolve(false);
+            img.src = url;
+        });
+    }
+    
+    formatImageName(baseName) {
+        return baseName
+            .replace(/[-_]/g, ' ')
+            .replace(/\b\w/g, l => l.toUpperCase());
+    }
+    
+    handleDebugKeypress(key) {
+        // Add to input buffer
+        this.debugInputBuffer += key.toUpperCase();
+        
+        // Clear old timeout
+        if (this.debugInputTimeout) {
+            clearTimeout(this.debugInputTimeout);
+        }
+        
+        // Check for JUMPER-CABLE
+        if (this.debugInputBuffer.includes('JUMPER-CABLE')) {
+            this.toggleImageSet();
+            this.debugInputBuffer = '';
+            return;
+        }
+        
+        // Keep only last 20 characters to prevent memory issues
+        if (this.debugInputBuffer.length > 20) {
+            this.debugInputBuffer = this.debugInputBuffer.slice(-20);
+        }
+        
+        // Clear buffer after 3 seconds of inactivity
+        this.debugInputTimeout = setTimeout(() => {
+            this.debugInputBuffer = '';
+        }, 3000);
+    }
+    
+    toggleImageSet() {
+        if (this.currentImageSet === 'sample') {
+            this.currentImageSet = 'hidden';
+            const hiddenCount = this.hiddenImages.length;
+            this.showStatus(`🔓 Hidden image set activated! (${hiddenCount} images) JUMPER-CABLE debug mode enabled.`, 'success');
+        } else {
+            this.currentImageSet = 'sample';
+            const sampleCount = this.sampleImages.length;
+            this.showStatus(`🔒 Switched back to sample images. (${sampleCount} images)`, 'info');
+        }
+        
+        this.currentImageIndex = 0;
+        this.loadCurrentImageSet();
+    }
+    
+    getCurrentImages() {
+        return this.currentImageSet === 'hidden' ? this.hiddenImages : this.sampleImages;
+    }
+    
+    loadCurrentImageSet() {
+        const images = this.getCurrentImages();
+        if (images.length > 0) {
+            this.loadTestImages();
+        } else {
+            console.warn(`No images found in ${this.currentImageSet} set`);
+        }
     }
     
     async handleImageUploads(files) {
@@ -573,10 +805,19 @@ class DepthViewerApp {
             invertY: this.invertYCheckbox.checked,
             lockY: this.lockYCheckbox.checked,
             displayDepthmap: this.displayDepthmapCheckbox.checked,
+            swipeSlideAdvance: this.swipeSlideAdvanceCheckbox.checked,
             localizedParallax: this.localizedParallaxCheckbox.checked,
             localizeDistance: parseInt(this.localizeDistanceSlider.value),
             backgroundDampening: parseFloat(this.backgroundDampeningSlider.value),
-            midgroundDampening: parseFloat(this.midgroundDampeningSlider.value)
+            midgroundDampening: parseFloat(this.midgroundDampeningSlider.value),
+            gyroscopeEnabled: this.gyroscopeEnabledCheckbox.checked,
+            gyroHorizontal: parseFloat(this.gyroHorizontalSlider.value),
+            gyroVertical: parseFloat(this.gyroVerticalSlider.value),
+            gyroInvertX: this.gyroInvertXCheckbox.checked,
+            gyroLockX: this.gyroLockXCheckbox.checked,
+            gyroInvertY: this.gyroInvertYCheckbox.checked,
+            gyroLockY: this.gyroLockYCheckbox.checked,
+            toastOpacity: parseFloat(this.toastOpacitySlider.value)
         };
         localStorage.setItem('depthViewerSettings', JSON.stringify(settings));
     }
@@ -654,6 +895,12 @@ class DepthViewerApp {
                     this.viewer.setOptions({ displayDepthmap: settings.displayDepthmap });
                 }
                 
+                // Apply swipe controls
+                if (settings.swipeSlideAdvance !== undefined) {
+                    this.swipeSlideAdvanceCheckbox.checked = settings.swipeSlideAdvance;
+                    this.viewer.setOptions({ swipeSlideAdvance: settings.swipeSlideAdvance });
+                }
+                
                 // Apply localized parallax settings
                 if (settings.localizedParallax !== undefined) {
                     this.localizedParallaxCheckbox.checked = settings.localizedParallax;
@@ -677,6 +924,51 @@ class DepthViewerApp {
                     this.midgroundDampeningSlider.value = settings.midgroundDampening;
                     this.midgroundDampeningValue.textContent = settings.midgroundDampening.toFixed(1);
                     this.viewer.setOptions({ midgroundDampening: settings.midgroundDampening });
+                }
+                
+                // Apply gyroscope settings
+                if (settings.gyroscopeEnabled !== undefined) {
+                    this.gyroscopeEnabledCheckbox.checked = settings.gyroscopeEnabled;
+                    // Don't auto-enable gyroscope on load, let user manually enable
+                }
+                
+                if (settings.gyroHorizontal !== undefined) {
+                    this.gyroHorizontalSlider.value = settings.gyroHorizontal;
+                    this.gyroHorizontalValue.textContent = settings.gyroHorizontal.toFixed(1);
+                    this.viewer.setOptions({ gyroHorizontal: settings.gyroHorizontal });
+                }
+                
+                if (settings.gyroVertical !== undefined) {
+                    this.gyroVerticalSlider.value = settings.gyroVertical;
+                    this.gyroVerticalValue.textContent = settings.gyroVertical.toFixed(1);
+                    this.viewer.setOptions({ gyroVertical: settings.gyroVertical });
+                }
+                
+                if (settings.gyroInvertX !== undefined) {
+                    this.gyroInvertXCheckbox.checked = settings.gyroInvertX;
+                    this.viewer.setOptions({ gyroInvertX: settings.gyroInvertX });
+                }
+                
+                if (settings.gyroLockX !== undefined) {
+                    this.gyroLockXCheckbox.checked = settings.gyroLockX;
+                    this.viewer.setOptions({ gyroLockX: settings.gyroLockX });
+                }
+                
+                if (settings.gyroInvertY !== undefined) {
+                    this.gyroInvertYCheckbox.checked = settings.gyroInvertY;
+                    this.viewer.setOptions({ gyroInvertY: settings.gyroInvertY });
+                }
+                
+                if (settings.gyroLockY !== undefined) {
+                    this.gyroLockYCheckbox.checked = settings.gyroLockY;
+                    this.viewer.setOptions({ gyroLockY: settings.gyroLockY });
+                }
+                
+                // Apply toast opacity
+                if (settings.toastOpacity !== undefined) {
+                    this.toastOpacitySlider.value = settings.toastOpacity;
+                    this.toastOpacityValue.textContent = settings.toastOpacity.toFixed(1);
+                    this.toastContainer.style.opacity = settings.toastOpacity;
                 }
             }
         } catch (error) {
@@ -719,25 +1011,28 @@ class DepthViewerApp {
     }
     
     previousImage() {
-        if (this.sampleImages.length === 0) return;
-        this.currentImageIndex = (this.currentImageIndex - 1 + this.sampleImages.length) % this.sampleImages.length;
+        const images = this.getCurrentImages();
+        if (images.length === 0) return;
+        this.currentImageIndex = (this.currentImageIndex - 1 + images.length) % images.length;
         this.loadCurrentSampleImage();
     }
     
     nextImage() {
-        if (this.sampleImages.length === 0) return;
-        this.currentImageIndex = (this.currentImageIndex + 1) % this.sampleImages.length;
+        const images = this.getCurrentImages();
+        if (images.length === 0) return;
+        this.currentImageIndex = (this.currentImageIndex + 1) % images.length;
         this.loadCurrentSampleImage();
     }
     
     async loadCurrentSampleImage() {
-        const imageSet = this.sampleImages[this.currentImageIndex];
+        const images = this.getCurrentImages();
+        const imageSet = images[this.currentImageIndex];
         if (!imageSet) {
             console.log('No image set found at index:', this.currentImageIndex);
             return;
         }
         
-        console.log('Loading image set:', imageSet);
+        console.log(`Loading image set from ${this.currentImageSet}:`, imageSet);
         this.showStatus(`Loading ${imageSet.name}...`, 'info');
         
         try {

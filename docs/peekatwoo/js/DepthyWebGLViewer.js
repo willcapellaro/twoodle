@@ -17,6 +17,13 @@ class DepthyWebGLViewer {
             lockX: options.lockX || false,
             lockY: options.lockY || false,
             displayDepthmap: options.displayDepthmap || false,
+            swipeSlideAdvance: options.swipeSlideAdvance || false,
+            gyroEnabled: options.gyroEnabled || false,
+            gyroInvertX: options.gyroInvertX || false,
+            gyroInvertY: options.gyroInvertY || false,
+            gyroLockX: options.gyroLockX || false,
+            gyroLockY: options.gyroLockY || false,
+            gyroSensitivity: options.gyroSensitivity || 1.0,
             localizedParallax: options.localizedParallax || false,
             localizeDistance: options.localizeDistance || 150,
             backgroundDampening: options.backgroundDampening || 0.3,
@@ -48,6 +55,17 @@ class DepthyWebGLViewer {
         // Localized parallax properties
         this.clickOrigin = { x: 0.5, y: 0.5 }; // Normalized coordinates of initial click
         this.currentFocusType = 1; // 0=near, 1=middle, 2=far
+        
+        // Swipe slide advance properties
+        this.swipeThreshold = 0.1; // 10% of screen width from edge
+        this.isSwipeTransitioning = false;
+        
+        // Gyroscope properties
+        this.gyroSupported = false;
+        this.gyroBaseline = { alpha: 0, beta: 0, gamma: 0 };
+        this.gyroOffset = { x: 0, y: 0 };
+        this.shouldCaptureBaseline = false;
+        this.gyroEventHandler = null;
         
         // Fill mode panning
         this.panOffset = { x: 0, y: 0 };
@@ -415,6 +433,25 @@ class DepthyWebGLViewer {
             this.isDragging = false;
             this.canvas.style.cursor = 'grab';
             
+            // Check for swipe slide advance
+            if (this.options.swipeSlideAdvance && !this.isSwipeTransitioning) {
+                const coords = getEventCoords(event);
+                const dragDistance = Math.abs(coords.x - this.dragStart.x);
+                
+                // Check if drag ended near edges and covered significant distance
+                if (dragDistance > 0.2) { // Minimum 20% drag distance
+                    if (coords.x <= this.swipeThreshold) {
+                        // Swiped to left edge - go to previous image
+                        this.triggerSlideTransition('previous');
+                        return;
+                    } else if (coords.x >= (1 - this.swipeThreshold)) {
+                        // Swiped to right edge - go to next image
+                        this.triggerSlideTransition('next');
+                        return;
+                    }
+                }
+            }
+            
             if (this.dragMode === 'sticky') {
                 // Keep current position
                 this.currentOffset = { ...this.targetOffset };
@@ -483,6 +520,9 @@ class DepthyWebGLViewer {
                 this.render();
             }
         });
+        
+        // Initialize gyroscope support detection
+        this.initGyroscope();
     }
     
     async loadColorImage(source) {
@@ -656,12 +696,15 @@ class DepthyWebGLViewer {
         this.interactionMode = mode;
         this.dragMode = dragMode;
         
-        // Reset offsets when changing modes
-        if (mode === 'hover') {
+        // Reset offsets when changing modes or switching to rubber-band
+        if (mode === 'hover' || dragMode === 'rubber-band') {
             this.currentOffset = { x: 0, y: 0 };
             this.targetOffset = { x: 0, y: 0 };
             this.mouseX = 0;
             this.mouseY = 0;
+            if (this.colorTexture && this.depthTexture) {
+                this.render();
+            }
             if (this.colorTexture && this.depthTexture) {
                 this.render();
             }
@@ -736,46 +779,60 @@ class DepthyWebGLViewer {
     }
     
     sampleDepthAtLocation(normalizedX, normalizedY) {
-        if (!this.depthImage) return 0.5; // Default to middle if no depth map
+        if (!this.depthImage) {
+            console.warn('No depth image available for sampling');
+            return 0.5; // Default to middle if no depth map
+        }
         
-        // Create a canvas to sample the depth map
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        
-        // Set canvas size to match depth image
-        canvas.width = this.depthImage.width;
-        canvas.height = this.depthImage.height;
-        
-        // Draw the depth image to canvas
-        ctx.drawImage(this.depthImage, 0, 0);
-        
-        // Calculate sample area (10px radius around click point)
-        const centerX = Math.floor(normalizedX * canvas.width);
-        const centerY = Math.floor(normalizedY * canvas.height);
-        const sampleRadius = 10;
-        
-        // Sample pixels in the area
-        let totalValue = 0;
-        let sampleCount = 0;
-        
-        for (let x = centerX - sampleRadius; x <= centerX + sampleRadius; x++) {
-            for (let y = centerY - sampleRadius; y <= centerY + sampleRadius; y++) {
-                if (x >= 0 && x < canvas.width && y >= 0 && y < canvas.height) {
-                    const distance = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
-                    if (distance <= sampleRadius) {
-                        const imageData = ctx.getImageData(x, y, 1, 1);
-                        // Use red channel for grayscale depth value (0-255)
-                        const depthValue = imageData.data[0] / 255; // Normalize to 0-1
-                        totalValue += depthValue;
-                        sampleCount++;
+        try {
+            // Create a canvas to sample the depth map
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            if (!ctx) {
+                console.error('Failed to get 2D context for depth sampling');
+                return 0.5;
+            }
+            
+            // Set canvas size to match depth image
+            canvas.width = this.depthImage.width;
+            canvas.height = this.depthImage.height;
+            
+            // Draw the depth image to canvas
+            ctx.drawImage(this.depthImage, 0, 0);
+            
+            // Calculate sample area (10px radius around click point)
+            const centerX = Math.floor(normalizedX * canvas.width);
+            const centerY = Math.floor(normalizedY * canvas.height);
+            const sampleRadius = 10;
+            
+            // Sample pixels in the area
+            let totalValue = 0;
+            let sampleCount = 0;
+            
+            for (let x = centerX - sampleRadius; x <= centerX + sampleRadius; x++) {
+                for (let y = centerY - sampleRadius; y <= centerY + sampleRadius; y++) {
+                    if (x >= 0 && x < canvas.width && y >= 0 && y < canvas.height) {
+                        const distance = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
+                        if (distance <= sampleRadius) {
+                            const imageData = ctx.getImageData(x, y, 1, 1);
+                            // Use red channel for grayscale depth value (0-255)
+                            const depthValue = imageData.data[0] / 255; // Normalize to 0-1
+                            totalValue += depthValue;
+                            sampleCount++;
+                        }
                     }
                 }
             }
+            
+            const averageDepth = sampleCount > 0 ? totalValue / sampleCount : 0.5;
+            console.log(`Sampled depth at (${normalizedX.toFixed(2)}, ${normalizedY.toFixed(2)}): ${averageDepth.toFixed(3)}`);
+            return averageDepth;
+            
+        } catch (error) {
+            console.error('Error sampling depth at location:', error);
+            return 0.5;
         }
-        
-        const averageDepth = sampleCount > 0 ? totalValue / sampleCount : 0.5;
-        console.log(`Sampled depth at (${normalizedX.toFixed(2)}, ${normalizedY.toFixed(2)}): ${averageDepth.toFixed(3)}`);
-        return averageDepth;
     }
     
     depthToFocusPlane(depthValue, invert = false) {
@@ -799,6 +856,50 @@ class DepthyWebGLViewer {
         return { value: focusValue, type: focusType };
     }
     
+    triggerSlideTransition(direction) {
+        if (this.isSwipeTransitioning) return;
+        
+        console.log('🎬 Slide transition:', direction);
+        this.isSwipeTransitioning = true;
+        
+        // Start parallax animation from edge to center
+        const startX = direction === 'next' ? 1.0 : -1.0; // Start from far right or left
+        const duration = 800; // Animation duration in ms
+        const startTime = performance.now();
+        
+        const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Ease-out animation
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            
+            // Animate from edge to center
+            this.mouseX = startX * (1 - easeProgress);
+            this.mouseY = 0;
+            
+            this.render();
+            
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                // Animation complete - trigger slide change
+                this.mouseX = 0;
+                this.mouseY = 0;
+                this.isSwipeTransitioning = false;
+                
+                // Notify about slide change if callback exists
+                if (this.onSlideChange) {
+                    this.onSlideChange(direction);
+                }
+                
+                this.render();
+            }
+        };
+        
+        requestAnimationFrame(animate);
+    }
+    
     setOptions(options) {
         Object.assign(this.options, options);
         if (this.colorTexture && this.depthTexture) {
@@ -817,6 +918,102 @@ class DepthyWebGLViewer {
         if (this.gl) {
             this.gl.clearColor(0.1, 0.1, 0.1, 1.0);
             this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+        }
+    }
+    
+    initGyroscope() {
+        // Check if DeviceOrientationEvent is supported
+        if (typeof DeviceOrientationEvent !== 'undefined') {
+            // For iOS 13+, need to request permission
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                console.log('iOS device detected - will request permission when enabled');
+                this.gyroSupported = true;
+            } else if (window.DeviceOrientationEvent) {
+                // Android and older iOS
+                this.gyroSupported = true;
+                console.log('Gyroscope support detected');
+            }
+        }
+        
+        if (this.onGyroSupportDetected) {
+            this.onGyroSupportDetected(this.gyroSupported);
+        }
+    }
+    
+    async enableGyroscope() {
+        if (!this.gyroSupported) return false;
+        
+        // Request permission on iOS 13+
+        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            try {
+                const permission = await DeviceOrientationEvent.requestPermission();
+                if (permission !== 'granted') {
+                    console.log('Gyroscope permission denied');
+                    return false;
+                }
+            } catch (error) {
+                console.error('Error requesting gyroscope permission:', error);
+                return false;
+            }
+        }
+        
+        // Create and store bound handler for proper removal later
+        this.gyroEventHandler = this.handleDeviceOrientation.bind(this);
+        window.addEventListener('deviceorientation', this.gyroEventHandler);
+        console.log('Gyroscope enabled');
+        return true;
+    }
+    
+    disableGyroscope() {
+        if (this.gyroEventHandler) {
+            window.removeEventListener('deviceorientation', this.gyroEventHandler);
+            this.gyroEventHandler = null;
+        }
+        this.gyroOffset = { x: 0, y: 0 };
+        this.mouseX = 0;
+        this.mouseY = 0;
+        this.render();
+        console.log('Gyroscope disabled');
+    }
+    
+    handleDeviceOrientation(event) {
+        if (!this.options.gyroEnabled) return;
+        
+        const { alpha, beta, gamma } = event;
+        
+        // Capture baseline on first read after centering
+        if (this.shouldCaptureBaseline) {
+            this.gyroBaseline = { alpha, beta, gamma };
+            this.shouldCaptureBaseline = false;
+            console.log('Gyroscope baseline captured:', this.gyroBaseline);
+            return;
+        }
+        
+        // Calculate relative changes from baseline
+        let deltaX = (gamma - this.gyroBaseline.gamma) * this.options.gyroSensitivity * 0.01;
+        let deltaY = (beta - this.gyroBaseline.beta) * this.options.gyroSensitivity * 0.01;
+        
+        // Apply invert options
+        if (this.options.gyroInvertX) deltaX *= -1;
+        if (this.options.gyroInvertY) deltaY *= -1;
+        
+        // Apply lock options
+        if (this.options.gyroLockX) deltaX = 0;
+        if (this.options.gyroLockY) deltaY = 0;
+        
+        // Update mouse position for rendering
+        this.mouseX = Math.max(-1, Math.min(1, deltaX));
+        this.mouseY = Math.max(-1, Math.min(1, deltaY));
+        
+        this.render();
+    }
+    
+    centerGyroscope() {
+        // Set current orientation as the baseline
+        if (this.gyroSupported) {
+            // We'll capture the baseline when the next orientation event fires
+            this.shouldCaptureBaseline = true;
+            console.log('Gyroscope centered - next reading will be baseline');
         }
     }
 }
