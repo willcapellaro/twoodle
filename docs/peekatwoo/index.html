@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Depth Viewer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Prevent scrollbars */
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .viewer-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+        
+        .viewer {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .top-controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .control-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        .control-btn.active {
+            background: #007acc;
+            color: white;
+        }
+        
+        .upload-btn {
+            background: #007acc;
+            color: white;
+        }
+        
+        .upload-btn:hover {
+            background: #005a99;
+        }
+        
+        /* Toast notification system */
+        .toast-container {
+            position: fixed;
+            bottom: 80px; /* Above the controls toggle button */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 90vw;
+            width: auto;
+            pointer-events: none; /* Allow clicks to pass through container */
+            transition: bottom 0.3s ease;
+        }
+        
+        /* Adjust toast position when controls panel is open */
+        .controls-open .toast-container {
+            bottom: 380px; /* Above the open controls panel */
+        }
+        
+        .toast {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+            word-wrap: break-word;
+            pointer-events: auto; /* Re-enable clicks for individual toasts */
+            animation: slideInUp 0.3s ease;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .toast.dismissing {
+            animation: slideOutDown 0.3s ease forwards;
+        }
+        
+        @keyframes slideOutDown {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+        
+        .toast.error {
+            background: rgba(220, 53, 69, 0.95);
+        }
+        
+        .toast.success {
+            background: rgba(40, 167, 69, 0.95);
+        }
+        
+        .toast.info {
+            background: rgba(23, 162, 184, 0.95);
+        }
+        
+        .toast-dismiss {
+            background: none;
+            border: none;
+            color: currentColor;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .toast-dismiss:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .controls-panel {
+            position: absolute;
+            bottom: -320px;
+            left: 0;
+            right: 0;
+            height: 300px;
+            background: rgba(30, 30, 30, 0.95);
+            color: white;
+            padding: 20px;
+            transition: bottom 0.3s ease;
+            z-index: 100;
+        }
+        
+        /* Removed toast-area styles - now using separate toast system */
+        
+        .controls-panel.open {
+            bottom: 0;
+        }
+        
+        .controls-toggle {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 101;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            height: 100%;
+            align-items: start;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .control-group label {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .control-range {
+            width: 100%;
+            margin: 5px 0;
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .control-buttons button {
+            padding: 6px 12px;
+            background: #444;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .control-buttons button.active {
+            background: #007acc;
+        }
+        
+        .drag-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 100, 200, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .drag-overlay.active {
+            display: flex;
+        }
+        
+        .hidden-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Controls -->
+        <div class="top-controls">
+            <button class="control-btn upload-btn" id="uploadBtn">📁 Upload</button>
+            <button class="control-btn active" id="viewModeBtn" title="Toggle Fit/Fill">🔳</button>
+        </div>
+        
+
+        
+        <!-- Main Viewer -->
+        <div class="viewer-container">
+            <div id="viewerElement" class="viewer"></div>
+        </div>
+        
+        <!-- Controls Panel -->
+        <div class="controls-panel" id="controlsPanel">
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label>Depth Scale</label>
+                    <input type="range" class="control-range" id="depthScale" min="0" max="3" step="0.1" value="1">
+                    <span id="depthScaleValue">1.0</span>
+                </div>
+                
+                <div class="control-group">
+                    <label>Focus Plane</label>
+                    <div class="control-buttons">
+                        <button data-focus="0.2">Near</button>
+                        <button data-focus="0.5" class="active">Middle</button>
+                        <button data-focus="0.8">Far</button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>Drag Sensitivity</label>
+                    <input type="range" class="control-range" id="sensitivity" min="0.1" max="2" step="0.1" value="1">
+                    <span id="sensitivityValue">1.0</span>
+                </div>
+                
+                <div class="control-group">
+                    <label>Interaction Mode</label>
+                    <div class="control-buttons">
+                        <button data-drag-mode="sticky" class="active">Sticky</button>
+                        <button data-drag-mode="rubber-band">Rubber Band</button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>Presets</label>
+                    <div class="control-buttons">
+                        <button data-preset="calm">Calm</button>
+                        <button data-preset="normal" class="active">Normal</button>
+                        <button data-preset="dramatic">Dramatic</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Controls Toggle -->
+        <button class="controls-toggle" id="controlsToggle">⚙️ Controls</button>
+        
+        <!-- Toast Notification Container -->
+        <div class="toast-container" id="toastContainer"></div>
+        
+        <!-- Hidden File Input -->
+        <input type="file" id="imageInput" class="hidden-input" accept="image/*" multiple>
+        
+        <!-- Drag Overlay -->
+        <div class="drag-overlay" id="dragOverlay">
+            Drop your images here<br>
+            <small>Color image + depth map (with "∂map" in filename)</small>
+        </div>
+    </div>
+
+    <script src="js/DepthyWebGLViewer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
