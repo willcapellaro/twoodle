@@ -520,6 +520,17 @@
                                 <input type="checkbox" id="swipeSlideAdvance" style="margin-right: 8px;">
                                 Swipe Slide Advance
                             </label>
+                            
+                            <label style="margin-top: 10px;">
+                                <input type="checkbox" id="animateSlideTransitions" style="margin-right: 8px;" checked>
+                                Animate Slide Transitions
+                            </label>
+                            
+                            <div class="inline-slider" style="margin-top: 10px;">
+                                <label>Animation Timing</label>
+                                <input type="range" class="control-range" id="animationTiming" min="200" max="2000" step="100" value="500">
+                                <span id="animationTimingValue">500ms</span>
+                            </div>
                         </div>
                         
                         <div class="control-group">
@@ -527,6 +538,15 @@
                                 <label>Toast Opacity</label>
                                 <input type="range" class="control-range" id="toastOpacity" min="0" max="1" step="0.1" value="0.9">
                                 <span id="toastOpacityValue">0.9</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group" id="depthMapSelectorGroup" style="display: none;">
+                            <label>Depth Map Variant</label>
+                            <div class="control-buttons" id="depthMapSelector">
+                                <button data-depth-map="default" class="active">Default</button>
+                                <button data-depth-map="light" style="display: none;">Light</button>
+                                <button data-depth-map="dark" style="display: none;">Dark</button>
                             </div>
                         </div>
                     </div>
@@ -598,6 +618,11 @@
                                 <input type="range" class="control-range" id="localizeDistance" min="50" max="500" step="10" value="150">
                                 <span id="localizeDistanceValue">150px</span>
                             </div>
+                            
+                            <label style="margin-top: 10px;">
+                                <input type="checkbox" id="symmetricalDrag" style="margin-right: 8px;">
+                                Symmetrical Drag (Mirror Effect)
+                            </label>
                         </div>
                         
                         <div class="control-group">
@@ -612,6 +637,14 @@
                                 <input type="range" class="control-range" id="midgroundDampening" min="0" max="1" step="0.1" value="0.6">
                                 <span id="midgroundDampeningValue">0.6</span>
                             </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Numpad Controls</label>
+                            <label style="margin-top: 10px;">
+                                <input type="checkbox" id="numpadAnimation" style="margin-right: 8px;" checked>
+                                Animate Numpad Transitions (500ms)
+                            </label>
                         </div>
                     </div>
                 </div>

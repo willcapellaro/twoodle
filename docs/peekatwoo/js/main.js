@@ -35,6 +35,9 @@ class DepthViewerApp {
         this.localizeDistanceValue = document.getElementById('localizeDistanceValue');
         this.distanceCircle = document.getElementById('distanceCircle');
         
+        // Symmetrical drag controls
+        this.symmetricalDragCheckbox = document.getElementById('symmetricalDrag');
+        
         // Slideshow controls
         this.prevImageBtn = document.getElementById('prevImageBtn');
         this.nextImageBtn = document.getElementById('nextImageBtn');
@@ -54,6 +57,11 @@ class DepthViewerApp {
         // Swipe controls
         this.swipeSlideAdvanceCheckbox = document.getElementById('swipeSlideAdvance');
         
+        // Animation controls
+        this.animateSlideTransitionsCheckbox = document.getElementById('animateSlideTransitions');
+        this.animationTimingSlider = document.getElementById('animationTiming');
+        this.animationTimingValue = document.getElementById('animationTimingValue');
+        
         // Dampening controls
         this.backgroundDampeningSlider = document.getElementById('backgroundDampening');
         this.backgroundDampeningValue = document.getElementById('backgroundDampeningValue');
@@ -71,6 +79,9 @@ class DepthViewerApp {
         this.gyroInvertYCheckbox = document.getElementById('gyroInvertY');
         this.gyroLockYCheckbox = document.getElementById('gyroLockY');
         this.gyroCenterBtn = document.getElementById('gyroCenterBtn');
+        
+        // Numpad controls
+        this.numpadAnimationCheckbox = document.getElementById('numpadAnimation');
         
         // Gyroscope debug display elements
         this.gyroDebugInfo = document.getElementById('gyroDebugInfo');
@@ -90,6 +101,10 @@ class DepthViewerApp {
         // Toast opacity control
         this.toastOpacitySlider = document.getElementById('toastOpacity');
         this.toastOpacityValue = document.getElementById('toastOpacityValue');
+        
+        // Depth map selector controls
+        this.depthMapSelectorGroup = document.getElementById('depthMapSelectorGroup');
+        this.depthMapSelector = document.getElementById('depthMapSelector');
         
         // Dynamic image loading
         this.sampleImages = [];
@@ -115,6 +130,14 @@ class DepthViewerApp {
         this.sensitivity = 1.0;
         this.currentViewMode = 'fit';
         this.currentDragMode = 'sticky';
+        
+        // Animation properties
+        this.animateSlideTransitions = true;
+        this.animationTiming = 500;
+        this.isSlideAnimating = false;
+        
+        // Symmetrical drag property
+        this.symmetricalDrag = false;
         
         // Load saved settings
         this.loadSettings();
@@ -236,6 +259,14 @@ class DepthViewerApp {
         this.localizedParallaxCheckbox.addEventListener('change', (e) => {
             this.viewer.setOptions({ localizedParallax: e.target.checked });
             this.updateLocalizedParallaxState();
+            
+            // Update symmetry compatibility when localized parallax changes
+            const images = this.getCurrentImages();
+            const imageSet = images[this.currentImageIndex];
+            if (imageSet) {
+                this.updateSymmetryCompatibility(imageSet.name);
+            }
+            
             this.saveSettings();
         });
         
@@ -257,6 +288,37 @@ class DepthViewerApp {
         
         this.localizeDistanceSlider.addEventListener('mouseleave', () => {
             this.hideDistanceCircle();
+        });
+        
+        // Add additional circle clearing events to prevent stuck circles
+        this.localizeDistanceSlider.addEventListener('blur', () => {
+            this.hideDistanceCircle();
+        });
+        
+        // Hide circle when clicking elsewhere
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#localizeDistance') && !e.target.closest('#distanceCircle')) {
+                this.hideDistanceCircle();
+            }
+        });
+        
+        // Symmetrical drag control
+        this.symmetricalDragCheckbox.addEventListener('change', (e) => {
+            // Re-check current image compatibility when toggling
+            const images = this.getCurrentImages();
+            const imageSet = images[this.currentImageIndex];
+            if (imageSet) {
+                this.updateSymmetryCompatibility(imageSet.name);
+            }
+            this.saveSettings();
+            console.log(`🪞 Symmetrical drag ${e.target.checked ? 'enabled' : 'disabled'}`);
+        });
+        
+        // Numpad animation control
+        this.numpadAnimationCheckbox.addEventListener('change', (e) => {
+            this.numpadAnimationEnabled = e.target.checked;
+            this.saveSettings();
+            console.log(`🎮 Numpad animation ${e.target.checked ? 'enabled' : 'disabled'}`);
         });
         
         // Slideshow controls
@@ -304,6 +366,20 @@ class DepthViewerApp {
         // Swipe controls
         this.swipeSlideAdvanceCheckbox.addEventListener('change', (e) => {
             this.viewer.setOptions({ swipeSlideAdvance: e.target.checked });
+            this.saveSettings();
+        });
+        
+        // Animation controls
+        this.animateSlideTransitionsCheckbox.addEventListener('change', (e) => {
+            this.animateSlideTransitions = e.target.checked;
+            this.saveSettings();
+            console.log(`🎬 Slide animations ${e.target.checked ? 'enabled' : 'disabled'}`);
+        });
+        
+        this.animationTimingSlider.addEventListener('input', (e) => {
+            const timing = parseInt(e.target.value);
+            this.animationTimingValue.textContent = timing + 'ms';
+            this.animationTiming = timing;
             this.saveSettings();
         });
         
@@ -389,6 +465,18 @@ class DepthViewerApp {
             this.saveSettings();
         });
         
+        // Depth map selector
+        document.querySelectorAll('[data-depth-map]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Update active button
+                document.querySelectorAll('[data-depth-map]').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                // Switch depth map
+                this.switchDepthMap(e.target.dataset.depthMap);
+            });
+        });
+        
         // Preset buttons
         document.querySelectorAll('[data-preset]').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -407,6 +495,9 @@ class DepthViewerApp {
         
         // Cheat sequence submit (click the display)
         this.cheatDisplay.parentElement.addEventListener('click', () => this.submitCheatSequence());
+        
+        // Keyboard controls
+        this.setupKeyboardControls();
         
         // Drag and drop
         this.setupDragAndDrop();
@@ -480,6 +571,146 @@ class DepthViewerApp {
         localStorage.setItem('sectionStates', JSON.stringify(sectionStates));
     }
     
+    setupKeyboardControls() {
+        // Track key states
+        this.keysPressed = new Set();
+        this.isSpaceHeld = false;
+        this.numpadAnimationEnabled = true; // Default enabled
+        
+        // Keydown handler
+        document.addEventListener('keydown', (e) => {
+            // Prevent default for keys we handle
+            if (['Space', 'KeyC', 'ArrowLeft', 'ArrowRight', 'Numpad1', 'Numpad2', 'Numpad3', 'Numpad4', 'Numpad5', 'Numpad6', 'Numpad7', 'Numpad8', 'Numpad9'].includes(e.code)) {
+                e.preventDefault();
+            }
+            
+            this.keysPressed.add(e.code);
+            
+            // Handle space key for temporary localized parallax toggle
+            if (e.code === 'Space' && !this.isSpaceHeld) {
+                this.isSpaceHeld = true;
+                this.handleSpaceToggle(true);
+            }
+            
+            // Handle single-press keys
+            if (!e.repeat) {
+                switch(e.code) {
+                    case 'KeyC':
+                        console.log('🎛️ C key pressed - toggling controls panel');
+                        this.toggleControlsPanel();
+                        break;
+                    case 'ArrowLeft':
+                        this.previousImage();
+                        break;
+                    case 'ArrowRight':
+                        this.nextImage();
+                        break;
+                    case 'Numpad1':
+                        this.handleNumpadDrag(-1, 1); // Bottom-left
+                        break;
+                    case 'Numpad2':
+                        this.handleNumpadDrag(0, 1); // Bottom
+                        break;
+                    case 'Numpad3':
+                        this.handleNumpadDrag(1, 1); // Bottom-right
+                        break;
+                    case 'Numpad4':
+                        this.handleNumpadDrag(-1, 0); // Left
+                        break;
+                    case 'Numpad5':
+                        this.handleNumpadCenter(); // Center
+                        break;
+                    case 'Numpad6':
+                        this.handleNumpadDrag(1, 0); // Right
+                        break;
+                    case 'Numpad7':
+                        this.handleNumpadDrag(-1, -1); // Top-left
+                        break;
+                    case 'Numpad8':
+                        this.handleNumpadDrag(0, -1); // Top
+                        break;
+                    case 'Numpad9':
+                        this.handleNumpadDrag(1, -1); // Top-right
+                        break;
+                }
+            }
+        });
+        
+        // Keyup handler
+        document.addEventListener('keyup', (e) => {
+            this.keysPressed.delete(e.code);
+            
+            // Handle space key release
+            if (e.code === 'Space' && this.isSpaceHeld) {
+                this.isSpaceHeld = false;
+                this.handleSpaceToggle(false);
+            }
+        });
+        
+        // Handle window blur to reset key states
+        window.addEventListener('blur', () => {
+            this.keysPressed.clear();
+            if (this.isSpaceHeld) {
+                this.isSpaceHeld = false;
+                this.handleSpaceToggle(false);
+            }
+        });
+    }
+    
+    handleSpaceToggle(isPressed) {
+        // Temporarily toggle localized parallax setting for pointer events
+        if (this.viewer) {
+            const currentSetting = this.localizedParallaxCheckbox.checked;
+            const tempSetting = isPressed ? !currentSetting : currentSetting;
+            
+            // Apply temporary setting without updating UI checkbox
+            this.viewer.setOptions({ 
+                localizedParallax: tempSetting,
+                tempParallaxOverride: isPressed
+            });
+            
+            console.log(`🎯 Space ${isPressed ? 'pressed' : 'released'}: Localized parallax temporarily ${tempSetting ? 'enabled' : 'disabled'}`);
+        }
+    }
+    
+    handleNumpadDrag(x, y) {
+        if (!this.viewer) return;
+        
+        // Get drag mode setting
+        const dragMode = document.querySelector('[data-drag-mode].active')?.dataset.dragMode || 'sticky';
+        
+        // Calculate drag amount (from center to direction)
+        const dragAmount = 100; // Base drag distance
+        const dragX = x * dragAmount;
+        const dragY = y * dragAmount;
+        
+        console.log(`🎮 Numpad drag: (${x}, ${y}) -> (${dragX}, ${dragY}), mode: ${dragMode}, localized: NEVER`);
+        
+        // Apply numpad drag with animation - NEVER use localized parallax for numpad
+        this.viewer.setNumpadDrag(dragX, dragY, {
+            dragMode: dragMode,
+            localizedParallax: false, // Numpad should never use localized parallax
+            animate: this.numpadAnimationEnabled,
+            animationDuration: 500
+        });
+    }
+    
+    handleNumpadCenter() {
+        if (!this.viewer) return;
+        
+        const dragMode = document.querySelector('[data-drag-mode].active')?.dataset.dragMode || 'sticky';
+        
+        // Only center if in sticky mode
+        if (dragMode === 'sticky') {
+            console.log('🎮 Numpad center: Resetting to center position');
+            this.viewer.setNumpadDrag(0, 0, {
+                dragMode: dragMode,
+                animate: this.numpadAnimationEnabled,
+                animationDuration: 500
+            });
+        }
+    }
+    
     // Dynamic image loading methods
     async loadImageSets() {
         try {
@@ -514,12 +745,21 @@ class DepthViewerApp {
         try {
             // Define image sets based on actual file structure
             if (folderPath.includes('hidden-images')) {
-                // Hidden images set
+                // Hidden images set with symmetry and alternative depth maps
                 const hiddenImagePairs = [
-                    { base: 'astrobutt-color', colorExt: '.jpeg', depthExt: '.jpg' },
+                    { base: 'astrobutt-color-symH', colorExt: '.jpeg', depthExt: '.jpg' },
                     { base: 'basketballcard', colorExt: '.jpeg', depthExt: '.jpg' },
+                    { base: 'bennalee-symH', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'callawile-symH', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'clerra-symH', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'eeleeen-symH', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'ellatan-symH', colorExt: '.png', depthExt: '.png' }, // Has alternative depth maps
                     { base: 'glassbutt2', colorExt: '.jpeg', depthExt: '.png' },
-                    { base: 'green-garbage', colorExt: '.jpeg', depthExt: '.png' }
+                    { base: 'green-garbage', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'pulpa-symV', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'purple-spreader', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'shoi-symV', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'swimma', colorExt: '.jpeg', depthExt: '.png' } // Has alternative depth maps
                 ];
                 
                 for (const pair of hiddenImagePairs) {
@@ -527,10 +767,19 @@ class DepthViewerApp {
                     const depthMap = `${folderPath}${pair.base}-∂map${pair.depthExt}`;
                     
                     if (await this.imageExists(colorImage) && await this.imageExists(depthMap)) {
+                        // Check for alternative depth maps
+                        const depthMapL = `${folderPath}${pair.base}-∂mapL${pair.depthExt}`;
+                        const depthMapD = `${folderPath}${pair.base}-∂mapD${pair.depthExt}`;
+                        
+                        const alternativeMaps = {};
+                        if (await this.imageExists(depthMapL)) alternativeMaps.light = depthMapL;
+                        if (await this.imageExists(depthMapD)) alternativeMaps.dark = depthMapD;
+                        
                         images.push({
                             name: this.formatImageName(pair.base),
                             colorImage: colorImage,
-                            depthMap: depthMap
+                            depthMap: depthMap,
+                            alternativeMaps: alternativeMaps
                         });
                     }
                 }
@@ -538,7 +787,10 @@ class DepthViewerApp {
                 // Sample images set (landing-pig is the landing/default image)
                 const sampleImagePairs = [
                     { base: 'landing-pig', colorExt: '.jpeg', depthExt: '.png' },
-                    { base: 'boar4', colorExt: '.jpeg', depthExt: '.png' }
+                    { base: 'boar2', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'boar3', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'boar4', colorExt: '.jpeg', depthExt: '.png' },
+                    { base: 'boar5-symH', colorExt: '.jpeg', depthExt: '.png' }
                 ];
                 
                 for (const pair of sampleImagePairs) {
@@ -546,10 +798,19 @@ class DepthViewerApp {
                     const depthMap = `${folderPath}${pair.base}-∂map${pair.depthExt}`;
                     
                     if (await this.imageExists(colorImage) && await this.imageExists(depthMap)) {
+                        // Check for alternative depth maps
+                        const depthMapL = `${folderPath}${pair.base}-∂mapL${pair.depthExt}`;
+                        const depthMapD = `${folderPath}${pair.base}-∂mapD${pair.depthExt}`;
+                        
+                        const alternativeMaps = {};
+                        if (await this.imageExists(depthMapL)) alternativeMaps.light = depthMapL;
+                        if (await this.imageExists(depthMapD)) alternativeMaps.dark = depthMapD;
+                        
                         images.push({
                             name: this.formatImageName(pair.base),
                             colorImage: colorImage,
-                            depthMap: depthMap
+                            depthMap: depthMap,
+                            alternativeMaps: alternativeMaps
                         });
                     }
                 }
@@ -1043,7 +1304,11 @@ class DepthViewerApp {
             gyroLockX: this.gyroLockXCheckbox.checked,
             gyroInvertY: this.gyroInvertYCheckbox.checked,
             gyroLockY: this.gyroLockYCheckbox.checked,
-            toastOpacity: parseFloat(this.toastOpacitySlider.value)
+            toastOpacity: parseFloat(this.toastOpacitySlider.value),
+            numpadAnimation: this.numpadAnimationCheckbox.checked,
+            animateSlideTransitions: this.animateSlideTransitions,
+            animationTiming: this.animationTiming,
+            symmetricalDrag: this.symmetricalDragCheckbox.checked
         };
         localStorage.setItem('depthViewerSettings', JSON.stringify(settings));
     }
@@ -1196,6 +1461,30 @@ class DepthViewerApp {
                     this.toastOpacityValue.textContent = settings.toastOpacity.toFixed(1);
                     this.toastContainer.style.opacity = settings.toastOpacity;
                 }
+                
+                // Apply numpad animation setting
+                if (settings.numpadAnimation !== undefined) {
+                    this.numpadAnimationCheckbox.checked = settings.numpadAnimation;
+                    this.numpadAnimationEnabled = settings.numpadAnimation;
+                }
+                
+                // Apply slide animation settings
+                if (settings.animateSlideTransitions !== undefined) {
+                    this.animateSlideTransitionsCheckbox.checked = settings.animateSlideTransitions;
+                    this.animateSlideTransitions = settings.animateSlideTransitions;
+                }
+                
+                if (settings.animationTiming !== undefined) {
+                    this.animationTimingSlider.value = settings.animationTiming;
+                    this.animationTimingValue.textContent = settings.animationTiming + 'ms';
+                    this.animationTiming = settings.animationTiming;
+                }
+                
+                // Apply symmetrical drag setting
+                if (settings.symmetricalDrag !== undefined) {
+                    this.symmetricalDragCheckbox.checked = settings.symmetricalDrag;
+                    this.viewer.setOptions({ symmetricalDrag: settings.symmetricalDrag });
+                }
             }
         } catch (error) {
             console.warn('Failed to load saved settings:', error);
@@ -1239,15 +1528,29 @@ class DepthViewerApp {
     previousImage() {
         const images = this.getCurrentImages();
         if (images.length === 0) return;
-        this.currentImageIndex = (this.currentImageIndex - 1 + images.length) % images.length;
-        this.loadCurrentSampleImage();
+        
+        if (this.isSlideAnimating) return; // Prevent multiple animations
+        
+        if (this.animateSlideTransitions && this.viewer) {
+            this.animateSlideTransition(-1); // -1 for backward
+        } else {
+            this.currentImageIndex = (this.currentImageIndex - 1 + images.length) % images.length;
+            this.loadCurrentSampleImage();
+        }
     }
     
     nextImage() {
         const images = this.getCurrentImages();
         if (images.length === 0) return;
-        this.currentImageIndex = (this.currentImageIndex + 1) % images.length;
-        this.loadCurrentSampleImage();
+        
+        if (this.isSlideAnimating) return; // Prevent multiple animations
+        
+        if (this.animateSlideTransitions && this.viewer) {
+            this.animateSlideTransition(1); // 1 for forward
+        } else {
+            this.currentImageIndex = (this.currentImageIndex + 1) % images.length;
+            this.loadCurrentSampleImage();
+        }
     }
     
     async loadCurrentSampleImage() {
@@ -1267,11 +1570,203 @@ class DepthViewerApp {
             console.log('Loading depth map:', imageSet.depthMap);
             await this.viewer.loadDepthMap(imageSet.depthMap);
             
+            // Check for symmetry compatibility based on filename
+            this.updateSymmetryCompatibility(imageSet.name);
+            
+            // Update depth map selector based on available alternatives
+            this.updateDepthMapSelector(imageSet);
+            
             this.showStatus(`${imageSet.name} loaded! Touch or drag to see the parallax depth effect.`, 'success');
         } catch (error) {
             this.showStatus(`Failed to load ${imageSet.name}: ${error.message}`, 'error');
             console.error('Sample image load error:', error);
         }
+    }
+    
+    updateSymmetryCompatibility(imageName) {
+        // Check for symmetry markers in filename
+        const hasHorizontalSymmetry = imageName.toLowerCase().includes('symh');
+        const hasVerticalSymmetry = imageName.toLowerCase().includes('symv');
+        const isSymmetryCompatible = hasHorizontalSymmetry || hasVerticalSymmetry;
+        
+        // Enable/disable the symmetry checkbox based only on image compatibility
+        this.symmetricalDragCheckbox.disabled = !isSymmetryCompatible;
+        
+        // Update the viewer with symmetry modes if compatible and checkbox enabled
+        if (isSymmetryCompatible && this.symmetricalDragCheckbox.checked) {
+            this.viewer.setOptions({ 
+                symmetricalDrag: true,
+                symmetryMode: hasHorizontalSymmetry && hasVerticalSymmetry ? 'both' : 
+                             hasHorizontalSymmetry ? 'horizontal' : 'vertical'
+            });
+        } else {
+            // Disable symmetry if not compatible or checkbox off
+            this.viewer.setOptions({ 
+                symmetricalDrag: false,
+                symmetryMode: isSymmetryCompatible ? 
+                             (hasHorizontalSymmetry && hasVerticalSymmetry ? 'both' : 
+                              hasHorizontalSymmetry ? 'horizontal' : 'vertical') : 'none'
+            });
+        }
+        
+        console.log(`🪞 Symmetry check for "${imageName}": H=${hasHorizontalSymmetry}, V=${hasVerticalSymmetry}, Compatible=${isSymmetryCompatible}, Checkbox=${this.symmetricalDragCheckbox.checked ? 'on' : 'off'}, Disabled=${this.symmetricalDragCheckbox.disabled}`);
+    }
+    
+    async switchDepthMap(mapType) {
+        const images = this.getCurrentImages();
+        const imageSet = images[this.currentImageIndex];
+        if (!imageSet) return;
+        
+        let newDepthMap;
+        if (mapType === 'default') {
+            newDepthMap = imageSet.depthMap;
+        } else if (mapType === 'light' && imageSet.alternativeMaps.light) {
+            newDepthMap = imageSet.alternativeMaps.light;
+        } else if (mapType === 'dark' && imageSet.alternativeMaps.dark) {
+            newDepthMap = imageSet.alternativeMaps.dark;
+        } else {
+            console.warn(`Depth map type "${mapType}" not available`);
+            return;
+        }
+        
+        try {
+            console.log(`🔄 Switching depth map to ${mapType}:`, newDepthMap);
+            await this.viewer.loadDepthMap(newDepthMap);
+            this.showStatus(`Switched to ${mapType} depth map`, 'info');
+        } catch (error) {
+            this.showStatus(`Failed to load ${mapType} depth map: ${error.message}`, 'error');
+            console.error('Depth map switch error:', error);
+        }
+    }
+    
+    updateDepthMapSelector(imageSet) {
+        const hasAlternatives = imageSet.alternativeMaps && 
+                               (imageSet.alternativeMaps.light || imageSet.alternativeMaps.dark);
+        
+        // Show/hide the selector group
+        this.depthMapSelectorGroup.style.display = hasAlternatives ? 'block' : 'none';
+        
+        if (hasAlternatives) {
+            // Show/hide individual buttons based on availability
+            const lightBtn = document.querySelector('[data-depth-map="light"]');
+            const darkBtn = document.querySelector('[data-depth-map="dark"]');
+            
+            lightBtn.style.display = imageSet.alternativeMaps.light ? 'inline-block' : 'none';
+            darkBtn.style.display = imageSet.alternativeMaps.dark ? 'inline-block' : 'none';
+            
+            // Reset to default
+            document.querySelectorAll('[data-depth-map]').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-depth-map="default"]').classList.add('active');
+            
+            console.log(`🎛️ Depth map selector updated - Light: ${!!imageSet.alternativeMaps.light}, Dark: ${!!imageSet.alternativeMaps.dark}`);
+        }
+    }
+    
+    async animateSlideTransition(direction) {
+        if (!this.viewer || this.isSlideAnimating) return;
+        
+        this.isSlideAnimating = true;
+        const timing = this.animationTiming;
+        
+        console.log(`🎬 Starting animated slide transition: direction=${direction}, timing=${timing}ms`);
+        
+        try {
+            // Phase 1: Animate current slide from center to exit position
+            const exitX = direction > 0 ? -1 : 1; // Left for next, right for previous
+            console.log(`Phase 1: Animating current slide to exit (${exitX}, 0)`);
+            
+            await new Promise(resolve => {
+                this.viewer.setNumpadDrag(exitX * 200, 0, {
+                    dragMode: 'sticky',
+                    animate: true,
+                    animationDuration: timing / 2
+                });
+                setTimeout(resolve, timing / 2);
+            });
+            
+            // Phase 2: Change to next/previous image
+            const images = this.getCurrentImages();
+            if (direction > 0) {
+                this.currentImageIndex = (this.currentImageIndex + 1) % images.length;
+            } else {
+                this.currentImageIndex = (this.currentImageIndex - 1 + images.length) % images.length;
+            }
+            
+            console.log(`Phase 2: Loading new image (index ${this.currentImageIndex})`);
+            
+            // Load new image
+            await this.loadCurrentSampleImage();
+            
+            // Phase 3: Set new slide to enter position (opposite side) and animate to center
+            const enterX = direction > 0 ? 1 : -1; // Right for next, left for previous
+            console.log(`Phase 3: Setting new slide at enter position (${enterX}, 0) and animating to center`);
+            
+            // Set initial position instantly (off-screen)
+            this.viewer.setNumpadDrag(enterX * 200, 0, {
+                dragMode: 'sticky',
+                animate: false
+            });
+            
+            // Small delay to ensure the position is set
+            await new Promise(resolve => setTimeout(resolve, 50));
+            
+            // Animate to center
+            this.viewer.setNumpadDrag(0, 0, {
+                dragMode: 'sticky',
+                animate: true,
+                animationDuration: timing / 2
+            });
+            
+            // Wait for animation to complete
+            await new Promise(resolve => setTimeout(resolve, timing / 2 + 50));
+            
+            // Ensure UI state matches viewer state after transition
+            this.synchronizeUIWithViewer();
+            
+            console.log('🎬 Slide transition completed');
+            
+        } catch (error) {
+            console.error('Slide animation error:', error);
+            // Fallback to instant transition
+            await this.loadCurrentSampleImage();
+            // Ensure UI state is synchronized even after fallback
+            this.synchronizeUIWithViewer();
+        } finally {
+            this.isSlideAnimating = false;
+        }
+    }
+
+    synchronizeUIWithViewer() {
+        // Ensure all UI controls reflect the actual viewer state after transitions
+        if (!this.viewer) return;
+        
+        const viewerOptions = this.viewer.getOptions();
+        
+        // Synchronize checkbox states
+        if (this.localizedParallaxCheckbox) {
+            const shouldBeChecked = viewerOptions.localizedParallax;
+            if (this.localizedParallaxCheckbox.checked !== shouldBeChecked) {
+                console.log(`🔄 Synchronizing localizedParallax: UI=${this.localizedParallaxCheckbox.checked} -> Viewer=${shouldBeChecked}`);
+                this.localizedParallaxCheckbox.checked = shouldBeChecked;
+            }
+        }
+        
+        if (this.symmetricalDragCheckbox) {
+            const shouldBeChecked = viewerOptions.symmetricalDrag;
+            if (this.symmetricalDragCheckbox.checked !== shouldBeChecked) {
+                console.log(`🔄 Synchronizing symmetricalDrag: UI=${this.symmetricalDragCheckbox.checked} -> Viewer=${shouldBeChecked}`);
+                this.symmetricalDragCheckbox.checked = shouldBeChecked;
+            }
+        }
+        
+        // Re-check symmetry compatibility after state sync
+        const images = this.getCurrentImages();
+        const imageSet = images[this.currentImageIndex];
+        if (imageSet) {
+            this.updateSymmetryCompatibility(imageSet.name);
+        }
+        
+        console.log('🔄 UI state synchronized with viewer');
     }
 }
 

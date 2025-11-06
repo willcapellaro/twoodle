@@ -28,6 +28,8 @@ class DepthyWebGLViewer {
             localizeDistance: options.localizeDistance || 150,
             backgroundDampening: options.backgroundDampening || 0.3,
             midgroundDampening: options.midgroundDampening || 0.7,
+            symmetricalDrag: options.symmetricalDrag || false,
+            symmetryMode: options.symmetryMode || 'none', // 'none', 'horizontal', 'vertical', 'both'
             ...options
         };
         
@@ -69,6 +71,10 @@ class DepthyWebGLViewer {
         
         // Fill mode panning
         this.panOffset = { x: 0, y: 0 };
+        
+        // Numpad animation properties
+        this.numpadAnimationId = null;
+        this.numpadAnimationStart = 0;
         
         this.init();
     }
@@ -162,6 +168,8 @@ class DepthyWebGLViewer {
             uniform float u_backgroundDampening;
             uniform float u_midgroundDampening;
             uniform int u_currentFocusType; // 0=near, 1=middle, 2=far
+            uniform bool u_symmetricalDrag;
+            uniform int u_symmetryMode; // 0=none, 1=horizontal, 2=vertical, 3=both
             
             varying vec2 v_texCoord;
             
@@ -204,9 +212,11 @@ class DepthyWebGLViewer {
                     // Near plane (u_currentFocusType == 0) - no dampening
                 }
                 
-                vec2 displacement = u_offset * depthFactor * 0.02; // Scale factor
+                // Calculate base displacement
+                vec2 baseDisplacement = u_offset * depthFactor * 0.02; // Scale factor
                 
-                // Apply localized parallax if enabled
+                // Calculate localized parallax falloff if enabled
+                float localizedFalloff = 1.0;
                 if (u_localizedParallax) {
                     // Convert localizeDistance from pixels to normalized coordinates
                     float normalizedDistance = u_localizeDistance / min(u_resolution.x, u_resolution.y);
@@ -224,11 +234,45 @@ class DepthyWebGLViewer {
                     float distanceFromOrigin = length(imageCoord - originInImage);
                     
                     // Create a falloff factor: full effect at origin, fades to 0 at distance
-                    float falloff = 1.0 - smoothstep(0.0, normalizedDistance, distanceFromOrigin);
-                    
-                    // Apply the falloff to the displacement
-                    displacement *= falloff;
+                    localizedFalloff = 1.0 - smoothstep(0.0, normalizedDistance, distanceFromOrigin);
                 }
+                
+                // Calculate symmetrical mirror factor if enabled
+                vec2 mirrorFactor = vec2(1.0, 1.0);
+                if (u_symmetricalDrag && u_symmetryMode > 0) {
+                    float featherWidth = 0.02; // Feather width (2% of image)
+                    
+                    // Apply horizontal symmetry (symH) - left mirrors right with feathering
+                    if (u_symmetryMode == 1 || u_symmetryMode == 3) { // horizontal or both
+                        float distanceFromCenter = abs(imageCoord.x - 0.5);
+                        if (imageCoord.x < 0.5) {
+                            // Feather the mirror effect near center line
+                            float featherFactor = smoothstep(featherWidth, 0.0, distanceFromCenter);
+                            mirrorFactor.x = mix(-1.0, 1.0, featherFactor); // Smooth transition from inverted to normal
+                        } else {
+                            // Same feathering on right side
+                            float featherFactor = smoothstep(featherWidth, 0.0, distanceFromCenter);
+                            mirrorFactor.x = mix(1.0, -1.0, featherFactor); // Smooth transition from normal to inverted
+                        }
+                    }
+                    
+                    // Apply vertical symmetry (symV) - top mirrors bottom with feathering
+                    if (u_symmetryMode == 2 || u_symmetryMode == 3) { // vertical or both
+                        float distanceFromCenter = abs(imageCoord.y - 0.5);
+                        if (imageCoord.y < 0.5) {
+                            // Feather the mirror effect near center line
+                            float featherFactor = smoothstep(featherWidth, 0.0, distanceFromCenter);
+                            mirrorFactor.y = mix(-1.0, 1.0, featherFactor); // Smooth transition from inverted to normal
+                        } else {
+                            // Same feathering on bottom side
+                            float featherFactor = smoothstep(featherWidth, 0.0, distanceFromCenter);
+                            mirrorFactor.y = mix(1.0, -1.0, featherFactor); // Smooth transition from normal to inverted
+                        }
+                    }
+                }
+                
+                // Combine all effects: base displacement * symmetry * localized falloff
+                vec2 displacement = baseDisplacement * mirrorFactor * localizedFalloff;
                 
                 // Sample color with displacement
                 vec2 sampleCoord = imageCoord + displacement;
@@ -326,6 +370,8 @@ class DepthyWebGLViewer {
         this.backgroundDampeningLocation = gl.getUniformLocation(this.program, 'u_backgroundDampening');
         this.midgroundDampeningLocation = gl.getUniformLocation(this.program, 'u_midgroundDampening');
         this.currentFocusTypeLocation = gl.getUniformLocation(this.program, 'u_currentFocusType');
+        this.symmetricalDragLocation = gl.getUniformLocation(this.program, 'u_symmetricalDrag');
+        this.symmetryModeLocation = gl.getUniformLocation(this.program, 'u_symmetryMode');
     }
     
     setupEventListeners() {
@@ -754,6 +800,14 @@ class DepthyWebGLViewer {
         gl.uniform1f(this.backgroundDampeningLocation, this.options.backgroundDampening);
         gl.uniform1f(this.midgroundDampeningLocation, this.options.midgroundDampening);
         gl.uniform1i(this.currentFocusTypeLocation, this.currentFocusType);
+        gl.uniform1i(this.symmetricalDragLocation, this.options.symmetricalDrag ? 1 : 0);
+        
+        // Set symmetry mode: 0=none, 1=horizontal, 2=vertical, 3=both
+        let symmetryModeValue = 0;
+        if (this.options.symmetryMode === 'horizontal') symmetryModeValue = 1;
+        else if (this.options.symmetryMode === 'vertical') symmetryModeValue = 2;
+        else if (this.options.symmetryMode === 'both') symmetryModeValue = 3;
+        gl.uniform1i(this.symmetryModeLocation, symmetryModeValue);
         
         // Setup attributes
         gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
@@ -907,6 +961,11 @@ class DepthyWebGLViewer {
         }
     }
     
+    getOptions() {
+        // Return a copy of current options to prevent external modification
+        return { ...this.options };
+    }
+    
     reset() {
         this.colorTexture = null;
         this.depthTexture = null;
@@ -1020,6 +1079,101 @@ class DepthyWebGLViewer {
             this.shouldCaptureBaseline = true;
             console.log('Gyroscope centered - next reading will be baseline');
         }
+    }
+    
+    setNumpadDrag(dragX, dragY, settings = {}) {
+        // Convert drag coordinates to normalized mouse coordinates
+        const normalizedX = 0.5 + (dragX / 200); // Center + normalized drag amount
+        const normalizedY = 0.5 + (dragY / 200);
+        
+        // Apply drag mode and localized parallax settings
+        this.dragMode = settings.dragMode || this.dragMode;
+        
+        // Temporarily set localized parallax if specified
+        const originalParallax = this.options.localizedParallax;
+        if (settings.localizedParallax !== undefined) {
+            this.options.localizedParallax = settings.localizedParallax;
+        }
+        
+        // Set click origin for localized parallax
+        if (this.options.localizedParallax) {
+            this.clickOrigin = { x: normalizedX, y: normalizedY };
+        }
+        
+        if (settings.animate && settings.animationDuration > 0) {
+            // Animate to the target position
+            this.animateToPosition(normalizedX, normalizedY, settings.animationDuration);
+        } else {
+            // Instant movement
+            this.mouseX = normalizedX;
+            this.mouseY = normalizedY;
+            
+            if (this.dragMode === 'sticky') {
+                this.targetOffset.x = (normalizedX - 0.5) * 2;
+                this.targetOffset.y = (normalizedY - 0.5) * 2;
+                this.currentOffset.x = this.targetOffset.x;
+                this.currentOffset.y = this.targetOffset.y;
+            } else {
+                // Rubber band mode - position is temporary
+                this.targetOffset.x = (normalizedX - 0.5) * 2;
+                this.targetOffset.y = (normalizedY - 0.5) * 2;
+            }
+            
+            this.render();
+        }
+        
+        // Restore original localized parallax setting
+        if (settings.localizedParallax !== undefined) {
+            this.options.localizedParallax = originalParallax;
+        }
+    }
+    
+    animateToPosition(targetX, targetY, duration) {
+        const startX = this.mouseX;
+        const startY = this.mouseY;
+        const startOffsetX = this.currentOffset.x;
+        const startOffsetY = this.currentOffset.y;
+        
+        const targetOffsetX = (targetX - 0.5) * 2;
+        const targetOffsetY = (targetY - 0.5) * 2;
+        
+        const startTime = performance.now();
+        
+        // Cancel any existing animation
+        if (this.numpadAnimationId) {
+            cancelAnimationFrame(this.numpadAnimationId);
+        }
+        
+        const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Ease-out cubic interpolation
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            
+            // Interpolate mouse position
+            this.mouseX = startX + (targetX - startX) * easeProgress;
+            this.mouseY = startY + (targetY - startY) * easeProgress;
+            
+            // Interpolate offset
+            this.currentOffset.x = startOffsetX + (targetOffsetX - startOffsetX) * easeProgress;
+            this.currentOffset.y = startOffsetY + (targetOffsetY - startOffsetY) * easeProgress;
+            
+            if (this.dragMode === 'sticky') {
+                this.targetOffset.x = this.currentOffset.x;
+                this.targetOffset.y = this.currentOffset.y;
+            }
+            
+            this.render();
+            
+            if (progress < 1) {
+                this.numpadAnimationId = requestAnimationFrame(animate);
+            } else {
+                this.numpadAnimationId = null;
+            }
+        };
+        
+        this.numpadAnimationId = requestAnimationFrame(animate);
     }
 }
 
