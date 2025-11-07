@@ -30,6 +30,7 @@ class DepthyWebGLViewer {
             midgroundDampening: options.midgroundDampening || 0.7,
             symmetricalDrag: options.symmetricalDrag || false,
             symmetryMode: options.symmetryMode || 'none', // 'none', 'horizontal', 'vertical', 'both'
+            zoomScale: options.zoomScale || 1.0,
             ...options
         };
         
@@ -170,11 +171,15 @@ class DepthyWebGLViewer {
             uniform int u_currentFocusType; // 0=near, 1=middle, 2=far
             uniform bool u_symmetricalDrag;
             uniform int u_symmetryMode; // 0=none, 1=horizontal, 2=vertical, 3=both
+            uniform float u_zoomScale;
             
             varying vec2 v_texCoord;
             
             void main() {
                 vec2 coord = v_texCoord;
+                
+                // Apply zoom by scaling coordinates from center
+                coord = (coord - 0.5) / u_zoomScale + 0.5;
                 
                 // Apply aspect ratio correction based on view mode
                 vec2 imageCoord;
@@ -240,33 +245,39 @@ class DepthyWebGLViewer {
                 // Calculate symmetrical mirror factor if enabled
                 vec2 mirrorFactor = vec2(1.0, 1.0);
                 if (u_symmetricalDrag && u_symmetryMode > 0) {
-                    float featherWidth = 0.02; // Feather width (2% of image)
+                    float featherWidth = 0.05; // Wider feather width (5% of image) for smoother transition
                     
-                    // Apply horizontal symmetry (symH) - left mirrors right with feathering
+                    // Apply horizontal symmetry (symH) - left mirrors right with smooth feathering
                     if (u_symmetryMode == 1 || u_symmetryMode == 3) { // horizontal or both
                         float distanceFromCenter = abs(imageCoord.x - 0.5);
+                        
+                        // Use a more gradual feathering function with wider transition
+                        float featherFactor = smoothstep(0.0, featherWidth, distanceFromCenter);
+                        
+                        // Apply mirror effect with smooth blending at center
                         if (imageCoord.x < 0.5) {
-                            // Feather the mirror effect near center line
-                            float featherFactor = smoothstep(featherWidth, 0.0, distanceFromCenter);
-                            mirrorFactor.x = mix(-1.0, 1.0, featherFactor); // Smooth transition from inverted to normal
+                            // Left side: blend from -1.0 (fully mirrored) to 0.0 (no effect) at center
+                            mirrorFactor.x = mix(0.0, -1.0, featherFactor);
                         } else {
-                            // Same feathering on right side
-                            float featherFactor = smoothstep(featherWidth, 0.0, distanceFromCenter);
-                            mirrorFactor.x = mix(1.0, -1.0, featherFactor); // Smooth transition from normal to inverted
+                            // Right side: blend from 1.0 (normal) to 0.0 (no effect) at center  
+                            mirrorFactor.x = mix(0.0, 1.0, featherFactor);
                         }
                     }
                     
-                    // Apply vertical symmetry (symV) - top mirrors bottom with feathering
+                    // Apply vertical symmetry (symV) - top mirrors bottom with smooth feathering
                     if (u_symmetryMode == 2 || u_symmetryMode == 3) { // vertical or both
                         float distanceFromCenter = abs(imageCoord.y - 0.5);
+                        
+                        // Use a more gradual feathering function with wider transition
+                        float featherFactor = smoothstep(0.0, featherWidth, distanceFromCenter);
+                        
+                        // Apply mirror effect with smooth blending at center
                         if (imageCoord.y < 0.5) {
-                            // Feather the mirror effect near center line
-                            float featherFactor = smoothstep(featherWidth, 0.0, distanceFromCenter);
-                            mirrorFactor.y = mix(-1.0, 1.0, featherFactor); // Smooth transition from inverted to normal
+                            // Top side: blend from -1.0 (fully mirrored) to 0.0 (no effect) at center
+                            mirrorFactor.y = mix(0.0, -1.0, featherFactor);
                         } else {
-                            // Same feathering on bottom side
-                            float featherFactor = smoothstep(featherWidth, 0.0, distanceFromCenter);
-                            mirrorFactor.y = mix(1.0, -1.0, featherFactor); // Smooth transition from normal to inverted
+                            // Bottom side: blend from 1.0 (normal) to 0.0 (no effect) at center
+                            mirrorFactor.y = mix(0.0, 1.0, featherFactor);
                         }
                     }
                 }
@@ -372,6 +383,7 @@ class DepthyWebGLViewer {
         this.currentFocusTypeLocation = gl.getUniformLocation(this.program, 'u_currentFocusType');
         this.symmetricalDragLocation = gl.getUniformLocation(this.program, 'u_symmetricalDrag');
         this.symmetryModeLocation = gl.getUniformLocation(this.program, 'u_symmetryMode');
+        this.zoomScaleLocation = gl.getUniformLocation(this.program, 'u_zoomScale');
     }
     
     setupEventListeners() {
@@ -809,6 +821,9 @@ class DepthyWebGLViewer {
         else if (this.options.symmetryMode === 'both') symmetryModeValue = 3;
         gl.uniform1i(this.symmetryModeLocation, symmetryModeValue);
         
+        // Set zoom scale
+        gl.uniform1f(this.zoomScaleLocation, this.options.zoomScale || 1.0);
+        
         // Setup attributes
         gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
         
@@ -964,6 +979,48 @@ class DepthyWebGLViewer {
     getOptions() {
         // Return a copy of current options to prevent external modification
         return { ...this.options };
+    }
+    
+    setMousePosition(x, y, animate = false, duration = 500) {
+        // Directly set mouse position without changing parallax settings
+        // Used for slide animations that should preserve current parallax mode
+        const targetX = x;
+        const targetY = y;
+        
+        if (animate && this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+        }
+        
+        if (animate) {
+            const startX = this.mouseX;
+            const startY = this.mouseY;
+            const startTime = performance.now();
+            
+            const animateStep = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Cubic ease-out animation
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                
+                this.mouseX = startX + (targetX - startX) * easeOut;
+                this.mouseY = startY + (targetY - startY) * easeOut;
+                
+                this.render();
+                
+                if (progress < 1) {
+                    this.animationFrameId = requestAnimationFrame(animateStep);
+                } else {
+                    this.animationFrameId = null;
+                }
+            };
+            
+            this.animationFrameId = requestAnimationFrame(animateStep);
+        } else {
+            this.mouseX = targetX;
+            this.mouseY = targetY;
+            this.render();
+        }
     }
     
     reset() {

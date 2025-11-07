@@ -489,6 +489,26 @@
 
             <div class="controls-grid">
                 
+                <!-- Control Sync Checker Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="sync-section">
+                        <span>▼ Control Sync Debug</span>
+                    </div>
+                    <div class="section-content" id="sync-section">
+                        <div class="control-group">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                                <button id="checkSyncBtn" class="control-button" style="padding: 10px; background: #4a90e2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                    🔄 Check Sync
+                                </button>
+                                <button id="forceSyncBtn" class="control-button" style="padding: 10px; background: #e24a4a; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                    � Force Sync
+                                </button>
+                            </div>
+                            <div id="syncStatus" style="font-size: 12px; color: #ccc; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; max-height: 120px; overflow-y: auto; font-family: monospace;">Click "Check Sync" to verify UI/viewer state alignment</div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Main Controls Section -->
                 <div class="control-section">
                     <div class="section-header" data-toggle="main-section">
@@ -519,6 +539,11 @@
                             <label>
                                 <input type="checkbox" id="swipeSlideAdvance" style="margin-right: 8px;">
                                 Swipe Slide Advance
+                            </label>
+                            
+                            <label style="margin-top: 10px;">
+                                <input type="checkbox" id="trackpadZoom" style="margin-right: 8px;">
+                                Trackpad Zoom (Experimental)
                             </label>
                             
                             <label style="margin-top: 10px;">
@@ -727,6 +752,39 @@
                             </div>
                             <div id="cheatSequence" style="background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 3px; margin-top: 10px; font-family: monospace; font-size: 14px; min-height: 20px; display: flex; align-items: center; justify-content: center; color: #666; cursor: pointer; border: 1px solid rgba(255,255,255,0.2);" title="Click to submit sequence">
                                 <span id="cheatDisplay">- - - - - - - -</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Depth Poetry Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="poetry-section">
+                        <span>▼ Depth Poetry</span>
+                    </div>
+                    <div class="section-content" id="poetry-section">
+                        <div class="control-group">
+                            <div style="font-family: Georgia, serif; line-height: 1.6; color: #ddd; font-style: italic; text-align: center; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                                <div style="font-size: 16px; margin-bottom: 15px; color: #ffcc00;">✨ Parallax Dreams ✨</div>
+                                <div style="font-size: 14px;">
+                                    In depths of pixels, shadows play,<br>
+                                    Where light and dark dance display.<br>
+                                    Touch moves mountains, swipe reveals sky,<br>
+                                    In dimensions where dreams fly.<br><br>
+                                    
+                                    Symmetry mirrors what we see,<br>
+                                    Localized effects set spirits free.<br>
+                                    Numpad navigates the space between,<br>
+                                    Reality and the digital scene.<br><br>
+                                    
+                                    Each control syncs to viewer's heart,<br>
+                                    Where coding magic plays its part.<br>
+                                    Scroll to bottom, find this verse—<br>
+                                    Mobile gestures, smooth and terse.
+                                </div>
+                                <div style="font-size: 12px; margin-top: 15px; color: #888;">
+                                    — The Depth Whisperer, 2025 —
+                                </div>
                             </div>
                         </div>
                     </div>

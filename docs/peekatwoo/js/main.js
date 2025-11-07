@@ -98,6 +98,14 @@ class DepthViewerApp {
         this.cheatBtn4 = document.getElementById('cheatBtn4');
         this.cheatDisplay = document.getElementById('cheatDisplay');
         
+        // Control sync elements
+        this.checkSyncBtn = document.getElementById('checkSyncBtn');
+        this.forceSyncBtn = document.getElementById('forceSyncBtn');
+        this.syncStatus = document.getElementById('syncStatus');
+        
+        // Zoom control
+        this.trackpadZoomCheckbox = document.getElementById('trackpadZoom');
+        
         // Toast opacity control
         this.toastOpacitySlider = document.getElementById('toastOpacity');
         this.toastOpacityValue = document.getElementById('toastOpacityValue');
@@ -130,6 +138,12 @@ class DepthViewerApp {
         this.sensitivity = 1.0;
         this.currentViewMode = 'fit';
         this.currentDragMode = 'sticky';
+        
+        // Zoom properties
+        this.trackpadZoomEnabled = false;
+        this.zoomScale = 1.0;
+        this.minZoom = 0.5;
+        this.maxZoom = 3.0;
         
         // Animation properties
         this.animateSlideTransitions = true;
@@ -319,6 +333,29 @@ class DepthViewerApp {
             this.numpadAnimationEnabled = e.target.checked;
             this.saveSettings();
             console.log(`🎮 Numpad animation ${e.target.checked ? 'enabled' : 'disabled'}`);
+        });
+        
+        // Control sync checker
+        this.checkSyncBtn.addEventListener('click', () => {
+            this.checkControlSync();
+        });
+        
+        this.forceSyncBtn.addEventListener('click', () => {
+            this.forceSynchronizeControls();
+        });
+        
+        // Trackpad zoom control
+        this.trackpadZoomCheckbox.addEventListener('change', (e) => {
+            this.trackpadZoomEnabled = e.target.checked;
+            if (this.trackpadZoomEnabled) {
+                this.setupZoomListeners();
+                this.showStatus('Trackpad zoom enabled. Use trackpad scroll to zoom in/out.', 'info');
+            } else {
+                this.removeZoomListeners();
+                this.resetZoom();
+                this.showStatus('Trackpad zoom disabled.', 'info');
+            }
+            this.saveSettings();
         });
         
         // Slideshow controls
@@ -1308,7 +1345,8 @@ class DepthViewerApp {
             numpadAnimation: this.numpadAnimationCheckbox.checked,
             animateSlideTransitions: this.animateSlideTransitions,
             animationTiming: this.animationTiming,
-            symmetricalDrag: this.symmetricalDragCheckbox.checked
+            symmetricalDrag: this.symmetricalDragCheckbox.checked,
+            trackpadZoom: this.trackpadZoomEnabled
         };
         localStorage.setItem('depthViewerSettings', JSON.stringify(settings));
     }
@@ -1484,6 +1522,15 @@ class DepthViewerApp {
                 if (settings.symmetricalDrag !== undefined) {
                     this.symmetricalDragCheckbox.checked = settings.symmetricalDrag;
                     this.viewer.setOptions({ symmetricalDrag: settings.symmetricalDrag });
+                }
+                
+                // Apply trackpad zoom setting
+                if (settings.trackpadZoom !== undefined) {
+                    this.trackpadZoomCheckbox.checked = settings.trackpadZoom;
+                    this.trackpadZoomEnabled = settings.trackpadZoom;
+                    if (this.trackpadZoomEnabled) {
+                        this.setupZoomListeners();
+                    }
                 }
             }
         } catch (error) {
@@ -1676,11 +1723,8 @@ class DepthViewerApp {
             console.log(`Phase 1: Animating current slide to exit (${exitX}, 0)`);
             
             await new Promise(resolve => {
-                this.viewer.setNumpadDrag(exitX * 200, 0, {
-                    dragMode: 'sticky',
-                    animate: true,
-                    animationDuration: timing / 2
-                });
+                // Use setMousePosition instead of setNumpadDrag to preserve parallax settings
+                this.viewer.setMousePosition(exitX, 0, true, timing / 2);
                 setTimeout(resolve, timing / 2);
             });
             
@@ -1701,36 +1745,24 @@ class DepthViewerApp {
             const enterX = direction > 0 ? 1 : -1; // Right for next, left for previous
             console.log(`Phase 3: Setting new slide at enter position (${enterX}, 0) and animating to center`);
             
-            // Set initial position instantly (off-screen)
-            this.viewer.setNumpadDrag(enterX * 200, 0, {
-                dragMode: 'sticky',
-                animate: false
-            });
+            // Set initial position instantly (off-screen) without affecting parallax settings
+            this.viewer.setMousePosition(enterX, 0, false);
             
             // Small delay to ensure the position is set
             await new Promise(resolve => setTimeout(resolve, 50));
             
-            // Animate to center
-            this.viewer.setNumpadDrag(0, 0, {
-                dragMode: 'sticky',
-                animate: true,
-                animationDuration: timing / 2
-            });
+            // Animate to center without affecting parallax settings
+            this.viewer.setMousePosition(0, 0, true, timing / 2);
             
             // Wait for animation to complete
             await new Promise(resolve => setTimeout(resolve, timing / 2 + 50));
             
-            // Ensure UI state matches viewer state after transition
-            this.synchronizeUIWithViewer();
-            
-            console.log('🎬 Slide transition completed');
+            console.log('🎬 Slide transition completed - parallax settings preserved');
             
         } catch (error) {
             console.error('Slide animation error:', error);
             // Fallback to instant transition
             await this.loadCurrentSampleImage();
-            // Ensure UI state is synchronized even after fallback
-            this.synchronizeUIWithViewer();
         } finally {
             this.isSlideAnimating = false;
         }
@@ -1741,23 +1773,40 @@ class DepthViewerApp {
         if (!this.viewer) return;
         
         const viewerOptions = this.viewer.getOptions();
+        let syncChanges = 0;
         
         // Synchronize checkbox states
         if (this.localizedParallaxCheckbox) {
-            const shouldBeChecked = viewerOptions.localizedParallax;
+            const shouldBeChecked = Boolean(viewerOptions.localizedParallax);
             if (this.localizedParallaxCheckbox.checked !== shouldBeChecked) {
                 console.log(`🔄 Synchronizing localizedParallax: UI=${this.localizedParallaxCheckbox.checked} -> Viewer=${shouldBeChecked}`);
                 this.localizedParallaxCheckbox.checked = shouldBeChecked;
+                syncChanges++;
             }
         }
         
         if (this.symmetricalDragCheckbox) {
-            const shouldBeChecked = viewerOptions.symmetricalDrag;
+            const shouldBeChecked = Boolean(viewerOptions.symmetricalDrag);
             if (this.symmetricalDragCheckbox.checked !== shouldBeChecked) {
                 console.log(`🔄 Synchronizing symmetricalDrag: UI=${this.symmetricalDragCheckbox.checked} -> Viewer=${shouldBeChecked}`);
                 this.symmetricalDragCheckbox.checked = shouldBeChecked;
+                syncChanges++;
             }
         }
+        
+        // Synchronize slider values
+        if (this.depthScaleSlider && viewerOptions.depthScale !== undefined) {
+            const currentValue = parseFloat(this.depthScaleSlider.value);
+            if (Math.abs(currentValue - viewerOptions.depthScale) > 0.01) {
+                console.log(`🔄 Synchronizing depthScale: UI=${currentValue} -> Viewer=${viewerOptions.depthScale}`);
+                this.depthScaleSlider.value = viewerOptions.depthScale;
+                this.depthScaleValue.textContent = viewerOptions.depthScale.toFixed(1);
+                syncChanges++;
+            }
+        }
+        
+        // Force re-evaluation of dependent settings
+        this.updateLocalizedParallaxState();
         
         // Re-check symmetry compatibility after state sync
         const images = this.getCurrentImages();
@@ -1766,7 +1815,168 @@ class DepthViewerApp {
             this.updateSymmetryCompatibility(imageSet.name);
         }
         
-        console.log('🔄 UI state synchronized with viewer');
+        console.log(`🔄 UI state synchronized with viewer (${syncChanges} changes made)`);
+    }
+
+    checkControlSync() {
+        if (!this.viewer) {
+            this.syncStatus.innerHTML = '<div style="color: #ff6666;">❌ No viewer instance found</div>';
+            return;
+        }
+
+        const viewerOptions = this.viewer.getOptions();
+        const timestamp = new Date().toLocaleTimeString();
+        let syncReport = `<div style="color: #66ff66; margin-bottom: 8px;">🔄 Sync Check - ${timestamp}</div>`;
+        let issues = 0;
+
+        // Check each control against viewer state
+        const checks = [
+            {
+                name: 'Localized Parallax',
+                ui: this.localizedParallaxCheckbox?.checked || false,
+                viewer: viewerOptions.localizedParallax || false
+            },
+            {
+                name: 'Symmetrical Drag',
+                ui: this.symmetricalDragCheckbox?.checked || false,
+                viewer: viewerOptions.symmetricalDrag || false
+            },
+            {
+                name: 'Depth Scale',
+                ui: parseFloat(this.depthScaleSlider?.value || 0),
+                viewer: viewerOptions.depthScale || 0
+            },
+            {
+                name: 'Sensitivity',
+                ui: parseFloat(this.sensitivitySlider?.value || 0),
+                viewer: viewerOptions.sensitivity || 0
+            },
+            {
+                name: 'Invert Depth Logic',
+                ui: this.invertDepthLogicCheckbox?.checked || false,
+                viewer: viewerOptions.invertDepthLogic || false
+            },
+            {
+                name: 'Display Depthmap',
+                ui: this.displayDepthmapCheckbox?.checked || false,
+                viewer: viewerOptions.displayDepthmap || false
+            }
+        ];
+
+        checks.forEach(check => {
+            const isSync = check.ui === check.viewer;
+            const icon = isSync ? '✅' : '❌';
+            const color = isSync ? '#66ff66' : '#ff6666';
+            
+            if (!isSync) issues++;
+            
+            syncReport += `<div style="color: ${color}; font-size: 11px; margin: 2px 0;">
+                ${icon} ${check.name}: UI=${check.ui} | Viewer=${check.viewer}
+            </div>`;
+        });
+
+        // Add summary
+        if (issues === 0) {
+            syncReport += '<div style="color: #66ff66; margin-top: 8px; font-weight: bold;">🎉 All controls in sync!</div>';
+        } else {
+            syncReport += `<div style="color: #ff6666; margin-top: 8px; font-weight: bold;">⚠️ Found ${issues} sync issue${issues > 1 ? 's' : ''}</div>`;
+            syncReport += '<div style="color: #ffcc00; font-size: 11px; margin-top: 4px;">💡 Try synchronizing manually or check after slide transitions</div>';
+        }
+
+        this.syncStatus.innerHTML = syncReport;
+        
+        // Auto-clear after 10 seconds
+        setTimeout(() => {
+            if (this.syncStatus.innerHTML === syncReport) {
+                this.syncStatus.innerHTML = '<div style="color: #888;">Click "Check Control Sync" to verify UI/viewer state alignment</div>';
+            }
+        }, 10000);
+
+        console.log('🔍 Control sync check completed:', { issues, checks });
+    }
+
+    forceSynchronizeControls() {
+        if (!this.viewer) {
+            this.syncStatus.innerHTML = '<div style="color: #ff6666;">❌ No viewer instance found</div>';
+            return;
+        }
+
+        const timestamp = new Date().toLocaleTimeString();
+        this.syncStatus.innerHTML = '<div style="color: #ffcc00;">🔧 Force synchronizing controls...</div>';
+
+        // Force viewer to match UI state
+        try {
+            const uiState = {
+                localizedParallax: this.localizedParallaxCheckbox?.checked || false,
+                symmetricalDrag: this.symmetricalDragCheckbox?.checked || false,
+                depthScale: parseFloat(this.depthScaleSlider?.value || 1),
+                sensitivity: parseFloat(this.sensitivitySlider?.value || 1),
+                invertDepthLogic: this.invertDepthLogicCheckbox?.checked || false,
+                displayDepthmap: this.displayDepthmapCheckbox?.checked || false,
+                localizeDistance: parseInt(this.localizeDistanceSlider?.value || 150),
+                backgroundDampening: parseFloat(this.backgroundDampeningSlider?.value || 0.8),
+                midgroundDampening: parseFloat(this.midgroundDampeningSlider?.value || 0.5)
+            };
+
+            // Apply all UI settings to viewer
+            this.viewer.setOptions(uiState);
+
+            // Re-evaluate dependent states
+            this.updateLocalizedParallaxState();
+            
+            // Re-check symmetry compatibility
+            const images = this.getCurrentImages();
+            const imageSet = images[this.currentImageIndex];
+            if (imageSet) {
+                this.updateSymmetryCompatibility(imageSet.name);
+            }
+
+            // Show success
+            this.syncStatus.innerHTML = `<div style="color: #66ff66;">✅ Force sync completed - ${timestamp}</div>
+                <div style="color: #ccc; font-size: 11px; margin-top: 4px;">All UI controls forced to viewer. Check sync again to verify.</div>`;
+
+            console.log('🔧 Force synchronization completed:', uiState);
+
+        } catch (error) {
+            console.error('Force sync error:', error);
+            this.syncStatus.innerHTML = `<div style="color: #ff6666;">❌ Force sync failed: ${error.message}</div>`;
+        }
+
+        // Auto-clear after 8 seconds
+        setTimeout(() => {
+            this.syncStatus.innerHTML = '<div style="color: #888;">Click "Check Sync" to verify UI/viewer state alignment</div>';
+        }, 8000);
+    }
+
+    setupZoomListeners() {
+        // Add wheel event listener for trackpad zoom
+        this.zoomHandler = (event) => {
+            if (!this.trackpadZoomEnabled) return;
+            
+            event.preventDefault();
+            
+            const zoomFactor = 1 + (event.deltaY * -0.01); // Negative for natural scroll direction
+            this.zoomScale = Math.max(this.minZoom, Math.min(this.maxZoom, this.zoomScale * zoomFactor));
+            
+            this.viewer.setOptions({ zoomScale: this.zoomScale });
+            
+            // Show zoom level briefly
+            this.showStatus(`Zoom: ${Math.round(this.zoomScale * 100)}%`, 'info', 1000);
+        };
+        
+        this.viewerElement.addEventListener('wheel', this.zoomHandler, { passive: false });
+    }
+
+    removeZoomListeners() {
+        if (this.zoomHandler) {
+            this.viewerElement.removeEventListener('wheel', this.zoomHandler);
+            this.zoomHandler = null;
+        }
+    }
+
+    resetZoom() {
+        this.zoomScale = 1.0;
+        this.viewer.setOptions({ zoomScale: 1.0 });
     }
 }
 
