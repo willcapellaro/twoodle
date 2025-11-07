@@ -674,6 +674,108 @@
                     </div>
                 </div>
                 
+                <!-- DOF Effects Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="dof-section">
+                        <span>▼ Depth of Field (DOF)</span>
+                    </div>
+                    <div class="section-content" id="dof-section">
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="enableDOF" style="margin-right: 8px;">
+                                Enable Depth of Field
+                            </label>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="inline-slider">
+                                <label>Blur Strength</label>
+                                <input type="range" class="control-range" id="blurStrength" min="0" max="5" step="0.1" value="2.0">
+                                <span id="blurStrengthValue">2.0</span>
+                            </div>
+                            
+                            <div class="inline-slider">
+                                <label>Focus Range</label>
+                                <input type="range" class="control-range" id="focusRange" min="0.1" max="1.0" step="0.05" value="0.3">
+                                <span id="focusRangeValue">0.30</span>
+                            </div>
+                            
+                            <div class="inline-slider">
+                                <label>Bokeh Quality</label>
+                                <input type="range" class="control-range" id="bokehQuality" min="1" max="8" step="1" value="4">
+                                <span id="bokehQualityValue">4</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Layered Images Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="layers-section">
+                        <span>▼ Layered Images</span>
+                    </div>
+                    <div class="section-content" id="layers-section">
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="enableLayers" style="margin-right: 8px;">
+                                Enable Layered Mode
+                            </label>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="inline-slider">
+                                <label>Foreground Offset</label>
+                                <input type="range" class="control-range" id="foregroundOffset" min="0.5" max="2.0" step="0.1" value="1.0">
+                                <span id="foregroundOffsetValue">1.0</span>
+                            </div>
+                            
+                            <div class="control-group" style="margin-top: 10px;">
+                                <label>Blend Mode</label>
+                                <select id="blendMode" style="width: 100%; padding: 5px; margin-top: 5px;">
+                                    <option value="normal">Normal</option>
+                                    <option value="multiply">Multiply</option>
+                                    <option value="screen">Screen</option>
+                                    <option value="overlay">Overlay</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Layer Debug Section -->
+                            <div class="control-group" style="margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.1); border-radius: 5px;">
+                                <div style="font-weight: bold; margin-bottom: 8px;">Layer Debug Info</div>
+                                
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span>Background Layer:</span>
+                                    <span id="backgroundLayerStatus" style="color: #888;">Not Detected</span>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span>Foreground Layer:</span>
+                                    <span id="foregroundLayerStatus" style="color: #888;">Not Detected</span>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                    <span>Fallback (Original):</span>
+                                    <span id="fallbackStatus" style="color: #28a745;">Available</span>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label>
+                                        <input type="checkbox" id="showBackground" checked style="margin-right: 8px;">
+                                        Show Background Layer
+                                    </label>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label>
+                                        <input type="checkbox" id="showForeground" checked style="margin-right: 8px;">
+                                        Show Foreground Layer
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Gyroscope Section -->
                 <div class="control-section">
                     <div class="section-header" data-toggle="gyroscope-section">

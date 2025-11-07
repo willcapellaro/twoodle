@@ -31,6 +31,14 @@ class DepthyWebGLViewer {
             symmetricalDrag: options.symmetricalDrag || false,
             symmetryMode: options.symmetryMode || 'none', // 'none', 'horizontal', 'vertical', 'both'
             zoomScale: options.zoomScale || 1.0,
+            enableDOF: options.enableDOF || false,
+            blurStrength: options.blurStrength || 2.0,
+            focusRange: options.focusRange || 0.3,
+            bokehQuality: options.bokehQuality || 4,
+            enableLayers: options.enableLayers || false,
+            foregroundOffset: options.foregroundOffset || 1.0,
+            blendMode: options.blendMode || 'normal',
+            backgroundColor: options.backgroundColor || null,
             ...options
         };
         
@@ -41,6 +49,16 @@ class DepthyWebGLViewer {
         this.depthTexture = null;
         this.colorImage = null;
         this.depthImage = null;
+        
+        // Layer support
+        this.backgroundTexture = null;
+        this.foregroundTexture = null;
+        this.backgroundImage = null;
+        this.foregroundImage = null;
+        this.hasBackgroundTexture = false;
+        this.hasForegroundTexture = false;
+        this.backgroundHexColor = null;
+        
         this.mouseX = 0;
         this.mouseY = 0;
         this.viewMode = 'fit'; // 'fit' or 'fill'
@@ -172,6 +190,18 @@ class DepthyWebGLViewer {
             uniform bool u_symmetricalDrag;
             uniform int u_symmetryMode; // 0=none, 1=horizontal, 2=vertical, 3=both
             uniform float u_zoomScale;
+            uniform bool u_enableDOF;
+            uniform float u_blurStrength;
+            uniform float u_focusRange;
+            uniform int u_bokehQuality;
+            uniform bool u_enableLayers;
+            uniform sampler2D u_backgroundTexture;
+            uniform sampler2D u_foregroundTexture;
+            uniform float u_foregroundOffset;
+            uniform vec3 u_backgroundColor;
+            uniform bool u_hasBackground;
+            uniform bool u_showBackground;
+            uniform bool u_showForeground;
             
             varying vec2 v_texCoord;
             
@@ -288,13 +318,104 @@ class DepthyWebGLViewer {
                 // Sample color with displacement
                 vec2 sampleCoord = imageCoord + displacement;
                 
+                vec4 finalColor;
+                
                 // Handle edge cases - use original pixel if outside bounds
                 if (sampleCoord.x < 0.0 || sampleCoord.x > 1.0 || 
                     sampleCoord.y < 0.0 || sampleCoord.y > 1.0) {
-                    gl_FragColor = texture2D(u_colorTexture, imageCoord);
-                } else {
-                    gl_FragColor = texture2D(u_colorTexture, sampleCoord);
+                    sampleCoord = imageCoord;
                 }
+                
+                // Apply DOF blur if enabled
+                if (u_enableDOF) {
+                    // Calculate focus distance based on depth and focus range
+                    float sampleDepth = texture2D(u_depthTexture, sampleCoord).r;
+                    float focusDistance = abs(sampleDepth - u_focus);
+                    float blurAmount = smoothstep(0.0, u_focusRange, focusDistance) * u_blurStrength;
+                    
+                    if (blurAmount > 0.1) {
+                        // Apply bokeh blur sampling
+                        vec4 blurredColor = vec4(0.0);
+                        float totalWeight = 0.0;
+                        int samples = u_bokehQuality;
+                        float radius = blurAmount * 0.01;
+                        
+                        for (int i = 0; i < 8; i++) {
+                            if (i >= samples) break;
+                            
+                            // Circular sampling pattern
+                            float angle = float(i) * 6.28318 / float(samples);
+                            vec2 offset = vec2(cos(angle), sin(angle)) * radius;
+                            vec2 blurCoord = sampleCoord + offset;
+                            
+                            if (blurCoord.x >= 0.0 && blurCoord.x <= 1.0 && 
+                                blurCoord.y >= 0.0 && blurCoord.y <= 1.0) {
+                                blurredColor += texture2D(u_colorTexture, blurCoord);
+                                totalWeight += 1.0;
+                            }
+                        }
+                        
+                        if (totalWeight > 0.0) {
+                            finalColor = blurredColor / totalWeight;
+                        } else {
+                            finalColor = texture2D(u_colorTexture, sampleCoord);
+                        }
+                    } else {
+                        finalColor = texture2D(u_colorTexture, sampleCoord);
+                    }
+                } else {
+                    finalColor = texture2D(u_colorTexture, sampleCoord);
+                }
+                
+                // Apply layered images if enabled
+                if (u_enableLayers) {
+                    // In layered mode, we start with transparent/black
+                    vec4 layeredColor = vec4(0.0, 0.0, 0.0, 0.0);
+                    bool hasVisibleLayer = false;
+                    
+                    // Add background layer if visible
+                    if (u_showBackground) {
+                        vec4 bgColor = texture2D(u_backgroundTexture, imageCoord);
+                        layeredColor = bgColor;
+                        hasVisibleLayer = true;
+                    }
+                    
+                    // Add foreground layer if visible
+                    if (u_showForeground) {
+                        vec2 fgDisplacement = displacement * u_foregroundOffset;
+                        vec2 fgCoord = imageCoord + fgDisplacement;
+                        
+                        if (fgCoord.x < 0.0 || fgCoord.x > 1.0 || fgCoord.y < 0.0 || fgCoord.y > 1.0) {
+                            fgCoord = imageCoord;
+                        }
+                        
+                        vec4 fgColor = texture2D(u_foregroundTexture, fgCoord);
+                        
+                        if (hasVisibleLayer) {
+                            // Blend foreground with existing layer(s)
+                            layeredColor = mix(layeredColor, fgColor, fgColor.a);
+                        } else {
+                            // Foreground is the only visible layer
+                            layeredColor = fgColor;
+                        }
+                        hasVisibleLayer = true;
+                    }
+                    
+                    // If no layers are visible, make it transparent (black)
+                    if (hasVisibleLayer) {
+                        finalColor = layeredColor;
+                    } else {
+                        finalColor = vec4(0.0, 0.0, 0.0, 1.0); // Black when no layers visible
+                    }
+                }
+                
+                // Apply background masking if enabled
+                if (u_hasBackground && finalColor.a < 1.0) {
+                    finalColor.rgb = mix(u_backgroundColor, finalColor.rgb, finalColor.a);
+                    finalColor.a = 1.0;
+                }
+                
+                gl_FragColor = finalColor;
             }
         `;
         
@@ -384,6 +505,26 @@ class DepthyWebGLViewer {
         this.symmetricalDragLocation = gl.getUniformLocation(this.program, 'u_symmetricalDrag');
         this.symmetryModeLocation = gl.getUniformLocation(this.program, 'u_symmetryMode');
         this.zoomScaleLocation = gl.getUniformLocation(this.program, 'u_zoomScale');
+        
+        // DOF uniform locations
+        this.enableDOFLocation = gl.getUniformLocation(this.program, 'u_enableDOF');
+        this.blurStrengthLocation = gl.getUniformLocation(this.program, 'u_blurStrength');
+        this.focusRangeLocation = gl.getUniformLocation(this.program, 'u_focusRange');
+        this.bokehQualityLocation = gl.getUniformLocation(this.program, 'u_bokehQuality');
+        
+        // Layer uniform locations
+        this.enableLayersLocation = gl.getUniformLocation(this.program, 'u_enableLayers');
+        this.backgroundTextureLocation = gl.getUniformLocation(this.program, 'u_backgroundTexture');
+        this.foregroundTextureLocation = gl.getUniformLocation(this.program, 'u_foregroundTexture');
+        this.foregroundOffsetLocation = gl.getUniformLocation(this.program, 'u_foregroundOffset');
+        
+        // Background color uniform locations
+        this.backgroundColorLocation = gl.getUniformLocation(this.program, 'u_backgroundColor');
+        this.hasBackgroundLocation = gl.getUniformLocation(this.program, 'u_hasBackground');
+        
+        // Layer visibility uniform locations
+        this.showBackgroundLocation = gl.getUniformLocation(this.program, 'u_showBackground');
+        this.showForegroundLocation = gl.getUniformLocation(this.program, 'u_showForeground');
     }
     
     setupEventListeners() {
@@ -646,6 +787,98 @@ class DepthyWebGLViewer {
         }
     }
     
+    async loadBackgroundImage(source) {
+        try {
+            console.log('Loading background image:', source);
+            
+            const img = new Image();
+            await new Promise((resolve, reject) => {
+                img.onload = resolve;
+                img.onerror = reject;
+                
+                if (source instanceof File) {
+                    const url = URL.createObjectURL(source);
+                    img.src = url;
+                } else {
+                    img.src = source;
+                }
+            });
+            
+            this.backgroundImage = img;
+            this.backgroundTexture = this.createTexture(img);
+            this.hasBackgroundTexture = true;
+            console.log('Background texture created');
+            
+            if (this.colorTexture) {
+                this.render();
+            }
+            
+        } catch (error) {
+            console.error('Failed to load background image:', error);
+            this.hasBackgroundTexture = false;
+            throw error;
+        }
+    }
+    
+    async loadForegroundImage(source) {
+        try {
+            console.log('Loading foreground image:', source);
+            
+            const img = new Image();
+            await new Promise((resolve, reject) => {
+                img.onload = resolve;
+                img.onerror = reject;
+                
+                if (source instanceof File) {
+                    const url = URL.createObjectURL(source);
+                    img.src = url;
+                } else {
+                    img.src = source;
+                }
+            });
+            
+            this.foregroundImage = img;
+            this.foregroundTexture = this.createTexture(img);
+            this.hasForegroundTexture = true;
+            console.log('Foreground texture created');
+            
+            if (this.colorTexture) {
+                this.render();
+            }
+            
+        } catch (error) {
+            console.error('Failed to load foreground image:', error);
+            this.hasForegroundTexture = false;
+            throw error;
+        }
+    }
+    
+    setBackgroundColor(hexColor) {
+        this.backgroundHexColor = hexColor;
+        console.log('Background color set to:', hexColor);
+        if (this.colorTexture) {
+            this.render();
+        }
+    }
+    
+    clearLayers() {
+        // Clear layer textures when switching images
+        if (this.backgroundTexture) {
+            this.gl.deleteTexture(this.backgroundTexture);
+            this.backgroundTexture = null;
+        }
+        if (this.foregroundTexture) {
+            this.gl.deleteTexture(this.foregroundTexture);
+            this.foregroundTexture = null;
+        }
+        this.backgroundImage = null;
+        this.foregroundImage = null;
+        this.hasBackgroundTexture = false;
+        this.hasForegroundTexture = false;
+        this.backgroundHexColor = null;
+        console.log('Layer textures cleared');
+    }
+    
     createTexture(image) {
         const gl = this.gl;
         const texture = gl.createTexture();
@@ -823,6 +1056,44 @@ class DepthyWebGLViewer {
         
         // Set zoom scale
         gl.uniform1f(this.zoomScaleLocation, this.options.zoomScale || 1.0);
+        
+        // Set DOF uniforms
+        gl.uniform1i(this.enableDOFLocation, this.options.enableDOF ? 1 : 0);
+        gl.uniform1f(this.blurStrengthLocation, this.options.blurStrength || 0.0);
+        gl.uniform1f(this.focusRangeLocation, this.options.focusRange || 0.5);
+        gl.uniform1i(this.bokehQualityLocation, this.options.bokehQuality || 4);
+        
+        // Set layered images uniforms
+        gl.uniform1i(this.enableLayersLocation, this.options.enableLayers && this.hasBackgroundTexture && this.hasForegroundTexture ? 1 : 0);
+        gl.uniform1i(this.hasBackgroundLocation, this.hasBackgroundTexture ? 1 : 0);
+        gl.uniform1f(this.foregroundOffsetLocation, this.options.foregroundOffset || 1.0);
+        
+        // Set background color from hex
+        if (this.backgroundHexColor) {
+            const r = parseInt(this.backgroundHexColor.substr(1, 2), 16) / 255.0;
+            const g = parseInt(this.backgroundHexColor.substr(3, 2), 16) / 255.0;
+            const b = parseInt(this.backgroundHexColor.substr(5, 2), 16) / 255.0;
+            gl.uniform3f(this.backgroundColorLocation, r, g, b);
+        } else {
+            gl.uniform3f(this.backgroundColorLocation, 0.0, 0.0, 0.0);
+        }
+        
+        // Set layer visibility uniforms
+        gl.uniform1i(this.showBackgroundLocation, this.options.showBackground !== false ? 1 : 0);
+        gl.uniform1i(this.showForegroundLocation, this.options.showForeground !== false ? 1 : 0);
+        
+        // Bind additional textures for layered images
+        if (this.backgroundTexture) {
+            gl.activeTexture(gl.TEXTURE2);
+            gl.bindTexture(gl.TEXTURE_2D, this.backgroundTexture);
+            gl.uniform1i(this.backgroundTextureLocation, 2);
+        }
+        
+        if (this.foregroundTexture) {
+            gl.activeTexture(gl.TEXTURE3);
+            gl.bindTexture(gl.TEXTURE_2D, this.foregroundTexture);
+            gl.uniform1i(this.foregroundTextureLocation, 3);
+        }
         
         // Setup attributes
         gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);

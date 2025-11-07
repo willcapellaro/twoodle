@@ -106,6 +106,28 @@ class DepthViewerApp {
         // Zoom control
         this.trackpadZoomCheckbox = document.getElementById('trackpadZoom');
         
+        // DOF controls
+        this.enableDOFCheckbox = document.getElementById('enableDOF');
+        this.blurStrengthSlider = document.getElementById('blurStrength');
+        this.blurStrengthValue = document.getElementById('blurStrengthValue');
+        this.focusRangeSlider = document.getElementById('focusRange');
+        this.focusRangeValue = document.getElementById('focusRangeValue');
+        this.bokehQualitySlider = document.getElementById('bokehQuality');
+        this.bokehQualityValue = document.getElementById('bokehQualityValue');
+        
+        // Layer controls
+        this.enableLayersCheckbox = document.getElementById('enableLayers');
+        this.foregroundOffsetSlider = document.getElementById('foregroundOffset');
+        this.foregroundOffsetValue = document.getElementById('foregroundOffsetValue');
+        this.blendModeSelect = document.getElementById('blendMode');
+        
+        // Layer debug controls
+        this.backgroundLayerStatus = document.getElementById('backgroundLayerStatus');
+        this.foregroundLayerStatus = document.getElementById('foregroundLayerStatus');
+        this.fallbackStatus = document.getElementById('fallbackStatus');
+        this.showBackgroundCheckbox = document.getElementById('showBackground');
+        this.showForegroundCheckbox = document.getElementById('showForeground');
+        
         // Toast opacity control
         this.toastOpacitySlider = document.getElementById('toastOpacity');
         this.toastOpacityValue = document.getElementById('toastOpacityValue');
@@ -144,6 +166,19 @@ class DepthViewerApp {
         this.zoomScale = 1.0;
         this.minZoom = 0.5;
         this.maxZoom = 3.0;
+        
+        // DOF properties
+        this.enableDOF = false;
+        this.blurStrength = 2.0;
+        this.focusRange = 0.3;
+        this.bokehQuality = 4;
+        
+        // Layer properties
+        this.enableLayers = false;
+        this.foregroundOffset = 1.0;
+        this.blendMode = 'normal';
+        this.showBackground = true;
+        this.showForeground = true;
         
         // Animation properties
         this.animateSlideTransitions = true;
@@ -493,6 +528,71 @@ class DepthViewerApp {
             this.viewer.centerGyroscope();
         });
         
+        // DOF controls
+        this.enableDOFCheckbox.addEventListener('change', (e) => {
+            this.enableDOF = e.target.checked;
+            this.viewer.setOptions({ enableDOF: this.enableDOF });
+            this.saveSettings();
+            console.log(`📸 DOF ${e.target.checked ? 'enabled' : 'disabled'}`);
+        });
+        
+        this.blurStrengthSlider.addEventListener('input', (e) => {
+            this.blurStrength = parseFloat(e.target.value);
+            this.blurStrengthValue.textContent = this.blurStrength.toFixed(1);
+            this.viewer.setOptions({ blurStrength: this.blurStrength });
+            this.saveSettings();
+        });
+        
+        this.focusRangeSlider.addEventListener('input', (e) => {
+            this.focusRange = parseFloat(e.target.value);
+            this.focusRangeValue.textContent = this.focusRange.toFixed(2);
+            this.viewer.setOptions({ focusRange: this.focusRange });
+            this.saveSettings();
+        });
+        
+        this.bokehQualitySlider.addEventListener('input', (e) => {
+            this.bokehQuality = parseInt(e.target.value);
+            this.bokehQualityValue.textContent = this.bokehQuality;
+            this.viewer.setOptions({ bokehQuality: this.bokehQuality });
+            this.saveSettings();
+        });
+        
+        // Layer controls
+        this.enableLayersCheckbox.addEventListener('change', (e) => {
+            this.enableLayers = e.target.checked;
+            this.viewer.setOptions({ enableLayers: this.enableLayers });
+            this.saveSettings();
+            console.log(`🖼️ Layered mode ${e.target.checked ? 'enabled' : 'disabled'}`);
+        });
+        
+        this.foregroundOffsetSlider.addEventListener('input', (e) => {
+            this.foregroundOffset = parseFloat(e.target.value);
+            this.foregroundOffsetValue.textContent = this.foregroundOffset.toFixed(1);
+            this.viewer.setOptions({ foregroundOffset: this.foregroundOffset });
+            this.saveSettings();
+        });
+        
+        this.blendModeSelect.addEventListener('change', (e) => {
+            this.blendMode = e.target.value;
+            this.viewer.setOptions({ blendMode: this.blendMode });
+            this.saveSettings();
+        });
+        
+        // Layer visibility controls
+        this.showBackgroundCheckbox.addEventListener('change', (e) => {
+            this.showBackground = e.target.checked;
+            this.viewer.setOptions({ showBackground: this.showBackground });
+            this.saveSettings();
+            console.log(`🖼️ Background layer ${e.target.checked ? 'shown' : 'hidden'}`);
+        });
+        
+        this.showForegroundCheckbox.addEventListener('change', (e) => {
+            this.showForeground = e.target.checked;
+            this.viewer.setOptions({ showForeground: this.showForeground });
+            this.saveSettings();
+            console.log(`🖼️ Foreground layer ${e.target.checked ? 'shown' : 'hidden'}`);
+        });
+        
         // Toast opacity control
         this.toastOpacitySlider.addEventListener('input', (e) => {
             const value = parseFloat(e.target.value);
@@ -782,7 +882,7 @@ class DepthViewerApp {
         try {
             // Define image sets based on actual file structure
             if (folderPath.includes('hidden-images')) {
-                // Hidden images set with symmetry and alternative depth maps
+                // Hidden images set with all features: symmetry, alternative depth maps, hex backgrounds, layered images
                 const hiddenImagePairs = [
                     { base: 'astrobutt-color-symH', colorExt: '.jpeg', depthExt: '.jpg' },
                     { base: 'basketballcard', colorExt: '.jpeg', depthExt: '.jpg' },
@@ -796,7 +896,9 @@ class DepthViewerApp {
                     { base: 'pulpa-symV', colorExt: '.jpeg', depthExt: '.png' },
                     { base: 'purple-spreader', colorExt: '.jpeg', depthExt: '.png' },
                     { base: 'shoi-symV', colorExt: '.jpeg', depthExt: '.png' },
-                    { base: 'swimma', colorExt: '.jpeg', depthExt: '.png' } // Has alternative depth maps
+                    { base: 'swimma', colorExt: '.jpeg', depthExt: '.png' }, // Has alternative depth maps
+                    { base: 'test2-#ff0000', colorExt: '.jpeg', depthExt: '.png' }, // Hex background support
+                    { base: 'test3-layered', colorExt: '.jpeg', depthExt: '.png' } // Layered image support
                 ];
                 
                 for (const pair of hiddenImagePairs) {
@@ -812,12 +914,45 @@ class DepthViewerApp {
                         if (await this.imageExists(depthMapL)) alternativeMaps.light = depthMapL;
                         if (await this.imageExists(depthMapD)) alternativeMaps.dark = depthMapD;
                         
-                        images.push({
+                        // Check for hex color in filename (e.g., "image-#ff0000.jpg")
+                        const hexMatch = pair.base.match(/#([0-9a-fA-F]{3,6})/);
+                        const backgroundColor = hexMatch ? `#${hexMatch[1]}` : null;
+                        
+                        // Check for layered images (background and foreground)
+                        // Try multiple extensions for layer files (.png, .jpg, .jpeg)
+                        const layerExtensions = ['.png', '.jpg', '.jpeg'];
+                        const layers = {};
+                        
+                        for (const ext of layerExtensions) {
+                            const bgImage = `${folderPath}${pair.base}-bg∂${ext}`;
+                            const fgImage = `${folderPath}${pair.base}-fg∂${ext}`;
+                            
+                            if (await this.imageExists(bgImage)) {
+                                layers.background = bgImage;
+                                console.log(`🖼️ Found background layer: ${bgImage}`);
+                            }
+                            if (await this.imageExists(fgImage)) {
+                                layers.foreground = fgImage;
+                                console.log(`🖼️ Found foreground layer: ${fgImage}`);
+                            }
+                            
+                            // Stop checking extensions once we find files
+                            if (layers.background && layers.foreground) break;
+                        }
+                        
+                        const imageSet = {
                             name: this.formatImageName(pair.base),
                             colorImage: colorImage,
                             depthMap: depthMap,
                             alternativeMaps: alternativeMaps
-                        });
+                        };
+                        
+                        // Add special features if detected
+                        if (backgroundColor) imageSet.backgroundColor = backgroundColor;
+                        if (layers.background) imageSet.backgroundImage = layers.background;
+                        if (layers.foreground) imageSet.foregroundImage = layers.foreground;
+                        
+                        images.push(imageSet);
                     }
                 }
             } else {
@@ -843,12 +978,39 @@ class DepthViewerApp {
                         if (await this.imageExists(depthMapL)) alternativeMaps.light = depthMapL;
                         if (await this.imageExists(depthMapD)) alternativeMaps.dark = depthMapD;
                         
-                        images.push({
+                        // Check for hex color in filename
+                        const hexMatch = pair.base.match(/#([0-9a-fA-F]{3,6})/);
+                        const backgroundColor = hexMatch ? `#${hexMatch[1]}` : null;
+                        
+                        // Check for layered images
+                        // Try multiple extensions for layer files (.png, .jpg, .jpeg)
+                        const layerExtensions = ['.png', '.jpg', '.jpeg'];
+                        const layers = {};
+                        
+                        for (const ext of layerExtensions) {
+                            const bgImage = `${folderPath}${pair.base}-bg∂${ext}`;
+                            const fgImage = `${folderPath}${pair.base}-fg∂${ext}`;
+                            
+                            if (await this.imageExists(bgImage)) layers.background = bgImage;
+                            if (await this.imageExists(fgImage)) layers.foreground = fgImage;
+                            
+                            // Stop checking extensions once we find files
+                            if (layers.background && layers.foreground) break;
+                        }
+                        
+                        const imageSet = {
                             name: this.formatImageName(pair.base),
                             colorImage: colorImage,
                             depthMap: depthMap,
                             alternativeMaps: alternativeMaps
-                        });
+                        };
+                        
+                        // Add special features if detected
+                        if (backgroundColor) imageSet.backgroundColor = backgroundColor;
+                        if (layers.background) imageSet.backgroundImage = layers.background;
+                        if (layers.foreground) imageSet.foregroundImage = layers.foreground;
+                        
+                        images.push(imageSet);
                     }
                 }
             }
@@ -1346,7 +1508,16 @@ class DepthViewerApp {
             animateSlideTransitions: this.animateSlideTransitions,
             animationTiming: this.animationTiming,
             symmetricalDrag: this.symmetricalDragCheckbox.checked,
-            trackpadZoom: this.trackpadZoomEnabled
+            trackpadZoom: this.trackpadZoomEnabled,
+            enableDOF: this.enableDOF,
+            blurStrength: this.blurStrength,
+            focusRange: this.focusRange,
+            bokehQuality: this.bokehQuality,
+            enableLayers: this.enableLayers,
+            foregroundOffset: this.foregroundOffset,
+            blendMode: this.blendMode,
+            showBackground: this.showBackground,
+            showForeground: this.showForeground
         };
         localStorage.setItem('depthViewerSettings', JSON.stringify(settings));
     }
@@ -1532,6 +1703,67 @@ class DepthViewerApp {
                         this.setupZoomListeners();
                     }
                 }
+                
+                // Apply DOF settings
+                if (settings.enableDOF !== undefined) {
+                    this.enableDOFCheckbox.checked = settings.enableDOF;
+                    this.enableDOF = settings.enableDOF;
+                    this.viewer.setOptions({ enableDOF: this.enableDOF });
+                }
+                
+                if (settings.blurStrength !== undefined) {
+                    this.blurStrengthSlider.value = settings.blurStrength;
+                    this.blurStrengthValue.textContent = settings.blurStrength.toFixed(1);
+                    this.blurStrength = settings.blurStrength;
+                    this.viewer.setOptions({ blurStrength: this.blurStrength });
+                }
+                
+                if (settings.focusRange !== undefined) {
+                    this.focusRangeSlider.value = settings.focusRange;
+                    this.focusRangeValue.textContent = settings.focusRange.toFixed(2);
+                    this.focusRange = settings.focusRange;
+                    this.viewer.setOptions({ focusRange: this.focusRange });
+                }
+                
+                if (settings.bokehQuality !== undefined) {
+                    this.bokehQualitySlider.value = settings.bokehQuality;
+                    this.bokehQualityValue.textContent = settings.bokehQuality;
+                    this.bokehQuality = settings.bokehQuality;
+                    this.viewer.setOptions({ bokehQuality: this.bokehQuality });
+                }
+                
+                // Apply layer settings
+                if (settings.enableLayers !== undefined) {
+                    this.enableLayersCheckbox.checked = settings.enableLayers;
+                    this.enableLayers = settings.enableLayers;
+                    this.viewer.setOptions({ enableLayers: this.enableLayers });
+                }
+                
+                if (settings.foregroundOffset !== undefined) {
+                    this.foregroundOffsetSlider.value = settings.foregroundOffset;
+                    this.foregroundOffsetValue.textContent = settings.foregroundOffset.toFixed(1);
+                    this.foregroundOffset = settings.foregroundOffset;
+                    this.viewer.setOptions({ foregroundOffset: this.foregroundOffset });
+                }
+                
+                if (settings.blendMode !== undefined) {
+                    this.blendModeSelect.value = settings.blendMode;
+                    this.blendMode = settings.blendMode;
+                    this.viewer.setOptions({ blendMode: this.blendMode });
+                }
+                
+                // Apply layer visibility settings
+                if (settings.showBackground !== undefined) {
+                    this.showBackgroundCheckbox.checked = settings.showBackground;
+                    this.showBackground = settings.showBackground;
+                    this.viewer.setOptions({ showBackground: this.showBackground });
+                }
+                
+                if (settings.showForeground !== undefined) {
+                    this.showForegroundCheckbox.checked = settings.showForeground;
+                    this.showForeground = settings.showForeground;
+                    this.viewer.setOptions({ showForeground: this.showForeground });
+                }
             }
         } catch (error) {
             console.warn('Failed to load saved settings:', error);
@@ -1611,14 +1843,36 @@ class DepthViewerApp {
         console.log(`Loading image set from ${this.currentImageSet}:`, imageSet);
         this.showStatus(`Loading ${imageSet.name}...`, 'info');
         
+        // Clear any existing layer textures before loading new image
+        this.viewer.clearLayers();
+        
         try {
             console.log('Loading color image:', imageSet.colorImage);
             await this.viewer.loadColorImage(imageSet.colorImage);
             console.log('Loading depth map:', imageSet.depthMap);
             await this.viewer.loadDepthMap(imageSet.depthMap);
             
+            // Load layered images if available
+            if (imageSet.backgroundImage) {
+                console.log('Loading background image:', imageSet.backgroundImage);
+                await this.viewer.loadBackgroundImage(imageSet.backgroundImage);
+            }
+            if (imageSet.foregroundImage) {
+                console.log('Loading foreground image:', imageSet.foregroundImage);
+                await this.viewer.loadForegroundImage(imageSet.foregroundImage);
+            }
+            
+            // Set background color if available
+            if (imageSet.backgroundColor) {
+                console.log('Setting background color:', imageSet.backgroundColor);
+                this.viewer.setBackgroundColor(imageSet.backgroundColor);
+            }
+            
             // Check for symmetry compatibility based on filename
             this.updateSymmetryCompatibility(imageSet.name);
+            
+            // Update layer debug info
+            this.updateLayerDebugInfo(imageSet);
             
             // Update depth map selector based on available alternatives
             this.updateDepthMapSelector(imageSet);
@@ -1657,6 +1911,32 @@ class DepthViewerApp {
         }
         
         console.log(`🪞 Symmetry check for "${imageName}": H=${hasHorizontalSymmetry}, V=${hasVerticalSymmetry}, Compatible=${isSymmetryCompatible}, Checkbox=${this.symmetricalDragCheckbox.checked ? 'on' : 'off'}, Disabled=${this.symmetricalDragCheckbox.disabled}`);
+    }
+    
+    updateLayerDebugInfo(imageSet) {
+        // Update background layer status
+        if (imageSet.backgroundImage) {
+            this.backgroundLayerStatus.textContent = '✓ Detected';
+            this.backgroundLayerStatus.style.color = '#28a745';
+            this.showBackgroundCheckbox.disabled = false;
+        } else {
+            this.backgroundLayerStatus.textContent = 'Not Detected';
+            this.backgroundLayerStatus.style.color = '#888';
+            this.showBackgroundCheckbox.disabled = true;
+        }
+        
+        // Update foreground layer status
+        if (imageSet.foregroundImage) {
+            this.foregroundLayerStatus.textContent = '✓ Detected';
+            this.foregroundLayerStatus.style.color = '#28a745';
+            this.showForegroundCheckbox.disabled = false;
+        } else {
+            this.foregroundLayerStatus.textContent = 'Not Detected';
+            this.foregroundLayerStatus.style.color = '#888';
+            this.showForegroundCheckbox.disabled = true;
+        }
+        
+        console.log(`🖼️ Layer debug info updated: Background=${imageSet.backgroundImage ? 'detected' : 'none'}, Foreground=${imageSet.foregroundImage ? 'detected' : 'none'}`);
     }
     
     async switchDepthMap(mapType) {
