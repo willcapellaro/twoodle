@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200;300;400;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Oxanium', monospace;
+  font-optical-sizing: auto;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0a0a0f;
+  color: #00f5ff;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #141420;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00f5ff;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0066cc;
+}
+
+/* Cyberpunk glow effects */
+.cyber-glow {
+  text-shadow: 0 0 5px currentColor;
+}
+
+.cyber-border {
+  border: 1px solid #00f5ff;
+  box-shadow: 
+    0 0 5px rgba(0, 245, 255, 0.5),
+    inset 0 0 5px rgba(0, 245, 255, 0.1);
+}
+
+/* Grid background */
+.grid-bg {
+  background-image: 
+    linear-gradient(rgba(26, 26, 46, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 26, 46, 0.3) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Button animations */
+.cyber-button {
+  transition: all 0.2s ease;
+  background: linear-gradient(45deg, rgba(0, 245, 255, 0.1), rgba(0, 102, 204, 0.1));
+}
+
+.cyber-button:hover {
+  background: linear-gradient(45deg, rgba(0, 245, 255, 0.2), rgba(0, 102, 204, 0.2));
+  box-shadow: 
+    0 0 10px rgba(0, 245, 255, 0.5),
+    inset 0 0 10px rgba(0, 245, 255, 0.1);
+  transform: scale(1.05);
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}

@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Depth Viewer</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Oxanium Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            font-family: 'Oxanium', sans-serif;
+            overflow: hidden; /* Prevent scrollbars */
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        body.controls-open {
+            overflow: hidden; /* Ensure no body scroll when panel is open */
+        }
+        
+        /* Synthwave Icon System */
+        .icon-btn {
+            background: none;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            padding: 12px;
+            margin: 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Oxanium', sans-serif;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 4px #00ffff33);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-btn:hover {
+            color: #ff1493;
+            border-color: #ff1493;
+            filter: drop-shadow(0 0 8px #ff1493) drop-shadow(0 0 16px #ff149333);
+            transform: translateY(-1px);
+        }
+
+        .icon-btn:active {
+            color: #ffff00;
+            border-color: #ffff00;
+            filter: drop-shadow(0 0 12px #ffff00);
+            transform: translateY(0);
+        }
+
+        .icon-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #00ffff22, transparent);
+            transition: left 0.5s;
+        }
+
+        .icon-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Slideshow Controls */
+        .slideshow-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .slideshow-controls .icon-btn {
+            padding: 8px 12px;
+        }
+
+        /* Image Counter Styling */
+        .image-counter {
+            color: #00ffff;
+            font-family: 'Oxanium', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 8px 16px;
+            border: 1px solid #00ffff33;
+            border-radius: 4px;
+            background: rgba(0, 255, 255, 0.05);
+            min-width: 120px;
+            text-align: center;
+            filter: drop-shadow(0 0 4px #00ffff22);
+        }
+
+        /* Upload Button Special Styling */
+        .upload-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-btn input[type="file"] {
+            position: absolute;
+            left: -9999px;
+            opacity: 0;
+        }
+
+        /* Settings Panel Toggle */
+        .settings-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        /* Control Panel Styling */
+        .control-section h3 {
+            color: #00ffff;
+            font-family: 'Oxanium', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+            filter: drop-shadow(0 0 4px #00ffff33);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .icon-btn {
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            .slideshow-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        
+        .cheat-btn {
+            transition: all 0.1s ease;
+            cursor: pointer;
+        }
+        
+        .cheat-btn:hover {
+            background: rgba(255,255,255,0.2) !important;
+            transform: scale(0.95);
+        }
+        
+        .cheat-btn:active {
+            background: rgba(255,255,255,0.3) !important;
+            transform: scale(0.9);
+        }
+        
+        .control-section {
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 5px;
+        }
+        
+        .section-header {
+            background: rgba(255,255,255,0.05);
+            padding: 10px 15px;
+            cursor: pointer;
+            user-select: none;
+            border-radius: 5px 5px 0 0;
+            transition: background 0.2s ease;
+        }
+        
+        .section-header:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .section-header span {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .section-content {
+            padding: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .section-content.collapsed {
+            display: none;
+        }
+        
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .viewer-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+        
+        .viewer {
+            width: 100%;
+            height: 100%;
+            touch-action: none; /* Prevent default touch behaviors like scrolling */
+            user-select: none; /* Prevent text selection on touch devices */
+            -webkit-user-select: none;
+            -webkit-touch-callout: none; /* Prevent callout on iOS */
+        }
+        
+        .top-controls,
+        .slideshow-controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .control-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        .control-btn.active {
+            background: #007acc;
+            color: white;
+        }
+        
+        .upload-btn {
+            background: #007acc;
+            color: white;
+        }
+        
+        .upload-btn:hover {
+            background: #005a99;
+        }
+        
+        /* Toast notification system */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 90vw;
+            width: auto;
+            pointer-events: none; /* Allow clicks to pass through container */
+            transition: left 0.3s ease;
+        }
+        
+        /* Adjust toast position when controls panel is open */
+        .controls-open .toast-container {
+            left: calc(50% - 165px); /* Shift left to account for right panel */
+        }
+        
+        .toast {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+            word-wrap: break-word;
+            pointer-events: auto; /* Re-enable clicks for individual toasts */
+            animation: slideInUp 0.3s ease;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .toast.dismissing {
+            animation: slideOutDown 0.3s ease forwards;
+        }
+        
+        @keyframes slideOutDown {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+        
+        .toast.error {
+            background: rgba(220, 53, 69, 0.95);
+        }
+        
+        .toast.success {
+            background: rgba(40, 167, 69, 0.95);
+        }
+        
+        .toast.info {
+            background: rgba(23, 162, 184, 0.95);
+        }
+        
+        .toast-dismiss {
+            background: none;
+            border: none;
+            color: currentColor;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .toast-dismiss:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .controls-panel {
+            position: absolute;
+            top: 0;
+            right: -350px;
+            width: 330px;
+            height: 100vh;
+            background: rgba(30, 30, 30, 0.95);
+            color: white;
+            padding: 20px;
+            transition: right 0.3s ease;
+            z-index: 100;
+            overflow-y: auto;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+        
+        .controls-panel.open {
+            right: 0;
+        }
+        
+        .controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 10px;
+        }
+        
+        .controls-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #fff;
+        }
+        
+        .close-panel-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+        
+        .close-panel-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .close-panel-btn:active {
+            transform: scale(0.95);
+        }
+        
+
+        
+        /* Mobile-specific improvements */
+        @media (max-width: 768px) {
+            .controls-panel {
+                width: 100vw;
+                right: -100vw;
+                height: 100vh;
+                height: 100dvh; /* Use dynamic viewport height for better mobile support */
+                max-height: none;
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+                padding: 15px;
+                padding-bottom: 50px; /* Extra padding at bottom to ensure all content is accessible */
+                box-sizing: border-box;
+            }
+            
+            .controls-panel.open {
+                right: 0;
+            }
+            
+            .controls-header {
+                position: sticky;
+                top: 0;
+                background: rgba(30, 30, 30, 0.95);
+                z-index: 1;
+                margin-bottom: 15px;
+                padding: 10px 0;
+            }
+            
+            .close-panel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .controls-grid {
+                padding-bottom: 20px; /* Ensure content doesn't get cut off */
+            }
+        }
+        
+        .controls-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .control-group label {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .inline-slider {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+        
+        .inline-slider label {
+            margin-right: 10px;
+            min-width: 100px;
+        }
+        
+        .inline-slider input[type="range"] {
+            flex: 1;
+            margin: 0 10px;
+        }
+        
+        .inline-slider span {
+            min-width: 40px;
+            text-align: right;
+        }
+        
+        .control-range {
+            width: 100%;
+            margin: 5px 0;
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .control-buttons button {
+            padding: 6px 12px;
+            background: #444;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .control-buttons button.active {
+            background: #007acc;
+        }
+        
+        .drag-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 100, 200, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .drag-overlay.active {
+            display: flex;
+        }
+        
+        .hidden-input {
+            display: none;
+        }
+        
+        /* Checkbox styling for localized parallax */
+        .control-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        .control-group input[type="checkbox"]:disabled + * {
+            opacity: 0.6;
+        }
+        
+        .control-group input[type="range"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        /* Circle overlay for distance visualization */
+        .distance-circle {
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 50;
+            display: none;
+            transform: translate(-50%, -50%);
+        }
+        
+        /* Touch-friendly canvas styling */
+        canvas {
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+        
+        /* Auto-focus highlight animation */
+        .auto-focus-highlight {
+            background: #ff6b35 !important;
+            animation: focusHighlight 2s ease-in-out;
+        }
+        
+        @keyframes focusHighlight {
+            0% { background: #ff6b35 !important; }
+            50% { background: #ff8c5a !important; }
+            100% { background: #ff6b35 !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Controls -->
+        <div class="slideshow-controls">
+            <button id="prevImageBtn" class="icon-btn" title="Previous Image">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            
+            <button id="playPauseBtn" class="icon-btn" title="Play/Pause Slideshow">
+                <i class="fas fa-play"></i>
+            </button>
+            
+            <button id="nextImageBtn" class="icon-btn" title="Next Image">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <div class="image-counter">
+                <span id="currentImageIndex">1</span> / <span id="totalImages">0</span>
+            </div>
+            
+            <label for="imageInput" class="icon-btn upload-btn" title="Upload Images">
+                <i class="fas fa-upload"></i>
+            </label>
+            
+            <button id="viewModeBtn" class="icon-btn" title="Toggle Fit/Fill">
+                <i class="fas fa-expand-arrows-alt"></i>
+            </button>
+            
+            <button id="controlsToggle" class="icon-btn" title="Settings">
+                <i class="fas fa-cog"></i>
+            </button>
+        </div>
+
+        
+        <!-- Main Viewer -->
+        <div class="viewer-container">
+            <div id="viewerElement" class="viewer"></div>
+            <div id="distanceCircle" class="distance-circle"></div>
+        </div>
+        
+        <!-- Controls Panel -->
+        <div class="controls-panel" id="controlsPanel">
+            <div class="controls-header">
+                <h3>Controls</h3>
+                <button class="close-panel-btn" id="closePanelBtn" title="Close panel">✕</button>
+            </div>
+
+            <div class="controls-grid">
+                
+                <!-- Control Sync Checker Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="sync-section">
+                        <span>▼ Control Sync Debug</span>
+                    </div>
+                    <div class="section-content" id="sync-section">
+                        <div class="control-group">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                                <button id="checkSyncBtn" class="control-button" style="padding: 10px; background: #4a90e2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                    🔄 Check Sync
+                                </button>
+                                <button id="forceSyncBtn" class="control-button" style="padding: 10px; background: #e24a4a; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                    � Force Sync
+                                </button>
+                            </div>
+                            <div id="syncStatus" style="font-size: 12px; color: #ccc; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; max-height: 120px; overflow-y: auto; font-family: monospace;">Click "Check Sync" to verify UI/viewer state alignment</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Controls Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="main-section">
+                        <span>▼ Main</span>
+                    </div>
+                    <div class="section-content" id="main-section">
+                        <div class="control-group">
+                            <div class="inline-slider">
+                                <label>Depth Scale</label>
+                                <input type="range" class="control-range" id="depthScale" min="0" max="3" step="0.1" value="1">
+                                <span id="depthScaleValue">1.0</span>
+                            </div>
+                            <div class="control-buttons">
+                                <button data-preset="calm">Calm</button>
+                                <button data-preset="normal" class="active">Normal</button>
+                                <button data-preset="dramatic">Dramatic</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="displayDepthmap" style="margin-right: 8px;">
+                                Display Depthmap
+                            </label>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="swipeSlideAdvance" style="margin-right: 8px;">
+                                Swipe Slide Advance
+                            </label>
+                            
+                            <label style="margin-top: 10px;">
+                                <input type="checkbox" id="trackpadZoom" style="margin-right: 8px;">
+                                Trackpad Zoom (Experimental)
+                            </label>
+                            
+                            <label style="margin-top: 10px;">
+                                <input type="checkbox" id="animateSlideTransitions" style="margin-right: 8px;" checked>
+                                Animate Slide Transitions
+                            </label>
+                            
+                            <div class="inline-slider" style="margin-top: 10px;">
+                                <label>Animation Timing</label>
+                                <input type="range" class="control-range" id="animationTiming" min="200" max="2000" step="100" value="500">
+                                <span id="animationTimingValue">500ms</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="inline-slider">
+                                <label>Toast Opacity</label>
+                                <input type="range" class="control-range" id="toastOpacity" min="0" max="1" step="0.1" value="0.9">
+                                <span id="toastOpacityValue">0.9</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group" id="depthMapSelectorGroup" style="display: none;">
+                            <label>Depth Map Variant</label>
+                            <div class="control-buttons" id="depthMapSelector">
+                                <button data-depth-map="default" class="active">Default</button>
+                                <button data-depth-map="light" style="display: none;">Light</button>
+                                <button data-depth-map="dark" style="display: none;">Dark</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Interactions Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="interactions-section">
+                        <span>▼ Interactions</span>
+                    </div>
+                    <div class="section-content" id="interactions-section">
+                        <div class="control-group">
+                            <label>Focus Plane</label>
+                            <div class="control-buttons">
+                                <button data-focus="0.2">Near</button>
+                                <button data-focus="0.5" class="active">Mid</button>
+                                <button data-focus="0.8">Far</button>
+                                <button data-focus="auto">Auto</button>
+                            </div>
+                            <label style="margin-top: 10px;">
+                                <input type="checkbox" id="invertDepthLogic" style="margin-right: 8px;">
+                                Invert Auto Focus Logic
+                            </label>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Drag Controls</label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+                                <label>
+                                    <input type="checkbox" id="invertX" style="margin-right: 5px;">
+                                    Invert X
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="lockX" style="margin-right: 5px;">
+                                    Lock X
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="invertY" style="margin-right: 5px;">
+                                    Invert Y
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="lockY" style="margin-right: 5px;">
+                                    Lock Y
+                                </label>
+                            </div>
+                            
+                            <div class="inline-slider">
+                                <label>Drag Sensitivity</label>
+                                <input type="range" class="control-range" id="sensitivity" min="0.1" max="3" step="0.1" value="1">
+                                <span id="sensitivityValue">1.0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Interaction Mode</label>
+                            <div class="control-buttons">
+                                <button data-drag-mode="sticky" class="active">Sticky</button>
+                                <button data-drag-mode="rubber-band">Rubber Band</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="localizedParallax" style="margin-right: 8px;">
+                                Localized Parallax
+                            </label>
+                            <div class="inline-slider">
+                                <label>Localize Distance</label>
+                                <input type="range" class="control-range" id="localizeDistance" min="50" max="500" step="10" value="150">
+                                <span id="localizeDistanceValue">150px</span>
+                            </div>
+                            
+                            <label style="margin-top: 10px;">
+                                <input type="checkbox" id="symmetricalDrag" style="margin-right: 8px;">
+                                Symmetrical Drag (Mirror Effect)
+                            </label>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="inline-slider">
+                                <label>Background Dampening</label>
+                                <input type="range" class="control-range" id="backgroundDampening" min="0" max="1" step="0.1" value="0.3">
+                                <span id="backgroundDampeningValue">0.3</span>
+                            </div>
+                            
+                            <div class="inline-slider">
+                                <label>Midground Dampening</label>
+                                <input type="range" class="control-range" id="midgroundDampening" min="0" max="1" step="0.1" value="0.6">
+                                <span id="midgroundDampeningValue">0.6</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Numpad Controls</label>
+                            <label style="margin-top: 10px;">
+                                <input type="checkbox" id="numpadAnimation" style="margin-right: 8px;" checked>
+                                Animate Numpad Transitions (500ms)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DOF Effects Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="dof-section">
+                        <span>▼ Depth of Field (DOF)</span>
+                    </div>
+                    <div class="section-content" id="dof-section">
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="enableDOF" style="margin-right: 8px;">
+                                Enable Depth of Field
+                            </label>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="inline-slider">
+                                <label>Blur Strength</label>
+                                <input type="range" class="control-range" id="blurStrength" min="0" max="5" step="0.1" value="2.0">
+                                <span id="blurStrengthValue">2.0</span>
+                            </div>
+                            
+                            <div class="inline-slider">
+                                <label>Focus Range</label>
+                                <input type="range" class="control-range" id="focusRange" min="0.1" max="1.0" step="0.05" value="0.3">
+                                <span id="focusRangeValue">0.30</span>
+                            </div>
+                            
+                            <div class="inline-slider">
+                                <label>Bokeh Quality</label>
+                                <input type="range" class="control-range" id="bokehQuality" min="1" max="8" step="1" value="4">
+                                <span id="bokehQualityValue">4</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Layered Images Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="layers-section">
+                        <span>▼ Layered Images</span>
+                    </div>
+                    <div class="section-content" id="layers-section">
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="enableLayers" style="margin-right: 8px;">
+                                Enable Layered Mode
+                            </label>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="inline-slider">
+                                <label>Foreground Offset</label>
+                                <input type="range" class="control-range" id="foregroundOffset" min="0.5" max="2.0" step="0.1" value="1.0">
+                                <span id="foregroundOffsetValue">1.0</span>
+                            </div>
+                            
+                            <div class="control-group" style="margin-top: 10px;">
+                                <label>Blend Mode</label>
+                                <select id="blendMode" style="width: 100%; padding: 5px; margin-top: 5px;">
+                                    <option value="normal">Normal</option>
+                                    <option value="multiply">Multiply</option>
+                                    <option value="screen">Screen</option>
+                                    <option value="overlay">Overlay</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Layer Debug Section -->
+                            <div class="control-group" style="margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.1); border-radius: 5px;">
+                                <div style="font-weight: bold; margin-bottom: 8px;">Layer Debug Info</div>
+                                
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span>Background Layer:</span>
+                                    <span id="backgroundLayerStatus" style="color: #888;">Not Detected</span>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span>Foreground Layer:</span>
+                                    <span id="foregroundLayerStatus" style="color: #888;">Not Detected</span>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                    <span>Fallback (Original):</span>
+                                    <span id="fallbackStatus" style="color: #28a745;">Available</span>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label>
+                                        <input type="checkbox" id="showBackground" checked style="margin-right: 8px;">
+                                        Show Background Layer
+                                    </label>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label>
+                                        <input type="checkbox" id="showForeground" checked style="margin-right: 8px;">
+                                        Show Foreground Layer
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gyroscope Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="gyroscope-section">
+                        <span>▼ Gyroscope</span>
+                    </div>
+                    <div class="section-content" id="gyroscope-section">
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="gyroscopeEnabled" style="margin-right: 8px;">
+                                Enable Gyroscope (Mobile)
+                            </label>
+                            
+                            <div class="inline-slider">
+                                <label>Horizontal Sensitivity</label>
+                                <input type="range" class="control-range" id="gyroHorizontal" min="0.1" max="3" step="0.1" value="1">
+                                <span id="gyroHorizontalValue">1.0</span>
+                            </div>
+                            
+                            <div class="inline-slider">
+                                <label>Vertical Sensitivity</label>
+                                <input type="range" class="control-range" id="gyroVertical" min="0.1" max="3" step="0.1" value="1">
+                                <span id="gyroVerticalValue">1.0</span>
+                            </div>
+                            
+                            <div style="display: flex; gap: 10px; margin: 10px 0;">
+                                <label style="font-size: 14px;">
+                                    <input type="checkbox" id="gyroInvertX" style="margin-right: 5px;">
+                                    Invert X
+                                </label>
+                                <label style="font-size: 14px;">
+                                    <input type="checkbox" id="gyroLockX" style="margin-right: 5px;">
+                                    Lock X
+                                </label>
+                            </div>
+                            
+                            <div style="display: flex; gap: 10px; margin: 10px 0;">
+                                <label style="font-size: 14px;">
+                                    <input type="checkbox" id="gyroInvertY" style="margin-right: 5px;">
+                                    Invert Y
+                                </label>
+                                <label style="font-size: 14px;">
+                                    <input type="checkbox" id="gyroLockY" style="margin-right: 5px;">
+                                    Lock Y
+                                </label>
+                            </div>
+                            
+                            <button id="gyroCenterBtn" class="control-button" style="margin-top: 10px;">
+                                📍 Center Gyroscope
+                            </button>
+                            
+                            <div id="gyroDebugInfo" style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px; margin-top: 10px; display: none;">
+                                <div style="color: #00ff00; margin-bottom: 5px;">🎯 Gyroscope Data:</div>
+                                <div>Alpha (Z): <span id="gyroAlphaValue">--</span>°</div>
+                                <div>Beta (X): <span id="gyroBetaValue">--</span>°</div>
+                                <div>Gamma (Y): <span id="gyroGammaValue">--</span>°</div>
+                                <div style="margin-top: 5px; color: #ffff00;">Processed:</div>
+                                <div>X Movement: <span id="gyroProcessedX">--</span></div>
+                                <div>Y Movement: <span id="gyroProcessedY">--</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cheat Codes Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="cheat-section">
+                        <span>▼ Cheat Codes</span>
+                    </div>
+                    <div class="section-content" id="cheat-section">
+                        <div class="control-group">
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px;">
+                                <button id="cheatBtn1" class="cheat-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 15px; border-radius: 5px; font-size: 18px;">⬜</button>
+                                <button id="cheatBtn2" class="cheat-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 15px; border-radius: 5px; font-size: 18px;">▲</button>
+                                <button id="cheatBtn3" class="cheat-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 15px; border-radius: 5px; font-size: 18px;">✕</button>
+                                <button id="cheatBtn4" class="cheat-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 15px; border-radius: 5px; font-size: 18px;">●</button>
+                            </div>
+                            <div id="cheatSequence" style="background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 3px; margin-top: 10px; font-family: monospace; font-size: 14px; min-height: 20px; display: flex; align-items: center; justify-content: center; color: #666; cursor: pointer; border: 1px solid rgba(255,255,255,0.2);" title="Click to submit sequence">
+                                <span id="cheatDisplay">- - - - - - - -</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Depth Poetry Section -->
+                <div class="control-section">
+                    <div class="section-header" data-toggle="poetry-section">
+                        <span>▼ Depth Poetry</span>
+                    </div>
+                    <div class="section-content" id="poetry-section">
+                        <div class="control-group">
+                            <div style="font-family: Georgia, serif; line-height: 1.6; color: #ddd; font-style: italic; text-align: center; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                                <div style="font-size: 16px; margin-bottom: 15px; color: #ffcc00;">✨ Parallax Dreams ✨</div>
+                                <div style="font-size: 14px;">
+                                    In depths of pixels, shadows play,<br>
+                                    Where light and dark dance display.<br>
+                                    Touch moves mountains, swipe reveals sky,<br>
+                                    In dimensions where dreams fly.<br><br>
+                                    
+                                    Symmetry mirrors what we see,<br>
+                                    Localized effects set spirits free.<br>
+                                    Numpad navigates the space between,<br>
+                                    Reality and the digital scene.<br><br>
+                                    
+                                    Each control syncs to viewer's heart,<br>
+                                    Where coding magic plays its part.<br>
+                                    Scroll to bottom, find this verse—<br>
+                                    Mobile gestures, smooth and terse.
+                                </div>
+                                <div style="font-size: 12px; margin-top: 15px; color: #888;">
+                                    — The Depth Whisperer, 2025 —
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Toast Notification Container -->
+        <div class="toast-container" id="toastContainer"></div>
+        
+        <!-- Hidden File Input -->
+        <input type="file" id="imageInput" class="hidden-input" accept="image/*" multiple>
+        
+        <!-- Drag Overlay -->
+        <div class="drag-overlay" id="dragOverlay">
+            Drop your images here<br>
+            <small>Color image + depth map (with "∂map" in filename)</small>
+        </div>
+    </div>
+
+    <script src="js/DepthyWebGLViewer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
