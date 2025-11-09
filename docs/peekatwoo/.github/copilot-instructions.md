@@ -1,91 +1,89 @@
-# Simple Depth Viewer - AI Coding Agent Instructions
+# AI Coding Instructions for Simple Depth Viewer
 
 ## Project Overview
-A modern React-based WebGL depth image viewer with cyberpunk aesthetic, creating mouse-controlled parallax effects using color images and depth maps. Built with React 18, Vite, Tailwind CSS, PIXI.js v7+, and FontAwesome icons.
+A WebGL-powered depth image viewer creating parallax effects using color images and depth maps. Built with PIXI.js v7+ and adapted from the Depthy algorithm.
 
-## Architecture Components
+## Core Architecture
 
-### React Application Structure
-- **`App.jsx`**: Main application component with cyberpunk UI and state management
-- **`DepthViewer.jsx`**: React wrapper component for PIXI.js integration
-- **`DepthPerspectiveFilter.js`**: Custom WebGL shader for depth-based parallax effects
+### Multi-Viewer Strategy
+The project implements **3 distinct viewer classes** for fallback compatibility:
+- `DepthyWebGLViewer` - Full Depthy algorithm implementation (primary)
+- `SimpleDepthViewer` - PIXI.js-based viewer with custom shaders
+- `BasicImageViewer` - HTML5 Canvas fallback
 
-### UI Design System
-- **Theme**: Cyberpunk/80s monochrome aesthetic with bright cyan, neon accents
-- **Colors**: `cyber-primary` (#00f5ff), `cyber-green` (#39ff14), `cyber-yellow` (#ffff00), `cyber-accent` (#ff00ff)
-- **Typography**: Oxanium font family for futuristic monospace appearance
-- **Layout**: Icon-only buttons, sliding console panel, grid backgrounds
+**Pattern**: Main app (`DepthViewerApp`) tries viewers in order until one works, handling WebGL/browser compatibility gracefully.
 
-### Core Classes
-- **`DepthViewer`**: React component wrapping PIXI.js application lifecycle
-- **`SimpleDepthViewer`**: Core viewer class handling texture loading and mouse interaction
-- **`DepthPerspectiveFilter`**: WebGL shader implementing ray-marching parallax algorithm
+### Image Pairing Convention
+Depth maps use special Unicode character `∂` (partial derivative symbol):
+- Color image: `example.jpg`
+- Depth map: `example-∂map.png`
+- Variants: `example-∂mapL.png` (light), `example-∂mapD.png` (dark)
+- Symmetry modes: `example-symH.jpg` (horizontal), `example-symV.jpg` (vertical)
 
-## Development Workflow
+**Critical**: Always preserve `∂map` naming when adding new sample images.
+
+### Shader System
+`DepthPerspectiveFilter.js` contains WebGL fragment shader performing:
+1. Ray-marching through depth field for parallax
+2. Per-pixel displacement based on mouse position and depth value
+3. Quality scaling via `MAXSTEPS` defines (1-5 quality levels)
+
+**Pattern**: Shader uniforms controlled via filter properties, not direct GL calls.
+
+## Key Development Workflows
+
+### Adding Sample Images
+```bash
+# Images auto-discovered from sample-images/ folder
+# Place paired files: image.jpg + image-∂map.png
+# App scans on startup, builds slideshow automatically
+```
+
+### Testing Viewer Compatibility
+The app includes a **cheat code system** (4-button sequence) to:
+- Switch between viewer implementations
+- Debug rendering issues
+- Test fallback behavior
+
+**Debug Pattern**: Use browser console to see which viewer loaded successfully.
 
 ### Local Development
 ```bash
-npm run dev    # Starts Vite dev server on port 5173
-npm run build  # Production build
-npm run preview # Preview production build
+npm run dev    # Starts http-server on port 8080
+# No build step - pure client-side JavaScript
 ```
 
-### File Upload Conventions
-- **Auto-detection**: Files containing `∂map`, `depth`, or `dmap` are treated as depth maps
-- **Fallback**: With 2 files, first is color image, second is depth map
-- **Supported**: JPG, JPEG, PNG formats
-- **UI**: Drag-and-drop or click-to-upload interface
+## Critical Patterns
 
-## React Integration Patterns
-
-### PIXI.js Lifecycle Management
-```jsx
-useEffect(() => {
-  // PIXI app initialization
-  const app = new PIXI.Application({...});
-  
-  return () => {
-    app.destroy(true, true); // Cleanup on unmount
-  };
-}, []);
+### Mouse/Touch Input Normalization
+All viewers expect normalized coordinates (0-1) converted to shader uniforms:
+```javascript
+const normalizedX = (x * 2 - 1) * 0.5; // [-0.5, 0.5]
+const normalizedY = (y * 2 - 1) * 0.5;
 ```
 
-### State Synchronization
-- React state controls (`depthScale`, `sensitivity`) sync to PIXI filter uniforms
-- `useImperativeHandle` exposes PIXI methods to parent components
-- Real-time slider updates trigger shader uniform changes
+### Gyroscope Integration
+Full device orientation support with per-axis controls:
+- Inversion flags (`gyroInvertX`, `gyroInvertY`)
+- Lock flags (`gyroLockX`, `gyroLockY`)
+- Sensitivity scaling per axis
 
-### File Handling
-- FileReader API for local file processing
-- URL.createObjectURL for temporary texture loading
-- Automatic cleanup with URL.revokeObjectURL
+### Advanced Features
+- **Localized Parallax**: Distance-based dampening around cursor
+- **Symmetrical Drag**: Mirrored input for symmetrical images
+- **Layer Dampening**: Different parallax intensity by depth zones
+- **Animation System**: Smooth transitions between images
 
-## Cyberpunk UI Components
+## File Organization
+- `index.html` - Single-page app with embedded styles (914 lines)
+- `js/main.js` - Main application logic (2267 lines)
+- `js/DepthyWebGLViewer.js` - Primary WebGL implementation (1509 lines)
+- `js/SimpleDepthViewer.js` - PIXI.js fallback (305 lines)
+- `js/BasicImageViewer.js` - Canvas fallback (246 lines)
+- `js/DepthPerspectiveFilter.js` - PIXI shader filter (146 lines)
 
-### Icon System
-- FontAwesome React components for all controls
-- Color-coded by function: `cyber-primary` (upload), `cyber-green` (play), `cyber-yellow` (navigation)
-- Hover effects with glow and scale transforms
+## External Dependencies
+- **PIXI.js v7.3.2** - Primary WebGL framework
+- **http-server** - Development server (no bundling needed)
 
-### Console Panel
-- Sliding right panel with grid background pattern
-- Grouped controls: LOAD, DEPTH, DISPLAY, DEVICE
-- Custom range sliders with cyberpunk styling
-
-### Toast Notifications
-- Bottom-center positioning with auto-dismiss
-- Color-coded: success (green), error (red), info (cyan)
-- CSS transitions for smooth appearance/disappearance
-
-## WebGL Shader Architecture
-- **Quality levels** (1-5): Control shader complexity via `MAXSTEPS`, `ENLARGE`, `CONFIDENCE_MAX`
-- **Ray-marching**: Depth-based pixel displacement with occlusion handling
-- **Uniforms**: `scale`, `offset`, `focus`, `enlarge` parameters for real-time control
-
-## Build and Deploy
-- **Vite**: Fast HMR development with React Fast Refresh
-- **Tailwind**: Utility-first CSS with custom cyberpunk color palette
-- **PostCSS**: Autoprefixer for cross-browser compatibility
-- **ESLint**: Code quality with React-specific rules
-
-When implementing new features, follow the established patterns of icon-based controls, cyberpunk color theming, and React-to-PIXI state synchronization.
+**Note**: No build process - all modules loaded as ES6 classes in browser.
