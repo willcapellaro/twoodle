@@ -43,12 +43,6 @@
             overflow: hidden;
         }
 
-        .icon-btn i {
-            font-size: 16px !important;
-            width: 16px;
-            text-align: center;
-        }
-
         .icon-btn:hover {
             color: #ff1493;
             border-color: #ff1493;
@@ -623,7 +617,7 @@
             </button>
             
             <button id="controlsToggle" class="icon-btn" title="Settings">
-                <i class="fas fa-eye"></i>
+                <i class="fas fa-cog"></i>
             </button>
         </div>
 
@@ -643,39 +637,22 @@
 
             <div class="controls-grid">
                 
-                <!-- System Section -->
+                <!-- Control Sync Checker Section -->
                 <div class="control-section">
                     <div class="section-header" data-toggle="sync-section">
-                        <span><i class="fas fa-search"></i> System</span>
+                        <span>▼ Control Sync Debug</span>
                     </div>
                     <div class="section-content" id="sync-section">
                         <div class="control-group">
-                            <label>
-                                <input type="checkbox" id="notificationsEnabled" style="margin-right: 8px;">
-                                Notifications
-                            </label>
-                            
-                            <div class="control-group" id="toastOpacityGroup" style="margin-top: 10px; display: none;">
-                                <div class="inline-slider">
-                                    <label>Toast Opacity</label>
-                                    <input type="range" class="control-range" id="toastOpacity" min="0" max="1" step="0.1" value="0.9">
-                                    <span id="toastOpacityValue">0.9</span>
-                                </div>
-                            </div>
-                            
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 15px 0 10px 0;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
                                 <button id="checkSyncBtn" class="control-button" style="padding: 10px; background: #4a90e2; color: white; border: none; border-radius: 4px; cursor: pointer;">
                                     🔄 Check Sync
                                 </button>
                                 <button id="forceSyncBtn" class="control-button" style="padding: 10px; background: #e24a4a; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                                    ⚡ Force Sync
+                                    � Force Sync
                                 </button>
                             </div>
-                            <div id="syncStatus" style="font-size: 12px; color: #ccc; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; max-height: 120px; overflow-y: auto; font-family: monospace; margin-bottom: 15px;">Click "Check Sync" to verify UI/viewer state alignment</div>
-                            
-                            <button id="resetDefaultsBtn" class="control-button" style="width: 100%; padding: 10px; background: #ff6b35; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                                🔄 Reset Default Settings
-                            </button>
+                            <div id="syncStatus" style="font-size: 12px; color: #ccc; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; max-height: 120px; overflow-y: auto; font-family: monospace;">Click "Check Sync" to verify UI/viewer state alignment</div>
                         </div>
                     </div>
                 </div>
@@ -726,6 +703,14 @@
                                 <label>Animation Timing</label>
                                 <input type="range" class="control-range" id="animationTiming" min="200" max="2000" step="100" value="500">
                                 <span id="animationTimingValue">500ms</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="inline-slider">
+                                <label>Toast Opacity</label>
+                                <input type="range" class="control-range" id="toastOpacity" min="0" max="1" step="0.1" value="0.9">
+                                <span id="toastOpacityValue">0.9</span>
                             </div>
                         </div>
                         

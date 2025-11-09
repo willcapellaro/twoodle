@@ -141,6 +141,11 @@ class DepthViewerApp {
         this.toastOpacitySlider = document.getElementById('toastOpacity');
         this.toastOpacityValue = document.getElementById('toastOpacityValue');
         
+        // System controls
+        this.notificationsCheckbox = document.getElementById('notificationsEnabled');
+        this.toastOpacityGroup = document.getElementById('toastOpacityGroup');
+        this.resetDefaultsBtn = document.getElementById('resetDefaultsBtn');
+        
         // Depth map selector controls
         this.depthMapSelectorGroup = document.getElementById('depthMapSelectorGroup');
         this.depthMapSelector = document.getElementById('depthMapSelector');
@@ -194,11 +199,17 @@ class DepthViewerApp {
         this.animationTiming = 500;
         this.isSlideAnimating = false;
         
+        // System properties
+        this.notificationsEnabled = false; // Default to OFF
+        
         // Symmetrical drag property
         this.symmetricalDrag = false;
         
         // Load saved settings
         this.loadSettings();
+        
+        // Initialize UI state
+        this.updateToastOpacityVisibility();
         
         // Initialize localized parallax state
         this.updateLocalizedParallaxState();
@@ -610,6 +621,18 @@ class DepthViewerApp {
             // Update toast container opacity
             this.toastContainer.style.opacity = value;
             this.saveSettings();
+        });
+        
+        // System controls
+        this.notificationsCheckbox.addEventListener('change', (e) => {
+            this.notificationsEnabled = e.target.checked;
+            this.toastOpacityGroup.style.display = e.target.checked ? 'block' : 'none';
+            this.saveSettings();
+            console.log(`🔔 Notifications ${e.target.checked ? 'enabled' : 'disabled'}`);
+        });
+        
+        this.resetDefaultsBtn.addEventListener('click', () => {
+            this.resetToDefaults();
         });
         
         // Depth map selector
@@ -1418,6 +1441,11 @@ class DepthViewerApp {
     }
     
     showStatus(message, type = 'info', duration = null) {
+        // Check if notifications are enabled
+        if (!this.notificationsEnabled) {
+            return; // Don't show toast if notifications are disabled
+        }
+        
         // Set default durations based on message type
         if (duration === null) {
             switch (type) {
@@ -1568,6 +1596,7 @@ class DepthViewerApp {
             gyroInvertY: this.gyroInvertYCheckbox.checked,
             gyroLockY: this.gyroLockYCheckbox.checked,
             toastOpacity: parseFloat(this.toastOpacitySlider.value),
+            notificationsEnabled: this.notificationsEnabled,
             numpadAnimation: this.numpadAnimationCheckbox.checked,
             animateSlideTransitions: this.animateSlideTransitions,
             animationTiming: this.animationTiming,
@@ -1735,6 +1764,13 @@ class DepthViewerApp {
                     this.toastContainer.style.opacity = settings.toastOpacity;
                 }
                 
+                // Apply notifications setting
+                if (settings.notificationsEnabled !== undefined) {
+                    this.notificationsEnabled = settings.notificationsEnabled;
+                    this.notificationsCheckbox.checked = settings.notificationsEnabled;
+                    this.updateToastOpacityVisibility();
+                }
+                
                 // Apply numpad animation setting
                 if (settings.numpadAnimation !== undefined) {
                     this.numpadAnimationCheckbox.checked = settings.numpadAnimation;
@@ -1843,6 +1879,116 @@ class DepthViewerApp {
     getCurrentAutoFocus() {
         const activeBtn = document.querySelector('[data-focus].active');
         return activeBtn ? activeBtn.dataset.focus === 'auto' : false;
+    }
+    
+    resetToDefaults() {
+        // Clear localStorage
+        localStorage.removeItem('depthViewerSettings');
+        
+        // Reset all controls to their default values
+        this.depthScaleSlider.value = 1.0;
+        this.depthScaleValue.textContent = '1.0';
+        this.sensitivitySlider.value = 1.0;
+        this.sensitivityValue.textContent = '1.0';
+        
+        // Reset drag mode to 'perspective'
+        document.querySelectorAll('[data-drag-mode]').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-drag-mode="perspective"]')?.classList.add('active');
+        this.currentDragMode = 'perspective';
+        
+        // Reset focus to 'auto'
+        document.querySelectorAll('[data-focus]').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-focus="auto"]')?.classList.add('active');
+        
+        // Reset checkboxes to default states
+        this.invertDepthLogicCheckbox.checked = false;
+        this.invertXCheckbox.checked = false;
+        this.lockXCheckbox.checked = false;
+        this.invertYCheckbox.checked = false;
+        this.lockYCheckbox.checked = false;
+        this.displayDepthmapCheckbox.checked = false;
+        this.swipeSlideAdvanceCheckbox.checked = true;
+        this.localizedParallaxCheckbox.checked = false;
+        this.symmetricalDragCheckbox.checked = false;
+        
+        // Reset sliders
+        this.localizeDistanceSlider.value = 100;
+        this.localizeDistanceValue.textContent = '100px';
+        this.backgroundDampeningSlider.value = 0.7;
+        this.backgroundDampeningValue.textContent = '0.7';
+        this.midgroundDampeningSlider.value = 0.85;
+        this.midgroundDampeningValue.textContent = '0.85';
+        
+        // Reset gyroscope settings
+        this.gyroscopeEnabledCheckbox.checked = false;
+        this.gyroHorizontalSlider.value = 1.0;
+        this.gyroHorizontalValue.textContent = '1.0';
+        this.gyroVerticalSlider.value = 1.0;
+        this.gyroVerticalValue.textContent = '1.0';
+        this.gyroInvertXCheckbox.checked = false;
+        this.gyroLockXCheckbox.checked = false;
+        this.gyroInvertYCheckbox.checked = false;
+        this.gyroLockYCheckbox.checked = false;
+        
+        // Reset notifications (default OFF) and toast opacity
+        this.notificationsEnabled = false;
+        this.notificationsCheckbox.checked = false;
+        this.toastOpacitySlider.value = 0.8;
+        this.toastOpacityValue.textContent = '0.8';
+        this.toastContainer.style.opacity = 0.8;
+        this.updateToastOpacityVisibility();
+        
+        // Reset animation settings
+        this.numpadAnimationCheckbox.checked = true;
+        this.numpadAnimationEnabled = true;
+        this.animateSlideTransitionsCheckbox.checked = false;
+        this.animateSlideTransitions = false;
+        this.animationTimingSlider.value = 500;
+        this.animationTimingValue.textContent = '500ms';
+        this.animationTiming = 500;
+        
+        // Reset other settings
+        this.trackpadZoomCheckbox.checked = false;
+        this.trackpadZoomEnabled = false;
+        
+        // Reset instance variables
+        this.sensitivity = 1.0;
+        
+        // Apply defaults to viewer
+        if (this.viewer) {
+            this.viewer.setOptions({
+                depthScale: 1.0,
+                sensitivity: 1.0,
+                invertDepthLogic: false,
+                invertX: false,
+                lockX: false,
+                invertY: false,
+                lockY: false,
+                displayDepthmap: false,
+                swipeSlideAdvance: true,
+                localizedParallax: false,
+                localizeDistance: 100,
+                backgroundDampening: 0.7,
+                midgroundDampening: 0.85,
+                gyroHorizontal: 1.0,
+                gyroVertical: 1.0,
+                gyroInvertX: false,
+                gyroLockX: false,
+                gyroInvertY: false,
+                gyroLockY: false,
+                symmetricalDrag: false,
+                autoFocus: true,
+                focus: 0.5
+            });
+            this.viewer.setInteractionMode('drag', 'perspective');
+        }
+        
+        this.showStatus('Settings reset to defaults');
+    }
+    
+    updateToastOpacityVisibility() {
+        // Show/hide toast opacity controls based on notifications enabled state
+        this.toastOpacityGroup.style.display = this.notificationsEnabled ? 'block' : 'none';
     }
     
     highlightAutoFocus(focusType) {
