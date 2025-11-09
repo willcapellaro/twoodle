@@ -7,11 +7,11 @@ A WebGL-powered depth image viewer creating parallax effects using color images 
 
 ### Multi-Viewer Strategy
 The project implements **3 distinct viewer classes** for fallback compatibility:
-- `DepthyWebGLViewer` - Full Depthy algorithm implementation (primary)
-- `SimpleDepthViewer` - PIXI.js-based viewer with custom shaders
-- `BasicImageViewer` - HTML5 Canvas fallback
+- `DepthyWebGLViewer` - Full Depthy algorithm implementation (unused in current build)
+- `SimpleDepthViewer` - PIXI.js-based viewer with custom shaders (current implementation)
+- `BasicImageViewer` - HTML5 Canvas fallback (available but not active)
 
-**Pattern**: Main app (`DepthViewerApp`) tries viewers in order until one works, handling WebGL/browser compatibility gracefully.
+**Pattern**: Currently uses only `SimpleDepthViewer`, but architecture supports viewer fallback chain for WebGL/browser compatibility. Main app (`DepthViewerApp`) instantiates viewer directly in constructor.
 
 ### Image Pairing Convention
 Depth maps use special Unicode character `∂` (partial derivative symbol):
@@ -32,20 +32,28 @@ Depth maps use special Unicode character `∂` (partial derivative symbol):
 
 ## Key Development Workflows
 
+### Image Discovery System
+Sample images are auto-discovered from two directories:
+- `sample-images/` - Main gallery accessible by default
+- `sample-images/hidden-images/` - Hidden gallery accessible via cheat code
+
+**Critical Pattern**: `scanImageFolder()` method dynamically builds image pairs by detecting file naming patterns. The app maintains two separate arrays (`sampleImages` and `hiddenImages`) and switches between them via `currentImageSet`.
+
+### Testing Viewer Compatibility
+The app includes a **cheat code system** (4-button sequence `12411241`) to:
+- Switch between `sample` and `hidden` image galleries
+- Access advanced features and debug images
+- Test edge cases (symmetry, layered images, hex backgrounds)
+
+**Debug Pattern**: Use browser console to see which viewer loaded successfully. Cheat system uses multiple hash functions for obfuscated validation.
+
 ### Adding Sample Images
 ```bash
 # Images auto-discovered from sample-images/ folder
 # Place paired files: image.jpg + image-∂map.png
 # App scans on startup, builds slideshow automatically
+# Use hidden-images/ subfolder for advanced feature testing
 ```
-
-### Testing Viewer Compatibility
-The app includes a **cheat code system** (4-button sequence) to:
-- Switch between viewer implementations
-- Debug rendering issues
-- Test fallback behavior
-
-**Debug Pattern**: Use browser console to see which viewer loaded successfully.
 
 ### Local Development
 ```bash
@@ -75,12 +83,12 @@ Full device orientation support with per-axis controls:
 - **Animation System**: Smooth transitions between images
 
 ## File Organization
-- `index.html` - Single-page app with embedded styles (914 lines)
-- `js/main.js` - Main application logic (2267 lines)
-- `js/DepthyWebGLViewer.js` - Primary WebGL implementation (1509 lines)
-- `js/SimpleDepthViewer.js` - PIXI.js fallback (305 lines)
-- `js/BasicImageViewer.js` - Canvas fallback (246 lines)
-- `js/DepthPerspectiveFilter.js` - PIXI shader filter (146 lines)
+- `index.html` - Single-page app with embedded styles (1061 lines)
+- `js/main.js` - Main application logic (2322 lines)
+- `js/DepthyWebGLViewer.js` - Primary WebGL implementation (1508 lines)
+- `js/SimpleDepthViewer.js` - PIXI.js fallback (304 lines)
+- `js/BasicImageViewer.js` - Canvas fallback (245 lines)
+- `js/DepthPerspectiveFilter.js` - PIXI shader filter (145 lines)
 
 ## External Dependencies
 - **PIXI.js v7.3.2** - Primary WebGL framework

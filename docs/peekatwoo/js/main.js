@@ -666,7 +666,13 @@ class DepthViewerApp {
                 if (content) {
                     const isExpanded = content.style.display !== 'none';
                     content.style.display = isExpanded ? 'none' : 'block';
-                    arrow.textContent = isExpanded ? '▶ ' + arrow.textContent.substring(2) : '▼ ' + arrow.textContent.substring(2);
+                    
+                    // Special handling for sync section to preserve search icon
+                    if (targetId === 'sync-section') {
+                        arrow.innerHTML = '<i class="fas fa-search"></i> Control Sync';
+                    } else {
+                        arrow.textContent = isExpanded ? '▶ ' + arrow.textContent.substring(2) : '▼ ' + arrow.textContent.substring(2);
+                    }
                     
                     // Save state to localStorage
                     this.saveSectionStates();
@@ -701,8 +707,13 @@ class DepthViewerApp {
                 const arrow = header.querySelector('span');
                 content.style.display = isExpanded ? 'block' : 'none';
                 if (arrow) {
-                    const sectionName = arrow.textContent.substring(2);
-                    arrow.textContent = (isExpanded ? '▼ ' : '▶ ') + sectionName;
+                    // Special handling for sync section to preserve search icon
+                    if (sectionId === 'sync-section') {
+                        arrow.innerHTML = '<i class="fas fa-search"></i> Control Sync';
+                    } else {
+                        const sectionName = arrow.textContent.substring(2);
+                        arrow.textContent = (isExpanded ? '▼ ' : '▶ ') + sectionName;
+                    }
                 }
             }
         });
@@ -1332,7 +1343,7 @@ class DepthViewerApp {
     
     toggleControlsPanel() {
         const isOpen = this.controlsPanel.classList.toggle('open');
-        this.controlsToggle.textContent = isOpen ? '× Debug' : '⚙️ Debug';
+        this.controlsToggle.innerHTML = isOpen ? '<i class="fas fa-xmark"></i>' : '<i class="fas fa-eye"></i>';
         
         // Backdrop disabled - no darkening scrim
         
